@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:14:06 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/23 22:25:31 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,11 @@ SDL_PATH:=$(ROOT_DIR)/SDL_MAC/library
 
 
 
-FT_DIR = ./includes
+INC_DIR = ./includes
+LIB_DIR = ./libft
 
-CFLAGS = -I $(FT_DIR) -Wall -Wextra -Werror -O3 `~/SDL/bin/sdl2-config --cflags`
-LDFLAGS = -lm -L $(FT_DIR) -lft -lpthread `~/SDL/bin/sdl2-config --libs`
+CFLAGS = -I $(INC_DIR) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
+LDFLAGS = -I $(INC_DIR) -lm -L $(LIB_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
 
 all:$(NAME)
 
@@ -36,8 +37,10 @@ $(NAME):$(OBJ)
 	gcc -o $@ $(SRC) $(LDFLAGS)
 
 clean:
+	rm -rf $(OBJ)
 
-fclean:
+fclean:clean
+	rm -rf $(NAME)
 
 re:
 
