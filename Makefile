@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:25:31 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/23 22:36:37 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 
 OS=$(shell uname -s)
-ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-SDL_SOURCES:=$(ROOT_DIR)/SDL_MAC
-SDL_PATH:=$(ROOT_DIR)/SDL_MAC/library
+ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+SDL_SOURCES:=$(ABS_PATH)/SDL_MAC
+SDL_PATH:=$(ABS_PATH)/SDL_MAC/library
 
 
 
@@ -33,6 +33,7 @@ LDFLAGS = -I $(INC_DIR) -lm -L $(LIB_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-c
 
 all:$(NAME)
 
+#rajouter compilation de libt / autres libs
 $(NAME):$(OBJ)
 	gcc -o $@ $(SRC) $(LDFLAGS)
 
@@ -42,7 +43,7 @@ clean:
 fclean:clean
 	rm -rf $(NAME)
 
-re:
+re:fclean clean
 
 $(OBJ):$(SRC)
 	gcc -o $@ -c $< $(CFLAGS)
