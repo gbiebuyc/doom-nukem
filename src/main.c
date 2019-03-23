@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:15:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 00:16:45 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	d.win = SDL_CreateWindow("doom-nukem", SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+			SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
 	if (!(d.win))
 	{
 		ft_putendl_fd("SDL_Create_Window has failed", 2);

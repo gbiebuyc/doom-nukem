@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 00:14:47 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 00:18:56 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,15 @@ all:$(NAME)
 
 #rajouter compilation de libt / autres libs
 $(NAME):$(OBJ)
+	make -C libft
 	gcc -o $@ $(SRC) $(LDFLAGS)
 
 clean:
+	@make -C libft clean
 	rm -rf $(OBJ)
 
 fclean:clean
+	make -C libft fclean
 	rm -rf $(NAME)
 
 re:fclean clean

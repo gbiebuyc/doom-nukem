@@ -6,15 +6,12 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 22:40:59 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:57:52 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 00:20:16 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # exec
 /doom-nukem
-
-# SDL
-/SDL
 
 # created by https://www.gitignore.io/api/c,vim,macos,linux
 # Edit at https://www.gitignore.io/?templates=c,vim,macos,linux
