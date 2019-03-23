@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:03:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 00:15:01 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		main(int argc, char **argv)
 		ft_putendl_fd("SDL_Create_Window has failed", 2);
 		exit(EXIT_FAILURE);
 	}
+
 	while (getchar() != '\n')
 		;
 	proper_exit(&d);

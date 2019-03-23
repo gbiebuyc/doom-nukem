@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 00:03:29 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 00:14:47 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ fclean:clean
 
 re:fclean clean
 
-$(OBJ):$(SRC)
+obj/%.o: src/%.c
 	gcc -o $@ -c $< $(CFLAGS)
 
 
