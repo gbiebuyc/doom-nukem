@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_nukem.h                                       :+:      :+:    :+:   */
+/*   init_SDL.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:34:05 by nallani          ###   ########.fr       */
+/*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
+/*   Updated: 2019/03/24 00:30:02 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_NUKEM_H
-#define DOOM_NUKEM_H
+#include "doom_nukem.h"
 
-#include "structs.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include "../libft/libft.h"
-
-/*
-** exit.c
-*/
-
-void	proper_exit(t_data *d);
-
-/*
-** init_SDL.c
-*/
-
-int		init_SDL(t_data *d);
-
-#endif
+int		init_SDL(t_data *d)
+{
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
+	{
+		ft_putendl_fd("SDL_Init has failed", 2);
+		return (0);
+	}
+	d->win = SDL_CreateWindow("doom-nukem", SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+	if (!(d->win))
+	{
+		ft_putendl_fd("SDL_Create_Window has failed", 2);
+		return (-1);
+	}
+	return (0);
+}
