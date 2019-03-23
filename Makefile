@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 00:18:56 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 00:23:35 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SDL_PATH:=$(ABS_PATH)/SDL/library
 
 
 
-INCLUDE = -I./includes -I./libft -I./SDL/library/include/SDL2
+INCLUDE = -I./includes
 LIB_DIR = ./libft
 
 CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
@@ -47,7 +47,7 @@ fclean:clean
 	make -C libft fclean
 	rm -rf $(NAME)
 
-re:fclean clean
+re:fclean clean all
 
 obj/%.o: src/%.c
 	gcc -o $@ -c $< $(CFLAGS)

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:03:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 00:23:26 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "structs.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "SDL.h"
-#include "libft.h"
+#include "../libft/libft.h"
 
 /*
 ** exit.c
