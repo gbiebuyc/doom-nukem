@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:42:00 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/23 22:47:33 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,3 +75,4 @@ SDL_clean:
 
 SDL_re:SDL_clean SDL
 	
+.PHONY: SDL clean fclean re all
