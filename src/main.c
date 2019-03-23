@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/23 21:54:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/23 23:02:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		main(int argc, char **argv)
 {
 	argc = 1;
+	pri
 	if (argv == NULL)
 	return (0);
 	else
