@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_nukem.h                                       :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:03:08 by nallani          ###   ########.fr       */
+/*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
+/*   Updated: 2019/03/24 00:01:14 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_NUKEM_H
-#define DOOM_NUKEM_H
+#ifndef STRUCTS_H
+#define STRUCTS_H
+#include "../SDL/library/include/SDL2/SDL.h"
 
-#include "structs.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include "SDL.h"
-#include "libft.h"
-
-/*
-** exit.c
-*/
-
-void	proper_exit(t_data *d);
+typedef struct	s_data
+{
+	SDL_Window *win;
+}				t_data;
 
 #endif

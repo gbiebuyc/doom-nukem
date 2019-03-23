@@ -6,13 +6,14 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:47:33 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 00:03:29 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= doom-nukem
 
-FILES= main
+FILES= main \
+	   exit
 
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
@@ -25,11 +26,11 @@ SDL_PATH:=$(ABS_PATH)/SDL/library
 
 
 
-INC_DIR = ./includes
+INCLUDE = -I./includes -I./libft -I./SDL/library/include/SDL2
 LIB_DIR = ./libft
 
-CFLAGS = -I $(INC_DIR) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
-LDFLAGS = -I $(INC_DIR) -lm -L $(LIB_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
+CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
+LDFLAGS = $(INCLUDE) -lm -L $(LIB_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
 
 all:$(NAME)
 
