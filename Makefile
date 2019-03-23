@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/23 22:36:37 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/23 22:42:00 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 OS=$(shell uname -s)
 ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-SDL_SOURCES:=$(ABS_PATH)/SDL_MAC
-SDL_PATH:=$(ABS_PATH)/SDL_MAC/library
+SDL_SOURCES:=$(ABS_PATH)/SDL
+SDL_PATH:=$(ABS_PATH)/SDL/library
 
 
 
