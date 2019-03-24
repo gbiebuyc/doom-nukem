@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 04:17:35 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 04:24:19 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,5 +66,11 @@ SDL_clean:
 	make -C $(SDL_SOURCES) uninstall
 
 SDL_re: SDL_clean SDL
+
+sdl:SDL
+
+sdl_re:SDL_re
+
+sdl_clean:SDL_clean
 	
-.PHONY: SDL clean fclean re all
+.PHONY: SDL clean fclean re all sdl
