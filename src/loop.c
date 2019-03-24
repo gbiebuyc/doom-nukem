@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:17:49 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 09:45:20 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ void						loop(t_data *d)
 		if (d->events.type == SDL_KEYDOWN)
 			event_key_down(d, d->events.key);
 		if (d->events.type == SDL_KEYUP)
-			;
+		{}
 		if (d->events.type == SDL_MOUSEMOTION)
-			;
+		{}
 		if (d->events.type == SDL_MOUSEBUTTONDOWN)
-			;
+		{}
 		if (d->events.type == SDL_MOUSEBUTTONUP)
-			;
+		{}
 		if (d->events.type == SDL_WINDOWEVENT)
 			event_window(d, d->events.window);
 		if (d->events.type == SDL_QUIT) // needed somewhere ?
