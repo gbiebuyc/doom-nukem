@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 04:16:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 07:49:33 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "../libft/libft.h"
 #include <time.h> // needed ?
+#include <sys/time.h>
 
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
@@ -30,7 +31,7 @@
 void	proper_exit(t_data *d);
 
 /*
-** init_SDL.c
+** init_sdl.c
 */
 
 int		ft_init_sdl(t_data *d, int width, int length);

@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 04:24:19 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 08:03:05 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME= doom-nukem
 
 FILES= main \
 	   exit \
-	   init_SDL \
+	   init_sdl \
 	   loop \
 	   key_event \
 	   window_event
@@ -22,7 +22,6 @@ FILES= main \
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
-OS=$(shell uname -s)
 ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SDL_SOURCES:=$(ABS_PATH)/SDL
 SDL_PATH:=$(ABS_PATH)/SDL/library
