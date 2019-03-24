@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   structs_doom.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 07:45:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 08:20:39 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef STRUCTS_DOOM_H
+#define STRUCTS_DOOM_H
 #include "../SDL/library/include/SDL2/SDL.h"
 
 typedef struct	s_hooks
