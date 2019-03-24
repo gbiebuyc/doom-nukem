@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:06:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 08:46:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv; // parse args pour doom-nukem_ed ?
-	if (!(ft_init_sdl(&d, WIN_WIDTH, WIN_LENGTH)))
-		return (-1);
+	ft_init_sdl(&d, WIN_WIDTH, WIN_LENGTH);
 	d.main_win.surface = SDL_GetWindowSurface(d.main_win.win);
 	for(int i = 0; i < 600; i++)
 		for(int j = 0; j < 800; j++)

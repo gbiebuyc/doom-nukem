@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:20:39 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 08:41:54 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct	s_data
 	SDL_Event		events;
 	t_time			time;
 	t_hooks			hooks;
+	char			err_count;
 }				t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:20:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 08:47:01 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 */
 
 void	proper_exit(t_data *d);
+void	err_exit(t_data *d, char count, const char *msg);
 
 /*
 ** init_sdl.c
 */
 
-int		ft_init_sdl(t_data *d, int width, int length);
+void	ft_init_sdl(t_data *d, int width, int length);
 
 /*
 ** loop.c
