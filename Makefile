@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 02:09:32 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/24 04:17:35 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,10 @@ NAME= doom-nukem
 FILES= main \
 	   exit \
 	   init_SDL \
-	   loop
-
+	   loop \
+	   key_event \
+	   window_event
+#need to reorganize and optimize files (especially loop and events
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 

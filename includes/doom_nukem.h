@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 02:52:31 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 04:16:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	proper_exit(t_data *d);
 ** init_SDL.c
 */
 
-int		init_sdl(t_data *d, int width, int length);
+int		ft_init_sdl(t_data *d, int width, int length);
 
 /*
 ** loop.c
@@ -41,4 +41,15 @@ int		init_sdl(t_data *d, int width, int length);
 
 void	loop(t_data *d);
 
+/*
+** key_event.c
+*/
+
+void	event_key_down(t_data *d, SDL_KeyboardEvent event);
+
+/*
+** window_event.c
+*/
+
+void	event_window(t_data *d, SDL_WindowEvent event);
 #endif
