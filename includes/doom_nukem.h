@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:34:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 02:52:31 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../libft/libft.h"
+#include <time.h> // needed ?
+
+#define WIN_WIDTH 800
+#define WIN_LENGTH 600
+#define CLOCK_PER_SEC 1000000.0
 
 /*
 ** exit.c
@@ -28,6 +33,12 @@ void	proper_exit(t_data *d);
 ** init_SDL.c
 */
 
-int		init_SDL(t_data *d);
+int		init_sdl(t_data *d, int width, int length);
+
+/*
+** loop.c
+*/
+
+void	loop(t_data *d);
 
 #endif

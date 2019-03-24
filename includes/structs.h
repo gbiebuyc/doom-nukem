@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:01:14 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 03:14:14 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 #define STRUCTS_H
 #include "../SDL/library/include/SDL2/SDL.h"
 
+typedef struct	s_mainWindow
+{
+	SDL_Window	*win;
+	SDL_Surface	*surface;
+}				t_mainWindow;
+
+typedef struct	s_timing
+{
+	double			ini_time;
+	double			last_time;
+}				t_timing;
+
 typedef struct	s_data
 {
-	SDL_Window *win;
+	t_mainWindow	main_win;
+	SDL_Event		events;
+	t_timing		time;
 }				t_data;
 
 #endif

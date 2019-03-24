@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 01:22:45 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/03/24 02:09:32 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME= doom-nukem
 
 FILES= main \
 	   exit \
-	   init_SDL
+	   init_SDL \
+	   loop
 
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
@@ -24,17 +25,17 @@ ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SDL_SOURCES:=$(ABS_PATH)/SDL
 SDL_PATH:=$(ABS_PATH)/SDL/library
 FT_DIR = ./libft
-INCLUDE = -I./includes -I $(FT_DIR)
+INCLUDE = -I./includes 
 
 CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
 LDFLAGS = -lm -L $(FT_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
 
 all: $(NAME)
 
-#rajouter compilation de libt / autres libs
-$(NAME): $(OBJ)
-	make -C $(FT_DIR)
-	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+#rajouter compilation de libft / autres libs (sdl ?)
+$(NAME):$(OBJ)
+	make -C libft
+	gcc -o $@ $(OBJ) $(LDFLAGS)
 
 clean:
 	make -C $(FT_DIR) clean
@@ -48,7 +49,6 @@ fclean:
 re: fclean all
 
 obj/%.o: src/%.c
-	mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 

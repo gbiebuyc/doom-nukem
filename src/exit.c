@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:00:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 00:02:34 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/24 01:35:56 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	proper_exit(t_data *d)
 {
-	SDL_DestroyWindow(d->win);
+	SDL_DestroyWindow(d->main_win.win);
 	SDL_Quit();
 	exit(EXIT_SUCCESS);
 }
