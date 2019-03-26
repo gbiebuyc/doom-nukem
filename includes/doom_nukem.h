@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:47:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/26 00:26:01 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <stdio.h>
 #include "../libft/libft.h"
 #include <sys/time.h>
+#include <string.h>
+#include <errno.h>
+#include <pthread.h>
 
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
@@ -52,5 +55,40 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event);
 */
 
 void	event_window(t_data *d, SDL_WindowEvent event);
+
+/*
+** ini.c
+*/
+
+void	ini_player(t_data *d);
+
+/*
+** refresh.c
+*/
+
+void	refresh_img(t_data *d);
+
+/*
+** intersection.c
+*/
+
+void	find_intersection(t_args *args);
+
+/*
+** vec2.c
+*/
+
+t_vec2f			sub_vec2f(t_vec2f v1, t_vec2f v2);
+t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
+void			actualize_dir(double angle, t_vec2f *vec);
+
+/*
+** vec2_2.c
+*/
+
+t_vec2f			mul_vec2f(t_vec2f v, double scalar);
+float			get_vec2f_length(t_vec2f v);
+double			vec2f_length(t_vec2f v);
+double			get_vec2f_angle(t_vec2f v1, t_vec2f v2);
 
 #endif

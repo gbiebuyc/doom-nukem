@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/24 08:03:05 by nallani          ###   ########.fr        #
+#    Updated: 2019/03/26 00:41:16 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,12 @@ FILES= main \
 	   init_sdl \
 	   loop \
 	   key_event \
-	   window_event
+	   window_event \
+	   ini \
+	   refresh \
+	   vec2 \
+	   vec2_2 #\
+#	   intersection
 #need to reorganize and optimize files (especially loop and events
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
@@ -52,6 +57,10 @@ re: fclean all
 obj/%.o: src/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
+#modifier $(NAME) pour compiler la sdl et etre en accord avec le pdf
+fast:
+	make -C libft
+	gcc -o $@ $(OBJ) $(LDFLAGS)
 
 #compilation SDL
 
@@ -72,4 +81,4 @@ sdl_re:SDL_re
 
 sdl_clean:SDL_clean
 	
-.PHONY: SDL clean fclean re all sdl
+.PHONY: SDL clean fclean re all sdl fast

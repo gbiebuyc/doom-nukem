@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/24 08:41:54 by nallani          ###   ########.fr       */
+/*   Updated: 2019/03/26 00:08:28 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,31 @@
 #define STRUCTS_DOOM_H
 #include "../SDL/library/include/SDL2/SDL.h"
 
+typedef struct	s_vec3f
+{
+	double		x;
+	double		y;
+	double		z;
+}				t_vec3f;
+
+typedef struct	s_vec2f
+{
+	double		x;
+	double		y;
+}				t_vec2f;
+
 typedef struct	s_hooks
 {
 	//insert enums;
 }				t_hooks;
+
+typedef struct	s_player
+{
+	t_vec3f		pos;
+	t_vec2f		dir;
+	t_vec2f		plane;
+}				t_player;
+
 typedef struct	s_mainWindow
 {
 	SDL_Window	*win;
@@ -37,7 +58,16 @@ typedef struct	s_data
 	SDL_Event		events;
 	t_time			time;
 	t_hooks			hooks;
-	char			err_count;
+	t_player		player;
+	SDL_Surface		*texture[4];
 }				t_data;
+
+typedef struct	s_args
+{
+	t_data		*d;
+	t_vec2f		ray_dir;
+	short		x;
+	double		angle;
+}				t_args;
 
 #endif
