@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/03/26 00:41:16 by nallani          ###   ########.fr        #
+#    Updated: 2019/04/01 16:57:53 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES= main \
 	   ini \
 	   refresh \
 	   vec2 \
+	   square \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events
@@ -55,6 +56,7 @@ fclean:
 re: fclean all
 
 obj/%.o: src/%.c
+	mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 #modifier $(NAME) pour compiler la sdl et etre en accord avec le pdf

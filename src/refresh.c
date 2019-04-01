@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/26 03:37:39 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:37:36 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void		main_raycast_multithread(t_data *d, int x, int tmp)
 
 void		refresh_img(t_data *d)
 {	
-	main_raycast_multithread(d, 0, 0);
+//	main_raycast_multithread(d, 0, 0);
+	square(d);
 	SDL_UpdateWindowSurface(d->main_win.win);
 }

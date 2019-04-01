@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/26 00:26:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:34:28 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
 
+void	square(t_data *d);
 /*
 ** exit.c
 */
@@ -81,6 +82,7 @@ void	find_intersection(t_args *args);
 t_vec2f			sub_vec2f(t_vec2f v1, t_vec2f v2);
 t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
 void			actualize_dir(double angle, t_vec2f *vec);
+t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
 
 /*
 ** vec2_2.c
@@ -90,5 +92,6 @@ t_vec2f			mul_vec2f(t_vec2f v, double scalar);
 float			get_vec2f_length(t_vec2f v);
 double			vec2f_length(t_vec2f v);
 double			get_vec2f_angle(t_vec2f v1, t_vec2f v2);
+t_vec3f			add_vec3f(t_vec3f a, t_vec3f b);
 
 #endif

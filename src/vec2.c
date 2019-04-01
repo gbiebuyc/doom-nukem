@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:14:59 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/26 00:15:18 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:34:04 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ void	actualize_dir(double diff, t_vec2f *dir)
 	y = dir->y;
 	dir->x = x * cos(diff) - y * sin(diff);
 	dir->y = x * sin(diff) + y * cos(diff);
+}
+
+t_vec3f sub_vec3f(t_vec3f v1, t_vec3f v2)
+{
+	return ((t_vec3f){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z});
 }

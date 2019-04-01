@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/03/26 00:08:28 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:04:10 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ typedef	struct	s_time
 	// ptet stocker la diff pour utiliser sur un autre event que dans loop ?
 }				t_time;
 
+typedef struct	s_cam
+{
+	t_vec3f		pos;
+	double		x_rot;
+	double		y_rot;
+}				t_cam;
+
 typedef struct	s_data
 {
 	t_mainWindow	main_win;
@@ -60,6 +67,7 @@ typedef struct	s_data
 	t_hooks			hooks;
 	t_player		player;
 	SDL_Surface		*texture[4];
+	t_cam			camera;
 }				t_data;
 
 typedef struct	s_args
