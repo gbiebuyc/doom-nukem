@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/01 18:29:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 13:09:25 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,9 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 		d->camera.pos.x += 0.1;
 	if (event.keysym.sym == SDLK_LEFT)
 		d->camera.pos.x -= 0.1;
+	if (event.keysym.sym == SDLK_DOWN)
+		d->camera.pos.y -= 0.1;
+	if (event.keysym.sym == SDLK_UP)
+		d->camera.pos.y += 0.1;
 
 }
