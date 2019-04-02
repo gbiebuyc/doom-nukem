@@ -6,13 +6,23 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 15:27:21 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 18:17:45 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_DOOM_H
 #define STRUCTS_DOOM_H
 #include "../SDL/library/include/SDL2/SDL.h"
+
+enum			e_enums
+{
+	FORWARD = 1,
+	BACKWARD,
+	LEFT_STRAFE,
+	RIGHT_STRAFE,
+	LEFT_TURN,
+	RIGHT_TURN
+};
 
 typedef struct	s_vec3f
 {
@@ -27,10 +37,12 @@ typedef struct	s_vec2f
 	double		y;
 }				t_vec2f;
 
-typedef struct	s_hooks
+typedef struct	s_keystate
 {
-	//insert enums;
-}				t_hooks;
+	char		dir;
+	char		strafe_dir;
+	char		hor_turn;
+}				t_keystate;
 
 typedef struct	s_player
 {
@@ -63,7 +75,7 @@ typedef struct	s_data
 	t_mainWindow	main_win;
 	SDL_Event		events;
 	t_time			time;
-	t_hooks			hooks;
+	t_keystate		keys;
 	t_player		player;
 	SDL_Surface		*texture[4];
 	t_cam			camera;

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:51:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 18:19:15 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event);
 */
 
 void	event_key_down(t_data *d, SDL_KeyboardEvent event);
+void	event_key_up(t_data *d, SDL_KeyboardEvent event);
 
 /*
 ** window_event.c
@@ -80,6 +81,7 @@ void	ini_player(t_data *d);
 */
 
 void	refresh_img(t_data *d);
+void	refresh_game(t_data *d);
 
 /*
 ** intersection.c

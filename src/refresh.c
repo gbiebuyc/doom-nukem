@@ -6,55 +6,54 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/01 17:37:36 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:42:41 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define NB_OF_THREADS 4
+#define MOVE_SPEED 0.08
+#define TURN_SPEED 0.02
 
-void		set_args(t_args *args, t_data *d, t_vec2f ray_dir, short x)
+void	refresh_game(t_data *d)
 {
-	args->d = d;
-	args->ray_dir = ray_dir;
-	args->x = x;
-	args->angle = get_vec2f_angle(d->player.dir, ray_dir);
-}
-
-// a effacer, fonction dans intersection.c (unfinished)
-void		find_intersection(t_args * args)
-{
-	(void)args;
-}
-
-void		main_raycast_multithread(t_data *d, int x, int tmp)
-{
-	t_vec2f		ray_dir;
-	pthread_t	id[NB_OF_THREADS];
-	t_args		args[NB_OF_THREADS];
-
-	x = 0;
-	while(x < WIN_WIDTH)
+	if (d->keys.dir || d->keys.strafe_dir)
 	{
-		tmp = 0;
-		while (tmp < NB_OF_THREADS)
+		t_vec2f newpos = (t_vec2f){d->camera.pos.x, d->camera.pos.z};
+		if (d->keys.dir == FORWARD)
+			newpos = add_vec2f(newpos,
+					mul_vec2f((t_vec2f){d->camera.dir.x, d->camera.dir.z}, MOVE_SPEED));
+		if (d->keys.dir == BACKWARD)
+			newpos = add_vec2f(newpos,
+					mul_vec2f((t_vec2f){d->camera.dir.x, d->camera.dir.z}, -MOVE_SPEED));
+		if (d->keys.strafe_dir == LEFT_STRAFE)
 		{
-			ray_dir = add_vec2f(d->player.dir, mul_vec2f(d->player.plane, 2.0 *
-						(x + tmp) / WIN_WIDTH - 1.0));
-			set_args(&args[tmp], d, ray_dir, WIN_WIDTH - x - tmp);
-			if (pthread_create(&id[tmp], NULL, (void *)&find_intersection
-						, &args[tmp]))
-				err_exit(d, 100/*a changer*/, strerror(errno));
-			tmp++;
+			t_vec2f dirtmp = (t_vec2f){d->camera.dir.x, d->camera.dir.z};
+			actualize_dir(M_PI_2, &dirtmp);
+			newpos = add_vec2f(newpos, mul_vec2f(dirtmp, MOVE_SPEED));
 		}
-		x += NB_OF_THREADS;
+		if (d->keys.strafe_dir == RIGHT_STRAFE)
+		{
+			t_vec2f dirtmp = (t_vec2f){d->camera.dir.x, d->camera.dir.z};
+			actualize_dir(-M_PI_2, &dirtmp);
+			newpos = add_vec2f(newpos, mul_vec2f(dirtmp, MOVE_SPEED));
+		}
+		d->camera.pos = (t_vec3f){newpos.x, d->camera.pos.y, newpos.y};
+	}
+	if (d->keys.hor_turn)
+	{
+		t_vec2f newrot = (t_vec2f){d->camera.dir.x, d->camera.dir.z};
+		if (d->keys.hor_turn == LEFT_TURN)
+			actualize_dir(TURN_SPEED, &newrot);
+		if (d->keys.hor_turn == RIGHT_TURN)
+			actualize_dir(-TURN_SPEED, &newrot);
+		d->camera.dir = (t_vec3f){newrot.x, d->camera.dir.y, newrot.y};
 	}
 }
 
-void		refresh_img(t_data *d)
+void	refresh_img(t_data *d)
 {	
-//	main_raycast_multithread(d, 0, 0);
+	//	main_raycast_multithread(d, 0, 0);
 	square(d);
 	SDL_UpdateWindowSurface(d->main_win.win);
 }
