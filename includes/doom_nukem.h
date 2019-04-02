@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/01 17:34:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:51:48 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ void	ft_init_sdl(t_data *d, int width, int length);
 */
 
 void	loop(t_data *d);
+
+/*
+** motion_event.c
+*/
+
+void	event_mouse_motion(t_data *d, SDL_MouseMotionEvent event);
+
+/*
+** mouse_event.c
+*/
+
+void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event);
 
 /*
 ** key_event.c

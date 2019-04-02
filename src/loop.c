@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 13:28:14 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 16:32:25 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,15 @@ static inline void			check_time(suseconds_t *time, t_data *d, suseconds_t *fps_s
 		*fps_sec_count = *fps_sec_count - FRAME + *time;
 		if (*fps_sec_count <= 0)
 		{
+			ft_putstr("\r");
 			ft_putstr("fps: ");
 			ft_putnbr(fps_count);
-			ft_putstr("\n");
 			fps_count = 0;
 			*fps_sec_count = 1000000;
 		}
 		fps_count++;
 		*time = FRAME;	
 		refresh_img(d);
-	//	printf("count:%d\n", count++); // do a time ./doom, press esc at 600 and you get the gramerate
 		(void)d;
 	}
 }
@@ -106,11 +105,9 @@ void						loop(t_data *d)
 		if (d->events.type == SDL_KEYUP)
 		{}
 		if (d->events.type == SDL_MOUSEMOTION)
-		{}
-		if (d->events.type == SDL_MOUSEBUTTONDOWN)
-		{}
-		if (d->events.type == SDL_MOUSEBUTTONUP)
-		{}
+			event_mouse_motion(d, d->events.motion);
+		if (d->events.type == SDL_MOUSEBUTTONDOWN || d->events.type == SDL_MOUSEBUTTONUP)
+			event_mouse_button(d, d->events.button);
 		if (d->events.type == SDL_WINDOWEVENT)
 			event_window(d, d->events.window);
 		if (d->events.type == SDL_QUIT) // needed somewhere ?

@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/01 16:57:53 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/02 16:51:41 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ FILES= main \
 	   ini \
 	   refresh \
 	   vec2 \
+	   motion_event \
+	   mouse_event \
 	   square \
 	   vec2_2 #\
 #	   intersection

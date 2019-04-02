@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/01 20:32:06 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:27:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ void	ft_init_sdl(t_data *d, int width, int length)
 		err_exit(d, 1, SDL_GetError());
 	if (!(d->main_win.surface = SDL_GetWindowSurface(d->main_win.win)))
 		err_exit(d, 1, SDL_GetError());
+	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
+		err_exit(d, 2, SDL_GetError());
 	load_textures(d);
 }
