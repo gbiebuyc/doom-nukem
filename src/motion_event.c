@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 15:33:28 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:47:41 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 17:06:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void		event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
 	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
 		return ;
 	if (event.xrel)
-	actualize_dir_vec3f_x(0.0174533 * event.xrel * MOUSE_SENSITIVTY, &d->camera.dir);
+	actualize_dir_vec3f_x(-0.0174533 * event.xrel * MOUSE_SENSITIVTY, &d->camera.dir);
 }
