@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:36:52 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 21:11:03 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 enum	e_texture_order
 {
 	TOP_LEFT, TOP_RIGHT, BOT_LEFT, BOT_RIGHT
+};
+
+enum			e_enums
+{
+	FORWARD = 1,
+	BACKWARD,
+	LEFT_STRAFE,
+	RIGHT_STRAFE,
+	LEFT_TURN,
+	RIGHT_TURN,
+	UP_FLY,
+	DOWN_FLY
 };
 
 typedef struct	s_vec3f
@@ -43,10 +55,13 @@ typedef struct	s_texture3d
 }				t_texture3d;
 
 
-typedef struct	s_hooks
+typedef struct	s_keystate
 {
-	//insert enums;
-}				t_hooks;
+	char		dir;
+	char		strafe_dir;
+	char		hor_turn;
+	char		ver_dir;
+}				t_keystate;
 
 typedef struct	s_player
 {
@@ -79,7 +94,7 @@ typedef struct	s_data
 	t_mainWindow	main_win;
 	SDL_Event		events;
 	t_time			time;
-	t_hooks			hooks;
+	t_keystate		keys;
 	t_player		player;
 	SDL_Surface		*texture[4];
 	t_cam			camera;

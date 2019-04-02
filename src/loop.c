@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:32:25 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 18:18:44 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static inline void			check_time(suseconds_t *time, t_data *d, suseconds_t *fps_s
 			*fps_sec_count = 1000000;
 		}
 		fps_count++;
-		*time = FRAME;	
+		*time = FRAME;
+		refresh_game(d);
 		refresh_img(d);
 		(void)d;
 	}
@@ -103,7 +104,7 @@ void						loop(t_data *d)
 		if (d->events.type == SDL_KEYDOWN)
 			event_key_down(d, d->events.key);
 		if (d->events.type == SDL_KEYUP)
-		{}
+			event_key_up(d, d->events.key);
 		if (d->events.type == SDL_MOUSEMOTION)
 			event_mouse_motion(d, d->events.motion);
 		if (d->events.type == SDL_MOUSEBUTTONDOWN || d->events.type == SDL_MOUSEBUTTONUP)
