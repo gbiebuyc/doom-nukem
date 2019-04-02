@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/02 16:51:41 by nallani          ###   ########.fr        #
+#    Updated: 2019/04/02 17:52:09 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES= main \
 	   motion_event \
 	   mouse_event \
 	   square \
+	   projection \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events

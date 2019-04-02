@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 16:57:58 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/02 15:21:02 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 21:07:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	putpixel(t_data *d, int x, int y, uint32_t color)
 void	square(t_data *d)
 {
 	t_vec3f cube[8];
-	t_vec3f projected;
 
 	cube[0] = (t_vec3f){-1, 1, -1};
 	cube[1] = (t_vec3f){1, 1, -1};
@@ -37,19 +36,17 @@ void	square(t_data *d)
 			d->main_win.surface->w * d->main_win.surface->h * 4);
 	while (i < 8)
 	{
-		projected = sub_vec3f(cube[i], d->camera.pos);
-		// Y Rotation
-		double xtmp = projected.x;
-		double ztmp = projected.z;
-		double angle = get_vec2f_angle(
-				(t_vec2f){d->camera.dir.x, d->camera.dir.z}, (t_vec2f){0, 1});
-		projected.x = cos(angle) * xtmp - sin(angle) * ztmp;
-		projected.z = sin(angle) * xtmp + cos(angle) * ztmp;
-		projected.x /= projected.z;
-		projected.y /= projected.z;
-		projected.x = projected.x  * WIN_WIDTH + WIN_WIDTH / 2;
-		projected.y = projected.y * -WIN_WIDTH + WIN_LENGTH / 2;
-		putpixel(d, projected.x, projected.y, 0xffffff);
+		t_vec2f test;
+		test = projection(cube[i], d->camera.dir, d->camera.pos);
+		putpixel(d, test.x, test.y, 0xffffff);
 		i++;
 	}
+	t_texture3d ret;
+	i = 0;
+	while (i < 4)
+	{
+		ret.vertex[i] = cube[i];
+		i++;
+	}
+	draw_texture(d, ret, *d->texture[0]);
 }

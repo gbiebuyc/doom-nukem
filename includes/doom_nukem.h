@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:51:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/02 21:07:21 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@
 
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
+/*
+** projection.c
+*/
+
+t_vec2f	projection(t_vec3f vec3, t_vec3f dir, t_vec3f pos);
+void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);
+void	putpixel(t_data *d, int x, int y, uint32_t color);
 /*
 ** exit.c
 */
