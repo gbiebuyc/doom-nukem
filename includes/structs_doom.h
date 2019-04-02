@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:17:45 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 19:24:48 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ enum			e_enums
 	LEFT_STRAFE,
 	RIGHT_STRAFE,
 	LEFT_TURN,
-	RIGHT_TURN
+	RIGHT_TURN,
+	UP_FLY,
+	DOWN_FLY
 };
 
 typedef struct	s_vec3f
@@ -42,6 +44,7 @@ typedef struct	s_keystate
 	char		dir;
 	char		strafe_dir;
 	char		hor_turn;
+	char		ver_dir;
 }				t_keystate;
 
 typedef struct	s_player

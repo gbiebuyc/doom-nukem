@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:42:41 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 19:32:53 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ void	refresh_game(t_data *d)
 			actualize_dir(-TURN_SPEED, &newrot);
 		d->camera.dir = (t_vec3f){newrot.x, d->camera.dir.y, newrot.y};
 	}
+	if (d->keys.ver_dir == UP_FLY)
+		d->camera.pos.y += MOVE_SPEED;
+	if (d->keys.ver_dir == DOWN_FLY)
+		d->camera.pos.y -= MOVE_SPEED;
 }
 
 void	refresh_img(t_data *d)

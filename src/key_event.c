@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:42:20 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 19:39:11 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,11 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 	if (event.keysym.sym == SDLK_RIGHT)
 		d->keys.hor_turn = RIGHT_TURN;
 
-	/*
 	// Altitude
-	if (event.keysym.sym == SDLK_UP)
-		d->camera.pos.y += 0.1;
-	if (event.keysym.sym == SDLK_DOWN)
-		d->camera.pos.y -= 0.1;	
-	*/
+	if (event.keysym.sym == SDLK_SPACE)
+		d->keys.ver_dir = UP_FLY;
+	if (event.keysym.sym == SDLK_LSHIFT)
+		d->keys.ver_dir = DOWN_FLY;
 }
 
 void	event_key_up(t_data *d, SDL_KeyboardEvent event)
@@ -66,11 +64,9 @@ void	event_key_up(t_data *d, SDL_KeyboardEvent event)
 	if (event.keysym.sym == SDLK_RIGHT)
 		d->keys.hor_turn = 0;
 
-	/*
 	// Altitude
-	if (event.keysym.sym == SDLK_UP)
-		d->camera.pos.y += 0.1;
-	if (event.keysym.sym == SDLK_DOWN)
-		d->camera.pos.y -= 0.1;	
-	*/
+	if (event.keysym.sym == SDLK_SPACE)
+		d->keys.ver_dir = 0;
+	if (event.keysym.sym == SDLK_LSHIFT)
+		d->keys.ver_dir = 0;
 }
