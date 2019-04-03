@@ -6,12 +6,11 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 21:07:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/03 15:30:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
 
 t_vec2f		projection(t_vec3f vec3, t_vec3f dir, t_vec3f pos)
 {
@@ -46,7 +45,7 @@ short		get_y_end(t_vec2f start, t_vec2f end, short count)
 
 }
 */
-void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface)
+void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface) // theorie du pourquoi ca merde : MAUVAIS SCALE de end_y
 {
 	short		x;
 	short		y;
@@ -62,13 +61,13 @@ void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface)
 		{
 			delta.x = (x - text.vertex[0].x) / length;
 			start_y = get_y_start(text.vertex[0], text.vertex[1], (short)(x - text.vertex[0].x));
-			end_y = get_y_start(text.vertex[3], text.vertex[2], (short)length);
-//			printf("start_y :%d , end_y :%d\n", start_y, end_y);
+			end_y = get_y_start(text.vertex[3], text.vertex[2], (short)(x - text.vertex[0].x));
+ 			printf("start_y :%d , end_y :%d\n", start_y, end_y);
 			y = start_y;
 			while (y <= end_y)
 			{
 				delta.y = fabs(((double)y - start_y) / (end_y - start_y));
-//				printf("x : %d, y %d\nsurface_x :%d, surface_y :%d\n", x, y, (int)delta.x, (int)delta.y);
+//				printf("x : %d, y %d\nsurface_x :%f, surface_y :%f\n", x, y, delta.x, delta.y);
 				putpixel(d, x, y, (uint32_t)((uint32_t *)surface.pixels)[(int)(delta.x * surface.w) + (int)(
 						delta.y * surface.h * surface.w)]);
 //				w_surface[x + y * WIN_WIDTH] = ((uint32_t *)surface.pixels)[(int)(delta.x * surface.w)
