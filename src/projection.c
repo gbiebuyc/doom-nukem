@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/03 15:30:10 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/03 19:42:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ t_vec2f		projection(t_vec3f vec3, t_vec3f dir, t_vec3f pos)
 	return (result);
 }
 
-short		get_y_start(t_vec2f start, t_vec2f end, short count)
+double		get_y_start(t_vec2f start, t_vec2f end, short count)
 {
 	double	step;
 	double	delta;
 
-	step = start.x - end.x;
-	delta = start.y - end.y;
+	step = (double)start.x - (double)end.x;
+	delta = (double)start.y - (double)end.y;
 	//printf("step: %f, delta :%f\n", step, delta);
-	return ((short)(delta / step * (count)) + start.y);
+	return ((delta / step * (count)) + start.y);
 }
 /*
 short		get_y_end(t_vec2f start, t_vec2f end, short count)
@@ -45,31 +45,37 @@ short		get_y_end(t_vec2f start, t_vec2f end, short count)
 
 }
 */
-void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface) // theorie du pourquoi ca merde : MAUVAIS SCALE de end_y
+void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface) //probleme avec la composante verticale de pos (delta.y ?)
 {
 	short		x;
 	short		y;
 	double		length;
-	short		end_y;
+	double		end_y;
 	t_vec2f		delta;
-	short		start_y;
+	double		start_y;
 
 	length = text.vertex[1].x - text.vertex[0].x;
 	x = text.vertex[0].x;
 //	printf("length: %f\n", length);
 		while (x <= text.vertex[1].x)
 		{
-			delta.x = (x - text.vertex[0].x) / length;
+			delta.x = (x - (short)text.vertex[0].x) / length;
 			start_y = get_y_start(text.vertex[0], text.vertex[1], (short)(x - text.vertex[0].x));
 			end_y = get_y_start(text.vertex[3], text.vertex[2], (short)(x - text.vertex[0].x));
- 			printf("start_y :%d , end_y :%d\n", start_y, end_y);
-			y = start_y;
-			while (y <= end_y)
+// 			printf("start_y :%d , end_y :%d\n", start_y, end_y);
+			y = (short)start_y;
+			while (y <= (short)end_y)
 			{
-				delta.y = fabs(((double)y - start_y) / (end_y - start_y));
-//				printf("x : %d, y %d\nsurface_x :%f, surface_y :%f\n", x, y, delta.x, delta.y);
-				putpixel(d, x, y, (uint32_t)((uint32_t *)surface.pixels)[(int)(delta.x * surface.w) + (int)(
-						delta.y * surface.h * surface.w)]);
+				delta.y = fabs((double)((double)y - start_y) / (end_y - start_y));
+				//printf("x : %d, y %d\nsurface_x :%f, surface_y :%f\n", x, y, delta.x, delta.y);
+				uint32_t pos = (int)(delta.x * surface.w) + (int)(delta.y * surface.h * (surface.w));
+				putpixel(d, x, y, (uint32_t)((uint32_t*)surface.pixels)[pos]);
+		//		uint32_t	colo;
+		//		colo = SDL_MapRGB(NULL, (uint8_t)((char*)surface.pixels)[pos], (uint8_t)((char*)surface.pixels)[pos + 1],
+		//				(uint8_t)((char*)surface.pixels)[pos + 2]);
+		//		putpixel(d, x, y, colo);
+	//			printf("x :%d\n", (int)(delta.x * surface.w));
+	//			printf("y :%d\n", (int)(delta.y * surface.h * surface.w));
 //				w_surface[x + y * WIN_WIDTH] = ((uint32_t *)surface.pixels)[(int)(delta.x * surface.w)
 //					+ (int)(delta.y * surface.h * surface.w)];
 				y++;

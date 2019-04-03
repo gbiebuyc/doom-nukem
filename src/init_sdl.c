@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:27:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/03 19:23:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,22 @@
 
 void	load_textures(t_data *d) // a modifier
 {
-	if (!(d->texture[0] = SDL_LoadBMP("./textures/south.bmp")))
-			err_exit(d, 2, SDL_GetError());
+	SDL_Surface *tmp;
+	if (!(tmp = SDL_LoadBMP("./textures/north.bmp")))
+		err_exit(d, 2, SDL_GetError());
+	if (!(d->texture[0] = SDL_ConvertSurfaceFormat(tmp,
+					d->main_win.surface->format->format, 0)))
+	{
+		SDL_FreeSurface(tmp);
+		err_exit(d, 2, SDL_GetError());
+	}
+		SDL_FreeSurface(tmp);
 	if (!(d->texture[1] = SDL_LoadBMP("./textures/south.bmp")))
-			err_exit(d, 3, SDL_GetError());
+		err_exit(d, 3, SDL_GetError());
 	if (!(d->texture[2] = SDL_LoadBMP("./textures/south.bmp")))
-			err_exit(d, 4, SDL_GetError());
+		err_exit(d, 4, SDL_GetError());
 	if (!(d->texture[3] = SDL_LoadBMP("./textures/south.bmp")))
-			err_exit(d, 5, SDL_GetError());
+		err_exit(d, 5, SDL_GetError());
 }
 
 void	ft_init_sdl(t_data *d, int width, int length)

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 16:57:58 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/02 21:12:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/03 19:31:50 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void	square(t_data *d)
 		i++;
 	}
 	draw_texture(d, ret, *d->texture[0]);
+//	printf("R%d\n", d->main_win.surface->format->Rmask);
+//	printf("G%d\n", d->main_win.surface->format->Gmask);
+//	printf("B%d\n", d->main_win.surface->format->Bmask);
+//	printf("A%d\n", d->main_win.surface->format->Amask);
+//	printf("win: %d\n", d->main_win.surface->format->format);
+//	printf("rgba32: %d\n", SDL_PIXELFORMAT_RGBA32);
+//	printf("argb32: %d\n", SDL_PIXELFORMAT_ARGB32);
+//	printf("bgra32: %d\n", SDL_PIXELFORMAT_BGRA32);
+//	printf("text: %d\n", d->texture[0]->format->format);
+//	printf("ABGR32: %d\n", SDL_PIXELFORMAT_ABGR32);
 }

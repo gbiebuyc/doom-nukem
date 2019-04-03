@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 21:11:03 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/03 16:23:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ enum	e_texture_order
 {
 	TOP_LEFT, TOP_RIGHT, BOT_LEFT, BOT_RIGHT
 };
+
+typedef struct	s_24_t
+{
+	uint32_t value : 24;
+}				t_24_t;
 
 enum			e_enums
 {
