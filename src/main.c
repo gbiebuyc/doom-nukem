@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:18:05 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:17:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int		main(int argc, char **argv)
 	(void)argv; // parse args pour doom-nukem_ed ?
 	ft_init_sdl(&d, WIN_WIDTH, WIN_LENGTH);
 	ini_player(&d);
-	d.camera.pos.x = 0;
-	d.camera.pos.y = 0;
-	d.camera.pos.z = -10;
-	d.camera.dir = (t_vec3f){0, 0, 1};
+	d.cam.pos = (t_vec3f){0, 0, -10};
 	for(int i = 0; i < 600; i++)
 		for(int j = 0; j < 800; j++)
 			((uint32_t*)d.main_win.surface->pixels)[i * 800 + j] =

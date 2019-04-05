@@ -6,29 +6,35 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/03 19:42:27 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/05 18:34:52 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-t_vec2f		projection(t_vec3f vec3, t_vec3f dir, t_vec3f pos)
+t_vec3f		get_projected_vertex(t_data *d, t_vec3f v)
 {
-	t_vec2f	result;
-	double	angle;
+	t_vec3f	new;
 
-	vec3 = sub_vec3f(vec3, pos);
-	angle = get_vec2f_angle((t_vec2f){dir.x, dir.z}, (t_vec2f){0, 1});
-	result.x = cos(angle) * vec3.x - sin(angle) * vec3.z;
-	result.y = vec3.y;
-	vec3.z = sin(angle) * vec3.x + cos(angle) * vec3.z;
-	result.x /= vec3.z;
-	result.y /= vec3.z;	
-	result.x = result.x * WIN_WIDTH + WIN_WIDTH / 2;
-	result.y = result.y * -WIN_WIDTH + WIN_LENGTH / 2;
-	return (result);
+	new = sub_vec3f(v, d->cam.pos);
+	new = (t_vec3f){
+		new.x * d->cam.cos_y - new.z * d->cam.sin_y,
+		new.y,
+		new.x * d->cam.sin_y + new.z * d->cam.cos_y
+	};
+	new = (t_vec3f){
+		new.x,
+		new.y * d->cam.cos_x - new.z * d->cam.sin_x,
+		new.y * d->cam.sin_x + new.z * d->cam.cos_x,
+	};
+	new.x /= new.z;
+	new.y /= new.z;
+	new.x = new.x * FOV *  WIN_WIDTH + WIN_WIDTH / 2;
+	new.y = new.y * FOV * -WIN_WIDTH + WIN_LENGTH / 2;
+	return (new);
 }
 
+/*
 double		get_y_start(t_vec2f start, t_vec2f end, short count)
 {
 	double	step;
@@ -39,12 +45,10 @@ double		get_y_start(t_vec2f start, t_vec2f end, short count)
 	//printf("step: %f, delta :%f\n", step, delta);
 	return ((delta / step * (count)) + start.y);
 }
-/*
 short		get_y_end(t_vec2f start, t_vec2f end, short count)
 {
 
 }
-*/
 void		draw_texture_2(t_data *d, t_texture2d text, SDL_Surface surface) //probleme avec la composante verticale de pos (delta.y ?)
 {
 	short		x;
@@ -103,3 +107,4 @@ void		draw_texture(t_data *d, t_texture3d text_3d, SDL_Surface surface)
 //	}
 	draw_texture_2(d, text_2d, surface);
 }
+*/

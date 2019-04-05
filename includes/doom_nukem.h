@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 21:08:51 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/05 17:49:29 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
+#define FOV 1
 /*
 ** projection.c
 */
 
-t_vec2f	projection(t_vec3f vec3, t_vec3f dir, t_vec3f pos);
+t_vec3f	get_projected_vertex(t_data *d, t_vec3f v);
 void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);

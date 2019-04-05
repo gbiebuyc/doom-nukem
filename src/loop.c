@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 18:18:44 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/02 23:53:38 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ static inline void			check_time(suseconds_t *time, t_data *d, suseconds_t *fps_s
 		*fps_sec_count = *fps_sec_count - FRAME + *time;
 		if (*fps_sec_count <= 0)
 		{
+			/*
 			ft_putstr("\r");
 			ft_putstr("fps: ");
 			ft_putnbr(fps_count);
+			*/
 			fps_count = 0;
 			*fps_sec_count = 1000000;
 		}
