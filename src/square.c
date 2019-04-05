@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 16:57:58 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/02 21:12:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/05 18:20:37 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void	square(t_data *d)
 			d->main_win.surface->w * d->main_win.surface->h * 4);
 	while (i < 8)
 	{
-		t_vec2f test;
-		test = projection(cube[i], d->camera.dir, d->camera.pos);
-		putpixel(d, test.x, test.y, 0xffffff);
+		//t_vec2f test;
+		//test = projection(cube[i], d->camera.dir, d->camera.pos);
+		//putpixel(d, test.x, test.y, 0xffffff);
+		t_vec3f new;
+		new = get_projected_vertex(d, cube[i]);
+		putpixel(d, new.x, new.y, 0xffffff);
 		i++;
 	}
+	/*
 	t_texture3d ret;
 	i = 0;
 	while (i < 4)
@@ -49,4 +53,5 @@ void	square(t_data *d)
 		i++;
 	}
 	draw_texture(d, ret, *d->texture[0]);
+	*/
 }

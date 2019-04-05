@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 21:11:03 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:18:51 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ typedef	struct	s_time
 typedef struct	s_cam
 {
 	t_vec3f		pos;
-	t_vec3f		dir;
+	t_vec3f		rot;
+	double		sin_x;
+	double		cos_x;
+	double		sin_y;
+	double		cos_y;
 }				t_cam;
 
 typedef struct	s_data
@@ -97,7 +101,7 @@ typedef struct	s_data
 	t_keystate		keys;
 	t_player		player;
 	SDL_Surface		*texture[4];
-	t_cam			camera;
+	t_cam			cam;
 }				t_data;
 
 typedef struct	s_args
