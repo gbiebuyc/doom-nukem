@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:14:59 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/02 16:08:41 by nallani          ###   ########.fr       */
+/*   Updated: 2019/04/08 03:29:28 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,9 @@ void	actualize_dir(double diff, t_vec2f *dir)
 t_vec3f sub_vec3f(t_vec3f v1, t_vec3f v2)
 {
 	return ((t_vec3f){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z});
+}
+
+t_vec3f mul_vec3f(t_vec3f v1, double scalar)
+{
+	return ((t_vec3f){v1.x * scalar, v1.y * scalar, v1.z * scalar});
 }

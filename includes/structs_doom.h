@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/05 18:35:05 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/07 21:27:39 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,14 @@ typedef struct	s_cam
 	double		cos_y;
 }				t_cam;
 
+typedef struct	s_wall
+{
+	t_vec3f		a;
+	t_vec3f		b;
+	t_vec3f		c;
+	t_vec3f		d;
+}				t_wall;
+
 typedef struct	s_data
 {
 	t_mainWindow	main_win;
@@ -107,6 +115,7 @@ typedef struct	s_data
 	t_player		player;
 	SDL_Surface		*texture[4];
 	t_cam			cam;
+	t_wall			walls[10]; // Will have to be malloc'd
 }				t_data;
 
 typedef struct	s_args

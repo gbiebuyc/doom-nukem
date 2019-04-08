@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/02 17:52:09 by nallani          ###   ########.fr        #
+#    Updated: 2019/04/08 05:32:12 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ FILES= main \
 	   vec2 \
 	   motion_event \
 	   mouse_event \
-	   square \
 	   projection \
+	   draw_wall \
+	   pixel \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events
@@ -59,7 +60,7 @@ fclean:
 re: fclean all
 
 obj/%.o: src/%.c
-	mkdir -p obj
+	@mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 #modifier $(NAME) pour compiler la sdl et etre en accord avec le pdf

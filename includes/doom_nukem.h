@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/05 17:49:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/08 04:31:19 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
+uint32_t	getpixel(SDL_Surface *s, int x, int y);
+void	draw_wall(t_data *d, t_wall wall, t_wall projected);
 /*
 ** exit.c
 */
@@ -83,6 +85,7 @@ void	event_window(t_data *d, SDL_WindowEvent event);
 */
 
 void	ini_player(t_data *d);
+void	init_scene(t_data *d);
 
 /*
 ** refresh.c
@@ -105,6 +108,7 @@ t_vec2f			sub_vec2f(t_vec2f v1, t_vec2f v2);
 t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
 void			actualize_dir(double angle, t_vec2f *vec);
 t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
+t_vec3f 		mul_vec3f(t_vec3f v1, double scalar);
 
 /*
 ** vec2_2.c

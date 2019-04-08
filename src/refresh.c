@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/05 17:39:57 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/08 05:34:50 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,24 @@ void	refresh_game(t_data *d)
 
 void	refresh_img(t_data *d)
 {	
-	//	main_raycast_multithread(d, 0, 0);
-	square(d);
+	ft_memset(d->main_win.surface->pixels, 0,
+			d->main_win.surface->w * d->main_win.surface->h * 4);
+	int i = 0;
+	while (i < 4)
+	{
+		t_wall new;
+		new = (t_wall){
+			get_projected_vertex(d, d->walls[i].a),
+			get_projected_vertex(d, d->walls[i].b),
+			get_projected_vertex(d, d->walls[i].c),
+			get_projected_vertex(d, d->walls[i].d)
+		};
+		putpixel(d, new.a.x, new.a.y, 0xffffff);
+		putpixel(d, new.b.x, new.b.y, 0xffffff);
+		putpixel(d, new.c.x, new.c.y, 0xffffff);
+		putpixel(d, new.d.x, new.d.y, 0xffffff);
+		draw_wall(d, d->walls[i], new);
+		i++;
+	}
 	SDL_UpdateWindowSurface(d->main_win.win);
 }
