@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 23:47:23 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/07 23:48:34 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:29:59 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ uint32_t	getpixel(SDL_Surface *s, int x, int y)
 uint32_t	getpixel2(SDL_Surface *s, int x, int y)
 {
 	return (((uint32_t*)s->pixels)[(int)x % s->w  + (int)y % s->h * s->w]);
+}
+
+uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b)
+{
+	return (SDL_MapRGBA(surface->format, r, g, b, 255));
 }

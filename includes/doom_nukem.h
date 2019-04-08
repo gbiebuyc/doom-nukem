@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/08 04:31:19 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:54:50 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 void	square(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, int x, int y);
-void	draw_wall(t_data *d, t_wall wall, t_wall projected);
+uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
+void	draw_wall(t_data *d, t_wall wall);
 /*
 ** exit.c
 */

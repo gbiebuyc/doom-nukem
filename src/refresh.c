@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/08 05:34:50 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:55:29 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	refresh_img(t_data *d)
 		putpixel(d, new.b.x, new.b.y, 0xffffff);
 		putpixel(d, new.c.x, new.c.y, 0xffffff);
 		putpixel(d, new.d.x, new.d.y, 0xffffff);
-		draw_wall(d, d->walls[i], new);
+		draw_wall(d, new);
 		i++;
 	}
 	SDL_UpdateWindowSurface(d->main_win.win);
