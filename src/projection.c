@@ -6,32 +6,36 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/05 18:34:52 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/13 15:35:57 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-t_vec3f		get_projected_vertex(t_data *d, t_vec3f v)
+void	apply_transform(t_data *d, t_vec3f *v)
 {
 	t_vec3f	new;
 
-	new = sub_vec3f(v, d->cam.pos);
+	new = sub_vec3f(*v, d->cam.pos);
 	new = (t_vec3f){
 		new.x * d->cam.cos_y - new.z * d->cam.sin_y,
 		new.y,
 		new.x * d->cam.sin_y + new.z * d->cam.cos_y
 	};
-	new = (t_vec3f){
-		new.x,
-		new.y * d->cam.cos_x - new.z * d->cam.sin_x,
-		new.y * d->cam.sin_x + new.z * d->cam.cos_x,
-	};
-	new.x /= new.z;
-	new.y /= new.z;
-	new.x = new.x * FOV *  WIN_WIDTH + WIN_WIDTH / 2;
-	new.y = new.y * FOV * -WIN_WIDTH + WIN_LENGTH / 2;
-	return (new);
+	*v = new;
+}
+
+void	apply_perspective(t_data *d, t_vec3f *v)
+{
+	t_vec3f	new;
+
+	(void)d;
+	new = *v;
+	new.x /= new.z * FOV;
+	new.y /= new.z * FOV;
+	new.x = new.x *  WIN_WIDTH + WIN_WIDTH / 2;
+	new.y = new.y * -WIN_WIDTH + WIN_LENGTH / 2;
+	*v = new;
 }
 
 /*

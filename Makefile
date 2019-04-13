@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/08 05:32:12 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/13 15:34:15 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ FILES= main \
 	   loop \
 	   key_event \
 	   window_event \
-	   ini \
 	   refresh \
 	   vec2 \
 	   motion_event \
@@ -26,6 +25,7 @@ FILES= main \
 	   projection \
 	   draw_wall \
 	   pixel \
+	   read_map \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events
@@ -41,12 +41,15 @@ INCLUDE = -I./includes
 CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
 LDFLAGS = -lm -L $(FT_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
 
-all: $(NAME)
+all: $(NAME) editor
 
 #rajouter compilation de libft / autres libs (sdl ?)
 $(NAME):$(OBJ)
 	make -C libft
 	gcc -o $@ $(OBJ) $(LDFLAGS)
+
+editor: obj/editor.o
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
 	make -C $(FT_DIR) clean

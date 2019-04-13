@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/08 19:55:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/13 15:32:36 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,45 @@ void	refresh_game(t_data *d)
 		d->cam.pos.y -= MOVE_SPEED;
 }
 
+#define DIST_FROM_CAMERA 1
+
 void	refresh_img(t_data *d)
 {	
 	ft_memset(d->main_win.surface->pixels, 0,
 			d->main_win.surface->w * d->main_win.surface->h * 4);
-	int i = 0;
-	while (i < 4)
+	t_sector sector = d->sectors[0];
+	for (int i = 0; i < sector.numwalls; i++)
 	{
-		t_wall new;
-		new = (t_wall){
-			get_projected_vertex(d, d->walls[i].a),
-			get_projected_vertex(d, d->walls[i].b),
-			get_projected_vertex(d, d->walls[i].c),
-			get_projected_vertex(d, d->walls[i].d)
-		};
-		putpixel(d, new.a.x, new.a.y, 0xffffff);
-		putpixel(d, new.b.x, new.b.y, 0xffffff);
-		putpixel(d, new.c.x, new.c.y, 0xffffff);
-		putpixel(d, new.d.x, new.d.y, 0xffffff);
-		draw_wall(d, new);
-		i++;
+		int wallnum = sector.headwall + i;
+		int wallnextnum = sector.headwall + (i + 1) % sector.numwalls;
+		t_vec3f left = vec2f_to_vec3f(d->walls[wallnum].point);
+		t_vec3f right = vec2f_to_vec3f(d->walls[wallnextnum].point);
+		apply_transform(d, &left);
+		apply_transform(d, &right);
+		// Clipping
+		if (left.z <= DIST_FROM_CAMERA && right.z <= DIST_FROM_CAMERA)
+			continue ;
+		if (left.z <= DIST_FROM_CAMERA || right.z <= DIST_FROM_CAMERA)
+		{
+			double shortened = (DIST_FROM_CAMERA - left.z) / (right.z - left.z);
+			if (left.z < DIST_FROM_CAMERA)
+			{
+				left = (t_vec3f){
+					left.x + (right.x - left.x) * shortened,
+						left.y + (right.y - left.y) * shortened,
+						DIST_FROM_CAMERA};
+			}
+			else
+			{
+				right = (t_vec3f){
+					left.x + (right.x - left.x) * shortened,
+						left.y + (right.y - left.y) * shortened,
+						DIST_FROM_CAMERA};
+			}
+		}
+		draw_wall(d, left, right,
+				(uint32_t[]){0xf4f442, 0xf44141,
+				0x4164f4, 0x64f441}[d->walls[wallnum].middlepicnum]);
 	}
 	SDL_UpdateWindowSurface(d->main_win.win);
 }

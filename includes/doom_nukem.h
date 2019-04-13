@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/08 19:54:50 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/13 15:37:33 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <string.h>
 #include <errno.h>
 #include <pthread.h>
+#include <fcntl.h>
 
 #define WIN_WIDTH 800
 #define WIN_LENGTH 600
@@ -29,14 +30,16 @@
 ** projection.c
 */
 
-t_vec3f	get_projected_vertex(t_data *d, t_vec3f v);
+void	apply_transform(t_data *d, t_vec3f *v);
+void	apply_perspective(t_data *d, t_vec3f *v);
 void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, int x, int y);
 uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
-void	draw_wall(t_data *d, t_wall wall);
+void	draw_wall(t_data *d, t_vec3f left, t_vec3f right, uint32_t color);
+void	read_map(t_data *d);
 /*
 ** exit.c
 */
@@ -110,6 +113,7 @@ t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
 void			actualize_dir(double angle, t_vec2f *vec);
 t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
 t_vec3f 		mul_vec3f(t_vec3f v1, double scalar);
+t_vec3f			vec2f_to_vec3f(t_vec2f v);
 
 /*
 ** vec2_2.c

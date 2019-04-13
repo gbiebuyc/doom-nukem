@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/07 21:27:39 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:29:40 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,34 @@ typedef struct	s_cam
 	double		cos_y;
 }				t_cam;
 
+typedef struct	s_sector
+{
+	int16_t		headwall;
+	int16_t		numwalls;
+	float		floorheight;
+	float		ceilheight;
+	int16_t		floorpicnum;
+	int16_t		ceilpicnum;
+	uint8_t		light;
+}				t_sector;
+
 typedef struct	s_wall
 {
-	t_vec3f		a;
-	t_vec3f		b;
-	t_vec3f		c;
-	t_vec3f		d;
+	t_vec2f		point;
+	int16_t		upperpicnum;
+	int16_t		middlepicnum;
+	int16_t		lowerpicnum;
+	int16_t		flags;
+
 }				t_wall;
+
+typedef struct	s_thing
+{
+	t_vec2f		pos;
+	float		angle;
+	int16_t		picnum;
+	int16_t		flags;
+}				t_thing;
 
 typedef struct	s_data
 {
@@ -115,7 +136,10 @@ typedef struct	s_data
 	t_player		player;
 	SDL_Surface		*texture[4];
 	t_cam			cam;
-	t_wall			walls[10]; // Will have to be malloc'd
+	t_sector		sectors[1024];
+	t_wall			walls[8192];
+	int16_t			numsectors;
+	int16_t			numwalls;
 }				t_data;
 
 typedef struct	s_args
