@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/13 16:03:08 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/15 05:04:04 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		main(int argc, char **argv, char **envp)
 	SDL_Window *win = SDL_CreateWindow("editor", SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, EDITOR_W, EDITOR_H, 0);
 	SDL_Surface *surface = SDL_GetWindowSurface(win);
+	ft_memset(surface->pixels, 0, EDITOR_W * EDITOR_H * 4);
 	for (int i = 0; i < numwalls; i++)
 	{
 		t_vec2f p = walls[i].point;
@@ -68,16 +69,15 @@ int		main(int argc, char **argv, char **envp)
 	}
 	SDL_UpdateWindowSurface(win);
 	SDL_Event e;
-	while (1)
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT)
-				goto exit;
-			else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_q)
-				goto exit;
-			else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_r)
-				run_game(envp);
-		}
+	while (SDL_WaitEvent(&e))
+	{
+		if (e.type == SDL_QUIT)
+			goto exit;
+		else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+			goto exit;
+		else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_r)
+			run_game(envp);
+	}
 exit:
 	SDL_DestroyWindow(win);
 	SDL_Quit();
@@ -94,5 +94,10 @@ void	run_game(char **envp)
 		execve(argv[0], argv, envp);
 	}
 	else
+	{
 		waitpid(pid, 0, 0);
+		// Ignore esc keypress from closing the game
+		SDL_Delay(300);
+		SDL_FlushEvent(SDL_KEYDOWN);
+	}
 }

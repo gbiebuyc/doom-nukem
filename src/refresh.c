@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/13 15:32:36 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/15 05:07:34 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	refresh_img(t_data *d)
 	t_sector sector = d->sectors[0];
 	for (int i = 0; i < sector.numwalls; i++)
 	{
-		int wallnum = sector.headwall + i;
-		int wallnextnum = sector.headwall + (i + 1) % sector.numwalls;
+		int wallnum = sector.firstwallnum + i;
+		int wallnextnum = sector.firstwallnum + (i + 1) % sector.numwalls;
 		t_vec3f left = vec2f_to_vec3f(d->walls[wallnum].point);
 		t_vec3f right = vec2f_to_vec3f(d->walls[wallnextnum].point);
 		apply_transform(d, &left);

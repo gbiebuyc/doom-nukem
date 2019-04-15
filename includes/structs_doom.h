@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/13 04:29:40 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/15 05:05:58 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct	s_cam
 
 typedef struct	s_sector
 {
-	int16_t		headwall;
+	int16_t		firstwallnum;
 	int16_t		numwalls;
 	float		floorheight;
 	float		ceilheight;

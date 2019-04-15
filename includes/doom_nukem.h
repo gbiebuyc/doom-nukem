@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/13 15:37:33 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/15 05:29:48 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, int x, int y);
 uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
 void	draw_wall(t_data *d, t_vec3f left, t_vec3f right, uint32_t color);
-void	read_map(t_data *d);
+void	load_map(t_data *d);
 /*
 ** exit.c
 */
