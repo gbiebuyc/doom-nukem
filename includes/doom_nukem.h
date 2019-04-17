@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/15 05:29:48 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/17 03:52:19 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@
 */
 
 void	apply_transform(t_data *d, t_vec3f *v);
-void	apply_perspective(t_data *d, t_vec3f *v);
+t_vec3f	apply_perspective(t_vec3f v);
 void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
-uint32_t	getpixel(SDL_Surface *s, int x, int y);
+uint32_t	getpixel(SDL_Surface *s, double x, double y);
+uint32_t	getpixel2(SDL_Surface *s, double x, double y);
 uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
-void	draw_wall(t_data *d, t_vec3f left, t_vec3f right, uint32_t color);
+void	draw_wall(t_data *d, t_wall_clipped wall);
 void	load_map(t_data *d);
 /*
 ** exit.c

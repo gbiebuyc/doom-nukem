@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/15 05:05:58 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/17 02:02:49 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,22 @@ typedef struct	s_wall
 	int16_t		flags;
 
 }				t_wall;
+
+typedef struct	s_wall_clipped
+{
+	t_vec3f		left;
+	t_vec3f		right;
+	t_vec3f		left2;
+	t_vec3f		right2;
+	double		left_tex_x;
+	double		right_tex_x;
+	//int16_t		sectornum;
+	int16_t		upperpicnum;
+	int16_t		middlepicnum;
+	int16_t		lowerpicnum;
+	int16_t		flags;
+
+}				t_wall_clipped;
 
 typedef struct	s_thing
 {

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/13 15:35:57 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/17 02:14:42 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,16 @@ void	apply_transform(t_data *d, t_vec3f *v)
 	*v = new;
 }
 
-void	apply_perspective(t_data *d, t_vec3f *v)
+t_vec3f	apply_perspective(t_vec3f v)
 {
 	t_vec3f	new;
 
-	(void)d;
-	new = *v;
+	new = v;
 	new.x /= new.z * FOV;
 	new.y /= new.z * FOV;
 	new.x = new.x *  WIN_WIDTH + WIN_WIDTH / 2;
 	new.y = new.y * -WIN_WIDTH + WIN_LENGTH / 2;
-	*v = new;
+	return (new);
 }
 
 /*
