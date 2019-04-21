@@ -3,23 +3,19 @@
 #                                                         :::      ::::::::    #
 #    .gitignore                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/23 22:40:59 by nallani           #+#    #+#              #
-#    Updated: 2019/04/13 16:06:03 by gbiebuyc         ###   ########.fr        #
+#    Created: 2019/01/18 22:07:23 by gbiebuyc          #+#    #+#              #
+#    Updated: 2019/04/22 05:58:03 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# exec
 /doom-nukem
 /editor
-
-# libs
 /SDL
-/libft
 
-# created by https://www.gitignore.io/api/c,vim,macos,linux
-# Edit at https://www.gitignore.io/?templates=c,vim,macos,linux
+# Created by https://www.gitignore.io/api/c,vim,linux,macos
+# Edit at https://www.gitignore.io/?templates=c,vim,linux,macos
 
 ### C ###
 # Prerequisites
@@ -28,6 +24,7 @@
 # Object files
 *.o
 *.ko
+*.obj
 *.elf
 
 # Linker output
@@ -135,4 +132,4 @@ tags
 # Persistent undo
 [._]*.un~
 
-# End of https://www.gitignore.io/api/c,vim,macos,linux
+# End of https://www.gitignore.io/api/c,vim,linux,macos

@@ -6,13 +6,13 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 18:41:08 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/01/18 23:25:15 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:56:09 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-intmax_t	ft_abs(intmax_t n)
+int	ft_abs(int n)
 {
 	return ((n < 0) ? -n : n);
 }

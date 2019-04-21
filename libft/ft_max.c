@@ -6,13 +6,13 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 18:40:28 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/01/18 23:25:17 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:56:19 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-intmax_t	ft_max(intmax_t a, intmax_t b)
+int	ft_max(int a, int b)
 {
 	return ((a > b) ? a : b);
 }

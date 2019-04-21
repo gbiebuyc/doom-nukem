@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 16:11:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/02/07 21:10:42 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:57:25 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ char			**dupstrarr(char **arr1);
 int				get_next_line(const int fd, char **line);
 double			ft_atof(const char *s);
 char			*ft_itoa_static(intmax_t n);
-intmax_t		ft_min(intmax_t a, intmax_t b);
-intmax_t		ft_max(intmax_t a, intmax_t b);
-intmax_t		ft_abs(intmax_t n);
+int				ft_min(int a, int b);
+int				ft_max(int a, int b);
+int				ft_abs(int n);
 uintmax_t		ft_pow(unsigned int x, unsigned int y);
 
 #endif
