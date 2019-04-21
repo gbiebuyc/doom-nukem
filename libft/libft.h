@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 16:11:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/21 23:57:25 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 00:17:01 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ int				ft_min(int a, int b);
 int				ft_max(int a, int b);
 int				ft_abs(int n);
 uintmax_t		ft_pow(unsigned int x, unsigned int y);
+int				ft_clamp(int x, int min, int max);
+double			ft_fclamp(double x, double min, double max);
 
 #endif

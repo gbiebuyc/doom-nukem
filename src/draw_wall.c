@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 19:38:27 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/21 23:41:36 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 06:06:54 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	draw_wall(t_data *d, t_wall_clipped wall)
 	{
 		// perspective correct interpolation of u texture coordinate
 		double w = (x - wall.left.x) / (wall.right.x - wall.left.x);
+		w = ft_fclamp(w, 0, 1);
 		double u = wall.left_u * (1 - w) + wall.right_u * w;
 		double z = 1 / (wall.left.z * (1 - w) + wall.right.z * w);
 		u *= z;
@@ -65,7 +66,7 @@ void	draw_floor(t_data *d, t_wall_clipped wall)
 		double left_v = d->cam.pos.z + distance * sin(angle) - line_dv / 2;
 		double right_v = left_v + line_dv;
 
-		w = fmax(0, fmin(1, (double)(y - y_start) / (slope_end - y_start)));
+		w = ft_fclamp((double)(y - y_start) / (slope_end - y_start), 0, 1);
 		int x_start = x1 * (1 - w) + wall.left2.x * w;
 		int x_end = x1 * (1 - w) + wall.right2.x * w;
 		for (int x = ft_max(0, x_start); x <= ft_min(WIDTH, x_end); x++)

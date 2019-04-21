@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/03 15:37:26 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/02/07 21:10:53 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/22 00:13:29 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,9 @@ SRC = ft_atoi.c \
 	  ft_min.c \
 	  ft_max.c \
 	  ft_abs.c \
-	  ft_pow.c
+	  ft_pow.c \
+	  ft_clamp.c \
+	  ft_fclamp.c
 
 OBJ = $(SRC:.c=.o)
 NAME = libft.a
