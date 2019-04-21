@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:02:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/20 06:00:12 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:39:49 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	apply_transform(t_data *d, t_vec3f *v)
 
 	new = sub_vec3f(*v, d->cam.pos);
 	new = (t_vec3f){
-		new.x * d->cam.cos_y - new.z * d->cam.sin_y,
+		new.x * d->cam.cos - new.z * d->cam.sin,
 		new.y,
-		new.x * d->cam.sin_y + new.z * d->cam.cos_y
+		new.x * d->cam.sin + new.z * d->cam.cos
 	};
 	*v = new;
 }
 
-t_vec3f	apply_perspective(t_vec3f v)
+t_vec3f	apply_perspective(t_data *d, t_vec3f v)
 {
 	t_vec3f	new;
 
@@ -34,6 +34,7 @@ t_vec3f	apply_perspective(t_vec3f v)
 	new.y /= new.z * FOV;
 	new.x = new.x *  WIDTH + WIDTH / 2;
 	new.y = new.y * -WIDTH + HEIGHT / 2;
+	new.y -= d->cam.y_offset;
 	return (new);
 }
 

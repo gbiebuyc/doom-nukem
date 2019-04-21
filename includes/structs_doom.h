@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 04:03:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:38:48 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,10 @@ typedef	struct	s_time
 typedef struct	s_cam
 {
 	t_vec3f		pos;
-	t_vec3f		rot;
-	double		sin_x;
-	double		cos_x;
-	double		sin_y;
-	double		cos_y;
+	double		rot;
+	double		sin;
+	double		cos;
+	double		y_offset;
 }				t_cam;
 
 typedef struct	s_sector

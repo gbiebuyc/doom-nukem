@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/20 05:59:22 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:17:57 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 */
 
 void	apply_transform(t_data *d, t_vec3f *v);
-t_vec3f	apply_perspective(t_vec3f v);
+t_vec3f	apply_perspective(t_data *d, t_vec3f v);
 void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
 void	square(t_data *d);

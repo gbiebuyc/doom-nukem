@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 02:44:59 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:41:13 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,30 @@
 void	refresh_game(t_data *d)
 {
 	if (d->keys.hor_turn == LEFT_TURN)
-		d->cam.rot.y -= TURN_SPEED;
+		d->cam.rot -= TURN_SPEED;
 	if (d->keys.hor_turn == RIGHT_TURN)
-		d->cam.rot.y += TURN_SPEED;
-	d->cam.sin_x = sin(d->cam.rot.x);
-	d->cam.cos_x = cos(d->cam.rot.x);
-	d->cam.sin_y = sin(d->cam.rot.y);
-	d->cam.cos_y = cos(d->cam.rot.y);
+		d->cam.rot += TURN_SPEED;
+	d->cam.sin = sin(d->cam.rot);
+	d->cam.cos = cos(d->cam.rot);
 	if (d->keys.dir == FORWARD)
 	{
-		d->cam.pos.z += d->cam.cos_y * MOVE_SPEED;
-		d->cam.pos.x += d->cam.sin_y * MOVE_SPEED;
+		d->cam.pos.z += d->cam.cos * MOVE_SPEED;
+		d->cam.pos.x += d->cam.sin * MOVE_SPEED;
 	}
 	if (d->keys.dir == BACKWARD)
 	{
-		d->cam.pos.z -= d->cam.cos_y * MOVE_SPEED;
-		d->cam.pos.x -= d->cam.sin_y * MOVE_SPEED;
+		d->cam.pos.z -= d->cam.cos * MOVE_SPEED;
+		d->cam.pos.x -= d->cam.sin * MOVE_SPEED;
 	}
 	if (d->keys.strafe_dir == LEFT_STRAFE)
 	{
-		d->cam.pos.z += d->cam.sin_y * MOVE_SPEED;
-		d->cam.pos.x -= d->cam.cos_y * MOVE_SPEED;
+		d->cam.pos.z += d->cam.sin * MOVE_SPEED;
+		d->cam.pos.x -= d->cam.cos * MOVE_SPEED;
 	}
 	if (d->keys.strafe_dir == RIGHT_STRAFE)
 	{
-		d->cam.pos.z -= d->cam.sin_y * MOVE_SPEED;
-		d->cam.pos.x += d->cam.cos_y * MOVE_SPEED;
+		d->cam.pos.z -= d->cam.sin * MOVE_SPEED;
+		d->cam.pos.x += d->cam.cos * MOVE_SPEED;
 	}
 	if (d->keys.ver_dir == UP_FLY)
 		d->cam.pos.y += MOVE_SPEED;
@@ -89,13 +87,13 @@ void	refresh_img(t_data *d)
 			right.z = DIST_FROM_CAMERA;
 		}
 		t_wall_clipped wall_clipped = (t_wall_clipped){
-				apply_perspective((t_vec3f){left.x,
+				apply_perspective(d, (t_vec3f){left.x,
 						left.y + sector.ceilheight, left.z}),
-				apply_perspective((t_vec3f){right.x,
+				apply_perspective(d, (t_vec3f){right.x,
 						right.y + sector.ceilheight, right.z}),
-				apply_perspective((t_vec3f){left.x,
+				apply_perspective(d, (t_vec3f){left.x,
 						left.y + sector.floorheight, left.z}),
-				apply_perspective((t_vec3f){right.x,
+				apply_perspective(d, (t_vec3f){right.x,
 						right.y + sector.floorheight, right.z}),
 				left_clip * scale_x, right_clip * scale_x,
 				d->walls[wallnum].upperpicnum, d->walls[wallnum].middlepicnum,

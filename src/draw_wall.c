@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 19:38:27 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/21 05:23:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 23:41:36 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	draw_floor(t_data *d, t_wall_clipped wall)
 	if (altitude <= 0)
 		return ;
 	altitude *= 2.7;
-	double angle = -d->cam.rot.y + M_PI_2;
+	double angle = -d->cam.rot + M_PI_2;
 	for (int y = y_start; y < HEIGHT; y++)
 	{
-		w = (double)(y - HEIGHT / 2) / (HEIGHT / 2);
+		w = (double)(y - HEIGHT / 2 + d->cam.y_offset) / (HEIGHT / 2);
 		double distance = altitude / w;
 		double line_du = sin(angle) * distance;
 		double line_dv = -cos(angle) * distance;
