@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/17 03:52:19 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/20 05:59:22 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <pthread.h>
 #include <fcntl.h>
 
-#define WIN_WIDTH 800
-#define WIN_LENGTH 600
+#define WIDTH 800
+#define HEIGHT 600
 #define FOV 1
 /*
 ** projection.c
@@ -40,6 +40,7 @@ uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);
 uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
 void	draw_wall(t_data *d, t_wall_clipped wall);
+void	draw_floor(t_data *d, t_wall_clipped wall);
 void	load_map(t_data *d);
 /*
 ** exit.c

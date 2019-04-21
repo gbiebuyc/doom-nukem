@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/15 05:04:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 02:48:14 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int		main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	sectors[0] = (t_sector){0, 4, 0, 2, 0, 0, 255};
+	sectors[0] = (t_sector){0, 4, 0, 2, 2, 0, 255};
 	walls[0] = (t_wall){(t_vec2f){-5, 5}, 0, 0, 0, 0};
-	walls[1] = (t_wall){(t_vec2f){ 5, 5}, 0, 1, 0, 0};
+	walls[1] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0};
 	walls[2] = (t_wall){(t_vec2f){ 5,-5}, 0, 2, 0, 0};
 	walls[3] = (t_wall){(t_vec2f){-5,-5}, 0, 3, 0, 0};
 	int16_t numsectors = 1;
@@ -64,7 +64,7 @@ int		main(int argc, char **argv, char **envp)
 	{
 		t_vec2f p = walls[i].point;
 		p.x = p.x * 5 + EDITOR_W / 2;
-		p.y = p.y * 5 + EDITOR_H / 2;
+		p.y = -p.y * 5 + EDITOR_H / 2;
 		((uint32_t*)surface->pixels)[(int)p.x + (int)p.y * EDITOR_W] = 0xffffff;
 	}
 	SDL_UpdateWindowSurface(win);

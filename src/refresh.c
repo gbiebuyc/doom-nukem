@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/17 04:52:21 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 02:44:59 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	refresh_img(t_data *d)
 			right.x = left.x + (right.x - left.x) * right_clip;
 			right.z = DIST_FROM_CAMERA;
 		}
-		draw_wall(d, (t_wall_clipped){
+		t_wall_clipped wall_clipped = (t_wall_clipped){
 				apply_perspective((t_vec3f){left.x,
 						left.y + sector.ceilheight, left.z}),
 				apply_perspective((t_vec3f){right.x,
@@ -99,8 +99,10 @@ void	refresh_img(t_data *d)
 						right.y + sector.floorheight, right.z}),
 				left_clip * scale_x, right_clip * scale_x,
 				d->walls[wallnum].upperpicnum, d->walls[wallnum].middlepicnum,
-				d->walls[wallnum].lowerpicnum, d->walls[wallnum].flags
-				});
+				d->walls[wallnum].lowerpicnum, d->walls[wallnum].flags, sector
+		};
+		draw_wall(d, wall_clipped);
+		draw_floor(d, wall_clipped);
 	}
 	SDL_UpdateWindowSurface(d->main_win.win);
 }

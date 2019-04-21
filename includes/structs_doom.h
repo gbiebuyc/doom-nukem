@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 04:01:56 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/21 04:03:28 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct	s_wall_clipped
 	int16_t		middlepicnum;
 	int16_t		lowerpicnum;
 	int16_t		flags;
+	t_sector	sector;
 
 }				t_wall_clipped;
 
