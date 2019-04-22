@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/15 05:30:12 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/22 04:57:31 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ FILES= main \
 	   draw_wall \
 	   pixel \
 	   load_map \
+	   inside \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events

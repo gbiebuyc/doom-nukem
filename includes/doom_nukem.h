@@ -6,14 +6,13 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 23:17:57 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 05:33:54 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 #define DOOM_NUKEM_H
 
-#include "structs_doom.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "../libft/libft.h"
@@ -26,6 +25,10 @@
 #define WIDTH 800
 #define HEIGHT 600
 #define FOV 1
+#define MAXNUMSECTORS 1024
+#define MAXNUMWALLS 8192
+#include <structs_doom.h>
+
 /*
 ** projection.c
 */
@@ -42,6 +45,8 @@ uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
 void	draw_wall(t_data *d, t_wall_clipped wall);
 void	draw_floor(t_data *d, t_wall_clipped wall);
 void	load_map(t_data *d);
+bool	inside(t_data *d, int16_t sectnum);
+
 /*
 ** exit.c
 */

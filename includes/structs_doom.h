@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 23:38:48 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 05:35:13 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct	s_wall
 	int16_t		middlepicnum;
 	int16_t		lowerpicnum;
 	int16_t		flags;
-
+	int16_t		neighborsect;
 }				t_wall;
 
 typedef struct	s_wall_clipped
@@ -131,7 +131,6 @@ typedef struct	s_wall_clipped
 	int16_t		lowerpicnum;
 	int16_t		flags;
 	t_sector	sector;
-
 }				t_wall_clipped;
 
 typedef struct	s_thing
@@ -151,10 +150,11 @@ typedef struct	s_data
 	t_player		player;
 	SDL_Surface		*texture[4];
 	t_cam			cam;
-	t_sector		sectors[1024];
-	t_wall			walls[8192];
+	t_sector		sectors[MAXNUMSECTORS];
+	t_wall			walls[MAXNUMWALLS];
 	int16_t			numsectors;
 	int16_t			numwalls;
+	int16_t			cursectnum;
 }				t_data;
 
 typedef struct	s_args

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/21 02:48:14 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 04:33:02 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,28 @@ void	run_game(char **envp);
 int		main(int argc, char **argv, char **envp)
 {
 	int f;
-	t_sector	sectors[1024];
-	t_wall		walls[8192];
+	t_sector	sectors[MAXNUMSECTORS];
+	t_wall		walls[MAXNUMWALLS];
 
 	(void)argc;
 	(void)argv;
 	sectors[0] = (t_sector){0, 4, 0, 2, 2, 0, 255};
-	walls[0] = (t_wall){(t_vec2f){-5, 5}, 0, 0, 0, 0};
-	walls[1] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0};
-	walls[2] = (t_wall){(t_vec2f){ 5,-5}, 0, 2, 0, 0};
-	walls[3] = (t_wall){(t_vec2f){-5,-5}, 0, 3, 0, 0};
-	int16_t numsectors = 1;
-	int16_t numwalls = 4;
+	walls[0] = (t_wall){(t_vec2f){-5, 5}, 0, 0, 0, 0, -1};
+	walls[1] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0, 1};
+	walls[2] = (t_wall){(t_vec2f){ 5,-5}, 0, 2, 0, 0, -1};
+	walls[3] = (t_wall){(t_vec2f){-5,-5}, 0, 3, 0, 0, -1};
+
+	sectors[1] = (t_sector){4, 4, 0, 2, 3, 0, 255};
+	walls[4] = (t_wall){(t_vec2f){ 5,-5}, 0, 0, 0, 0, 0};
+	walls[5] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0, -1};
+	walls[6] = (t_wall){(t_vec2f){ 20,-15}, 0, 2, 0, 0, -1};
+	walls[7] = (t_wall){(t_vec2f){ 5,-15}, 0, 3, 0, 0, -1};
+
+	int16_t numsectors = 2;
+	int16_t numwalls = 8;
 	t_vec3f startpos = {0, 1, 0};
 	double angle = 0;
+	int16_t startsectnum = 0;
 
 	if (
 			((f = open("map01", O_WRONLY | O_CREAT, 0666)) == -1) ||
@@ -43,6 +51,7 @@ int		main(int argc, char **argv, char **envp)
 			// Write starting position
 			write(f, &startpos, sizeof(startpos)) < 0 ||
 			write(f, &angle, sizeof(angle)) < 0 ||
+			write(f, &startsectnum, sizeof(startsectnum)) < 0 ||
 
 			// Write all sectors
 			write(f, &numsectors, sizeof(numsectors)) < 0 ||

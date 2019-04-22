@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 02:56:31 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/21 23:42:30 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 02:19:39 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	load_map(t_data *d)
 			// Load starting position
 			read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
 			read(f, &d->cam.rot, sizeof(double)) == -1 ||
+			read(f, &d->cursectnum, sizeof(int16_t)) == -1 ||
 
 			// Load all sectors
 			read(f, &d->numsectors, sizeof(int16_t)) == -1 ||

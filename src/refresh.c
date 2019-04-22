@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/21 23:41:13 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:48:24 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ void	refresh_game(t_data *d)
 		d->cam.pos.y += MOVE_SPEED;
 	if (d->keys.ver_dir == DOWN_FLY)
 		d->cam.pos.y -= MOVE_SPEED;
+
+	// Update current sector
+	t_sector sect = d->sectors[d->cursectnum];
+	for (int i = 0; i < sect.numwalls; i++)
+	{
+		int16_t neighborsect = d->walls[sect.firstwallnum + i].neighborsect;
+		if (neighborsect != -1 && inside(d, neighborsect))
+		{
+			d->cursectnum = neighborsect;
+			printf("You are now inside sector %d\n", neighborsect);
+			break ;
+		}
+	}
 }
 
 #define DIST_FROM_CAMERA 1.0
@@ -59,7 +72,7 @@ void	refresh_img(t_data *d)
 
 	ft_memset(d->main_win.surface->pixels, 0,
 			d->main_win.surface->w * d->main_win.surface->h * 4);
-	t_sector sector = d->sectors[0];
+	t_sector sector = d->sectors[d->cursectnum];
 	for (int i = 0; i < sector.numwalls; i++)
 	{
 		int wallnum = sector.firstwallnum + i;
