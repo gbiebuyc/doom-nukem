@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/22 19:48:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:28:41 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,12 @@ void	refresh_game(t_data *d)
 	}
 }
 
-#define DIST_FROM_CAMERA 1.0
-
 void	refresh_img(t_data *d)
 {
-	double	left_clip;
-	double	right_clip;
-	double	scale_x;
+	double	left_u;
+	double	right_u;
+	double	len;
+	double	len2;
 
 	ft_memset(d->main_win.surface->pixels, 0,
 			d->main_win.surface->w * d->main_win.surface->h * 4);
@@ -77,27 +76,28 @@ void	refresh_img(t_data *d)
 	{
 		int wallnum = sector.firstwallnum + i;
 		int wallnextnum = sector.firstwallnum + (i + 1) % sector.numwalls;
-		t_vec3f left = vec2f_to_vec3f(d->walls[wallnum].point);
-		t_vec3f right = vec2f_to_vec3f(d->walls[wallnextnum].point);
+		t_vec3f left = vec2to3(d->walls[wallnum].point);
+		t_vec3f right = vec2to3(d->walls[wallnextnum].point);
 		apply_transform(d, &left);
 		apply_transform(d, &right);
-		if (left.z <= DIST_FROM_CAMERA && right.z <= DIST_FROM_CAMERA)
+		if (left.z <= 0 && right.z <= 0)
 			continue ;
-		scale_x = vec2f_length((t_vec2f){right.x - left.x, right.z - left.z}) /
-			(sector.ceilheight - sector.floorheight);
-		left_clip = 0;
-		right_clip = 1;
-		if (left.z <= DIST_FROM_CAMERA)
+		len = vec2f_length((t_vec2f){right.x - left.x, right.z - left.z});
+		left_u = 0;
+		right_u = 1;
+		if (left.z <= 0)
 		{
-			left_clip = (DIST_FROM_CAMERA - left.z) / (right.z - left.z);
-			left.x = left.x + (right.x - left.x) * left_clip;
-			left.z = DIST_FROM_CAMERA;
+			if (!clip_wall(&left, right))
+				continue ;
+			len2 = vec2f_length((t_vec2f){right.x - left.x, right.z - left.z});
+			left_u = 1.0 - len2 / len;
 		}
-		if (right.z <= DIST_FROM_CAMERA)
+		if (right.z <= 0)
 		{
-			right_clip = (left.z - DIST_FROM_CAMERA) / (left.z - right.z);
-			right.x = left.x + (right.x - left.x) * right_clip;
-			right.z = DIST_FROM_CAMERA;
+			if (!clip_wall(&right, left))
+				continue ;
+			len2 = vec2f_length((t_vec2f){right.x - left.x, right.z - left.z});
+			right_u = len2 / len;
 		}
 		t_wall_clipped wall_clipped = (t_wall_clipped){
 				apply_perspective(d, (t_vec3f){left.x,
@@ -108,9 +108,10 @@ void	refresh_img(t_data *d)
 						left.y + sector.floorheight, left.z}),
 				apply_perspective(d, (t_vec3f){right.x,
 						right.y + sector.floorheight, right.z}),
-				left_clip * scale_x, right_clip * scale_x,
+				left_u * len, right_u * len,
 				d->walls[wallnum].upperpicnum, d->walls[wallnum].middlepicnum,
-				d->walls[wallnum].lowerpicnum, d->walls[wallnum].flags, sector
+				d->walls[wallnum].lowerpicnum, d->walls[wallnum].flags, sector,
+				sector.ceilheight - sector.floorheight
 		};
 		draw_wall(d, wall_clipped);
 		draw_floor(d, wall_clipped);

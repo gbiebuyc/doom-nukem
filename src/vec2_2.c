@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:15:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/13 05:57:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:48:37 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ t_vec3f	add_vec3f(t_vec3f a, t_vec3f b)
 	return ((t_vec3f){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
-t_vec3f	vec2f_to_vec3f(t_vec2f v)
+t_vec3f	vec2to3(t_vec2f v)
 {
 	return ((t_vec3f){v.x, 0, v.y});
+}
+
+t_vec2f	vec3to2(t_vec3f v)
+{
+	return ((t_vec2f){v.x, v.z});
 }

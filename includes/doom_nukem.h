@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/22 05:33:54 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:22:54 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ void	draw_wall(t_data *d, t_wall_clipped wall);
 void	draw_floor(t_data *d, t_wall_clipped wall);
 void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum);
+t_vec3f	vec2to3(t_vec2f v);
+t_vec2f	vec3to2(t_vec3f v);
+bool	clip_wall(t_vec3f *p0, t_vec3f p1);
+
+/*
+** utils.c
+*/
+
+double	lerp(double norm, double min, double max);
+double	norm(double val, double min, double max);
+int		clamp(int x, int min, int max);
+double	fclamp(double x, double min, double max);
 
 /*
 ** exit.c
@@ -120,7 +132,6 @@ t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
 void			actualize_dir(double angle, t_vec2f *vec);
 t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
 t_vec3f 		mul_vec3f(t_vec3f v1, double scalar);
-t_vec3f			vec2f_to_vec3f(t_vec2f v);
 
 /*
 ** vec2_2.c

@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/22 04:57:31 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/26 18:23:26 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,11 @@ FILES= main \
 	   mouse_event \
 	   projection \
 	   draw_wall \
+	   clip_wall \
 	   pixel \
 	   load_map \
 	   inside \
+	   utils \
 	   vec2_2 #\
 #	   intersection
 #need to reorganize and optimize files (especially loop and events
