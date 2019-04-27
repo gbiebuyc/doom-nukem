@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 18:21:39 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/26 18:43:10 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/27 01:38:53 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,21 @@ t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3)
 ** returns false if wall outside field of view
 */
 
-bool	clip_wall(t_vec3f *p0, t_vec3f p1)
+bool	clip_wall(double *x1, double *z1, double x2, double z2)
 {
+	t_vec2f p0 = (t_vec2f){*x1, *z1};
+	t_vec2f p1 = (t_vec2f){x2, z2};
 	// clip du cote de l'x a l'origine
-	double x_intercept = lerp(norm(0, p0->z, p1.z), p0->x, p1.x);
+	double x_intercept = lerp(norm(0, p0.y, p1.y), p0.x, p1.x);
 	double side = (x_intercept < 0) ? -1 : 1;
 	t_vec2f near = {((side * WIDTH / 2.0) / WIDTH) * 1.0, 1};
 	t_vec2f far = {((side * WIDTH / 2.0) / WIDTH) * 10.0, 10};
-	t_vec2f inter = intersect(vec3to2(*p0), vec3to2(p1), near, far);
+	t_vec2f inter = intersect(p0, p1, near, far);
 	if (inter.y <= 0)
 		return (false);
-	if (((p0->x - p1.x) < 0) != ((inter.x - p1.x) < 0))
+	if (((p0.x - p1.x) < 0) != ((inter.x - p1.x) < 0))
 		return (false);
-	p0->x = inter.x;
-	p0->z = inter.y;
+	*x1 = inter.x;
+	*z1 = inter.y;
 	return (true);
 }

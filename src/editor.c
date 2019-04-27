@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/22 04:33:02 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/27 04:18:59 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		main(int argc, char **argv, char **envp)
 	walls[2] = (t_wall){(t_vec2f){ 5,-5}, 0, 2, 0, 0, -1};
 	walls[3] = (t_wall){(t_vec2f){-5,-5}, 0, 3, 0, 0, -1};
 
-	sectors[1] = (t_sector){4, 4, 0, 2, 3, 0, 255};
+	sectors[1] = (t_sector){4, 4, 0.5, 1.5, 3, 0, 255};
 	walls[4] = (t_wall){(t_vec2f){ 5,-5}, 0, 0, 0, 0, 0};
 	walls[5] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0, -1};
 	walls[6] = (t_wall){(t_vec2f){ 20,-15}, 0, 2, 0, 0, -1};

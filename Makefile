@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/26 18:23:26 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/27 05:43:46 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ FILES= main \
 	   vec2 \
 	   motion_event \
 	   mouse_event \
-	   projection \
 	   draw_wall \
 	   clip_wall \
 	   pixel \

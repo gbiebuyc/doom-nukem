@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/26 18:22:54 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/27 06:23:02 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,17 @@
 ** projection.c
 */
 
-void	apply_transform(t_data *d, t_vec3f *v);
-t_vec3f	apply_perspective(t_data *d, t_vec3f v);
 void	draw_texture(t_data *d, t_texture3d text, SDL_Surface surface);
 
-void	square(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);
-uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b);
-void	draw_wall(t_data *d, t_wall_clipped wall);
-void	draw_floor(t_data *d, t_wall_clipped wall);
+void	draw_wall(t_data *d, t_projdata p, t_frustum *fr);
+void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
 void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum);
-t_vec3f	vec2to3(t_vec2f v);
-t_vec2f	vec3to2(t_vec3f v);
-bool	clip_wall(t_vec3f *p0, t_vec3f p1);
+bool	clip_wall(double *x1, double *z1, double x2, double z2);
+void	display_sector(t_data *d, t_sector *sect, t_frustum *fr);
 
 /*
 ** utils.c

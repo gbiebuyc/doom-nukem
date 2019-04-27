@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/25 18:09:19 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/27 05:30:39 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,27 @@ typedef struct	s_wall
 	int16_t		neighborsect;
 }				t_wall;
 
-typedef struct	s_wall_clipped
+typedef struct	s_projdata
 {
-	t_vec3f		left;
-	t_vec3f		right;
-	t_vec3f		left2;
-	t_vec3f		right2;
-	double		left_u;
-	double		right_u;
-	int16_t		upperpicnum;
-	int16_t		middlepicnum;
-	int16_t		lowerpicnum;
-	int16_t		flags;
-	t_sector	sector;
+	double		x1;
+	double		x2;
+	double		z1;
+	double		z2;
+	int			y1a;
+	int			y2a;
+	int			y1b;
+	int			y2b;
+	t_sector	*neighbor;
+	int			ny1a;
+	int			ny2a;
+	int			ny1b;
+	int			ny2b;
+	double		u_begin;
+	double		u_end;
 	double		y_scale;
-}				t_wall_clipped;
+	t_wall		*wall;
+	t_sector	*sector;
+}				t_projdata;
 
 typedef struct	s_thing
 {
@@ -141,6 +147,14 @@ typedef struct	s_thing
 	int16_t		picnum;
 	int16_t		flags;
 }				t_thing;
+
+typedef struct	s_frustum
+{
+	int			ytop[WIDTH];
+	int			ybottom[WIDTH];
+	int			x1;
+	int			x2;
+}				t_frustum;
 
 typedef struct	s_data
 {
