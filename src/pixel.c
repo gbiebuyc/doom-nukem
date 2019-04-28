@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 23:47:23 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/20 06:01:36 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/29 01:34:02 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	putpixel(t_data *d, int x, int y, uint32_t color)
 {
 	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
-		((uint32_t*)d->main_win.surface->pixels)[(int)x + (int)y * WIDTH] = color;
+		((uint32_t*)d->screen->pixels)[(int)x + (int)y * WIDTH] = color;
 }
 
 uint32_t	getpixel(SDL_Surface *s, double x, double y)

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 19:38:27 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/27 06:11:06 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/29 01:43:35 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	draw_wall(t_data *d, t_projdata p, t_frustum *fr)
 			double v = lerp(norm(y, ya, yb), 0, p.y_scale);
 			if (p.neighbor && y < nya)
 				putpixel(d, x, y, getpixel2(
-							d->texture[p.wall->lowerpicnum], u, v));
+							d->textures[p.wall->lowerpicnum], u, v));
 			else if (p.neighbor && y > nyb)
 				putpixel(d, x, y, getpixel2(
-							d->texture[p.wall->lowerpicnum], u, v));
+							d->textures[p.wall->lowerpicnum], u, v));
 			else if (!p.neighbor)
 				putpixel(d, x, y, getpixel2(
-							d->texture[p.wall->middlepicnum], u, v));
+							d->textures[p.wall->middlepicnum], u, v));
 		}
 	}
 	if (p.neighbor && beginx < endx)
@@ -60,41 +60,6 @@ void	draw_wall(t_data *d, t_projdata p, t_frustum *fr)
 		nfr.x1 = beginx;
 		nfr.x2 = endx;
 		// recursive call
-		display_sector(d, p.neighbor, &nfr);
-	}
-}
-
-void	draw_floor(t_data *d, t_projdata p, t_frustum *fr)
-{
-	double n;
-
-	double altitude = d->cam.pos.y - p.sector->floorheight;
-	if (altitude <= 0)
-		return ;
-	altitude *= 2.7;
-	double angle = -d->cam.rot + M_PI_2;
-	for (int x = ft_max(fr->x1, p.x1);
-			x <= ft_min(fr->x2, p.x2); x++)
-	{
-		n = norm(x, p.x1, p.x2);
-		double y_start = lerp(n, p.y1b, p.y2b);
-		for (int y = ft_max(fr->ytop[x], y_start); y <= fr->ybottom[x]; y++)
-		{
-			n = norm(y - HEIGHT / 2 + d->cam.y_offset, 0, HEIGHT / 2);
-			double distance = altitude / n;
-			double line_du = sin(angle) * distance;
-			double line_dv = -cos(angle) * distance;
-			double left_u = d->cam.pos.x + distance * cos(angle) - line_du / 2;
-			double right_u = left_u + line_du;
-			double left_v = d->cam.pos.z + distance * sin(angle) - line_dv / 2;
-			double right_v = left_v + line_dv;
-
-			n = norm(x, 0, WIDTH);
-			double u = lerp(n, left_u, right_u);
-			double v = lerp(n, left_v, right_v);
-			double scale = 1;
-			putpixel(d, x, y, getpixel2(d->texture[p.sector->floorpicnum],
-						u * scale, v * scale));
-		}
+		render_sector(d, p.neighbor, &nfr);
 	}
 }

@@ -6,11 +6,15 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/22 05:45:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/29 02:07:05 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+/*
+** Used to detect the current sector at each frame.
+*/
 
 bool	inside(t_data *d, int16_t sectnum)
 {

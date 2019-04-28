@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/27 05:43:46 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/29 01:55:54 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,20 @@ FILES= main \
 	   exit \
 	   init_sdl \
 	   loop \
-	   key_event \
-	   window_event \
-	   refresh \
-	   vec2 \
-	   motion_event \
-	   mouse_event \
+	   events \
+	   update \
+	   render \
+	   render_sector \
+	   draw_floor \
 	   draw_wall \
 	   clip_wall \
 	   pixel \
 	   load_map \
 	   inside \
 	   utils \
-	   vec2_2 #\
-#	   intersection
-#need to reorganize and optimize files (especially loop and events
+	   vec2 \
+	   vec2_2
+
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
@@ -58,7 +57,7 @@ clean:
 	rm -rf $(OBJ)
 
 fclean:
-	make -C $(FT_DIR) fclean
+	#make -C $(FT_DIR) fclean // penible a chaque make re
 	rm -rf $(OBJ)
 	rm -rf $(NAME)
 
