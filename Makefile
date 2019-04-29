@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/29 01:55:54 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/30 00:04:33 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,12 @@ OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SDL_SOURCES:=$(ABS_PATH)/SDL
 SDL_PATH:=$(ABS_PATH)/SDL/library
-FT_DIR = ./libft
-INCLUDE = -I./includes 
-
-CFLAGS = $(INCLUDE) -Wall -Wextra -Werror -O3 `$(SDL_PATH)/bin/sdl2-config --cflags`
-LDFLAGS = -lm -L $(FT_DIR) -lft -lpthread `$(SDL_PATH)/bin/sdl2-config --libs`
+SDL_CFG = $(SDL_PATH)/bin/sdl2-config
+FT_DIR = libft
+INCLUDE = includes 
+CFLAGS = -Wall -Wextra -Werror -O3 -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
+LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
+ED_DIR = srced
 
 all: $(NAME) editor
 
@@ -49,15 +50,17 @@ $(NAME):$(OBJ)
 	make -C libft
 	gcc -o $@ $(OBJ) $(LDFLAGS)
 
-editor: obj/editor.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+editor:
+	make -C $(ED_DIR)
 
 clean:
 	make -C $(FT_DIR) clean
+	make -C $(ED_DIR) clean
 	rm -rf $(OBJ)
 
 fclean:
 	#make -C $(FT_DIR) fclean // penible a chaque make re
+	make -C $(ED_DIR) fclean
 	rm -rf $(OBJ)
 	rm -rf $(NAME)
 
@@ -91,4 +94,4 @@ sdl_re:SDL_re
 
 sdl_clean:SDL_clean
 	
-.PHONY: SDL clean fclean re all sdl fast
+.PHONY: SDL clean fclean re all sdl fast editor

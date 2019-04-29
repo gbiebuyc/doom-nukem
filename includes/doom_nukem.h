@@ -6,16 +6,18 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 23:55:49 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 00:01:29 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 # define DOOM_NUKEM_H
 
+# include <SDL.h>
+# include <libft.h>
+# include <common_structs.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 
