@@ -6,13 +6,15 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/29 04:25:11 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/04/29 07:58:32 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/04/30 07:16:47 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ../editor
 SRC = main.c \
-	  init_sdl.c
+	  init_sdl.c \
+	  ../src/vec2.c \
+	  pixel.c
 OBJ = $(SRC:.c=.o)
 FT_DIR = ../libft
 SDL_CFG = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../SDL/library/bin/sdl2-config

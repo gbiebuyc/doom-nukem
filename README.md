@@ -23,5 +23,6 @@ loop()
 }
 ```
 ### Editor keys:
-
-R = Run the game
+- R = Run the game
+- Right click = drag view
+- Wheel = zoom

@@ -6,11 +6,11 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:14:59 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/08 03:29:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 07:05:42 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom_nukem.h"
+#include <common.h>
 
 t_vec2f	sub_vec2f(t_vec2f v1, t_vec2f v2)
 {

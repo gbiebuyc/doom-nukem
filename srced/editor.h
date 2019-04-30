@@ -6,16 +6,14 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/29 09:11:33 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 08:35:42 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <SDL.h>
-# include <common_structs.h>
-# include <libft.h>
+# include <common.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <stdint.h>
@@ -25,6 +23,7 @@
 # define H 600
 # define MAXNUMSECTORS 1024
 # define MAXNUMWALLS 8192
+# define GRIDSIZE 64
 
 typedef struct		s_data
 {
@@ -48,5 +47,11 @@ void	draw_screen(t_data *d);
 void	init_sectors(t_data *d);
 void	save_file(t_data *d);
 void	create_sector(t_data *d);
+void	putpixel(t_data *d, int x, int y, uint32_t color);
+void	draw_grid(t_data *d);
+void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color);
+void	draw_sector(t_data *d, int16_t sectnum);
+t_vec2f	worldtoscreen(t_data *d, t_vec2f p);
+t_vec2f	screentoworld(t_data *d, t_vec2f p);
 
 #endif

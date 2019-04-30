@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common_structs.h                                   :+:      :+:    :+:   */
+/*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/29 09:40:08 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 07:12:25 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMON_STRUCTS_H
-# define COMMON_STRUCTS_H
+#ifndef COMMON_H
+# define COMMON_H
+
+# include <SDL.h>
+# include <libft.h>
 
 /*
-** These structs are used both in the editor and in the game
+** This header is used both by the editor and the game
 */
 
 typedef struct	s_vec3f
@@ -29,6 +32,12 @@ typedef struct	s_vec2f
 	double		x;
 	double		y;
 }				t_vec2f;
+
+typedef struct	s_vec2
+{
+	int			x;
+	int			y;
+}				t_vec2;
 
 typedef struct	s_sector
 {
@@ -58,5 +67,25 @@ typedef struct	s_thing
 	int16_t		picnum;
 	int16_t		flags;
 }				t_thing;
+
+/*
+** vec2.c
+*/
+
+t_vec2f			sub_vec2f(t_vec2f v1, t_vec2f v2);
+t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
+void			actualize_dir(double angle, t_vec2f *vec);
+t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
+t_vec3f			mul_vec3f(t_vec3f v1, double scalar);
+
+/*
+** vec2_2.c
+*/
+
+t_vec2f			mul_vec2f(t_vec2f v, double scalar);
+float			get_vec2f_length(t_vec2f v);
+double			vec2f_length(t_vec2f v);
+double			get_vec2f_angle(t_vec2f v1, t_vec2f v2);
+t_vec3f			add_vec3f(t_vec3f a, t_vec3f b);
 
 #endif

@@ -6,16 +6,14 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/30 00:01:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 07:11:33 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 # define DOOM_NUKEM_H
 
-# include <SDL.h>
-# include <libft.h>
-# include <common_structs.h>
+# include <common.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
@@ -75,25 +73,5 @@ void	loop(t_data *d);
 void	event_mouse_motion(t_data *d, SDL_MouseMotionEvent event);
 void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event);
 void	event_key_down(t_data *d, SDL_KeyboardEvent event);
-
-/*
-** vec2.c
-*/
-
-t_vec2f			sub_vec2f(t_vec2f v1, t_vec2f v2);
-t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
-void			actualize_dir(double angle, t_vec2f *vec);
-t_vec3f			sub_vec3f(t_vec3f v1, t_vec3f v2);
-t_vec3f			mul_vec3f(t_vec3f v1, double scalar);
-
-/*
-** vec2_2.c
-*/
-
-t_vec2f			mul_vec2f(t_vec2f v, double scalar);
-float			get_vec2f_length(t_vec2f v);
-double			vec2f_length(t_vec2f v);
-double			get_vec2f_angle(t_vec2f v1, t_vec2f v2);
-t_vec3f			add_vec3f(t_vec3f a, t_vec3f b);
 
 #endif

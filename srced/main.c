@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/29 22:23:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/04/30 11:23:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		main(int argc, char **argv)
 {
 	t_data	d;
 
-	d.scale = 64;
-	d.pos = (t_vec2f){-32, -32};
+	d.scale = W / 64;
+	d.pos = (t_vec2f){0, 0};
 	(void)argc;
 	(void)argv;
 	init_sdl(&d);
@@ -29,7 +29,6 @@ void	main_loop(t_data *d)
 {
 	SDL_Event e;
 
-	(void)d;
 	draw_screen(d);
 	while (SDL_WaitEvent(&e))
 	{
@@ -44,8 +43,28 @@ void	main_loop(t_data *d)
 			else if (e.key.keysym.sym == SDLK_s)
 				save_file(d);
 		}
+		else if (e.type == SDL_MOUSEWHEEL) // Zoom
+			d->scale *= (e.wheel.y == 1) ? 1.1 : 0.9;
 		else if (e.type == SDL_MOUSEBUTTONDOWN)
-			create_sector(d);
+		{
+			if (e.button.button == SDL_BUTTON_LEFT)
+			{
+				t_vec2f p = screentoworld(d, (t_vec2f){e.button.x, e.button.y});
+				printf("%f, %f\n", p.x, p.y);
+				// Create wall at this point
+			}
+			else if (e.button.button == SDL_BUTTON_RIGHT)
+				SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
+		}
+		else if (e.type == SDL_MOUSEMOTION &&
+				(e.motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)))
+		{
+			// Drag the view / pos
+			d->pos = screentoworld(d, (t_vec2f){e.motion.x, e.motion.y});
+			SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
+		}
+		draw_screen(d);
+		SDL_FlushEvent(SDL_MOUSEMOTION);
 	}
 	SDL_DestroyWindow(d->win);
 	SDL_Quit();
@@ -53,15 +72,10 @@ void	main_loop(t_data *d)
 
 void	draw_screen(t_data *d)
 {
-	double scale = W / d->scale;
 	ft_memset(d->screen->pixels, 0, W * H * 4);
-	for (int i = 0; i < d->numwalls; i++)
-	{
-		t_vec2f p = d->walls[i].point;
-		p.x = p.x * scale - d->pos.x * scale;
-		p.y = p.y * scale - d->pos.y * scale;
-		((uint32_t*)d->screen->pixels)[(int)p.x + (int)p.y * W] = 0xffffff;
-	}
+	draw_grid(d);
+	for (int s = 0; s < d->numsectors; s++)
+		draw_sector(d, s);
 	SDL_UpdateWindowSurface(d->win);
 }
 
@@ -135,4 +149,65 @@ void	save_file(t_data *d)
 void	create_sector(t_data *d)
 {
 	(void)d;
+}
+
+void	draw_grid(t_data *d)
+{
+	int x;
+	int y;
+
+	for (int i = -GRIDSIZE; i <= GRIDSIZE; i++)
+	{
+		x = worldtoscreen(d, (t_vec2f){i, 0}).x;
+		for (y = 0; y < H; y++)
+			putpixel(d, x, y, 0x505050);
+		y = worldtoscreen(d, (t_vec2f){0, i}).y;
+		for (x = 0; x < W; x++)
+			putpixel(d, x, y, 0x505050);
+	}
+}
+
+void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color)
+{
+	t_vec2	delta;
+	int		steps;
+	t_vec2f	increment;
+
+	delta.x = v2.x - v1.x;
+	delta.y = v2.y - v1.y;
+	steps = (abs(delta.x) > abs(delta.y)) ? abs(delta.x) : abs(delta.y);
+	increment.x = delta.x / (double)steps;
+	increment.y = delta.y / (double)steps;
+	while (steps--)
+	{
+		putpixel(d, (int)v1.x, (int)v1.y, color);
+		v1 = add_vec2f(v1, increment);
+	}
+}
+
+void	draw_sector(t_data *d, int16_t sectnum)
+{
+	int i, j;
+
+	int npoints = d->sectors[sectnum].numwalls;
+	for (i = 0, j = npoints-1; i < npoints; j = i++)
+	{
+		t_vec2f p0 = d->walls[d->sectors[sectnum].firstwallnum + i].point;
+		t_vec2f p1 = d->walls[d->sectors[sectnum].firstwallnum + j].point;
+		p0 = worldtoscreen(d, p0);
+		p1 = worldtoscreen(d, p1);
+		draw_line(d, p0, p1, 0xffffff);
+	}
+}
+
+t_vec2f	worldtoscreen(t_data *d, t_vec2f p)
+{
+	return ((t_vec2f){(p.x - d->pos.x) * d->scale + W / 2,
+			-(p.y - d->pos.y) * d->scale + H / 2});
+}
+
+t_vec2f	screentoworld(t_data *d, t_vec2f p)
+{
+	return ((t_vec2f){(p.x - W / 2) / d->scale + d->pos.x,
+			-(p.y - H / 2) / d->scale + d->pos.y});
 }
