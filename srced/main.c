@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/30 11:23:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/01 23:27:44 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		main(int argc, char **argv)
 
 	d.scale = W / 64;
 	d.pos = (t_vec2f){0, 0};
+	d.selectedwall = NULL;
 	(void)argc;
 	(void)argv;
 	init_sdl(&d);
@@ -44,24 +45,20 @@ void	main_loop(t_data *d)
 				save_file(d);
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
-			d->scale *= (e.wheel.y == 1) ? 1.1 : 0.9;
+			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
 		else if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
 			if (e.button.button == SDL_BUTTON_LEFT)
-			{
-				t_vec2f p = screentoworld(d, (t_vec2f){e.button.x, e.button.y});
-				printf("%f, %f\n", p.x, p.y);
-				// Create wall at this point
-			}
+				select_wall_under_cursor(d, (t_vec2f){e.button.x, e.button.y});
 			else if (e.button.button == SDL_BUTTON_RIGHT)
-				SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
+				update_pos(d, (t_vec2f){e.button.x, e.button.y});
 		}
-		else if (e.type == SDL_MOUSEMOTION &&
-				(e.motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)))
+		else if (e.type == SDL_MOUSEMOTION)
 		{
-			// Drag the view / pos
-			d->pos = screentoworld(d, (t_vec2f){e.motion.x, e.motion.y});
-			SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
+			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
+				update_wall_pos(d, (t_vec2f){e.motion.x, e.motion.y});
+			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT))
+				update_pos(d, (t_vec2f){e.motion.x, e.motion.y});
 		}
 		draw_screen(d);
 		SDL_FlushEvent(SDL_MOUSEMOTION);
@@ -210,4 +207,35 @@ t_vec2f	screentoworld(t_data *d, t_vec2f p)
 {
 	return ((t_vec2f){(p.x - W / 2) / d->scale + d->pos.x,
 			-(p.y - H / 2) / d->scale + d->pos.y});
+}
+
+void	select_wall_under_cursor(t_data *d, t_vec2f p)
+{
+	double min_dist = INFINITY;
+	d->selectedwall = NULL;
+	t_wall *wall = d->walls;
+	while (wall - d->walls < d->numwalls)
+	{
+		t_vec2f p2 = worldtoscreen(d, wall->point);
+		double dist = vec2f_length((t_vec2f){p.x - p2.x, p.y - p2.y});
+		if (dist < 50 && dist < min_dist)
+		{
+			d->selectedwall = wall;
+			min_dist = dist;
+		}
+		wall++;
+	}
+	update_wall_pos(d, p);
+}
+
+void	update_wall_pos(t_data *d, t_vec2f p)
+{
+	if (d->selectedwall)
+		d->selectedwall->point = screentoworld(d, p);
+}
+
+void	update_pos(t_data *d, t_vec2f p)
+{
+	d->pos = screentoworld(d, p);
+	SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
 }

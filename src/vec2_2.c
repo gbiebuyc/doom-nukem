@@ -6,11 +6,11 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:15:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/25 16:48:37 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/01 00:45:09 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom_nukem.h"
+#include <common.h>
 
 t_vec2f	mul_vec2f(t_vec2f v, double scalar)
 {

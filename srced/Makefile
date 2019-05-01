@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/29 04:25:11 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/04/30 07:16:47 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/01 00:45:31 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = ../editor
 SRC = main.c \
 	  init_sdl.c \
 	  ../src/vec2.c \
+	  ../src/vec2_2.c \
 	  pixel.c
 OBJ = $(SRC:.c=.o)
 FT_DIR = ../libft

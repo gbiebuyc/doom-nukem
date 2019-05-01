@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/30 08:35:42 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/01 05:06:52 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdint.h>
 # include <fcntl.h>
 
-# define W 800
-# define H 600
+# define W 1500
+# define H 1000
 # define MAXNUMSECTORS 1024
 # define MAXNUMWALLS 8192
 # define GRIDSIZE 64
@@ -36,6 +36,7 @@ typedef struct		s_data
 	t_wall			walls[MAXNUMWALLS];
 	int16_t			numsectors;
 	int16_t			numwalls;
+	t_wall			*selectedwall;
 }					t_data;
 
 extern char **environ; // used by execve
@@ -53,5 +54,8 @@ void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color);
 void	draw_sector(t_data *d, int16_t sectnum);
 t_vec2f	worldtoscreen(t_data *d, t_vec2f p);
 t_vec2f	screentoworld(t_data *d, t_vec2f p);
+void	select_wall_under_cursor(t_data *d, t_vec2f p);
+void	update_pos(t_data *d, t_vec2f p);
+void	update_wall_pos(t_data *d, t_vec2f v);
 
 #endif
