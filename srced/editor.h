@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/02 22:53:45 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:24:55 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_data
 	t_wall			*selectedwall;
 	t_wall			*selectedwall2;
 	bool			grid_locking;
+	bool			sectordrawing;
 }					t_data;
 
 extern char **environ; // used by execve
@@ -49,7 +50,8 @@ void	main_loop(t_data *d);
 void	draw_screen(t_data *d);
 void	init_sectors(t_data *d);
 void	save_file(t_data *d);
-void	create_sector(t_data *d);
+void	add_sector(t_data *d);
+void	add_wall(t_data *d);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 void	draw_grid(t_data *d);
 void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color);
@@ -59,5 +61,6 @@ t_vec2f	screentoworld(t_data *d, t_vec2f p);
 void	select_wall_under_cursor(t_data *d, t_vec2f p);
 void	update_pos(t_data *d, t_vec2f p);
 void	update_wall_pos(t_data *d, t_vec2f v);
+t_vec2f	grid_lock(t_data *d, t_vec2f p);
 
 #endif

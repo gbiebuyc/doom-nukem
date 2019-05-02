@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/02 23:01:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:35:00 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int		main(int argc, char **argv)
 {
 	t_data	d;
 
+	ft_memset(&d, 0, sizeof(t_data));
 	d.scale = W / 64;
 	d.pos = (t_vec2f){0, 0};
 	d.selectedwall = NULL;
 	d.selectedwall2 = NULL;
 	d.grid_locking = true;
+	d.sectordrawing = false;
 	(void)argc;
 	(void)argv;
 	init_sdl(&d);
@@ -47,6 +49,13 @@ void	main_loop(t_data *d)
 				save_file(d);
 			else if (e.key.keysym.sym == SDLK_l)
 				d->grid_locking = !d->grid_locking;
+			else if (e.key.keysym.sym == SDLK_SPACE)
+			{
+				if (d->sectordrawing)
+					add_wall(d);
+				else
+					add_sector(d);
+			}
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
 			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
@@ -57,9 +66,17 @@ void	main_loop(t_data *d)
 			else if (e.button.button == SDL_BUTTON_RIGHT)
 				update_pos(d, (t_vec2f){e.button.x, e.button.y});
 		}
+		else if (e.type == SDL_MOUSEBUTTONUP)
+		{
+			if (e.button.button == SDL_BUTTON_LEFT && !d->sectordrawing)
+			{
+				d->selectedwall = NULL;
+				d->selectedwall2 = NULL;
+			}
+		}
 		else if (e.type == SDL_MOUSEMOTION)
 		{
-			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
+			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
 				update_wall_pos(d, (t_vec2f){e.motion.x, e.motion.y});
 			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT))
 				update_pos(d, (t_vec2f){e.motion.x, e.motion.y});
@@ -147,9 +164,40 @@ void	save_file(t_data *d)
 	close(f);
 }
 
-void	create_sector(t_data *d)
+void	add_sector(t_data *d)
 {
-	(void)d;
+	d->sectordrawing = true;
+	d->numsectors++;
+	d->sectors[d->numsectors - 1].firstwallnum = d->numwalls;
+	add_wall(d); // First wall
+	add_wall(d); // Current wall
+}
+
+void	add_wall(t_data *d)
+{
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	t_vec2f p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
+	t_sector *sect = &d->sectors[d->numsectors - 1];
+	for (int i = 0; i < sect->numwalls - 1; i++)
+	{
+		t_wall *wall = d->walls + sect->firstwallnum + i;
+		if (wall->point.x == d->selectedwall->point.x &&
+				wall->point.y == d->selectedwall->point.y)
+		{
+			// The loop is done when you press the
+			// space bar at the first point again.
+			d->numwalls--;
+			sect->numwalls--;
+			d->sectordrawing = false;
+			return ;
+		}
+	}
+	d->numwalls++;
+	d->sectors[d->numsectors - 1].numwalls++;
+	d->walls[d->numwalls - 1].point = p;
+	d->walls[d->numwalls - 1].neighborsect = -1;
+	d->selectedwall = &d->walls[d->numwalls - 1];
 }
 
 void	draw_grid(t_data *d)
@@ -255,9 +303,7 @@ void	update_wall_pos(t_data *d, t_vec2f p)
 {
 	if (!d->selectedwall)
 		return ;
-	p = screentoworld(d, p);
-	if (d->grid_locking)
-		p = (t_vec2f){floor(p.x + 0.5), floor(p.y + 0.5)};
+	p = grid_lock(d, screentoworld(d, p));
 	d->selectedwall->point = p;
 	if (!d->selectedwall2)
 		return ;
@@ -268,4 +314,11 @@ void	update_pos(t_data *d, t_vec2f p)
 {
 	d->pos = screentoworld(d, p);
 	SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
+}
+
+t_vec2f	grid_lock(t_data *d, t_vec2f p)
+{
+	if (!d->grid_locking)
+		return (p);
+	return ((t_vec2f){floor(p.x + 0.5), floor(p.y + 0.5)});
 }
