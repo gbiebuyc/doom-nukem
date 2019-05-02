@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/01 05:06:52 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:40:32 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_data
 	int16_t			numsectors;
 	int16_t			numwalls;
 	t_wall			*selectedwall;
+	t_wall			*selectedwall2;
 }					t_data;
 
 extern char **environ; // used by execve

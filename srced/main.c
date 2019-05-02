@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/01 23:27:44 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/02 22:43:08 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		main(int argc, char **argv)
 	d.scale = W / 64;
 	d.pos = (t_vec2f){0, 0};
 	d.selectedwall = NULL;
+	d.selectedwall2 = NULL;
 	(void)argc;
 	(void)argv;
 	init_sdl(&d);
@@ -189,11 +190,12 @@ void	draw_sector(t_data *d, int16_t sectnum)
 	int npoints = d->sectors[sectnum].numwalls;
 	for (i = 0, j = npoints-1; i < npoints; j = i++)
 	{
-		t_vec2f p0 = d->walls[d->sectors[sectnum].firstwallnum + i].point;
-		t_vec2f p1 = d->walls[d->sectors[sectnum].firstwallnum + j].point;
-		p0 = worldtoscreen(d, p0);
-		p1 = worldtoscreen(d, p1);
-		draw_line(d, p0, p1, 0xffffff);
+		t_wall *w0 = &d->walls[d->sectors[sectnum].firstwallnum + i];
+		t_wall *w1 = &d->walls[d->sectors[sectnum].firstwallnum + j];
+		t_vec2f p0 = worldtoscreen(d, w0->point);
+		t_vec2f p1 = worldtoscreen(d, w1->point);
+		// Draw walls in white and portals in red.
+		draw_line(d, p0, p1, (w1->neighborsect != -1) ? 0xdd0000 : 0xffffff);
 	}
 }
 
@@ -213,25 +215,48 @@ void	select_wall_under_cursor(t_data *d, t_vec2f p)
 {
 	double min_dist = INFINITY;
 	d->selectedwall = NULL;
+	d->selectedwall2 = NULL;
 	t_wall *wall = d->walls;
 	while (wall - d->walls < d->numwalls)
 	{
+		// Find closest wall. Priority to walls that have a neighbor.
 		t_vec2f p2 = worldtoscreen(d, wall->point);
 		double dist = vec2f_length((t_vec2f){p.x - p2.x, p.y - p2.y});
-		if (dist < 50 && dist < min_dist)
+		if (dist < 50 && ((dist < min_dist) ||
+					(dist == min_dist && wall->neighborsect != -1)))
 		{
 			d->selectedwall = wall;
 			min_dist = dist;
 		}
 		wall++;
 	}
+	if (d->selectedwall && d->selectedwall->neighborsect != -1)
+	{
+		// Find corresponding neighbor wall.
+		t_sector *neighborsect = &d->sectors[d->selectedwall->neighborsect];
+		for (int i = 0; i < neighborsect->numwalls; i++)
+		{
+			wall = d->walls + neighborsect->firstwallnum + i;
+			if (wall->point.x == d->selectedwall->point.x &&
+					wall->point.y == d->selectedwall->point.y)
+			{
+				d->selectedwall2 = wall;
+				break ;
+			}
+		}
+	}
 	update_wall_pos(d, p);
 }
 
 void	update_wall_pos(t_data *d, t_vec2f p)
 {
-	if (d->selectedwall)
-		d->selectedwall->point = screentoworld(d, p);
+	if (!d->selectedwall)
+		return ;
+	p = screentoworld(d, p);
+	d->selectedwall->point = p;
+	if (!d->selectedwall2)
+		return ;
+	d->selectedwall2->point = p;
 }
 
 void	update_pos(t_data *d, t_vec2f p)
