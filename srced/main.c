@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/02 22:43:08 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:01:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		main(int argc, char **argv)
 	d.pos = (t_vec2f){0, 0};
 	d.selectedwall = NULL;
 	d.selectedwall2 = NULL;
+	d.grid_locking = true;
 	(void)argc;
 	(void)argv;
 	init_sdl(&d);
@@ -44,6 +45,8 @@ void	main_loop(t_data *d)
 				run_game();
 			else if (e.key.keysym.sym == SDLK_s)
 				save_file(d);
+			else if (e.key.keysym.sym == SDLK_l)
+				d->grid_locking = !d->grid_locking;
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
 			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
@@ -253,6 +256,8 @@ void	update_wall_pos(t_data *d, t_vec2f p)
 	if (!d->selectedwall)
 		return ;
 	p = screentoworld(d, p);
+	if (d->grid_locking)
+		p = (t_vec2f){floor(p.x + 0.5), floor(p.y + 0.5)};
 	d->selectedwall->point = p;
 	if (!d->selectedwall2)
 		return ;

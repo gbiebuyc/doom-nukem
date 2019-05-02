@@ -24,5 +24,7 @@ loop()
 ```
 ### Editor keys:
 - R = Run the game
+- S = Save file
+- L = Toggle grid locking
 - Right click = drag view
 - Wheel = zoom
