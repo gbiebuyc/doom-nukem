@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 20:14:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/04 22:45:18 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	main_loop(t_data *d)
 			if (e.key.keysym.sym == SDLK_ESCAPE)
 				break ;
 			else if (e.key.keysym.sym == SDLK_r)
-				run_game();
+				run_game(d);
 			else if (e.key.keysym.sym == SDLK_s)
 				save_file(d);
 			else if (e.key.keysym.sym == SDLK_l)
@@ -60,6 +60,10 @@ void	main_loop(t_data *d)
 				debug_print(d);
 			else if (e.key.keysym.sym == SDLK_DELETE)
 				del_sector(d, find_sect_under_cursor(d));
+			else if (e.key.keysym.sym == SDLK_PAGEDOWN)
+				change_floor_height(d, -0.1, find_sect_under_cursor(d));
+			else if (e.key.keysym.sym == SDLK_PAGEUP)
+				change_floor_height(d, +0.1, find_sect_under_cursor(d));
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
 			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
@@ -92,10 +96,11 @@ void	main_loop(t_data *d)
 	SDL_Quit();
 }
 
-void	run_game()
+void	run_game(t_data *d)
 {
 	pid_t	pid;
 
+	save_file(d);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -223,12 +228,12 @@ void	detect_neighbors(t_data *d, int16_t sectnum)
 		t_wall *w0 = &d->walls[d->sectors[sectnum].firstwallnum + i];
 		t_wall *w1 = &d->walls[d->sectors[sectnum].firstwallnum + j];
 		w0->neighborsect = -1;
-		for (int s = 0; s < d->numsectors - 1 && w0->neighborsect == -1; s++)
+		for (int s = 0; s < d->numsectors && w0->neighborsect == -1; s++)
 		{
 			if (s == sectnum)
 				continue ;
-			npoints = d->sectors[s].numwalls;
-			for (int k = npoints-1, l = 0; l < npoints; k = l++)
+			for (int k = d->sectors[s].numwalls - 1, l = 0;
+					l < d->sectors[s].numwalls; k = l++)
 			{
 				t_wall *w2 = &d->walls[d->sectors[s].firstwallnum + k];
 				t_wall *w3 = &d->walls[d->sectors[s].firstwallnum + l];
@@ -375,4 +380,12 @@ bool	inside(t_data *d, int16_t sectnum, t_vec2f test)
 			c = !c;
 	}
 	return (c);
+}
+
+void	change_floor_height(t_data *d, double val, int16_t sectnum)
+{
+	if (sectnum < 0)
+		return ;
+	d->sectors[sectnum].floorheight += val;
+	printf("sect %d floorheight = %f\n", sectnum, d->sectors[sectnum].floorheight);
 }

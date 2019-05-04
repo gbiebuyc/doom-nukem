@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 20:13:13 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/04 21:27:38 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct		s_data
 
 extern char **environ; // used by execve
 
-void	run_game();
+void	run_game(t_data *d);
 void	init_sdl(t_data *d);
 void	main_loop(t_data *d);
 void	draw_screen(t_data *d);
@@ -69,5 +69,6 @@ void	debug_print(t_data *d);
 void	del_sector(t_data *d, int16_t sectnum);
 int16_t	find_sect_under_cursor(t_data *d);
 bool	inside(t_data *d, int16_t sectnum, t_vec2f test);
+void	change_floor_height(t_data *d, double val, int16_t sectnum);
 
 #endif
