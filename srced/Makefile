@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/29 04:25:11 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/05/04 11:22:50 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/04 11:29:23 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRC = main.c \
 	  init_sdl.c \
 	  ../src/vec2.c \
 	  ../src/vec2_2.c \
+	  draw.c \
 	  pixel.c
 OBJ = $(SRC:.c=.o)
 FT_DIR = ../libft
