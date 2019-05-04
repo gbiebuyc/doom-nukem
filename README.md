@@ -29,3 +29,4 @@ loop()
 - Space = draw sector (clockwise only!)
 - Right click = drag view
 - Wheel = zoom
+- Delete = delete sector under cursor

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 12:54:34 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/04 20:14:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void	main_loop(t_data *d)
 				else
 					add_sector(d);
 			}
+			else if (e.key.keysym.sym == SDLK_d)
+				debug_print(d);
+			else if (e.key.keysym.sym == SDLK_DELETE)
+				del_sector(d, find_sect_under_cursor(d));
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
 			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
@@ -160,6 +164,7 @@ void	add_sector(t_data *d)
 	d->sectordrawing = true;
 	d->numsectors++;
 	d->sectors[d->numsectors - 1].firstwallnum = d->numwalls;
+	d->sectors[d->numsectors - 1].numwalls = 0;
 	d->sectors[d->numsectors - 1].floorheight = 0;
 	d->sectors[d->numsectors - 1].ceilheight = 1;
 	d->sectors[d->numsectors - 1].floorpicnum = 1;
@@ -300,4 +305,74 @@ int16_t	in_which_sector_is_this_wall(t_data *d, t_wall *wall)
 		if (d->sectors[s].firstwallnum > w)
 			break ;
 	return (s - 1);
+}
+
+void	debug_print(t_data *d)
+{
+	t_wall		*wall;
+
+	printf("DEBUG OUTPUT:\n");
+	for (int w = 0, s = 0; w < d->numwalls; w++)
+	{
+		if (w == d->sectors[s].firstwallnum)
+			printf("sector %d\n", s++);
+		wall = d->walls + w;
+		printf("wall %d", w);
+		if (wall->neighborsect != -1)
+			printf(" neighbor %d", wall->neighborsect);
+		printf("\n");
+	}
+	printf("\n");
+}
+
+void	del_sector(t_data *d, int16_t sectnum)
+{
+	if (sectnum < 0)
+		return ;
+	t_sector *sect = d->sectors + sectnum;
+	int n = sect->numwalls;
+	d->numwalls -= n;
+	for (int w = sect->firstwallnum; w < d->numwalls; w++)
+	{
+		d->walls[w] = d->walls[w + n];
+		if (d->walls[w].neighborsect == sectnum)
+			d->walls[w].neighborsect = -1;
+		if (d->walls[w].neighborsect > sectnum)
+			d->walls[w].neighborsect--;
+	}
+	d->numsectors--;
+	for (int s = sectnum; s < d->numsectors; s++)
+	{
+		d->sectors[s] = d->sectors[s + 1];
+		d->sectors[s].firstwallnum -= n;
+	}
+}
+
+int16_t	find_sect_under_cursor(t_data *d)
+{
+	int		x, y;
+
+	SDL_GetMouseState(&x, &y);
+	t_vec2f p = screentoworld(d, (t_vec2f){x, y});
+	for (int s = 0; s < d->numsectors; s++)
+		if (inside(d, s, p))
+			return (s);
+	return (-1);
+}
+
+bool	inside(t_data *d, int16_t sectnum, t_vec2f test)
+{
+	int i, j;
+	bool c = 0;
+
+	int npoints = d->sectors[sectnum].numwalls;
+	for (i = 0, j = npoints-1; i < npoints; j = i++)
+	{
+		t_vec2f p0 = d->walls[d->sectors[sectnum].firstwallnum + i].point;
+		t_vec2f p1 = d->walls[d->sectors[sectnum].firstwallnum + j].point;
+		if ( ((p0.y > test.y) != (p1.y > test.y)) &&
+				(test.x < (p1.x-p0.x) * (test.y-p0.y) / (p1.y-p0.y) + p0.x) )
+			c = !c;
+	}
+	return (c);
 }

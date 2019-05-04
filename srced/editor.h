@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 12:49:09 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/04 20:13:13 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,9 @@ t_vec2f	grid_lock(t_data *d, t_vec2f p);
 void	detect_neighbors(t_data *d, int16_t sectnum);
 int16_t	in_which_sector_is_this_wall(t_data *d, t_wall *w);
 bool	same_pos(t_wall *w0, t_wall *w1);
+void	debug_print(t_data *d);
+void	del_sector(t_data *d, int16_t sectnum);
+int16_t	find_sect_under_cursor(t_data *d);
+bool	inside(t_data *d, int16_t sectnum, t_vec2f test);
 
 #endif
