@@ -26,6 +26,6 @@ loop()
 - R = Run the game
 - S = Save file
 - L = Toggle grid locking
-- Space = draw sector
+- Space = draw sector (clockwise only!)
 - Right click = drag view
 - Wheel = zoom

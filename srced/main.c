@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/03 01:35:00 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/04 12:53:28 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,17 @@ void	run_game()
 
 void	init_sectors(t_data *d)
 {
-	d->sectors[0] = (t_sector){0, 4, 0, 2, 2, 0, 255};
-	d->walls[0] = (t_wall){(t_vec2f){-5, 5}, 0, 0, 0, 0, -1};
-	d->walls[1] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0, 1};
-	d->walls[2] = (t_wall){(t_vec2f){ 5,-5}, 0, 2, 0, 0, -1};
-	d->walls[3] = (t_wall){(t_vec2f){-5,-5}, 0, 3, 0, 0, -1};
+	d->sectors[0] = (t_sector){0, 4, 0, 1, 2, 0, 255};
+	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1};
+	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, 1};
+	d->walls[2] = (t_wall){(t_vec2f){ 2,-2}, 0, 2, 0, 0, -1};
+	d->walls[3] = (t_wall){(t_vec2f){-2,-2}, 0, 3, 0, 0, -1};
 
-	d->sectors[1] = (t_sector){4, 4, 0.5, 1.5, 3, 0, 255};
-	d->walls[4] = (t_wall){(t_vec2f){ 5,-5}, 0, 0, 0, 0, 0};
-	d->walls[5] = (t_wall){(t_vec2f){ 20, 5}, 0, 1, 0, 0, -1};
-	d->walls[6] = (t_wall){(t_vec2f){ 20,-15}, 0, 2, 0, 0, -1};
-	d->walls[7] = (t_wall){(t_vec2f){ 5,-15}, 0, 3, 0, 0, -1};
+	d->sectors[1] = (t_sector){4, 4, 0.1, 0.9, 3, 0, 255};
+	d->walls[4] = (t_wall){(t_vec2f){ 2,-2}, 0, 0, 0, 0, 0};
+	d->walls[5] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, -1};
+	d->walls[6] = (t_wall){(t_vec2f){ 6,-6}, 0, 2, 0, 0, -1};
+	d->walls[7] = (t_wall){(t_vec2f){ 2,-6}, 0, 3, 0, 0, -1};
 
 	d->numsectors = 2;
 	d->numwalls = 8;
@@ -138,7 +138,7 @@ void	save_file(t_data *d)
 {
 	int f;
 
-	t_vec3f startpos = {0, 1, 0};
+	t_vec3f startpos = {0, 0.5, 0};
 	double angle = 0;
 	int16_t startsectnum = 0;
 
@@ -169,21 +169,23 @@ void	add_sector(t_data *d)
 	d->sectordrawing = true;
 	d->numsectors++;
 	d->sectors[d->numsectors - 1].firstwallnum = d->numwalls;
+	d->sectors[d->numsectors - 1].floorheight = 0;
+	d->sectors[d->numsectors - 1].ceilheight = 1;
+	d->sectors[d->numsectors - 1].floorpicnum = 1;
 	add_wall(d); // First wall
 	add_wall(d); // Current wall
 }
 
 void	add_wall(t_data *d)
 {
-	int x, y;
-	SDL_GetMouseState(&x, &y);
-	t_vec2f p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
+	t_wall	*wall;
+	int		x, y;
+
 	t_sector *sect = &d->sectors[d->numsectors - 1];
-	for (int i = 0; i < sect->numwalls - 1; i++)
+	if (sect->numwalls >= 2)
 	{
-		t_wall *wall = d->walls + sect->firstwallnum + i;
-		if (wall->point.x == d->selectedwall->point.x &&
-				wall->point.y == d->selectedwall->point.y)
+		wall = d->walls + sect->firstwallnum;
+		if (same_pos(wall, d->selectedwall))
 		{
 			// The loop is done when you press the
 			// space bar at the first point again.
@@ -193,11 +195,56 @@ void	add_wall(t_data *d)
 			return ;
 		}
 	}
+	for (int i = 0; i < sect->numwalls - 1; i++)
+	{
+		// Check if there is not already a wall at this point.
+		wall = d->walls + sect->firstwallnum + i;
+		if (same_pos(wall, d->selectedwall))
+			return ;
+	}
 	d->numwalls++;
-	d->sectors[d->numsectors - 1].numwalls++;
+	sect->numwalls++;
+	SDL_GetMouseState(&x, &y);
+	t_vec2f p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
 	d->walls[d->numwalls - 1].point = p;
 	d->walls[d->numwalls - 1].neighborsect = -1;
 	d->selectedwall = &d->walls[d->numwalls - 1];
+}
+
+bool	same_pos(t_wall *w0, t_wall *w1)
+{
+	return (w0->point.x == w1->point.x &&
+			w0->point.y == w1->point.y);
+}
+
+void	detect_neighbors(t_data *d, int16_t sectnum)
+{
+	int npoints = d->sectors[sectnum].numwalls;
+	if (npoints < 2)
+		return ;
+	for (int i = npoints-1, j = 0; j < npoints; i = j++)
+	{
+		t_wall *w0 = &d->walls[d->sectors[sectnum].firstwallnum + i];
+		t_wall *w1 = &d->walls[d->sectors[sectnum].firstwallnum + j];
+		w0->neighborsect = -1;
+		for (int s = 0; s < d->numsectors - 1 && w0->neighborsect == -1; s++)
+		{
+			if (s == sectnum)
+				continue ;
+			npoints = d->sectors[s].numwalls;
+			for (int k = npoints-1, l = 0; l < npoints; k = l++)
+			{
+				t_wall *w2 = &d->walls[d->sectors[s].firstwallnum + k];
+				t_wall *w3 = &d->walls[d->sectors[s].firstwallnum + l];
+				if (same_pos(w0, w3) && same_pos(w1, w2))
+				{
+					w0->neighborsect = s;
+					w2->neighborsect = sectnum;
+					break ;
+				}
+			}
+		}
+	}
 }
 
 void	draw_grid(t_data *d)
@@ -288,8 +335,7 @@ void	select_wall_under_cursor(t_data *d, t_vec2f p)
 		for (int i = 0; i < neighborsect->numwalls; i++)
 		{
 			wall = d->walls + neighborsect->firstwallnum + i;
-			if (wall->point.x == d->selectedwall->point.x &&
-					wall->point.y == d->selectedwall->point.y)
+			if (same_pos(wall, d->selectedwall))
 			{
 				d->selectedwall2 = wall;
 				break ;
@@ -305,9 +351,10 @@ void	update_wall_pos(t_data *d, t_vec2f p)
 		return ;
 	p = grid_lock(d, screentoworld(d, p));
 	d->selectedwall->point = p;
-	if (!d->selectedwall2)
-		return ;
-	d->selectedwall2->point = p;
+	if (d->selectedwall2)
+		d->selectedwall2->point = p;
+	else
+		detect_neighbors(d, in_which_sector_is_this_wall(d, d->selectedwall));
 }
 
 void	update_pos(t_data *d, t_vec2f p)
@@ -321,4 +368,14 @@ t_vec2f	grid_lock(t_data *d, t_vec2f p)
 	if (!d->grid_locking)
 		return (p);
 	return ((t_vec2f){floor(p.x + 0.5), floor(p.y + 0.5)});
+}
+
+int16_t	in_which_sector_is_this_wall(t_data *d, t_wall *wall)
+{
+	int s, w;
+
+	for (s = 0, w = wall - d->walls; s < d->numsectors; s++)
+		if (d->sectors[s].firstwallnum > w)
+			break ;
+	return (s - 1);
 }
