@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/30 00:04:33 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ FILES= main \
 	   load_map \
 	   inside \
 	   utils \
+	   shade \
 	   vec2 \
 	   vec2_2
 
