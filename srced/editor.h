@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 21:27:38 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:51:15 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	draw_sector(t_data *d, int16_t sectnum);
 t_vec2f	worldtoscreen(t_data *d, t_vec2f p);
 t_vec2f	screentoworld(t_data *d, t_vec2f p);
 void	select_wall_under_cursor(t_data *d, t_vec2f p);
-void	update_pos(t_data *d, t_vec2f p);
-void	update_wall_pos(t_data *d, t_vec2f v);
+void	update_pos(t_data *d);
+void	update_wall_pos(t_data *d);
 t_vec2f	grid_lock(t_data *d, t_vec2f p);
 void	detect_neighbors(t_data *d, int16_t sectnum);
 int16_t	in_which_sector_is_this_wall(t_data *d, t_wall *w);
@@ -70,5 +70,6 @@ void	del_sector(t_data *d, int16_t sectnum);
 int16_t	find_sect_under_cursor(t_data *d);
 bool	inside(t_data *d, int16_t sectnum, t_vec2f test);
 void	change_floor_height(t_data *d, double val, int16_t sectnum);
+void	cancel_last_wall(t_data *d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/04 22:45:18 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:56:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	main_loop(t_data *d)
 				change_floor_height(d, -0.1, find_sect_under_cursor(d));
 			else if (e.key.keysym.sym == SDLK_PAGEUP)
 				change_floor_height(d, +0.1, find_sect_under_cursor(d));
+			else if (e.key.keysym.sym == SDLK_BACKSPACE)
+				cancel_last_wall(d);
 		}
 		else if (e.type == SDL_MOUSEWHEEL) // Zoom
 			d->scale *= (e.wheel.y > 0) ? 1.1 : 0.9;
@@ -72,7 +74,7 @@ void	main_loop(t_data *d)
 			if (e.button.button == SDL_BUTTON_LEFT)
 				select_wall_under_cursor(d, (t_vec2f){e.button.x, e.button.y});
 			else if (e.button.button == SDL_BUTTON_RIGHT)
-				update_pos(d, (t_vec2f){e.button.x, e.button.y});
+				update_pos(d);
 		}
 		else if (e.type == SDL_MOUSEBUTTONUP)
 		{
@@ -85,9 +87,9 @@ void	main_loop(t_data *d)
 		else if (e.type == SDL_MOUSEMOTION)
 		{
 			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
-				update_wall_pos(d, (t_vec2f){e.motion.x, e.motion.y});
+				update_wall_pos(d);
 			if (e.motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT))
-				update_pos(d, (t_vec2f){e.motion.x, e.motion.y});
+				update_pos(d);
 		}
 		draw_screen(d);
 		SDL_FlushEvent(SDL_MOUSEMOTION);
@@ -281,14 +283,17 @@ void	select_wall_under_cursor(t_data *d, t_vec2f p)
 			}
 		}
 	}
-	update_wall_pos(d, p);
+	update_wall_pos(d);
 }
 
-void	update_wall_pos(t_data *d, t_vec2f p)
+void	update_wall_pos(t_data *d)
 {
+	int		x, y;
+
 	if (!d->selectedwall)
 		return ;
-	p = grid_lock(d, screentoworld(d, p));
+	SDL_GetMouseState(&x, &y);
+	t_vec2f p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
 	d->selectedwall->point = p;
 	if (d->selectedwall2)
 		d->selectedwall2->point = p;
@@ -296,9 +301,12 @@ void	update_wall_pos(t_data *d, t_vec2f p)
 		detect_neighbors(d, in_which_sector_is_this_wall(d, d->selectedwall));
 }
 
-void	update_pos(t_data *d, t_vec2f p)
+void	update_pos(t_data *d)
 {
-	d->pos = screentoworld(d, p);
+	int		x, y;
+
+	SDL_GetMouseState(&x, &y);
+	d->pos = screentoworld(d, (t_vec2f){x, y});
 	SDL_WarpMouseInWindow(d->win, W / 2, H / 2);
 }
 
@@ -388,4 +396,25 @@ void	change_floor_height(t_data *d, double val, int16_t sectnum)
 		return ;
 	d->sectors[sectnum].floorheight += val;
 	printf("sect %d floorheight = %f\n", sectnum, d->sectors[sectnum].floorheight);
+}
+
+void	cancel_last_wall(t_data *d)
+{
+	if (!d->sectordrawing)
+		return ;
+	t_sector *sect = &d->sectors[d->numsectors - 1];
+	sect->numwalls--;
+	d->numwalls--;
+	if (sect->numwalls >= 2)
+	{
+		d->selectedwall--;
+		update_wall_pos(d);
+	}
+	else
+	{
+		d->numwalls--;
+		d->numsectors--;
+		d->selectedwall = NULL;
+		d->sectordrawing = false;
+	}
 }
