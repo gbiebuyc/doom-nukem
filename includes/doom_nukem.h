@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 04:06:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:10:25 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
 void	update(t_data *d);
 void	render(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
-void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, uint8_t id_of_monster);
+void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t id_of_monster);
 void	init_monsters(t_data *d);
 uint32_t	shade(double z, uint32_t c);
 t_vec3f		vec2to3(t_vec2f v); // disppear ???
+t_vec2f		vec3to2(t_vec3f v); //same ?
 
 
 /*

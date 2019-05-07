@@ -3,14 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/07 08:26:11 by nallani           #+#    #+#             */
+/*   Updated: 2019/05/07 08:29:30 by nallani          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_sprite.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 04:00:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:26:01 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+uint8_t		get_nb_anim_from_rot(double monster_rot,
+		t_vec2f monster_pos, t_vec2f player_pos)
+{
+	double	rot;
+	double	vision_rot;
+	t_vec2f	vision;
+
+	vision = sub_vec2f(monster_pos, player_pos);
+	vision_rot = atan2(vision.y, vision.x);
+	rot = vision_rot - monster_rot;
+	rot += M_PI_2 + M_PI * 2;
+	printf("%f\n", rot);
+	rot = rot -  0.125 * M_PI;
+	if (rot > M_PI)
+	{
+		if (rot < 1.25 * M_PI)
+			return (1);
+		if (rot < 1.5 * M_PI)
+			return (0);
+		if (rot < 1.75 * M_PI)
+			return (7);
+		if (rot < 2 * M_PI)
+			return (6);
+	}
+	if (rot > 0.75 * M_PI)
+		return (2);
+	if (rot > M_PI_2)
+		return (3);
+	if (rot > M_PI_4)
+		return (4);
+	return (5);
+}
+
 t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos)
 {
 	t_vec3f	new;
@@ -31,38 +77,69 @@ t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos)
 	return (new);
 }
 
-void draw_sprite(t_data *d, t_projdata p, t_frustum *fr, uint8_t monster_list)
+void	display_sprite(t_3vec2f a, t_data *d, SDL_Surface *s, bool rev)
+{
+	int			x;
+	int			y;
+	int			colo;
+
+	x = a.start.x;
+	while (x <= a.end.x)
+	{
+		y = a.start.y;
+		while(y <= a.end.y)
+		{
+			if (rev)
+				colo = getpixel(s, (1 - a.scale.x * (x - a.start.x)), a.scale.y * (y - a.start.y));
+			else
+				colo = getpixel(s, a.scale.x * (x - a.start.x), a.scale.y * (y - a.start.y));
+			if (colo != 2037515) 
+				putpixel(d, x, y, colo);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list)
 {
 	t_monster	monster;
 	t_vec3f		top_left;
 	t_vec3f		bot_right;
 	t_vec3f		monsterpos;
+	t_3vec2f	a;
 
-	monster = d->monsters[p.sector->id_of_monster[monster_list] - 1];
-	monsterpos = (t_vec3f) {monster.pos.x, p.sector->floorheight + 0.1 + d->monster_type[monster.id_type].height * monster.size, monster.pos.y};
+	monster = d->monsters[p.sector->id_of_monster[monster_list]];
+	printf("%d\n", monster.id_type);
+	monsterpos = (t_vec3f) {monster.pos.x, p.sector->floorheight + d->monster_type[monster.id_type].floating + monster.height, monster.pos.y};
 
-	t_vec2f scale = (t_vec2f){d->monster_type[monster.id_type].width * monster.size, 0};
-	actualize_dir(-d->cam.rot, &scale); // add ft_max entre pos du monstre et distance min pour affichage;
+	t_vec2f scale = (t_vec2f){monster.width, 0};
+	actualize_dir(-d->cam.rot, &scale); // add ft_max entre pos du monstre et distance min pour affichage; //ou plutot
+	// faire les collisions avec le joueur et empecher la bestiole d'avancer si trop proche ?
 	top_left = get_projected_vertex(d, (t_vec3f){monsterpos.x - scale.x, monsterpos.y, monsterpos.z - scale.y}, monsterpos);
 	bot_right = get_projected_vertex(d, (t_vec3f){monsterpos.x + scale.x,
-			monsterpos.y + 0.1 - d->monster_type[monster.id_type].height * monster.size, monsterpos.z + scale.y}, monsterpos);
+			monsterpos.y + d->monster_type[monster.id_type].floating - monster.height, monsterpos.z + scale.y}, monsterpos);
 
-	double begin_x = top_left.x > bot_right.x ? bot_right.x : top_left.x;
-	double end_x = top_left.x > bot_right.x ? top_left.x : bot_right.x;
-	if (top_left.z > 0.3)
-	for (int x = begin_x; x < end_x; x++)
+	if (top_left.z > 0.4) //pansement
 	{
-		double scale_x = fabs((100.0 / (begin_x - end_x)) * (x - begin_x)) / 100;
-		double begin_y = bot_right.y > top_left.y ? top_left.y : bot_right.y;
-		double end_y = bot_right.y > top_left.y ? bot_right.y : top_left.y;
-		for (int y = begin_y; y < end_y; y++)
+		a.start.x = top_left.x > bot_right.x ? bot_right.x : top_left.x ;
+		//		a.start.x = ft_max(begin_x, fr->x1);// problem : besoin de faire en sorte que le sprite en sorte pas de la fenetre du secteur
+		//		(pas simplement du dernier mur du secteur)
+		a.end.x = top_left.x > bot_right.x ? top_left.x : bot_right.x;
+		//		a.end_x = ft_min(end_x, fr->x2);
+		a.scale.x = fabs(100.0 / (a.start.x - a.end.x) / 100);
+		a.start.y = bot_right.y > top_left.y ? top_left.y : bot_right.y;
+		a.end.y = bot_right.y > top_left.y ? bot_right.y : top_left.y;
+		a.scale.y = fabs((100.0 / (a.start.y - a.end.y)) / 100);
+		int nb_of_anim = get_nb_anim_from_rot(monster.rot, monster.pos, vec3to2(d->cam.pos));
+		if (nb_of_anim > 4)
 		{
-			double scale_y = fabs((100.0 / (begin_y - end_y)) * (y - begin_y)) / 100;
-			uint32_t colo = getpixel(d->monster_text[monster.id_type][monster.anim], scale_x, scale_y);
-			if (colo != 2037515)
-			putpixel(d, x, y, colo);
+			nb_of_anim = 8 - nb_of_anim; 
+			display_sprite(a, d, d->monster_text[monster.id_type][nb_of_anim], false);
 		}
+		else
+			display_sprite(a, d, d->monster_text[monster.id_type][nb_of_anim], true);
 	}
-		if (p.sector->id_of_monster[++monster_list])
-	draw_sprite(d, p, fr, monster_list);
+	if (p.sector->id_of_monster[++monster_list] != -1) //recursive call for all monsters in a sector (/!\ need to sort them before first call)
+		draw_sprite(d, p, fr, monster_list);
 }

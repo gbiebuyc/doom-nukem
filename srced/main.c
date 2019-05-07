@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 03:54:09 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 04:33:33 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,20 @@ void	run_game(t_data *d)
 
 void	init_sectors(t_data *d)
 {
-	d->sectors[0] = (t_sector){0, 4, 0.2, 7.0, 2, 0, 255, {1}};
+	d->sectors[0] = (t_sector){0, 4, 0.2, 7.0, 2, {0}, 0, 255};
 	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1};
 	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, 1};
 	d->walls[2] = (t_wall){(t_vec2f){ 2,-2}, 0, 2, 0, 0, -1};
 	d->walls[3] = (t_wall){(t_vec2f){-2,-2}, 0, 3, 0, 0, -1};
 
-	d->sectors[1] = (t_sector){4, 4, 0, 7.0, 3, 0, 255, {0}};
+	d->sectors[1] = (t_sector){4, 4, 0, 7.0, 3, {0}, 0, 255};
 	d->walls[4] = (t_wall){(t_vec2f){ 2,-2}, 0, 0, 0, 0, 0};
 	d->walls[5] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, -1};
 	d->walls[6] = (t_wall){(t_vec2f){ 6,-6}, 0, 2, 0, 0, -1};
 	d->walls[7] = (t_wall){(t_vec2f){ 2,-6}, 0, 3, 0, 0, -1};
+	ft_memset(d->sectors[0].id_of_monster, -1, sizeof(d->sectors[0].id_of_monster));
+	ft_memset(d->sectors[1].id_of_monster, -1, sizeof(d->sectors[1].id_of_monster));
+	d->sectors[0].id_of_monster[0] = 0;
 
 	d->numsectors = 2;
 	d->numwalls = 8;
@@ -197,6 +200,7 @@ void	add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].floorheight = 0;
 	d->sectors[d->numsectors - 1].ceilheight = 7;
 	d->sectors[d->numsectors - 1].floorpicnum = 1;
+	ft_memset(d->sectors[d->numsectors - 1].id_of_monster, -1, sizeof(d->sectors[d->numsectors-1].id_of_monster));
 	add_wall(d); // First wall
 	add_wall(d); // Current wall
 }

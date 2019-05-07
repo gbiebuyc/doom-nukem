@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 03:57:53 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 07:37:32 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define MAXNUMSECTORS 1024
 # define MAXNUMMONSTERS 256
 # define MAXNUMWALLS 8192
-# define MAXTYPEMONSTERS 10
+# define MAXTYPEMONSTERS 2
 
 /*
 ** This header is used both by the editor and the game
@@ -52,9 +52,9 @@ typedef struct	s_sector
 	float		floorheight;
 	float		ceilheight;
 	int16_t		floorpicnum;
+	int16_t		id_of_monster[MAXMONSTERSEC];
 	int16_t		ceilpicnum;
 	uint8_t		light;
-	uint8_t		id_of_monster[MAXMONSTERSEC];
 }				t_sector;
 
 typedef struct	s_wall
@@ -77,17 +77,20 @@ typedef struct	s_thing
 
 typedef struct	s_monster
 {
-	t_vec2f		pos;
-	double		size;
-	double		height;
-	double		width;
-	double		health_mult;
-	double		rot;
-	int16_t		life;
-	uint8_t		id_type;
-	uint8_t		anim;
+	t_vec2f		pos; //position du monstre en x et z
+	double		size; // scale de la taille par rapport a la taille du monstre type (a exprimer em %)
+	double		height; // calculee dans le binaire
+	double		width; // calculee dans le binaire
+	double		health_mult; // scale de la vie par rapport a la vie du monstre type
+	double		rot; // unused for now, will be used to chose animation displayed
+	int16_t		life; //life calculated in binary
+	int16_t		sector; // which sector is the monster from
+	uint8_t		id_type; // which type is the monster
+	//double	floating; // might be used to set different floating height for monsters
+	uint8_t		anim; // unused for now
 	void		(*behavior)(/*add stuff there*/); //maybe do it with a if (id == 1) then call behaviour_1()...
-	bool		activated;
+	 // behavior unused for now
+	bool		activated; // unused for now
 }				t_monster;
 
 /*

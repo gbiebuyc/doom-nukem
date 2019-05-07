@@ -6,12 +6,19 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 01:40:47 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 07:37:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_DOOM_H
 # define STRUCTS_DOOM_H
+
+typedef struct	s_3vec2f
+{
+	t_vec2f		start;
+	t_vec2f		end;
+	t_vec2f		scale;
+}				t_3vec2f;
 
 typedef struct	s_cam
 {
@@ -57,10 +64,11 @@ typedef struct	s_monster_type
 	double		height;
 	double		width;
 	uint16_t	health;
+	double		floating;
 	uint8_t	id_sprite;
 }				t_monster_type;
 
-# define MAXNBOFANIMATION 1
+# define MAXNBOFANIMATION 5
 
 typedef struct	s_data
 {

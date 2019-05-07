@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 01:51:31 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:52:55 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void	initialize_monster(t_data *d, t_monster *monster)
 	monster->width = monster->size * d->monster_type[monster->id_type].width;
 	monster->height = monster->size * d->monster_type[monster->id_type].height;
 	monster->anim = 0;
+	monster->rot = 1.5 * M_PI;
 }
 
 void	init_monster_list(t_data *d)
 {
 	d->monster_type[0].width = 0.8;
 	d->monster_type[0].height = 2.0;
+	d->monster_type[0].floating = 0.1;
 	d->monster_type[0].health = 1000;
 	d->monster_type[0].id_sprite = 0;
 }

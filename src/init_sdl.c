@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 03:31:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 07:59:29 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ void	init_sdl(t_data *d)
 	load_texture(d, "./textures/south.bmp");
 	load_texture(d, "./textures/east.bmp");
 	load_texture(d, "./textures/west.bmp");
-	load_monster_texture(d, "./textures/sprites/MOMDA1.bmp", false);
+	load_monster_texture(d, "./textures/sprites/motherdemon/walk1/MOMDA1.bmp", false);
+	load_monster_texture(d, "./textures/sprites/motherdemon/walk1/MOMDA2A8.bmp", false);
+	load_monster_texture(d, "./textures/sprites/motherdemon/walk1/MOMDA3A7.bmp", false);
+	load_monster_texture(d, "./textures/sprites/motherdemon/walk1/MOMDA4A6.bmp", false);
+	load_monster_texture(d, "./textures/sprites/motherdemon/walk1/MOMDA5.bmp", false);
 	d->keys = SDL_GetKeyboardState(NULL);
 }

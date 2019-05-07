@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/06 07:48:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 05:25:15 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_floor(d, p, fr);
 		draw_wall(d, p, fr);
-		if (*sect->id_of_monster)
-			draw_sprite(d, p, fr, 0);
+		if (*sect->id_of_monster != -1) // probleme structuration code (appele 3x et soucis avec frustum)
+			draw_sprite(d, p, fr, *sect->id_of_monster);
 	}
 }
