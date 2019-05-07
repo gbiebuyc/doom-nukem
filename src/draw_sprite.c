@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 08:55:52 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:20:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list) /
 		if (nb_of_anim > 4)
 		{
 			nb_of_anim = 8 - nb_of_anim; 
-			display_sprite(a, d, d->monster_text[monster.id_type][nb_of_anim], false);
+			display_sprite(a, d, d->monster_text[monster.id_type][monster.anim_state][nb_of_anim], false);
 		}
 		else
-			display_sprite(a, d, d->monster_text[monster.id_type][nb_of_anim], true);
+			display_sprite(a, d, d->monster_text[monster.id_type][monster.anim_state][nb_of_anim], true);
 	}
 	if (p.sector->id_of_monster[++monster_list] != -1) //recursive call for all monsters in a sector (/!\ need to sort them before first call)
 		draw_sprite(d, p, fr, monster_list);

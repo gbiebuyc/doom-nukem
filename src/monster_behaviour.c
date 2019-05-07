@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   monster_behaviour.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 22:23:30 by nallani          ###   ########.fr       */
+/*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
+/*   Updated: 2019/05/07 23:14:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int		main(int argc, char **argv)
-{	
-	t_data d;
-
-	(void)argc;
-	(void)argv;
-	load_map(&d);
-	init_sdl(&d);
-	init_monsters(&d);
-	loop(&d);
+void	monster_behaviour(t_data *d, t_monster *monster)
+{
+	(void)d;
+	(void)monster;	
 }

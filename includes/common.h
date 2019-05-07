@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 07:37:32 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:13:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ typedef struct	s_monster
 	int16_t		sector; // which sector is the monster from
 	uint8_t		id_type; // which type is the monster
 	//double	floating; // might be used to set different floating height for monsters
-	uint8_t		anim; // unused for now
-	void		(*behavior)(/*add stuff there*/); //maybe do it with a if (id == 1) then call behaviour_1()...
-	 // behavior unused for now
+	uint8_t		anim_state; // set during behaviour to chose which state of animation is the monster in
+	uint8_t		anim_time;
+	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster
 	bool		activated; // unused for now
 }				t_monster;
 

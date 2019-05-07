@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 21:22:40 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/05 23:50:22 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:28:06 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ void	gravity(t_data *d, int mod)
 {
 	static double	accel;
 
-	if (mod)
+	if (mod == 1 && (accel = JUMP_FORCE))
+		return ;
+	if (mod == 2)
 	{
-		accel = JUMP_FORCE;
+		accel += 0.0015;
 		return ;
 	}
 	d->cam.pos.y += accel;
-		accel -= 0.004;
+	accel -= 0.004;
 	if (d->cam.pos.y > d->sectors[d->cursectnum].ceilheight && accel > 0)
 		accel = 0;
 	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT)
@@ -36,8 +38,20 @@ void	gravity(t_data *d, int mod)
 	}
 }
 
-void	jump(t_data *d)
+void	jump(t_data *d, bool pressed)
 {
+	static bool is_jumping;
+
+	if (!pressed)
+	{
+		is_jumping = false;
+		return;
+	}
 	if (d->cam.pos.y <= d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT)
+	{
 		gravity(d, 1);
+		is_jumping = 1;
+	}
+	else if (is_jumping)
+		gravity(d, 2);
 }

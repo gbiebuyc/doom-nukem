@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 08:02:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:19:34 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,27 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 	i = 0;
 	(void)d;
 	(void)monsters;
-//	t_vec3f dist = sub_vec3f(vec2to3(monsters[i].pos), d->cam.pos);
+	//	t_vec3f dist = sub_vec3f(vec2to3(monsters[i].pos), d->cam.pos);
 	while (i < *nummonsters)
 	{
-//		monsters[i].pos.x -= 0.001 * dist.x;
-//		monsters[i].pos.y -= 0.001 * dist.z;
-		;/*appply behavior of monster (return -1 if death)
-		if (behaviour(monsters[i]) == -1) // if monster moved apply inside to change sector
+		if (!monsters[i].activated)
 		{
-			*nummonsters--;
-			*monsters[i] = *monsters[nummonsters];
-			continue;
+			i++;
+			continue ;
 		}
-	*/	i++;
+		if (monsters[i].behaviour == 0)	
+			monster_behaviour(d, &monsters[i]);
+		monster_anim_state(&monsters[i], d->monster_type);
+		//		monsters[i].pos.x -= 0.001 * dist.x;
+		//		monsters[i].pos.y -= 0.001 * dist.z;
+		;/*appply behavior of monster (return -1 if death)
+		   if (behaviour(monsters[i]) == -1) // if monster moved apply inside to change sector
+		   {
+		  *nummonsters--;
+		  *monsters[i] = *monsters[nummonsters];
+		  continue;
+		  }
+		  */	i++;
 	}
 }
 
@@ -47,8 +55,7 @@ void	update(t_data *d)
 		d->cam.rot -= 2 * M_PI; // ''
 	d->cam.sin = sin(d->cam.rot);
 	d->cam.cos = cos(d->cam.rot);
-	if (d->keys[SDL_SCANCODE_J])
-		jump(d);
+	d->keys[SDL_SCANCODE_J] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	movement(d);
 
 	// Update current sector
