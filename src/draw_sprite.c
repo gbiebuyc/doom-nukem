@@ -3,29 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/07 08:26:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 08:29:30 by nallani          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw_sprite.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 08:26:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:55:52 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-uint8_t		get_nb_anim_from_rot(double monster_rot,
-		t_vec2f monster_pos, t_vec2f player_pos)
+// OPEN CIRCLE_ANIM on slack to understand code for 1rst function
+
+uint8_t		get_nb_anim_from_rot(double monster_rot, 
+		t_vec2f monster_pos, t_vec2f player_pos)// get the NB of the animation based on where does it face compared to where you are
+	//code is in circle_anim on slack
 {
 	double	rot;
 	double	vision_rot;
@@ -34,8 +25,11 @@ uint8_t		get_nb_anim_from_rot(double monster_rot,
 	vision = sub_vec2f(monster_pos, player_pos);
 	vision_rot = atan2(vision.y, vision.x);
 	rot = vision_rot - monster_rot;
-	rot += M_PI_2 + M_PI * 2;
-	printf("%f\n", rot);
+	rot += M_PI_2 + M_PI * 2; // PANSEMENT ??
+	if (rot > 2 * M_PI)
+		rot -= 2 * M_PI;
+	if (rot < 0)
+		rot += 2 * M_PI;
 	rot = rot -  0.125 * M_PI;
 	if (rot > M_PI)
 	{
@@ -54,10 +48,12 @@ uint8_t		get_nb_anim_from_rot(double monster_rot,
 		return (3);
 	if (rot > M_PI_4)
 		return (4);
+	if (rot < 0)
+		return (6);
 	return (5);
 }
 
-t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos)
+t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos) // projection (for sprites only i think ?, unapplicable somewhere else)
 {
 	t_vec3f	new;
 	t_vec3f dist;
@@ -77,13 +73,15 @@ t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos)
 	return (new);
 }
 
-void	display_sprite(t_3vec2f a, t_data *d, SDL_Surface *s, bool rev)
+void	display_sprite(t_3vec2f a, t_data *d, SDL_Surface *s, bool rev) // display a sprite
+	//a contains start end and scale values
+	//rev is used to mirror an image
 {
 	int			x;
 	int			y;
 	int			colo;
 
-	x = a.start.x;
+	x = a.start.x + 1;
 	while (x <= a.end.x)
 	{
 		y = a.start.y;
@@ -101,7 +99,8 @@ void	display_sprite(t_3vec2f a, t_data *d, SDL_Surface *s, bool rev)
 	}
 }
 
-void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list)
+void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list) //main function to draw a sprite, need
+	//to adjust start_x with fr (see problem below in comments)
 {
 	t_monster	monster;
 	t_vec3f		top_left;
@@ -110,7 +109,6 @@ void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list)
 	t_3vec2f	a;
 
 	monster = d->monsters[p.sector->id_of_monster[monster_list]];
-	printf("%d\n", monster.id_type);
 	monsterpos = (t_vec3f) {monster.pos.x, p.sector->floorheight + d->monster_type[monster.id_type].floating + monster.height, monster.pos.y};
 
 	t_vec2f scale = (t_vec2f){monster.width, 0};

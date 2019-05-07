@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 07:59:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:45:52 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	load_monster_texture(t_data *d, char *path, bool inc) // pass path for each
 	if (!(d->monster_text[i][j++] = SDL_ConvertSurfaceFormat(tmp,
 					d->screen->format->format, 0)))
 		exit(EXIT_FAILURE);
-	printf("%d\n", (int)((int32_t*)d->monster_text[0][0]->pixels)[0]);
+//	printf("%d\n", (int)((int32_t*)d->monster_text[0][0]->pixels)[0]); (wtf color ?)
 //	printf("%d\n", (int)((int8_t*)d->monster_text[0][0]->pixels)[0]);
 //	printf("%d\n", (int)((int8_t*)d->monster_text[0][0]->pixels)[1]);
 //	printf("%d\n", (int)((int8_t*)d->monster_text[0][0]->pixels)[2]);

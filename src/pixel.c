@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 23:47:23 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/05 22:45:53 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:31:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ uint32_t	getpixel(SDL_Surface *s, double x, double y)
 	realy = s->h * y;
 	if (realx >= 0 && realy >= 0 && realx < s->w && realy < s->h)
 		return (((uint32_t*)s->pixels)[realx + realy * s->w]);
+	printf("%f\n", x);
 	return (0);
 }
 
