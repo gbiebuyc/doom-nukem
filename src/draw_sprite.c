@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 03:55:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 04:00:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void draw_sprite(t_data *d, t_projdata p, t_frustum *fr, uint8_t monster_list)
 			monsterpos.y + 0.1 - d->monster_type[monster.id_type].height * monster.size, monsterpos.z + scale.y}, monsterpos);
 
 	double begin_x = top_left.x > bot_right.x ? bot_right.x : top_left.x;
+	double end_x = top_left.x > bot_right.x ? top_left.x : bot_right.x;
 	if (top_left.z > 0.3)
 	for (int x = begin_x; x < end_x; x++)
 	{

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 01:10:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 03:57:53 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct	s_monster
 	double		height;
 	double		width;
 	double		health_mult;
+	double		rot;
 	int16_t		life;
 	uint8_t		id_type;
 	uint8_t		anim;

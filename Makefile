@@ -6,11 +6,8 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2019/05/07 00:54:59 by nallani          ###   ########.fr        #
-=======
+#    Updated: 2019/05/07 04:00:10 by nallani          ###   ########.fr        #
 #    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
->>>>>>> dc424990bf39bd4b8be2441cadc0ab96a8fd3c72
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +29,10 @@ FILES= main \
 	   load_map \
 	   inside \
 	   utils \
-<<<<<<< HEAD
 	   jump \
 	   movement \
 	   draw_sprite \
-=======
 	   shade \
->>>>>>> dc424990bf39bd4b8be2441cadc0ab96a8fd3c72
 	   vec2 \
 	   vec2_2
 
