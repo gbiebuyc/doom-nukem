@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 19:38:27 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/05 22:15:33 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 03:54:26 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	draw_wall(t_data *d, t_projdata p, t_frustum *fr)
 		{
 			double v = lerp(norm(y, ya, yb), 0, p.y_scale);
 			if (p.neighbor && y < nya)
-				putpixel(d, x, y, getpixel2(
-							d->textures[p.wall->lowerpicnum], u, v));
+				putpixel(d, x, y, shade(z, getpixel2(
+							d->textures[p.wall->lowerpicnum], u, v)));
 			else if (p.neighbor && y > nyb)
-				putpixel(d, x, y, getpixel2(
-							d->textures[p.wall->lowerpicnum], u, v));
+				putpixel(d, x, y, shade(z, getpixel2(
+							d->textures[p.wall->lowerpicnum], u, v)));
 			else if (!p.neighbor)
-				putpixel(d, x, y, getpixel2(
-							d->textures[p.wall->middlepicnum], u, v));
+				putpixel(d, x, y, shade(z, getpixel2(
+							d->textures[p.wall->middlepicnum], u, v)));
 		}
 	}
 	if (p.neighbor && beginx < endx)

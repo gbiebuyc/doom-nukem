@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:12:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/05 22:26:50 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/07 03:55:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr)
 			double u = lerp(n, left_u, right_u);
 			double v = lerp(n, left_v, right_v);
 			double scale = 1;
-			putpixel(d, x, y, getpixel2(d->textures[p.sector->floorpicnum],
-						u * scale, v * scale));
+			putpixel(d, x, y, shade(distance, getpixel2(d->textures
+							[p.sector->floorpicnum], u * scale, v * scale)));
 		}
 	}
 }

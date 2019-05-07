@@ -6,7 +6,11 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/05/07 00:51:42 by nallani          ###   ########.fr       */
+=======
+/*   Updated: 2019/05/05 11:10:14 by gbiebuyc         ###   ########.fr       */
+>>>>>>> dc424990bf39bd4b8be2441cadc0ab96a8fd3c72
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +39,12 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
 void	update(t_data *d);
 void	render(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
+<<<<<<< HEAD
 void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, uint8_t id_of_monster);
 void	init_monsters(t_data *d);
+=======
+uint32_t	shade(double z, uint32_t c);
+>>>>>>> dc424990bf39bd4b8be2441cadc0ab96a8fd3c72
 
 /*
 ** utils.c
