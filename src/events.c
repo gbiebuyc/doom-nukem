@@ -18,8 +18,10 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 		proper_exit(d);
 
 	// Pause button
-	if (event.keysym.sym == SDLK_p)
+	else if (event.keysym.sym == SDLK_p)
 		 SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
+	else if (event.keysym.sym == SDLK_PAUSE)
+		d->debug_pause = true;
 }
 
 #define MOUSE_SENSITIVTY 1
@@ -42,5 +44,29 @@ void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event)
 	}
 	else
 	{
+	}
+}
+
+void debug_pause(t_data *d)
+{
+	SDL_Event	e;
+
+	if (!d->debug_pause)
+		return ;
+	SDL_UpdateWindowSurface(d->win);
+	while (SDL_WaitEvent(&e))
+	{
+		if (e.type == SDL_KEYDOWN)
+		{
+			if (e.key.keysym.sym == SDLK_SPACE)
+				return ;
+			else if (e.key.keysym.sym == SDLK_PAUSE)
+			{
+				d->debug_pause = false;
+				return ;
+			}
+			else if (e.key.keysym.sym == SDLK_ESCAPE)
+				exit(EXIT_SUCCESS);
+		}
 	}
 }

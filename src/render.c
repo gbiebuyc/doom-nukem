@@ -14,10 +14,11 @@
 
 void	render(t_data *d)
 {
-	ft_memset(d->screen->pixels, 0, d->screen->w * d->screen->h * 4);
+	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
 	t_frustum fr;
 	fr.x1 = 0;
 	fr.x2 = WIDTH - 1;
+	ft_memset(fr.visitedportals, 0, sizeof(fr.visitedportals));
 	for(int x = 0; x < WIDTH; ++x)
 	{
 		fr.ytop[x] = 0;

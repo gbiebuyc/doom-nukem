@@ -32,12 +32,14 @@ uint32_t	getpixel2(SDL_Surface *s, double x, double y);
 void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
-void	draw_wall(t_data *d, t_projdata p, t_frustum *fr);
+void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
+void	clamp_wall(bool visible[], int *x1, int *x2);
 void	update(t_data *d);
 void	render(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
 uint32_t	shade(double z, uint32_t c);
+void	debug_pause(t_data *d);
 
 /*
 ** utils.c

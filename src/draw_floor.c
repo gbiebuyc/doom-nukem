@@ -19,12 +19,11 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr)
 	double altitude = d->cam.pos.y - p.sector->floorheight;
 	if (altitude <= 0)
 		return ;
-	altitude *= 2.7;
+	altitude *= 2.66;
 	double angle = -d->cam.rot + M_PI_2;
-	for (int x = ft_max(fr->x1, p.x1);
-			x <= ft_min(fr->x2, p.x2); x++)
+	for (int x = p.cx1; x <= p.cx2; x++)
 	{
-		n = norm(x, p.x1, p.x2);
+		n = fclamp(norm(x, p.x1, p.x2), 0, 1);
 		double y_start = lerp(n, p.y1b, p.y2b);
 		for (int y = ft_max(fr->ytop[x], y_start); y <= fr->ybottom[x]; y++)
 		{

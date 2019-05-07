@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_sector.c                                   :+:      :+:    :+:   */
+/*   render_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 01:10:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 21:19:47 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	len2;
 	double	yceil;
 	double	yfloor;
+	double	zbuffer[WIDTH];
 
+	for (int i = 0; i < WIDTH; i++)
+		zbuffer[i] = INFINITY;
 	for (int i = 0; i < sect->numwalls; i++)
 	{
 		int wallnum = sect->firstwallnum + i;
@@ -29,7 +32,10 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		double z1 = d->walls[wallnum].point.y - d->cam.pos.z;
 		double x2 = d->walls[wallnextnum].point.x - d->cam.pos.x;
 		double z2 = d->walls[wallnextnum].point.y - d->cam.pos.z;
-		t_projdata p;
+		t_projdata p = {.zbuffer = zbuffer, .sector = sect,
+			.wall = &d->walls[wallnum]};
+		p.neighbor = (p.wall->neighborsect == -1) ? NULL :
+			&d->sectors[p.wall->neighborsect];
 		p.x1 = x1 * d->cam.cos - z1 * d->cam.sin;
 		p.z1 = x1 * d->cam.sin + z1 * d->cam.cos;
 		p.x2 = x2 * d->cam.cos - z2 * d->cam.sin;
@@ -53,10 +59,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 			len2 = vec2f_length((t_vec2f){p.x2 - p.x1, p.z2 - p.z1});
 			u_end = len2 / len1;
 		}
-		p.wall = &d->walls[wallnum];
-		p.sector = sect;
-		p.neighbor = (p.wall->neighborsect == -1) ? NULL :
-			&d->sectors[p.wall->neighborsect];
 		double scale1 = (1.0 / p.z1) * WIDTH;
 		double scale2 = (1.0 / p.z2) * WIDTH;
 		p.x1 = p.x1 * scale1 + WIDTH / 2;
@@ -80,7 +82,8 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.u_begin = u_begin * len1;
 		p.u_end = u_end * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
+		draw_wall(d, &p, fr);
 		draw_floor(d, p, fr);
-		draw_wall(d, p, fr);
+		debug_pause(d);
 	}
 }

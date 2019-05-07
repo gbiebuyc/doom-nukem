@@ -26,6 +26,8 @@ typedef struct	s_projdata
 {
 	double		x1;
 	double		x2;
+	int			cx1;
+	int			cx2;
 	double		z1;
 	double		z2;
 	int			y1a;
@@ -42,6 +44,7 @@ typedef struct	s_projdata
 	double		y_scale;
 	t_wall		*wall;
 	t_sector	*sector;
+	double		*zbuffer;
 }				t_projdata;
 
 typedef struct	s_frustum
@@ -50,6 +53,7 @@ typedef struct	s_frustum
 	int			ybottom[WIDTH];
 	int			x1;
 	int			x2;
+	bool		visitedportals[MAXNUMWALLS];
 }				t_frustum;
 
 typedef struct	s_data
@@ -64,6 +68,7 @@ typedef struct	s_data
 	int16_t			numsectors;
 	int16_t			numwalls;
 	int16_t			cursectnum;
+	bool			debug_pause;
 }				t_data;
 
 #endif
