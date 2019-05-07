@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/30 07:11:33 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:51:42 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define FPS 60
-# define MAXNUMSECTORS 1024
-# define MAXNUMWALLS 8192
 # include <structs_doom.h>
 
 void	putpixel(t_data *d, int x, int y, uint32_t color);
@@ -37,6 +35,8 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
 void	update(t_data *d);
 void	render(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
+void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, uint8_t id_of_monster);
+void	init_monsters(t_data *d);
 
 /*
 ** utils.c
@@ -55,8 +55,7 @@ void	proper_exit(t_data *d);
 void	err_exit(t_data *d, char count, const char *msg);
 
 /*
-** init_sdl.c
-*/
+** ini*/
 
 void	init_sdl(t_data *d);
 
@@ -73,5 +72,18 @@ void	loop(t_data *d);
 void	event_mouse_motion(t_data *d, SDL_MouseMotionEvent event);
 void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event);
 void	event_key_down(t_data *d, SDL_KeyboardEvent event);
+
+/*
+** jump.c
+*/
+
+void	gravity(t_data *d, int mod);
+void	jump(t_data *d);
+
+/*
+** movement.c
+*/
+
+void	movement(t_data *d);
 
 #endif

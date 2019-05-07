@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 18:21:39 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/27 01:38:53 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/03 21:08:41 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3)
 ** returns false if wall outside field of view
 */
 
-bool	clip_wall(double *x1, double *z1, double x2, double z2)
+bool	clip_wall(double *x1, double *z1, double x2, double z2) //??
 {
 	t_vec2f p0 = (t_vec2f){*x1, *z1};
 	t_vec2f p1 = (t_vec2f){x2, z2};

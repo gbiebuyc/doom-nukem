@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/30 00:16:30 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:40:47 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,29 @@ typedef struct	s_frustum
 	int			x2;
 }				t_frustum;
 
+typedef struct	s_monster_type
+{
+	double		height;
+	double		width;
+	uint16_t	health;
+	uint8_t	id_sprite;
+}				t_monster_type;
+
+# define MAXNBOFANIMATION 1
+
 typedef struct	s_data
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
 	SDL_Surface		*textures[4];
+	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAXNBOFANIMATION];
 	const Uint8		*keys;
 	t_cam			cam;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
+	t_monster		monsters[MAXNUMMONSTERS];
+	t_monster_type	monster_type[MAXTYPEMONSTERS];
+	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
 	int16_t			cursectnum;

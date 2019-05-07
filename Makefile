@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/04/30 00:04:33 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/07 00:54:59 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME= doom-nukem
 FILES= main \
 	   exit \
 	   init_sdl \
+	   init_monsters \
 	   loop \
 	   events \
 	   update \
@@ -27,6 +28,9 @@ FILES= main \
 	   load_map \
 	   inside \
 	   utils \
+	   jump \
+	   movement \
+	   draw_sprite \
 	   vec2 \
 	   vec2_2
 
@@ -73,7 +77,7 @@ obj/%.o: src/%.c
 #modifier $(NAME) pour compiler la sdl et etre en accord avec le pdf
 fast:
 	make -C libft
-	gcc -o $@ $(OBJ) $(LDFLAGS)
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 #compilation SDL
 

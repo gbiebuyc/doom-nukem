@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 01:23:16 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/05 23:48:48 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 {
 	if (event.keysym.sym == SDLK_ESCAPE)
 		proper_exit(d);
-
 	// Pause button
 	if (event.keysym.sym == SDLK_p)
 		 SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
 }
 
 #define MOUSE_SENSITIVTY 1
-#define MAX_Y_OFFSET HEIGHT/2
+#define MAX_Y_OFFSET HEIGHT
 
 void		event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
 {
 	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
 		return ;
-	d->cam.y_offset += event.yrel * MOUSE_SENSITIVTY * 0.3;
+	d->cam.y_offset += event.yrel * MOUSE_SENSITIVTY * 0.5;
 	d->cam.y_offset = fclamp(d->cam.y_offset, -MAX_Y_OFFSET, MAX_Y_OFFSET);
 	d->cam.rot += event.xrel * MOUSE_SENSITIVTY * 0.001;
 }

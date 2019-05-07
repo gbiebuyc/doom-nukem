@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/30 07:12:25 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:10:48 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <SDL.h>
 # include <libft.h>
+
+# define MAXMONSTERSEC 20
+# define MAXNUMSECTORS 1024
+# define MAXNUMMONSTERS 256
+# define MAXNUMWALLS 8192
+# define MAXTYPEMONSTERS 10
 
 /*
 ** This header is used both by the editor and the game
@@ -48,6 +54,7 @@ typedef struct	s_sector
 	int16_t		floorpicnum;
 	int16_t		ceilpicnum;
 	uint8_t		light;
+	uint8_t		id_of_monster[MAXMONSTERSEC];
 }				t_sector;
 
 typedef struct	s_wall
@@ -67,6 +74,20 @@ typedef struct	s_thing
 	int16_t		picnum;
 	int16_t		flags;
 }				t_thing;
+
+typedef struct	s_monster
+{
+	t_vec2f		pos;
+	double		size;
+	double		height;
+	double		width;
+	double		health_mult;
+	int16_t		life;
+	uint8_t		id_type;
+	uint8_t		anim;
+	void		(*behavior)(/*add stuff there*/); //maybe do it with a if (id == 1) then call behaviour_1()...
+	bool		activated;
+}				t_monster;
 
 /*
 ** vec2.c

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 00:57:47 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:47:25 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int		main(int argc, char **argv)
 	(void)argv;
 	load_map(&d);
 	init_sdl(&d);
+	init_monsters(&d);
 	loop(&d);
 }

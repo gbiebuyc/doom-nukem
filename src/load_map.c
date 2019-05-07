@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 02:56:31 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/22 02:19:39 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:12:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void	load_map(t_data *d)
 
 			// Load all walls
 			read(f, &d->numwalls, sizeof(int16_t)) == -1 ||
-			read(f, d->walls, sizeof(t_wall) * d->numwalls) == -1
+			read(f, d->walls, sizeof(t_wall) * d->numwalls) == -1 ||
+
+			// Load ennemy data
+			read(f, &d->nummonsters, sizeof(d->nummonsters)) == -1 ||
+			read(f, d->monsters, sizeof(t_monster) * d->nummonsters) == -1
 	   )
 	{
 		printf("map error\n");

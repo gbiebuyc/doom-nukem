@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 01:10:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/06 07:48:23 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		len1 = vec2f_length((t_vec2f){p.x2 - p.x1, p.z2 - p.z1});
 		u_begin = 0;
 		u_end = 1;
-		if (p.z1 <= 0)
+		if (p.z1 <= 0) //??
 		{
 			if (!clip_wall(&p.x1, &p.z1, p.x2, p.z2))
 				continue ;
@@ -82,5 +82,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_floor(d, p, fr);
 		draw_wall(d, p, fr);
+		if (*sect->id_of_monster)
+			draw_sprite(d, p, fr, 0);
 	}
 }
