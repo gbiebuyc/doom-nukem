@@ -1,0 +1,2 @@
+Faire en sorte que les murs soient franchissables ou non (passage secret ?) (deverouillage avec porte ?)
+

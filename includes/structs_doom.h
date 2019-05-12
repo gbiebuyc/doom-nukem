@@ -6,12 +6,19 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/30 00:16:30 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:03:35 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_DOOM_H
 # define STRUCTS_DOOM_H
+
+typedef struct	s_3vec2f
+{
+	t_vec2f		start;
+	t_vec2f		end;
+	t_vec2f		scale;
+}				t_3vec2f;
 
 typedef struct	s_cam
 {
@@ -56,15 +63,33 @@ typedef struct	s_frustum
 	bool		visitedportals[MAXNUMWALLS];
 }				t_frustum;
 
+# define MAX_STATE 10
+
+typedef struct	s_monster_type
+{
+	double		height;
+	double		width;
+	uint16_t	health;
+	double		floating;
+	uint8_t		id_sprite;
+	uint8_t		anim_order[MAX_STATE];	
+}				t_monster_type;
+
+# define MAXNBOFANIMATION 5
+
 typedef struct	s_data
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
 	SDL_Surface		*textures[4];
+	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE][MAXNBOFANIMATION];
 	const Uint8		*keys;
 	t_cam			cam;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
+	t_monster		monsters[MAXNUMMONSTERS];
+	t_monster_type	monster_type[MAXTYPEMONSTERS];
+	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
 	int16_t			cursectnum;

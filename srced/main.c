@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/06 16:56:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 04:33:33 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		main(int argc, char **argv)
 	(void)argv;
 	init_sdl(&d);
 	init_sectors(&d);
+	init_monsters(&d);
 	main_loop(&d);
 }
 
@@ -120,20 +121,41 @@ void	run_game(t_data *d)
 
 void	init_sectors(t_data *d)
 {
-	d->sectors[0] = (t_sector){0, 4, 0, 1, 2, 0, 255};
+	d->sectors[0] = (t_sector){0, 4, 0, 1, 2, {0}, 0, 255};
 	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1};
 	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, 1};
 	d->walls[2] = (t_wall){(t_vec2f){ 2,-2}, 0, 2, 0, 0, -1};
 	d->walls[3] = (t_wall){(t_vec2f){-2,-2}, 0, 3, 0, 0, -1};
 
-	d->sectors[1] = (t_sector){4, 4, 0.1, 0.9, 3, 0, 255};
+	d->sectors[1] = (t_sector){4, 4, 0.1, 0.9, 3, {0}, 0, 255};
 	d->walls[4] = (t_wall){(t_vec2f){ 2,-2}, 0, 0, 0, 0, 0};
 	d->walls[5] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, -1};
 	d->walls[6] = (t_wall){(t_vec2f){ 6,-6}, 0, 2, 0, 0, -1};
 	d->walls[7] = (t_wall){(t_vec2f){ 2,-6}, 0, 3, 0, 0, -1};
+	ft_memset(d->sectors[0].id_of_monster, -1, sizeof(d->sectors[0].id_of_monster));
+	ft_memset(d->sectors[1].id_of_monster, -1, sizeof(d->sectors[1].id_of_monster));
+	d->sectors[0].id_of_monster[0] = 0;
 
 	d->numsectors = 2;
 	d->numwalls = 8;
+}
+
+void	init_monsters(t_data *d)
+{
+	t_monster	monster;
+	t_vec2f		pos;
+
+	pos.x = 0.1;
+	pos.y = 0.1;
+
+	d->nummonsters = 1;
+	monster.pos = pos;
+	monster.activated = false;
+	monster.health_mult = 1;
+	monster.id_type = 0;
+	monster.size = 1.0;
+	d->monsters[0] = monster;
+//	monster.behavior = &basic_monster;
 }
 
 void	save_file(t_data *d)
@@ -158,7 +180,10 @@ void	save_file(t_data *d)
 
 			// Write all walls
 			write(f, &d->numwalls, sizeof(d->numwalls)) < 0 ||
-			write(f, d->walls, sizeof(*d->walls) * d->numwalls) < 0
+			write(f, d->walls, sizeof(*d->walls) * d->numwalls) < 0 ||
+
+			write(f, &d->nummonsters, sizeof(d->nummonsters)) < 0 ||
+			write(f, d->monsters, sizeof(*d->monsters) * d->nummonsters) < 0
 	   )
 		printf("error\n");
 	else
@@ -175,6 +200,7 @@ void	add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].floorheight = 0;
 	d->sectors[d->numsectors - 1].ceilheight = 1;
 	d->sectors[d->numsectors - 1].floorpicnum = 1;
+	ft_memset(d->sectors[d->numsectors - 1].id_of_monster, -1, sizeof(d->sectors[d->numsectors-1].id_of_monster));
 	add_wall(d); // First wall
 	add_wall(d); // Current wall
 }

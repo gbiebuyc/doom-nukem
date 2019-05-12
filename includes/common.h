@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/30 07:12:25 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:13:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <SDL.h>
 # include <libft.h>
+
+# define MAXMONSTERSEC 20
+# define MAXNUMSECTORS 1024
+# define MAXNUMMONSTERS 256
+# define MAXNUMWALLS 8192
+# define MAXTYPEMONSTERS 2
 
 /*
 ** This header is used both by the editor and the game
@@ -46,6 +52,7 @@ typedef struct	s_sector
 	float		floorheight;
 	float		ceilheight;
 	int16_t		floorpicnum;
+	int16_t		id_of_monster[MAXMONSTERSEC];
 	int16_t		ceilpicnum;
 	uint8_t		light;
 }				t_sector;
@@ -67,6 +74,24 @@ typedef struct	s_thing
 	int16_t		picnum;
 	int16_t		flags;
 }				t_thing;
+
+typedef struct	s_monster
+{
+	t_vec2f		pos; //position du monstre en x et z
+	double		size; // scale de la taille par rapport a la taille du monstre type (a exprimer em %)
+	double		height; // calculee dans le binaire
+	double		width; // calculee dans le binaire
+	double		health_mult; // scale de la vie par rapport a la vie du monstre type
+	double		rot; // unused for now, will be used to chose animation displayed
+	int16_t		life; //life calculated in binary
+	int16_t		sector; // which sector is the monster from
+	uint8_t		id_type; // which type is the monster
+	//double	floating; // might be used to set different floating height for monsters
+	uint8_t		anim_state; // set during behaviour to chose which state of animation is the monster in
+	uint8_t		anim_time;
+	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster
+	bool		activated; // unused for now
+}				t_monster;
 
 /*
 ** vec2.c

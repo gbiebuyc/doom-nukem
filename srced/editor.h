@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/06 16:51:15 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/07 03:54:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 
 # define W 1500
 # define H 1000
-# define MAXNUMSECTORS 1024
-# define MAXNUMWALLS 8192
 # define GRIDSIZE 64
 
 typedef struct		s_data
@@ -34,19 +32,23 @@ typedef struct		s_data
 	t_vec2f			pos;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
+	t_monster		monsters[MAXNUMMONSTERS];
+	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
 	t_wall			*selectedwall;
 	t_wall			*selectedwall2;
 	bool			grid_locking;
 	bool			sectordrawing;
-}					t_data;
+}					t_data; //a rename
 
 extern char **environ; // used by execve
 
+extern void	basic_monster();
 void	run_game(t_data *d);
 void	init_sdl(t_data *d);
 void	main_loop(t_data *d);
+void	init_monsters(t_data *d);
 void	draw_screen(t_data *d);
 void	init_sectors(t_data *d);
 void	save_file(t_data *d);
