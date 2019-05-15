@@ -84,7 +84,9 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_wall(d, &p, fr);
 		draw_floor(d, p, fr);
+		/*
 		if (*sect->id_of_monster != -1)
 			draw_sprite(d, p, fr, *sect->id_of_monster);
+		*/
 	}
 }
