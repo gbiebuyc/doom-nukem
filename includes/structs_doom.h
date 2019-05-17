@@ -77,11 +77,18 @@ typedef struct	s_monster_type
 
 # define MAXNBOFANIMATION 5
 
+typedef struct	s_bitmap
+{
+	int			w;
+	int			h;
+	uint32_t	*pixels;
+}				t_bitmap;
+
 typedef struct	s_data
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
-	SDL_Surface		*textures[4];
+	t_bitmap		textures[100];
 	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE][MAXNBOFANIMATION];
 	const Uint8		*keys;
 	t_cam			cam;
@@ -92,8 +99,10 @@ typedef struct	s_data
 	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
+	int16_t			numtextures;
 	int16_t			cursectnum;
 	bool			debug_pause;
+	char			*gamedata;
 }				t_data;
 
 #endif

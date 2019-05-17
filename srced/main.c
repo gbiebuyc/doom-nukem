@@ -167,7 +167,7 @@ void	save_file(t_data *d)
 	int16_t startsectnum = 0;
 
 	if (
-			((f = open("map01", O_WRONLY | O_CREAT, 0666)) == -1) ||
+			((f = open("maps/map01", O_WRONLY | O_CREAT, 0666)) == -1) ||
 
 			// Write starting position
 			write(f, &startpos, sizeof(startpos)) < 0 ||
@@ -187,7 +187,7 @@ void	save_file(t_data *d)
 	   )
 		printf("error\n");
 	else
-		printf("saved map01\n");
+		printf("saved maps/map01\n");
 	close(f);
 }
 

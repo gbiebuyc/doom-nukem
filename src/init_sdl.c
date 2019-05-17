@@ -12,19 +12,6 @@
 
 #include "doom_nukem.h"
 
-void	load_texture(t_data *d, char *path)
-{
-	static int	i;
-	SDL_Surface *tmp;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-		exit(EXIT_FAILURE);
-	if (!(d->textures[i++] = SDL_ConvertSurfaceFormat(tmp,
-					d->screen->format->format, 0)))
-		exit(EXIT_FAILURE);
-	SDL_FreeSurface(tmp);
-}
-
 void	load_monster_texture(t_data *d, char *path, int i[3]) //i[0] == monster_id & i[1] == state_of_anim | anim & i[2] == orientation
 {
 	SDL_Surface *tmp;
@@ -53,10 +40,6 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		err_exit(d, 2, SDL_GetError());
-	load_texture(d, "./textures/north.bmp");
-	load_texture(d, "./textures/south.bmp");
-	load_texture(d, "./textures/east.bmp");
-	load_texture(d, "./textures/west.bmp");
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA1.bmp", (int[3]){0, 0, 0});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA2A8.bmp", (int[3]){0, 0, 1});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA3A7.bmp", (int[3]){0, 0, 2});
@@ -79,4 +62,55 @@ void	init_sdl(t_data *d)
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD5.bmp", (int[3]){0, 3, 4});
 
 	d->keys = SDL_GetKeyboardState(NULL);
+
+	int fd;
+	if (!(fd = open("./gamedata", O_RDONLY)))
+		exit(printf("gamedata error\n"));
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		exit(printf("gamedata error\n"));
+	d->gamedata = mmap(NULL, s.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+	char *p = d->gamedata;
+	while (p < (d->gamedata + s.st_size))
+	{
+		if ((d->gamedata + s.st_size) - p < 512)
+			exit(printf("gamedata error\n"));
+		int filesize = parseoct(p + 124, 12);
+		if (ft_strnequ(p, "map", 3) && filesize > 0)
+			load_map(d, p + 512);
+		else if (ft_strnequ(p, "tex", 3) && filesize > 0)
+			load_tex(d, p + 512);
+		p += 512;
+		while (filesize > 0)
+		{
+			filesize -= 512;
+			p += 512;
+		}
+	}
+}
+
+void	load_tex(t_data *d, char *p)
+{
+	t_bitmap *tex = &d->textures[d->numtextures];
+	tex->w = *(int32_t*)(p + 18);
+	tex->h = *(int32_t*)(p + 22);
+	tex->pixels = (uint32_t*)(p + 138);
+	d->numtextures++;
+}
+
+int		parseoct(const char *p, size_t n)
+{
+	int i = 0;
+
+	while ((*p < '0' || *p > '7') && n > 0) {
+		++p;
+		--n;
+	}
+	while (*p >= '0' && *p <= '7' && n > 0) {
+		i *= 8;
+		i += *p - '0';
+		++p;
+		--n;
+	}
+	return (i);
 }

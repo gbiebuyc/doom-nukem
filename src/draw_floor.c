@@ -40,7 +40,7 @@ void	draw_floor(t_data *d, t_projdata p, t_frustum *fr)
 			double u = lerp(n, left_u, right_u);
 			double v = lerp(n, left_v, right_v);
 			double scale = 1;
-			putpixel(d, x, y, shade(distance, getpixel2(d->textures
+			putpixel(d, x, y, shade(distance, bmpgetpixel2(d->textures
 							[p.sector->floorpicnum], u * scale, v * scale)));
 		}
 	}

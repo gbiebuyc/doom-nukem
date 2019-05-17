@@ -12,33 +12,28 @@
 
 #include "doom_nukem.h"
 
-void	load_map(t_data *d)
+void	read_pointer(char **p, void *dst, size_t size)
 {
-	int f;
-	
-	if (
-			((f = open("map01", O_RDONLY)) == -1) ||
+	ft_memcpy(dst, *p, size);
+	*p += size;
+}
 
-			// Load starting position
-			read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
-			read(f, &d->cam.rot, sizeof(double)) == -1 ||
-			read(f, &d->cursectnum, sizeof(int16_t)) == -1 ||
+void	load_map(t_data *d, char *p)
+{
+	// Load starting position
+	read_pointer(&p, &d->cam.pos, sizeof(t_vec3f));
+	read_pointer(&p, &d->cam.rot, sizeof(double));
+	read_pointer(&p, &d->cursectnum, sizeof(int16_t));
 
-			// Load all sectors
-			read(f, &d->numsectors, sizeof(int16_t)) == -1 ||
-			read(f, d->sectors, sizeof(t_sector) * d->numsectors) == -1 ||
+	// Load all sectors
+	read_pointer(&p, &d->numsectors, sizeof(int16_t));
+	read_pointer(&p, d->sectors, sizeof(t_sector) * d->numsectors);
 
-			// Load all walls
-			read(f, &d->numwalls, sizeof(int16_t)) == -1 ||
-			read(f, d->walls, sizeof(t_wall) * d->numwalls) == -1 ||
+	// Load all walls
+	read_pointer(&p, &d->numwalls, sizeof(int16_t));
+	read_pointer(&p, d->walls, sizeof(t_wall) * d->numwalls);
 
-			// Load ennemy data
-			read(f, &d->nummonsters, sizeof(d->nummonsters)) == -1 ||
-			read(f, d->monsters, sizeof(t_monster) * d->nummonsters) == -1
-	   )
-	{
-		printf("map error\n");
-		exit(EXIT_FAILURE);
-	}
-	close(f);
+	// Load ennemy data
+	read_pointer(&p, &d->nummonsters, sizeof(d->nummonsters));
+	read_pointer(&p, d->monsters, sizeof(t_monster) * d->nummonsters);
 }

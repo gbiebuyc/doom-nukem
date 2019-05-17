@@ -18,7 +18,6 @@ int		main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	load_map(&d);
 	init_sdl(&d);
 	init_monsters(&d);
 	loop(&d);

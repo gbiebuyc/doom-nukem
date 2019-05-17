@@ -37,7 +37,21 @@ uint32_t	getpixel2(SDL_Surface *s, double x, double y)
 				(y >= 0 && y < 1.0) ? y : y - floor(y)));
 }
 
-uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b)
+uint32_t	bmpgetpixel(t_bitmap b, double x, double y)
 {
-	return (SDL_MapRGBA(surface->format, r, g, b, 255));
+	int realx;
+	int realy;
+
+	realx = b.w * x;
+	realy = b.h * (1.0 - y); // bitmaps are oriented bottom-up
+	if (realx >= 0 && realy >= 0 && realx < b.w && realy < b.h)
+		return (b.pixels[realx + realy * b.w]);
+	return (0);
+}
+
+// looping on the texture
+uint32_t	bmpgetpixel2(t_bitmap b, double x, double y)
+{
+	return (bmpgetpixel(b, (x >= 0 && x < 1.0) ? x : x - floor(x),
+				(y >= 0 && y < 1.0) ? y : y - floor(y)));
 }
