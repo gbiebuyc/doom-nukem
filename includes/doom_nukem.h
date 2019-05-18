@@ -50,7 +50,8 @@ void	monster_behaviour(t_data *d, t_monster *monster);
 uint32_t	shade(double z, uint32_t c);
 t_vec3f		vec2to3(t_vec2f v);
 t_vec2f		vec3to2(t_vec3f v);
-void	load_tex(t_data *d, char *p);
+void	recognise_file(t_data *d, char *filename, char *p);
+void	load_tex(t_data *d, char *p, int texnum);
 int		parseoct(const char *p, size_t n);
 
 /*

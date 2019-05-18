@@ -84,6 +84,15 @@ typedef struct	s_bitmap
 	uint32_t	*pixels;
 }				t_bitmap;
 
+enum			e_textures
+{
+	METAL1,
+	METAL2,
+	STONE,
+	WOOD,
+	BRICK
+};
+
 typedef struct	s_data
 {
 	SDL_Window		*win;
@@ -99,7 +108,6 @@ typedef struct	s_data
 	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
-	int16_t			numtextures;
 	int16_t			cursectnum;
 	bool			debug_pause;
 	char			*gamedata;

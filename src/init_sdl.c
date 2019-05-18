@@ -63,6 +63,7 @@ void	init_sdl(t_data *d)
 
 	d->keys = SDL_GetKeyboardState(NULL);
 
+	// Parse the gamedata tarball
 	int fd;
 	if (!(fd = open("./gamedata", O_RDONLY)))
 		exit(printf("gamedata error\n"));
@@ -76,10 +77,8 @@ void	init_sdl(t_data *d)
 		if ((d->gamedata + s.st_size) - p < 512)
 			exit(printf("gamedata error\n"));
 		int filesize = parseoct(p + 124, 12);
-		if (ft_strnequ(p, "map", 3) && filesize > 0)
-			load_map(d, p + 512);
-		else if (ft_strnequ(p, "tex", 3) && filesize > 0)
-			load_tex(d, p + 512);
+		if (filesize > 0)
+			recognise_file(d, p, p + 512);
 		p += 512;
 		while (filesize > 0)
 		{
@@ -89,13 +88,27 @@ void	init_sdl(t_data *d)
 	}
 }
 
-void	load_tex(t_data *d, char *p)
+void	recognise_file(t_data *d, char *filename, char *p)
 {
-	t_bitmap *tex = &d->textures[d->numtextures];
-	tex->w = *(int32_t*)(p + 18);
-	tex->h = *(int32_t*)(p + 22);
-	tex->pixels = (uint32_t*)(p + 138);
-	d->numtextures++;
+	if (ft_strequ(filename, "maps/map01"))
+		load_map(d, p);
+	else if (ft_strequ(filename, "textures/metal1.bmp"))
+		load_tex(d, p, METAL1);
+	else if (ft_strequ(filename, "textures/metal2.bmp"))
+		load_tex(d, p, METAL2);
+	else if (ft_strequ(filename, "textures/stone.bmp"))
+		load_tex(d, p, STONE);
+	else if (ft_strequ(filename, "textures/wood.bmp"))
+		load_tex(d, p, WOOD);
+	else if (ft_strequ(filename, "textures/brick.bmp"))
+		load_tex(d, p, BRICK);
+}
+
+void	load_tex(t_data *d, char *p, int texnum)
+{
+	d->textures[texnum].w = *(int32_t*)(p + 18);
+	d->textures[texnum].h = *(int32_t*)(p + 22);
+	d->textures[texnum].pixels = (uint32_t*)(p + 138);
 }
 
 int		parseoct(const char *p, size_t n)
