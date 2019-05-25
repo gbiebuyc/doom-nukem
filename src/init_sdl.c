@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
+/*
 void	load_texture(t_data *d, char *path)
 {
 	static int	i;
@@ -23,7 +23,7 @@ void	load_texture(t_data *d, char *path)
 					d->screen->format->format, 0)))
 		exit(EXIT_FAILURE);
 	SDL_FreeSurface(tmp);
-}
+}*/
 
 void	load_monster_texture(t_data *d, char *path, int i[3]) //i[0] == monster_id & i[1] == state_of_anim | anim & i[2] == orientation
 {
@@ -53,10 +53,34 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		err_exit(d, 2, SDL_GetError());
-	load_texture(d, "./textures/north.bmp");
-	load_texture(d, "./textures/south.bmp");
-	load_texture(d, "./textures/east.bmp");
-	load_texture(d, "./textures/west.bmp");
+/********************/
+	int		wall_i;
+	int		name_i;
+
+	wall_i = -1;
+	while (++wall_i < d->numwalls)
+	{
+		name_i = -1;
+		while (++name_i < d->nb_textures)
+		{
+			if (ft_strequ(d->walls[wall_i].texture_name, d->tex_name_list[name_i]))
+			{
+				d->walls[wall_i].middlepicnum = name_i;
+				break ;
+			}
+		}
+	}
+
+/**********************/
+	/*load_texture(d, d->walls[0].texture_name);
+    d->walls[0].middlepicnum = 0;
+    load_texture(d, d->walls[1].texture_name);
+    d->walls[1].middlepicnum = 1;
+    load_texture(d, d->walls[2].texture_name);
+    d->walls[2].middlepicnum = 2;
+    load_texture(d, d->walls[3].texture_name);
+    d->walls[3].middlepicnum = 3;*/
+
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA1.bmp", (int[3]){0, 0, 0});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA2A8.bmp", (int[3]){0, 0, 1});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA3A7.bmp", (int[3]){0, 0, 2});

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 03:54:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/24 08:25:38 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,60 +18,233 @@
 # include <sys/wait.h>
 # include <stdint.h>
 # include <fcntl.h>
+# include <dirent.h>
 
-# define W 1500
-# define H 1000
+# define W 1600
+# define H 1200
+# define MAXNUMSECTORS 1024
+# define MAXNUMWALLS 8192
 # define GRIDSIZE 64
+# define TEXTURE_PATH "./textures"
 
-typedef struct		s_data
+/*
+**	ed_interface_*.c
+*/
+
+# define MARGIN 10
+# define PROPERTIES_LIMIT 275
+# define TEXTURE_TOOLBAR 550
+
+typedef struct	s_assets
+{
+	SDL_Surface	*assets[100];
+	SDL_Surface	*assets_icon[100];
+}				t_assets;
+
+typedef struct	s_toolbar
+{
+	SDL_Surface	*select[2];
+	SDL_Surface	*move[2];
+	SDL_Surface	*properties[10];
+	SDL_Surface	*player_start;
+	t_assets	assets[3];
+}				t_toolbar;
+
+/*
+**	selection_cat_pos : save the category assets the mouse is currently in
+**						0 = ammo, 1 = Monster, 2 = Healpack, 3 = Playerstart
+*/
+
+typedef struct	s_interface
+{
+	SDL_Surface	*menu;
+	t_toolbar	toolbar;
+	int			show_menu;
+	int			is_on_menu;
+	int			select;
+	int			move;
+	int			btn_right_pressed;
+	int			texture_case_select;
+	int			selection_cat_pos;
+	t_vec2f		mouse_selection_pos;
+	t_vec2f		tex_select[3];
+	t_vec2f		btn_floor_height_pos;
+	t_vec2f		btn_ceil_height_pos;
+	t_vec2f		assets_category[4];
+}				t_interface;
+
+// typedef struct	s_texture_data
+// {
+// 	char					*name;
+// 	struct s_texture_data	*begin;
+// 	struct s_texture_data	*prev;
+// 	struct s_texture_data	*next;
+// }				t_texture_data;
+
+/*
+**	texture_to_scale = size to resize the image,
+**	texture_to_scale = 32 -> will resuze the image to 32x32 pixels
+*/
+
+typedef struct	s_data
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
-	SDL_Surface		*textures[4];
+	SDL_Surface		**textures;
+	t_texture_data	*texture_list;
+	int				nb_texture;
+	int32_t			nb_used_texture;
 	double			scale;
 	t_vec2f			pos;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
-	t_monster		monsters[MAXNUMMONSTERS];
-	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
 	t_wall			*selectedwall;
 	t_wall			*selectedwall2;
+	int				selected_sector;
+	int				selected_wall;
 	bool			grid_locking;
 	bool			sectordrawing;
-}					t_data; //a rename
+	t_interface		interface;
+	double			texture_to_scale;
+	/**/
+	int				selected_texture;
+	t_vec2f			temp;
+}				t_data;
+
+void			run_game(t_data *d);
+void			init_sectors(t_data *d);
+void			save_file(t_data *d);
+void			putpixel(t_data *d, int x, int y, uint32_t color);
+void			debug_print(t_data *d);
 
 extern char **environ; // used by execve
 
-extern void	basic_monster();
-void	run_game(t_data *d);
-void	init_sdl(t_data *d);
-void	main_loop(t_data *d);
-void	init_monsters(t_data *d);
-void	draw_screen(t_data *d);
-void	init_sectors(t_data *d);
-void	save_file(t_data *d);
-void	add_sector(t_data *d);
-void	add_wall(t_data *d);
-void	putpixel(t_data *d, int x, int y, uint32_t color);
-void	draw_grid(t_data *d);
-void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color);
-void	draw_sector(t_data *d, int16_t sectnum);
-t_vec2f	worldtoscreen(t_data *d, t_vec2f p);
-t_vec2f	screentoworld(t_data *d, t_vec2f p);
-void	select_wall_under_cursor(t_data *d, t_vec2f p);
-void	update_pos(t_data *d);
-void	update_wall_pos(t_data *d);
-t_vec2f	grid_lock(t_data *d, t_vec2f p);
-void	detect_neighbors(t_data *d, int16_t sectnum);
-int16_t	in_which_sector_is_this_wall(t_data *d, t_wall *w);
-bool	same_pos(t_wall *w0, t_wall *w1);
-void	debug_print(t_data *d);
-void	del_sector(t_data *d, int16_t sectnum);
-int16_t	find_sect_under_cursor(t_data *d);
-bool	inside(t_data *d, int16_t sectnum, t_vec2f test);
-void	change_floor_height(t_data *d, double val, int16_t sectnum);
-void	cancel_last_wall(t_data *d);
+/*
+**	ed_init.c
+*/
+
+int				init_editor(t_data *d);
+
+/*
+**	ed_texture_init.c
+*/
+
+int				init_texture(t_data *d);
+
+/*
+**	ed_draw.c
+*/
+
+void			draw_screen(t_data *d);
+
+/*
+**	ed_conversion.c
+*/
+
+t_vec2f			worldtoscreen(t_data *d, t_vec2f p);
+t_vec2f			screentoworld(t_data *d, t_vec2f p);
+
+/*
+**	pixel.c
+*/
+
+void			put_pixel_to_surface(SDL_Surface *sur, int x, int y,
+														uint32_t color);
+
+/*
+**	ed_editor.c
+*/
+
+void			change_ceil_height(t_data *d, double val, int16_t sectnum);
+void			change_floor_height(t_data *d, double val, int16_t sectnum);
+void			cancel_last_wall(t_data *d);
+int16_t			in_which_sector_is_this_wall(t_data *d, t_wall *w);
+void			update_pos(t_data *d, SDL_Event *e);
+
+/*
+**	ed_editor_functions.c
+*/
+
+bool			same_pos(t_wall *w0, t_wall *w1);
+void			detect_neighbors(t_data *d, int16_t sectnum);
+
+/*
+**	ed_editor_sector.c
+*/
+
+void			add_sector(t_data *d);
+void			del_sector(t_data *d, int16_t sectnum, t_sector *sect);
+int16_t			find_sect_under_cursor(t_data *d);
+
+/*
+**	ed_editor_wall.c
+*/
+
+void			add_wall(t_data *d);
+void			select_wall_under_cursor(t_data *d, t_vec2f p);
+void			update_wall_pos(t_data *d);
+
+/*
+**	ed_interface.c
+*/
+
+void			draw_separator(t_data *d, int x, int y, int color);
+void			show_menu(t_data *d);
+
+/*
+**	ed_interface_functions.c
+*/
+
+t_vec2f			grid_lock(t_data *d, t_vec2f p);
+int				is_on_select_move_icon(t_data *d, int x, int y);
+int				check_if_mouse_on_menu(t_data *d, int x, int y);
+void			btn_height(t_data *d, int x, int y, t_interface *i);
+
+/*
+**	ed_interface_properties.c
+*/
+
+void			draw_selection_arround_asset(t_data *d);
+void			print_properties(t_data *d, SDL_Surface **properties);
+
+/*
+**	ed_interface_properties2.c
+*/
+
+void			fill_texture_selection(t_data *d, t_interface *i);
+
+/*
+**	ed_utils.c
+*/
+
+void			copy_surface_to_surface(SDL_Surface *src,
+								SDL_Surface *dest, int p[2], t_data *d);
+void			save_selected_texture(t_data *d, int x, int y);
+void			remove_backgorund_image(SDL_Surface *s);
+
+/*
+**	ed_event.c
+*/
+
+void			event_keypress(t_data *d, SDL_Event *e);
+void			zoom(t_data *d, SDL_Event *e);
+void			event_motion_mouse(t_data *d, SDL_Event *e);
+
+/*
+**	ed_event_function.c
+*/
+
+int				menu_save_button(t_data *d, SDL_Event *e);
+int				menu_exit_button(t_data *d, SDL_Event *e);
+int				properties_texture_selection(t_data *d, SDL_Event *e);
+int				selecting_assets(t_data *d, SDL_Event *e);
+
+/*
+**	ed_event_mouse_button.c
+*/
+
+int				event_mouse_button(t_data *d, SDL_Event *e);
 
 #endif

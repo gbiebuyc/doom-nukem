@@ -81,8 +81,10 @@ typedef struct	s_data
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
-	SDL_Surface		*textures[4];
+	SDL_Surface		**textures;
 	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE][MAXNBOFANIMATION];
+	int32_t			nb_textures;
+	char			**tex_name_list;
 	const Uint8		*keys;
 	t_cam			cam;
 	t_sector		sectors[MAXNUMSECTORS];

@@ -25,5 +25,6 @@ void	render(t_data *d)
 		fr.ybottom[x] = HEIGHT-1;
 	}
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
+//	SDL_BlitSurface(d->textures[1], 0, d->screen, 0);
 	SDL_UpdateWindowSurface(d->win);
 }

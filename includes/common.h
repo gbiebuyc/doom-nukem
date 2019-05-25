@@ -65,6 +65,7 @@ typedef struct	s_wall
 	int16_t		lowerpicnum;
 	int16_t		flags;
 	int16_t		neighborsect;
+	char		*texture_name;
 }				t_wall;
 
 typedef struct	s_thing
@@ -92,6 +93,17 @@ typedef struct	s_monster
 	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster
 	bool		activated; // unused for now
 }				t_monster;
+
+/***********/
+typedef struct	s_texture_data
+{
+	char					name[100];
+	int						used;
+	struct s_texture_data	*begin;
+	struct s_texture_data	*prev;
+	struct s_texture_data	*next;
+}				t_texture_data;
+/***********/
 
 /*
 ** vec2.c

@@ -77,17 +77,23 @@ SRC = ft_atoi.c \
 	  ft_min.c \
 	  ft_max.c \
 	  ft_abs.c \
-	  ft_pow.c
+	  ft_pow.c \
+	  conv_char.c conv_int.c conv_percent.c conv_string.c ft_printf.c init_printf.c \
+	  my_itoa.c print.c utils.c wide_utils.c my_fputs.c ft_fputc.c
 
 OBJ = $(SRC:.c=.o)
+
 NAME = libft.a
+
 CFLAGS = -Wall -Wextra -Werror
-.PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rs $(NAME) $(OBJ)
+	@ar rs $(NAME) $(OBJ)
+
+./%.o: ./%.c ./libft.h
+	@gcc -o $@ -c $< $(CFLAGS)
 
 clean:
 	rm -rf $(OBJ)
@@ -96,3 +102,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

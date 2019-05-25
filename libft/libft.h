@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdbool.h>
+# include "ft_printf.h"
 
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
@@ -97,5 +98,8 @@ int				ft_min(int a, int b);
 int				ft_max(int a, int b);
 int				ft_abs(int n);
 uintmax_t		ft_pow(unsigned int x, unsigned int y);
+
+int				ft_fputc(int c, FILE *stream);
+int				my_fputs(char *s, FILE *stream, size_t len);
 
 #endif

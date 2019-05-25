@@ -1,0 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ed_event.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/14 23:45:28 by mikorale          #+#    #+#             */
+/*   Updated: 2019/05/14 23:45:29 by mikorale         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "editor.h"
+
+void		event_keypress(t_data *d, SDL_Event *e)
+{
+	if (e->key.keysym.sym == SDLK_ESCAPE)
+	{
+		d->interface.show_menu = !d->interface.show_menu;
+		d->interface.texture_case_select = -1;
+	}
+	else if (e->key.keysym.sym == SDLK_r)
+		run_game(d);
+	else if (e->key.keysym.sym == SDLK_s)
+		save_file(d);
+	else if (e->key.keysym.sym == SDLK_l)
+		d->grid_locking = !d->grid_locking;
+	else if (e->key.keysym.sym == SDLK_SPACE)
+		(d->sectordrawing) ? add_wall(d) : add_sector(d);
+	else if (e->key.keysym.sym == SDLK_d)
+		debug_print(d);
+	else if (e->key.keysym.sym == SDLK_DELETE && !d->sectordrawing)
+		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
+	else if (e->key.keysym.sym == SDLK_PAGEDOWN)
+		change_floor_height(d, -0.1, d->selected_sector);
+	else if (e->key.keysym.sym == SDLK_PAGEUP)
+		change_floor_height(d, +0.1, d->selected_sector);
+	else if (e->key.keysym.sym == SDLK_BACKSPACE)
+		cancel_last_wall(d);
+}
+
+void		zoom(t_data *d, SDL_Event *e)
+{
+	if (e->wheel.y > 0)
+		d->scale *= (d->scale < 50) ? 1.1 : 1;
+	else if (e->wheel.y < 0)
+		d->scale *= (d->scale > 10) ? 0.9 : 1;
+}
+
+void		event_motion_mouse(t_data *d, SDL_Event *e)
+{
+	int	x;
+	int	y;
+
+	SDL_GetMouseState(&x, &y);
+	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
+		(d->interface.select) ? update_wall_pos(d) : 1;
+	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
+		(d->interface.move) ? update_pos(d, e) : 1;
+	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)
+		&& x < W - PROPERTIES_LIMIT &&
+		(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
+		update_pos(d, e);
+	if (selecting_assets(d, e) != -1)
+		d->interface.mouse_selection_pos = (t_vec2f){x, y};
+	if (d->interface.show_menu)
+		d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
+}
