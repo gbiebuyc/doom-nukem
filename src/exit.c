@@ -27,7 +27,6 @@ void	err_exit(t_data *d, char count, const char *msg)
 	ft_putstr_fd("err_code: ", 2);
 	ft_putnbr_fd((int)count, 2);
 	ft_putstr_fd("\n", 2);
-	/*
 	if (count > 5)
 		SDL_FreeSurface(d->textures[3]);
 	if (count > 4)
@@ -36,7 +35,6 @@ void	err_exit(t_data *d, char count, const char *msg)
 		SDL_FreeSurface(d->textures[1]);
 	if (count > 2)
 		SDL_FreeSurface(d->textures[0]);
-	*/
 	if (count > 1)
 		SDL_DestroyWindow(d->win);
 	if (count)

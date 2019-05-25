@@ -63,13 +63,13 @@ void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr)
 		{
 			double v = lerp(norm(y, ya, yb), 0, p->y_scale);
 			if (p->neighbor && y < nya)
-				putpixel(d, x, y, shade(z, bmpgetpixel2(
+				putpixel(d, x, y, shade(z, getpixel2(
 							d->textures[p->wall->lowerpicnum], u, v)));
 			else if (p->neighbor && y > nyb)
-				putpixel(d, x, y, shade(z, bmpgetpixel2(
+				putpixel(d, x, y, shade(z, getpixel2(
 							d->textures[p->wall->lowerpicnum], u, v)));
 			else if (!p->neighbor)
-				putpixel(d, x, y, shade(z, bmpgetpixel2(
+				putpixel(d, x, y, shade(z, getpixel2(
 							d->textures[p->wall->middlepicnum], u, v)));
 		}
 	}

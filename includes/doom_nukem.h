@@ -18,11 +18,6 @@
 # include <stdio.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/mman.h>
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -32,9 +27,7 @@
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);
-uint32_t	bmpgetpixel(t_bitmap b, double x, double y);
-uint32_t	bmpgetpixel2(t_bitmap b, double x, double y);
-void	load_map(t_data *d, char *p);
+void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
 void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
@@ -50,9 +43,6 @@ void	monster_behaviour(t_data *d, t_monster *monster);
 uint32_t	shade(double z, uint32_t c);
 t_vec3f		vec2to3(t_vec2f v);
 t_vec2f		vec3to2(t_vec3f v);
-void	recognise_file(t_data *d, char *filename, char *p);
-void	load_tex(t_data *d, char *p, int texnum);
-int		parseoct(const char *p, size_t n);
 
 /*
 ** utils.c
