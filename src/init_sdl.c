@@ -71,6 +71,20 @@ void	init_sdl(t_data *d)
 		}
 	}
 
+	int		sect_i;
+
+	sect_i = -1;
+	while (++sect_i < d->numsectors)
+	{
+		name_i = -1;
+		while (++name_i < d->nb_textures)
+		{
+			if (ft_strequ(d->sectors[sect_i].floor_texture_name, d->tex_name_list[name_i]))
+				d->sectors[sect_i].floorpicnum = name_i;
+			if (ft_strequ(d->sectors[sect_i].ceil_texture_name, d->tex_name_list[name_i]))
+				d->sectors[sect_i].ceilpicnum = name_i;
+		}
+	}
 /**********************/
 	/*load_texture(d, d->walls[0].texture_name);
     d->walls[0].middlepicnum = 0;

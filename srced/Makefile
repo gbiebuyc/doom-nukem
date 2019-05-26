@@ -24,6 +24,7 @@ SRC = main.c \
 	  ed_interface.c ed_interface_functions.c \
 	  ed_interface_properties.c ed_interface_properties2.c\
 	  ed_utils.c \
+	  ed_save_file.c ed_fix_data_to_save.c
 
 OBJ = $(SRC:.c=.o)
 

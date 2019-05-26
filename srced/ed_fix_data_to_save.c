@@ -1,0 +1,82 @@
+#include "editor.h"
+
+/*
+**	Set all texture as unsued.
+*/
+
+static void	reset_used(t_data *d)
+{
+	t_texture_data *tmp;
+
+	tmp = d->texture_list->begin;
+	while (tmp)
+	{
+		tmp->used = 0;
+		tmp = tmp->next;
+	}
+}
+
+/*
+**	set the corresponding texture name to each sector and walls structure.
+*/
+
+void	set_texture_name(t_data *d, t_sector *s, t_wall *w)
+{
+	t_texture_data	*tmp;
+	int				j;
+	int				tex_num;
+
+	tmp = d->texture_list->begin;
+	tex_num = 0;
+	while (tmp)
+	{
+		j = -1;
+		while (++j < d->numsectors)
+		{
+			if (s[j].floorpicnum == tex_num)
+				ft_strcpy(s[j].floor_texture_name, tmp->name);
+			if (s[j].ceilpicnum == tex_num)
+				ft_strcpy(s[j].ceil_texture_name, tmp->name);
+		}
+		j = -1;
+		while (++j < d->numwalls)
+			if (w[j].middlepicnum == tex_num)
+				ft_strcpy(w[j].texture_name, tmp->name);
+		tex_num++;
+		tmp = tmp->next;
+	}
+}
+
+/*
+**	Browse all the texture and set as used,
+**	all texture currently used in the map
+*/
+
+void	set_texture_used(t_data *d, t_sector *s, t_wall *w)
+{
+	t_texture_data	*tmp;
+	int				j;
+	int				tex_num;
+
+	d->nb_used_texture = 0;
+	reset_used(d);
+	tmp = d->texture_list->begin;
+	tex_num = 0;
+	while (tmp)
+	{
+		j = -1;
+		while (++j < d->numsectors && tmp->used != 1)
+			if (s[j].floorpicnum == tex_num || s[j].ceilpicnum == tex_num)
+				d->nb_used_texture +=
+					(tmp->used = 1);
+		j = -1;
+		while (++j < d->numwalls && tmp->used != 1)
+			if (w[j].lowerpicnum == tex_num || w[j].middlepicnum == tex_num ||
+				w[j].upperpicnum == tex_num)
+				d->nb_used_texture +=
+					(tmp->used = 1);
+		tex_num++;
+		tmp = tmp->next;
+	}
+	set_texture_name(d, s, w);
+}

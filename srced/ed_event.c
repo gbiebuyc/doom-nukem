@@ -12,6 +12,58 @@
 
 #include "editor.h"
 
+static void	debug_print(t_data *d)
+{
+	t_wall		*wall;
+	int			w;
+	int			s;
+
+	printf("DEBUG OUTPUT:\n");
+	w = 0;
+	s = 0;
+	while (w < d->numwalls)
+	{
+		if (w == d->sectors[s].firstwallnum)
+			printf("sector %d\n", s++);
+		wall = d->walls + w;
+		printf("wall %d", w);
+		if (wall->neighborsect != -1)
+			printf(" neighbor %d", wall->neighborsect);
+		printf("\n");
+		ft_printf("picnum low :%d | mid : %d | up : %d\n", wall->lowerpicnum,
+									wall->middlepicnum, wall->upperpicnum);
+		ft_printf("texture name = %s\n", wall->texture_name);
+		w++;
+	}
+	printf("\n");
+}
+
+/*
+**	SDL_Delay(300) Ignore esc keypress from closing the game
+*/
+
+static void	run_game(t_data *d)
+{
+	pid_t		pid;
+	char *const	argv[] = {"doom-nukem", NULL};
+	extern char	**environ;
+
+	if (!save_file(d))
+	{
+		pid = fork();
+		if (pid == 0)
+			execve(argv[0], argv, environ);
+		else
+		{
+			waitpid(pid, 0, 0);
+			SDL_Delay(300);
+			SDL_FlushEvent(SDL_KEYDOWN);
+		}
+	}
+	else
+		ft_printf("Error saving file\nAbort running game...\n");
+}
+
 void		event_keypress(t_data *d, SDL_Event *e)
 {
 	if (e->key.keysym.sym == SDLK_ESCAPE)
@@ -22,7 +74,7 @@ void		event_keypress(t_data *d, SDL_Event *e)
 	else if (e->key.keysym.sym == SDLK_r)
 		run_game(d);
 	else if (e->key.keysym.sym == SDLK_s)
-		save_file(d);
+		(save_file(d)) ? ft_printf("Error during file saving.\n") : 1;
 	else if (e->key.keysym.sym == SDLK_l)
 		d->grid_locking = !d->grid_locking;
 	else if (e->key.keysym.sym == SDLK_SPACE)

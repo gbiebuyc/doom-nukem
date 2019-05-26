@@ -73,14 +73,6 @@ typedef struct	s_interface
 	t_vec2f		assets_category[4];
 }				t_interface;
 
-// typedef struct	s_texture_data
-// {
-// 	char					*name;
-// 	struct s_texture_data	*begin;
-// 	struct s_texture_data	*prev;
-// 	struct s_texture_data	*next;
-// }				t_texture_data;
-
 /*
 **	texture_to_scale = size to resize the image,
 **	texture_to_scale = 32 -> will resuze the image to 32x32 pixels
@@ -92,34 +84,25 @@ typedef struct	s_data
 	SDL_Surface		*screen;
 	SDL_Surface		**textures;
 	t_texture_data	*texture_list;
-	int				nb_texture;
-	int32_t			nb_used_texture;
-	double			scale;
-	t_vec2f			pos;
+	t_interface		interface;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
 	int16_t			numsectors;
 	int16_t			numwalls;
+	int				nb_texture;
+	int32_t			nb_used_texture;
+	double			scale;
+	t_vec2f			pos;
 	t_wall			*selectedwall;
 	t_wall			*selectedwall2;
 	int				selected_sector;
 	int				selected_wall;
+	int				selected_texture;
 	bool			grid_locking;
 	bool			sectordrawing;
-	t_interface		interface;
 	double			texture_to_scale;
-	/**/
-	int				selected_texture;
 	t_vec2f			temp;
 }				t_data;
-
-void			run_game(t_data *d);
-void			init_sectors(t_data *d);
-void			save_file(t_data *d);
-void			putpixel(t_data *d, int x, int y, uint32_t color);
-void			debug_print(t_data *d);
-
-extern char **environ; // used by execve
 
 /*
 **	ed_init.c
@@ -152,6 +135,7 @@ t_vec2f			screentoworld(t_data *d, t_vec2f p);
 
 void			put_pixel_to_surface(SDL_Surface *sur, int x, int y,
 														uint32_t color);
+void			putpixel(t_data *d, int x, int y, uint32_t color);
 
 /*
 **	ed_editor.c
@@ -246,5 +230,17 @@ int				selecting_assets(t_data *d, SDL_Event *e);
 */
 
 int				event_mouse_button(t_data *d, SDL_Event *e);
+
+/*
+**	ed_save_file.c
+*/
+
+int				save_file(t_data *d);
+
+/*
+**	ed_fix_data_to_save.c
+*/
+
+void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 
 #endif

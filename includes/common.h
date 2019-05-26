@@ -55,6 +55,8 @@ typedef struct	s_sector
 	int16_t		id_of_monster[MAXMONSTERSEC];
 	int16_t		ceilpicnum;
 	uint8_t		light;
+	char		floor_texture_name[100];
+	char		ceil_texture_name[100];
 }				t_sector;
 
 typedef struct	s_wall
