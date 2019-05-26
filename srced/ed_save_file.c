@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ed_save_file.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/26 13:54:11 by mikorale          #+#    #+#             */
+/*   Updated: 2019/05/26 13:54:12 by mikorale         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "editor.h"
 
-static int write_texture_data(t_data *d, int f)
+static int	write_texture_data(t_data *d, int f)
 {
-	t_texture_data *tmp;
-	int i;
+	t_texture_data	*tmp;
+	int				i;
 
 	tmp = d->texture_list->begin;
 	i = -1;
@@ -43,9 +55,8 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 {
 	int i;
 
-	if (write(f, &d->numsectors, sizeof(d->numsectors)) < 0)// ||
-	//	/**/ write(f, d->sectors, sizeof(*d->sectors) * d->numsectors) < 0)
-		/**/ ft_printf("sector failed\n");
+	if (write(f, &d->numsectors, sizeof(d->numsectors)) < 0)
+		return (ft_printf("Failed to write numsectors\n"));
 	i = -1;
 	while (++i < d->numsectors)
 		if (write(f, &d->sectors[i], sizeof(t_sector)) < 0 ||
@@ -64,17 +75,21 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 
 int			save_file(t_data *d)
 {
-	int f;
-	t_vec3f startpos = {0, 0.5, 0};
-	double angle = 0;
-	int16_t startsectnum = 0;
+	t_vec3f	startpos;
+	double	angle;
+	int16_t	startsectnum;
+	int		f;
 
+	startpos = (t_vec3f){0, 0.5, 0};
+	angle = 0;
+	startsectnum = 0;
 	if (((f = open("map01", O_WRONLY | O_CREAT, 0666)) == -1) ||
 		write(f, &startpos, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
 		write(f, &startsectnum, sizeof(int16_t)) < 0)
 		return (ft_printf("Write starting data failed\n"));
 	set_texture_used(d, d->sectors, d->walls);
+	set_texture_name(d, d->sectors, d->walls);
 	if (write_wall_n_sector_data(d, f) || write_texture_list(d, f) ||
 		write_texture_data(d, f))
 		return (1);

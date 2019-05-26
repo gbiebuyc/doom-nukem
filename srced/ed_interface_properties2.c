@@ -12,6 +12,15 @@
 
 #include "editor.h"
 
+void		draw_separator(t_data *d, int x, int y, int color)
+{
+	while (x < W)
+	{
+		putpixel(d, x, y, color);
+		x++;
+	}
+}
+
 static void	empty_case(t_data *d, int n, t_interface *i)
 {
 	int	x;

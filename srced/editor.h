@@ -174,7 +174,6 @@ void			update_wall_pos(t_data *d);
 **	ed_interface.c
 */
 
-void			draw_separator(t_data *d, int x, int y, int color);
 void			show_menu(t_data *d);
 
 /*
@@ -197,6 +196,7 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 **	ed_interface_properties2.c
 */
 
+void			draw_separator(t_data *d, int x, int y, int color);
 void			fill_texture_selection(t_data *d, t_interface *i);
 
 /*
@@ -241,6 +241,7 @@ int				save_file(t_data *d);
 **	ed_fix_data_to_save.c
 */
 
+void			set_texture_name(t_data *d, t_sector *s, t_wall *w);
 void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 
 #endif

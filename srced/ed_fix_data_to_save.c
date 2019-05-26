@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ed_fix_data_to_save.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/26 13:54:22 by mikorale          #+#    #+#             */
+/*   Updated: 2019/05/26 13:54:24 by mikorale         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "editor.h"
 
 /*
@@ -20,7 +32,7 @@ static void	reset_used(t_data *d)
 **	set the corresponding texture name to each sector and walls structure.
 */
 
-void	set_texture_name(t_data *d, t_sector *s, t_wall *w)
+void		set_texture_name(t_data *d, t_sector *s, t_wall *w)
 {
 	t_texture_data	*tmp;
 	int				j;
@@ -52,7 +64,7 @@ void	set_texture_name(t_data *d, t_sector *s, t_wall *w)
 **	all texture currently used in the map
 */
 
-void	set_texture_used(t_data *d, t_sector *s, t_wall *w)
+void		set_texture_used(t_data *d, t_sector *s, t_wall *w)
 {
 	t_texture_data	*tmp;
 	int				j;
@@ -78,5 +90,4 @@ void	set_texture_used(t_data *d, t_sector *s, t_wall *w)
 		tex_num++;
 		tmp = tmp->next;
 	}
-	set_texture_name(d, s, w);
 }

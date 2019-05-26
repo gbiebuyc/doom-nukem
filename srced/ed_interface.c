@@ -12,45 +12,8 @@
 
 #include "editor.h"
 
-void		draw_separator(t_data *d, int x, int y, int color)
+static void	get_category_position(t_data *d)
 {
-	while (x < W)
-	{
-		putpixel(d, x, y, color);
-		x++;
-	}
-}
-
-static void	print_assets(t_data *d, t_assets *a/*, SDL_Surface *prop*/)
-{
-	int i;
-	int	x;
-	int	y;
-	int	x_tmp;
-
-	x = W - PROPERTIES_LIMIT + 8;
-	x_tmp = x - 38;
-	y = d->interface.toolbar.properties[4]->h + 13;
-	d->interface.assets_category[0] = (t_vec2f){x - 1, y - 1};
-	i = -1;
-	while (++i < 3)
-		copy_surface_to_surface(a[0].assets_icon[i], d->screen, (int[2]){x_tmp += 38, y}, d);
-	x_tmp = x - 38;
-	y = H * 0.15 + d->interface.toolbar.properties[5]->h + 13;
-	d->interface.assets_category[1] = (t_vec2f){x, y};
-	i = -1;
-	while (++i < 5)
-		copy_surface_to_surface(a[1].assets_icon[i], d->screen, (int[2]){x_tmp += 38, y}, d);
-	x_tmp = x - 38;
-	y += (H * 0.15);
-	d->interface.assets_category[2] = (t_vec2f){x, y};
-	i = -1;
-	while (++i < 2)
-		copy_surface_to_surface(a[2].assets_icon[i], d->screen, (int[2]){x_tmp += 38, y}, d);
-	/************************/
-/*	int	*n;
-	int	m;
-	int	j;
 	int	x;
 	int	y;
 
@@ -60,17 +23,28 @@ static void	print_assets(t_data *d, t_assets *a/*, SDL_Surface *prop*/)
 	y = H * 0.15 + d->interface.toolbar.properties[5]->h + 13;
 	d->interface.assets_category[1] = (t_vec2f){x, y};
 	d->interface.assets_category[2] = (t_vec2f){x, y + (H * 0.15)};
+}
+
+static void	print_assets(t_data *d, t_assets *a)
+{
+	int	*n;
+	int	m;
+	int	j;
+	int	x;
+	int	y;
+
+	get_category_position(d);
 	n = (int[3]){3, 5, 2};
 	m = -1;
 	while (++m < 3)
 	{
 		j = -1;
+		y = d->interface.assets_category[m].y;
+		x = W - PROPERTIES_LIMIT - 30;
 		while (++j < n[m])
-		{
-
-		}
-	}*/
-	/****** player_start *******/
+			copy_surface_to_surface(a[m].assets_icon[j], d->screen,
+										(int[2]){x += 38, y}, d);
+	}
 	y = H * 0.40 + d->interface.toolbar.properties[7]->h + 20;
 	d->interface.assets_category[3] = (t_vec2f){x, y};
 	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,

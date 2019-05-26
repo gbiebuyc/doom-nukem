@@ -23,7 +23,7 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e)
 		&& !d->sectordrawing)
 	{
 		d->selected_sector = find_sect_under_cursor(d);
-	/**/ft_printf("sectnum = %d\n", d->selected_sector);
+		ft_printf("[Selected sector] = %d\n", d->selected_sector);
 		select_wall_under_cursor(d, (t_vec2f){e->button.x, e->button.y});
 	}
 	else if (x > W - PROPERTIES_LIMIT)
