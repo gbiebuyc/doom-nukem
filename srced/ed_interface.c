@@ -76,7 +76,7 @@ static void	print_assets_toolbar(t_data *d, SDL_Surface **prop)
 	draw_separator(d, W - PROPERTIES_LIMIT, y + prop[7]->h + 10, 0x008800);
 	x = (W - PROPERTIES_LIMIT * 0.5) - prop[7]->w * 0.5;
 	copy_surface_to_surface(prop[7], d->screen, (int[2]){x, y + 5}, d);
-	print_assets(d, d->interface.toolbar.assets/*, d->interface.toolbar.properties*/);
+	print_assets(d, d->interface.toolbar.assets);
 }
 
 static void	print_texture_toolbar(t_data *d)
@@ -134,6 +134,4 @@ void		show_menu(t_data *d)
 		putpixel(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	print_properties(d, d->interface.toolbar.properties);
 	print_assets_toolbar(d, d->interface.toolbar.properties);
-	// TODO put the texture from wall structure inside the texture_case
-	// depending on which wall or sector is select
 }

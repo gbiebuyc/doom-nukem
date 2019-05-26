@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-/*
-void	load_texture(t_data *d, char *path)
-{
-	static int	i;
-	SDL_Surface *tmp;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-		exit(EXIT_FAILURE);
-	if (!(d->textures[i++] = SDL_ConvertSurfaceFormat(tmp,
-					d->screen->format->format, 0)))
-		exit(EXIT_FAILURE);
-	SDL_FreeSurface(tmp);
-}*/
 
 void	load_monster_texture(t_data *d, char *path, int i[3]) //i[0] == monster_id & i[1] == state_of_anim | anim & i[2] == orientation
 {
@@ -42,6 +29,35 @@ void	load_monster_texture(t_data *d, char *path, int i[3]) //i[0] == monster_id 
 	SDL_FreeSurface(tmp);
 }
 
+void	fix_picnum(t_data *d)
+{
+	int		i;
+	int		name_i;
+
+	i = -1;
+	while (++i < d->numwalls)
+	{
+		name_i = -1;
+		while (++name_i < d->nb_textures)
+		{
+			if (ft_strequ(d->walls[i].texture_name, d->tex_name_list[name_i]))
+				d->walls[i].middlepicnum = name_i;
+		}
+	}
+	i = -1;
+	while (++i < d->numsectors)
+	{
+		name_i = -1;
+		while (++name_i < d->nb_textures)
+		{
+			if (ft_strequ(d->sectors[i].floor_texture_name, d->tex_name_list[name_i]))
+				d->sectors[i].floorpicnum = name_i;
+			if (ft_strequ(d->sectors[i].ceil_texture_name, d->tex_name_list[name_i]))
+				d->sectors[i].ceilpicnum = name_i;
+		}
+	}
+}
+
 void	init_sdl(t_data *d)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
@@ -54,47 +70,8 @@ void	init_sdl(t_data *d)
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		err_exit(d, 2, SDL_GetError());
 /********************/
-	int		wall_i;
-	int		name_i;
-
-	wall_i = -1;
-	while (++wall_i < d->numwalls)
-	{
-		name_i = -1;
-		while (++name_i < d->nb_textures)
-		{
-			if (ft_strequ(d->walls[wall_i].texture_name, d->tex_name_list[name_i]))
-			{
-				d->walls[wall_i].middlepicnum = name_i;
-				break ;
-			}
-		}
-	}
-
-	int		sect_i;
-
-	sect_i = -1;
-	while (++sect_i < d->numsectors)
-	{
-		name_i = -1;
-		while (++name_i < d->nb_textures)
-		{
-			if (ft_strequ(d->sectors[sect_i].floor_texture_name, d->tex_name_list[name_i]))
-				d->sectors[sect_i].floorpicnum = name_i;
-			if (ft_strequ(d->sectors[sect_i].ceil_texture_name, d->tex_name_list[name_i]))
-				d->sectors[sect_i].ceilpicnum = name_i;
-		}
-	}
-/**********************/
-	/*load_texture(d, d->walls[0].texture_name);
-    d->walls[0].middlepicnum = 0;
-    load_texture(d, d->walls[1].texture_name);
-    d->walls[1].middlepicnum = 1;
-    load_texture(d, d->walls[2].texture_name);
-    d->walls[2].middlepicnum = 2;
-    load_texture(d, d->walls[3].texture_name);
-    d->walls[3].middlepicnum = 3;*/
-
+	fix_picnum(d);
+/********************/
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA1.bmp", (int[3]){0, 0, 0});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA2A8.bmp", (int[3]){0, 0, 1});
 	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA3A7.bmp", (int[3]){0, 0, 2});
