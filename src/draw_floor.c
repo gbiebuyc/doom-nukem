@@ -6,42 +6,48 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:12:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 03:55:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/26 13:46:01 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	draw_floor(t_data *d, t_projdata p, t_frustum *fr)
+void	draw_floor2(t_data *d, int xy[2], double sincos[2], t_projdata *p)
 {
-	double n;
+	double	dist;
+	double	left_u;
+	double	right_u;
+	double	left_v;
+	double	right_v;
 
-	double altitude = d->cam.pos.y - p.sector->floorheight;
-	if (altitude <= 0)
+	dist = (d->cam.pos.y - p->sector->floorheight) * 2.66 /
+		norm(xy[1] - HEIGHT * 0.5 + d->cam.y_offset, 0, HEIGHT * 0.5);
+	left_u = d->cam.pos.x + sincos[1] * dist - sincos[0] * dist * 0.5;
+	right_u = d->cam.pos.x + sincos[1] * dist + sincos[0] * dist * 0.5;
+	left_v = d->cam.pos.z + sincos[0] * dist + sincos[1] * dist * 0.5;
+	right_v = d->cam.pos.z + sincos[0] * dist - sincos[1] * dist * 0.5;
+	putpixel(d, xy[0], xy[1], shade(dist, getpixel2(
+					d->textures[p->sector->floorpicnum],
+					lerp(norm(xy[0], 0, WIDTH), left_u, right_u),
+					lerp(norm(xy[0], 0, WIDTH), left_v, right_v))));
+}
+
+void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
+{
+	double	sincos[2];
+	int		x;
+	int		y;
+
+	if ((d->cam.pos.y - p->sector->floorheight) <= 0)
 		return ;
-	altitude *= 2.66;
-	double angle = -d->cam.rot + M_PI_2;
-	for (int x = p.cx1; x <= p.cx2; x++)
+	sincos[0] = sin(-d->cam.rot + M_PI_2);
+	sincos[1] = cos(-d->cam.rot + M_PI_2);
+	x = p->cx1 - 1;
+	while (++x <= p->cx2)
 	{
-		n = fclamp(norm(x, p.x1, p.x2), 0, 1);
-		double y_start = lerp(n, p.y1b, p.y2b);
-		for (int y = ft_max(fr->ytop[x], y_start); y <= fr->ybottom[x]; y++)
-		{
-			n = norm(y - HEIGHT / 2 + d->cam.y_offset, 0, HEIGHT / 2);
-			double distance = altitude / n;
-			double line_du = sin(angle) * distance;
-			double line_dv = -cos(angle) * distance;
-			double left_u = d->cam.pos.x + distance * cos(angle) - line_du / 2;
-			double right_u = left_u + line_du;
-			double left_v = d->cam.pos.z + distance * sin(angle) - line_dv / 2;
-			double right_v = left_v + line_dv;
-
-			n = norm(x, 0, WIDTH);
-			double u = lerp(n, left_u, right_u);
-			double v = lerp(n, left_v, right_v);
-			double scale = 1;
-			putpixel(d, x, y, shade(distance, getpixel2(d->textures
-							[p.sector->floorpicnum], u * scale, v * scale)));
-		}
+		y = ft_max(fr->ytop[x],
+				lerp(fclamp(norm(x, p->x1, p->x2), 0, 1), p->y1b, p->y2b)) - 1;
+		while (++y <= fr->ybottom[x])
+			draw_floor2(d, (int[2]){x, y}, sincos, p);
 	}
 }

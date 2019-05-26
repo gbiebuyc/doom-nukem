@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/12 17:52:58 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/26 13:44:42 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
 void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
-void	draw_floor(t_data *d, t_projdata p, t_frustum *fr);
+void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr);
 void	clamp_wall(bool visible[], int *x1, int *x2);
 void	update(t_data *d);
 void	render(t_data *d);

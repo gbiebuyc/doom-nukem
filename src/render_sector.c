@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/12 18:09:22 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/26 13:43:42 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.u_end = u_end * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_wall(d, &p, fr);
-		draw_floor(d, p, fr);
+		draw_floor(d, &p, fr);
 		/*
 		if (*sect->id_of_monster != -1)
 			draw_sprite(d, p, fr, *sect->id_of_monster);
