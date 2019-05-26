@@ -23,6 +23,8 @@ static void	get_category_position(t_data *d)
 	y = H * 0.15 + d->interface.toolbar.properties[5]->h + 13;
 	d->interface.assets_category[1] = (t_vec2f){x, y};
 	d->interface.assets_category[2] = (t_vec2f){x, y + (H * 0.15)};
+	y = H * 0.40 + d->interface.toolbar.properties[7]->h + 20;
+	d->interface.assets_category[3] = (t_vec2f){x, y};
 }
 
 static void	print_assets(t_data *d, t_assets *a)
@@ -45,8 +47,8 @@ static void	print_assets(t_data *d, t_assets *a)
 			copy_surface_to_surface(a[m].assets_icon[j], d->screen,
 										(int[2]){x += 38, y}, d);
 	}
-	y = H * 0.40 + d->interface.toolbar.properties[7]->h + 20;
-	d->interface.assets_category[3] = (t_vec2f){x, y};
+	x = W - PROPERTIES_LIMIT + 8;
+	y = d->interface.assets_category[3].y;
 	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
 													(int[2]){x, y}, d);
 }

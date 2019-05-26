@@ -39,10 +39,10 @@ void	fix_picnum(t_data *d)
 	{
 		name_i = -1;
 		while (++name_i < d->nb_textures)
-		{
 			if (ft_strequ(d->walls[i].texture_name, d->tex_name_list[name_i]))
-				d->walls[i].middlepicnum = name_i;
-		}
+				d->walls[i].lowerpicnum =
+				d->walls[i].middlepicnum =
+				d->walls[i].upperpicnum = name_i;
 	}
 	i = -1;
 	while (++i < d->numsectors)
