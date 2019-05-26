@@ -87,7 +87,7 @@ fast:
 
 SDL:
 	cd $(SDL_SOURCES); ./configure --prefix=$(SDL_PATH)
-	make -C $(SDL_SOURCES)
+	make -C $(SDL_SOURCES) -j4
 	make -C $(SDL_SOURCES) install
 
 SDL_clean:
