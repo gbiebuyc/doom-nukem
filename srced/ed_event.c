@@ -64,30 +64,29 @@ static void	run_game(t_data *d)
 		ft_printf("Error saving file\nAbort running game...\n");
 }
 
-void		event_keypress(t_data *d, SDL_Event *e)
+void		event_keypress(t_data *d, SDL_Keycode key)
 {
-	if (e->key.keysym.sym == SDLK_ESCAPE)
+	if (key == SDLK_ESCAPE)
 	{
 		d->interface.show_menu = !d->interface.show_menu;
 		d->interface.texture_case_select = -1;
 	}
-	else if (e->key.keysym.sym == SDLK_r)
-		run_game(d);
-	else if (e->key.keysym.sym == SDLK_s)
+	else if (key == SDLK_r || key == SDLK_d)
+		(key == SDLK_r) ? run_game(d) : debug_print(d);
+	else if (key == SDLK_s)
 		(save_file(d)) ? ft_printf("Error during file saving.\n") : 1;
-	else if (e->key.keysym.sym == SDLK_l)
+	else if (key == SDLK_l)
 		d->grid_locking = !d->grid_locking;
-	else if (e->key.keysym.sym == SDLK_SPACE)
+	else if (key == SDLK_SPACE)
 		(d->sectordrawing) ? add_wall(d) : add_sector(d);
-	else if (e->key.keysym.sym == SDLK_d)
-		debug_print(d);
-	else if (e->key.keysym.sym == SDLK_DELETE && !d->sectordrawing)
+	else if (key == SDLK_DELETE && !d->sectordrawing)
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
-	else if (e->key.keysym.sym == SDLK_PAGEDOWN)
-		change_floor_height(d, -0.1, d->selected_sector);
-	else if (e->key.keysym.sym == SDLK_PAGEUP)
-		change_floor_height(d, +0.1, d->selected_sector);
-	else if (e->key.keysym.sym == SDLK_BACKSPACE)
+	else if (key == SDLK_KP_1 || key == SDLK_KP_3)
+		change_floor_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1),
+													d->selected_sector);
+	else if (key == SDLK_KP_7 || key == SDLK_KP_9)
+		change_ceil_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1), d->selected_sector);
+	else if (key == SDLK_BACKSPACE)
 		cancel_last_wall(d);
 }
 

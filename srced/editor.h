@@ -212,7 +212,7 @@ void			remove_backgorund_image(SDL_Surface *s);
 **	ed_event.c
 */
 
-void			event_keypress(t_data *d, SDL_Event *e);
+void			event_keypress(t_data *d, SDL_Keycode key);
 void			zoom(t_data *d, SDL_Event *e);
 void			event_motion_mouse(t_data *d, SDL_Event *e);
 

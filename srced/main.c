@@ -33,7 +33,7 @@ void	main_loop(t_data *d)
 		if (e.type == SDL_QUIT)
 			break ;
 		else if (e.type == SDL_KEYDOWN)
-			event_keypress(d, &e);
+			event_keypress(d, e.key.keysym.sym);
 		else if (e.type == SDL_MOUSEWHEEL)
 			zoom(d, &e);
 		else if (event_mouse_button(d, &e) < 0)
