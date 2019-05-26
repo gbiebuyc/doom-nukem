@@ -24,6 +24,7 @@ int		read_texture_data(t_data *d, int f)
 	i = -1;
 	while (++i < d->nb_textures)
 	{
+		// TODO IF RETURN
 		read(f, &w, sizeof(int));
 		read(f, &h, sizeof(int));
 
@@ -50,37 +51,23 @@ int		read_textures_name(t_data *d, int f)
 			return (ft_printf("failed to malloc tex\n"));
 		if (read(f, d->tex_name_list[i], 100) < 0)
 			return (ft_printf("failed to read tex name"));
-		
 	}
 	if (read_texture_data(d, f))
 		return (1);
 	return (0);
 }
 
+// TODO add sectors reading here
+
 int		read_wall_structure(t_data *d, int f)
 {
 	int		i;
-	int		j;
-	char	c;
-	char	str[1000];
 
-	i = 0;
-	while (i < d->numwalls)
-	{
-		if (read(f, &d->walls[i], sizeof(t_wall)) == -1)
+	i = -1;
+	while (++i < d->numwalls)
+		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
+			read(f, d->walls[i].texture_name, 100) < 0)
 			return (ft_printf("failed to read wall structure\n"));
-		j = 0;
-		c = 0;
-		while (c != '\0' || j == 0)
-		{
-			if (read(f, &c, 1) < 0)
-				return (ft_printf("failed to get filename\n"));
-			str[j] = c;
-			j++;
-		}
-		d->walls[i].texture_name = ft_strdup(str);
-		i++;
-	}
 	return (0);
 }
 

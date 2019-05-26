@@ -65,7 +65,7 @@ typedef struct	s_wall
 	int16_t		lowerpicnum;
 	int16_t		flags;
 	int16_t		neighborsect;
-	char		*texture_name;
+	char		texture_name[100];
 }				t_wall;
 
 typedef struct	s_thing

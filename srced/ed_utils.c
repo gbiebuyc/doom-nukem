@@ -68,7 +68,7 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dest,
 }
 
 /***/
-char	*get_texture_name(t_data *d)
+char	*get_texture_name(t_data *d, int selected_teture)
 {
 	char *name;
 	int	i;
@@ -76,7 +76,7 @@ char	*get_texture_name(t_data *d)
 
 	i = 0;
 	list = d->texture_list->begin;
-	while (i < d->selected_texture)
+	while (i < selected_teture)
 	{
 		list = list->next;
 		i++;
@@ -99,10 +99,7 @@ void			save_selected_texture(t_data *d, int x, int y)
 		if (d->selected_texture < d->nb_texture)
 		{
 			if (d->interface.texture_case_select == 2 && d->selected_wall >= 0)
-			{
 				d->walls[d->selected_wall].middlepicnum = d->selected_texture;
-				d->walls[d->selected_wall].texture_name = get_texture_name(d);
-			}
 			else if (d->interface.texture_case_select == 1)
 				s->ceilpicnum = d->selected_texture;
 			else if (d->interface.texture_case_select == 0)

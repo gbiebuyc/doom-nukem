@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/24 08:26:15 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/05/26 12:02:54 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	run_game(t_data *d)
 
 void	init_sectors(t_data *d)
 {
-	d->sectors[0] = (t_sector){0, 4, 0, 1, 2, {0}, 0, 255};
+	d->sectors[0] = (t_sector){0, 4, 0, 1, 0, {0}, 0, 255};
 	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1, ""};
-	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 1, 0, 0, -1, ""};
-	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 2, 0, 0, -1, ""};
-	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, 0, 3, 0, 0, -1, ""};
+	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 0, 0, 0, -1, ""};
+	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 0, 0, 0, -1, ""};
+	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, 0, 0, 0, 0, -1, ""};
 	d->numsectors = 1;
 	d->numwalls = 4;
 }
@@ -111,15 +111,39 @@ static void	reset_used(t_data *d)
 	}
 }
 
+void	set_texture_name(t_data *d, t_sector *s, t_wall *w)
+{
+	t_texture_data	*tmp;
+	int				j;
+	int				tex_num;
+(void)s;
+
+	tmp = d->texture_list->begin;
+	tex_num = 0;
+	while (tmp)
+	{
+	/*	j = -1;
+		while (++j < d->numsectors)
+			if (s[j].floorpicnum == tex_num || s[j].ceilpicnum == tex_num)
+				ft_strcpy(s[j].name, tmp->name);*/
+		j = -1;
+		while (++j < d->numwalls)
+			if (w[j].middlepicnum == tex_num)
+				ft_strcpy(w[j].texture_name, tmp->name);
+		tex_num++;
+		tmp = tmp->next;
+	}
+}
+
 void	set_texture_used(t_data *d, t_sector *s, t_wall *w)
 {
 	t_texture_data	*tmp;
 	int				j;
 	int				tex_num;
 
+	d->nb_used_texture = 0;
 	reset_used(d);
 	tmp = d->texture_list->begin;
-	d->nb_used_texture = 0;
 	tex_num = 0;
 	while (tmp)
 	{
@@ -137,6 +161,7 @@ void	set_texture_used(t_data *d, t_sector *s, t_wall *w)
 		tex_num++;
 		tmp = tmp->next;
 	}
+	set_texture_name(d, s, w);
 }
 
 void	save_file(t_data *d)
@@ -164,17 +189,16 @@ void	save_file(t_data *d)
 	else
 	{
 		int i = 0;
-		int len;
 		// write all walls and the corresponding texture name
+		
+		set_texture_used(d, d->sectors, d->walls);
 		while (i < d->numwalls)
 		{
-			len = ft_strlen(d->walls[i].texture_name);
 			if (write(f, &d->walls[i], sizeof(t_wall)) < 0 ||
-				write(f, d->walls[i].texture_name, len + 1) < 0)
+				write(f, d->walls[i].texture_name, 100) < 0)
 				exit(ft_printf("error print wall struct\n"));
 			i++;
 		}
-		set_texture_used(d, d->sectors, d->walls);
 		if (write(f, &d->nb_used_texture, sizeof(int32_t)) < 0)
 			ft_printf("Error nb texture write\n");
 		t_texture_data	*tmp;
@@ -182,10 +206,8 @@ void	save_file(t_data *d)
 		while (tmp)
 		{
 			if (tmp->used)
-			{
 				if (write(f, tmp->name, 100) < 0)
 					exit(ft_printf("failed to write texture_list\n"));
-			}
 			tmp = tmp->next;
 		}
 		if (write_texture_data(d, f))
