@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 23:03:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/27 12:05:53 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@ typedef struct	s_projdata
 	t_wall		*wall;
 	t_sector	*sector;
 	double		*zbuffer;
+	double	n;
+	double	z;
+	int		x;
+	int		y;
+	double	u;
+	double	v;
+	int		ya;
+	int		yb;
+	int		nya;
+	int		nyb;
+	bool	visible[WIDTH];
 }				t_projdata;
 
 typedef struct	s_frustum
@@ -96,6 +107,8 @@ typedef struct	s_data
 	int16_t			numwalls;
 	int16_t			cursectnum;
 	bool			debug_pause;
+	double			dooranimstep[MAXNUMWALLS];
+	double			doorstate[MAXNUMWALLS];
 }				t_data;
 
 #endif

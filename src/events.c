@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/05 23:48:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/27 13:24:47 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 		proper_exit(d);
 	// Pause button
 	else if (event.keysym.sym == SDLK_p)
-		 SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
+		SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
 	else if (event.keysym.sym == SDLK_PAUSE)
 		d->debug_pause = true;
+	else if (event.keysym.sym == SDLK_e)
+		activate_door(d);
 }
 
 #define MOUSE_SENSITIVTY 1

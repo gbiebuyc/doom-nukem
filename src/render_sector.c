@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/26 14:09:32 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:33:59 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 			.wall = &d->walls[wallnum]};
 		p.neighbor = (p.wall->neighborsect == -1) ? NULL :
 			&d->sectors[p.wall->neighborsect];
+		p.wall->lowerpicnum = d->walls[wallnextnum].middlepicnum;
 		p.x1 = x1 * d->cam.cos - z1 * d->cam.sin;
 		p.z1 = x1 * d->cam.sin + z1 * d->cam.cos;
 		p.x2 = x2 * d->cam.cos - z2 * d->cam.sin;

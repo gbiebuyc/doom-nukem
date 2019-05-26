@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/05/26 14:10:17 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/27 13:27:08 by gbiebuyc         ###   ########.fr        #
 #    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -19,6 +19,7 @@ FILES= main \
 	   init_monsters \
 	   loop \
 	   events \
+	   door_activation \
 	   monster_behaviour \
 	   monster_anim_state \
 	   update \
