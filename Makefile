@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/05/07 23:13:49 by nallani          ###   ########.fr        #
+#    Updated: 2019/05/26 14:10:17 by gbiebuyc         ###   ########.fr        #
 #    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -25,6 +25,7 @@ FILES= main \
 	   render \
 	   render_sector \
 	   draw_floor \
+	   draw_ceil \
 	   draw_wall \
 	   clip_wall \
 	   pixel \
