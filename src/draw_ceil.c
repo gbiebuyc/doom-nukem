@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/26 13:56:00 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/26 14:16:16 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/26 14:25:43 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	draw_ceil2(t_data *d, int xy[2], double sincos[2], t_projdata *p)
 	double	right_v;
 
 	dist = (p->sector->ceilheight - d->cam.pos.y) * 2.66 /
-		norm(xy[1] - HEIGHT * 0.5 + d->cam.y_offset, 0, HEIGHT * 0.5);
-	left_u = -d->cam.pos.x + sincos[1] * dist - sincos[0] * dist * 0.5;
-	right_u = -d->cam.pos.x + sincos[1] * dist + sincos[0] * dist * 0.5;
-	left_v = -d->cam.pos.z + sincos[0] * dist + sincos[1] * dist * 0.5;
-	right_v = -d->cam.pos.z + sincos[0] * dist - sincos[1] * dist * 0.5;
+		-norm(xy[1] - HEIGHT * 0.5 + d->cam.y_offset, 0, HEIGHT * 0.5);
+	left_u = d->cam.pos.x + sincos[1] * dist - sincos[0] * dist * 0.5;
+	right_u = d->cam.pos.x + sincos[1] * dist + sincos[0] * dist * 0.5;
+	left_v = d->cam.pos.z + sincos[0] * dist + sincos[1] * dist * 0.5;
+	right_v = d->cam.pos.z + sincos[0] * dist - sincos[1] * dist * 0.5;
 	putpixel(d, xy[0], xy[1], shade(dist, getpixel2(
 					d->textures[p->sector->ceilpicnum],
 					lerp(norm(xy[0], 0, WIDTH), left_u, right_u),
