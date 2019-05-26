@@ -6,12 +6,23 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/18 22:07:23 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/04/22 05:58:03 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/26 11:04:23 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 /doom-nukem
 /editor
+
+SDL/Makefile
+SDL/Makefile.rules
+SDL/build/
+SDL/config.log
+SDL/config.status
+SDL/library/
+SDL/libtool
+SDL/sdl2-config
+SDL/sdl2-config.cmake
+SDL/sdl2.pc
 
 # Created by https://www.gitignore.io/api/c,vim,linux,macos
 # Edit at https://www.gitignore.io/?templates=c,vim,linux,macos
