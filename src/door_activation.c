@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 13:25:48 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 13:26:05 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/27 14:18:24 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	activate_neighbor_door(t_data *d, t_wall *door,
 		t_wall *nextwall, t_sector *nei)
 {
-	int16_t lastwall = nei->firstwallnum + nei->numwalls - 1;
-	for (int i = lastwall, j = nei->firstwallnum; j < lastwall; i = j++)
+	int16_t last = nei->firstwallnum + nei->numwalls;
+	for (int i = last - 1, j = nei->firstwallnum; j < last; i = j++)
 	{
 		if (d->walls[i].neighborsect == -1)
 			continue ;
@@ -32,14 +32,18 @@ void	activate_neighbor_door(t_data *d, t_wall *door,
 	}
 }
 
-#define ACTIVATION_DIST 2
+#define ACTIVATION_DIST 1.5
 
 void	activate_door(t_data *d)
 {
+	int16_t	door;
+	int16_t	nextwall;
+
+	double closest_dist = INFINITY;
 	t_sector *sect = d->sectors + d->cursectnum;
-	int16_t lastwall = sect->firstwallnum + sect->numwalls - 1;
+	int16_t last = sect->firstwallnum + sect->numwalls;
 	t_vec2f p = (t_vec2f){d->cam.pos.x, d->cam.pos.z};
-	for (int i = lastwall, j = sect->firstwallnum; j < lastwall; i = j++)
+	for (int i = last - 1, j = sect->firstwallnum; j < last; i = j++)
 	{
 		if (d->walls[i].neighborsect == -1)
 			continue ;
@@ -55,14 +59,19 @@ void	activate_door(t_data *d)
 		double	dx = p.x - closest.x;
 		double	dy = p.y - closest.y;
 		double	dist = vec2f_length((t_vec2f){dx, dy});
-		if (dist > ACTIVATION_DIST)
-			continue ;
-		if (d->doorstate[i] == 0 || d->dooranimstep[i] < 0)
-			d->dooranimstep[i] = 0.01;
-		else if (d->doorstate[i] == 1 || d->dooranimstep[i] > 0)
-			d->dooranimstep[i] = -0.01;
-		activate_neighbor_door(d, &d->walls[i], &d->walls[j],
-				&d->sectors[d->walls[i].neighborsect]);
-		return;
+		if (dist < ACTIVATION_DIST && dist < closest_dist)
+		{
+			closest_dist = dist;
+			door = i;
+			nextwall = j;
+		}
 	}
+	if (closest_dist == INFINITY)
+		return ;
+	if (d->doorstate[door] == 0 || d->dooranimstep[door] < 0)
+		d->dooranimstep[door] = 0.01;
+	else if (d->doorstate[door] == 1 || d->dooranimstep[door] > 0)
+		d->dooranimstep[door] = -0.01;
+	activate_neighbor_door(d, &d->walls[door], &d->walls[nextwall],
+			&d->sectors[d->walls[door].neighborsect]);
 }
