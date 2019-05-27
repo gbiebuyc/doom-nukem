@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 12:52:05 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:49:37 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,30 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 	}
 }
 
-void	update(t_data *d)
+void	update_doors(t_data *d)
 {
 	int i;
 
-	// update doors
 	i = -1;
 	while (++i < MAXNUMWALLS)
 	{
-		d->doorstate[i] += d->dooranimstep[i];
-		if (d->doorstate[i] >= 1 || d->doorstate[i] <= 0)
+		if (!d->walls[i].is_door || d->walls[i].neighborsect == -1)
+			d->doorstate[i] = 1;
+		else
 		{
-			d->doorstate[i] = fclamp(d->doorstate[i], 0, 1);
-			d->dooranimstep[i] = 0;
+			d->doorstate[i] += d->dooranimstep[i];
+			if (d->doorstate[i] >= 1 || d->doorstate[i] <= 0)
+			{
+				d->doorstate[i] = fclamp(d->doorstate[i], 0, 1);
+				d->dooranimstep[i] = 0;
+			}
 		}
 	}
+}
+
+void	update(t_data *d)
+{
+	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;
 	d->cam.rot += d->keys[SDL_SCANCODE_RIGHT] * TURN_SPEED;
 	d->cam.sin = sin(d->cam.rot);

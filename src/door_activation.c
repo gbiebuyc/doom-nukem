@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 13:25:48 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 14:18:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:38:01 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	activate_door(t_data *d)
 	t_vec2f p = (t_vec2f){d->cam.pos.x, d->cam.pos.z};
 	for (int i = last - 1, j = sect->firstwallnum; j < last; i = j++)
 	{
-		if (d->walls[i].neighborsect == -1)
+		if (!d->walls[i].is_door || d->walls[i].neighborsect == -1)
 			continue ;
 		t_vec2f a = d->walls[i].point;
 		t_vec2f b = d->walls[j].point;

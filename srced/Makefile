@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/29 04:25:11 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/05/04 11:29:23 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/05/27 16:17:32 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = main.c \
 	  ed_interface.c ed_interface_functions.c \
 	  ed_interface_properties.c ed_interface_properties2.c\
 	  ed_utils.c \
+	  ed_door_toggle.c \
 	  ed_save_file.c ed_fix_data_to_save.c
 
 OBJ = $(SRC:.c=.o)

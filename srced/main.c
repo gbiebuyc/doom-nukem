@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/26 12:02:54 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:14:18 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void	init_structure(t_data *d)
 void		init_sectors(t_data *d)
 {
 	d->sectors[0] = (t_sector){0, 4, 0, 1, 0, {0}, 0, 255, "", ""};
-	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1, ""};
-	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 0, 0, 0, -1, ""};
-	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 0, 0, 0, -1, ""};
-	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, 0, 0, 0, 0, -1, ""};
+	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1, "", false};
+	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 0, 0, 0, -1, "", false};
+	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 0, 0, 0, -1, "", false};
+	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, 0, 0, 0, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
 }

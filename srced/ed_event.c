@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 23:45:28 by mikorale          #+#    #+#             */
-/*   Updated: 2019/05/14 23:45:29 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:23:26 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void		event_keypress(t_data *d, SDL_Keycode key)
 		ceil_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_BACKSPACE)
 		cancel_last_wall(d);
+	else if (key == SDLK_g)
+		toggle_isdoor(d);
 }
 
 void		zoom(t_data *d, SDL_Event *e)

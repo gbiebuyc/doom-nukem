@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 23:17:07 by mikorale          #+#    #+#             */
-/*   Updated: 2019/05/17 23:17:09 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/05/27 15:40:32 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		add_wall(t_data *d)
 	p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
 	d->walls[d->numwalls - 1].point = p;
 	d->walls[d->numwalls - 1].neighborsect = -1;
+	d->walls[d->numwalls - 1].is_door = false;
 	d->selectedwall = &d->walls[d->numwalls - 1];
 }
 

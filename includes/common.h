@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/07 23:13:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/05/27 15:36:09 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_wall
 	int16_t		flags;
 	int16_t		neighborsect;
 	char		texture_name[100];
+	bool		is_door;
 }				t_wall;
 
 typedef struct	s_thing
