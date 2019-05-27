@@ -92,7 +92,7 @@ void		draw_screen(t_data *d)
 	while (++s < d->numsectors)
 		draw_sector(d, s);
 	show_menu(d);
-	if (d->interface.selection_cat_pos != -1)
-		draw_selection_arround_asset(d);
+	if (d->interface.category != -1)
+		draw_selection_arround_asset(d, d->interface.category_pos);
 	SDL_UpdateWindowSurface(d->win);
 }

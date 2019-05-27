@@ -28,6 +28,14 @@
 # define TEXTURE_PATH "./textures"
 
 /*
+**	Numbers of assets for each category
+*/
+
+# define AMMO_ASSET 3
+# define MONSTER_ASSET 5
+# define HEAL_ASSET 2
+
+/*
 **	ed_interface_*.c
 */
 
@@ -65,17 +73,18 @@ typedef struct	s_interface
 	int			move;
 	int			btn_right_pressed;
 	int			texture_case_select;
-	int			selection_cat_pos;
-	t_vec2f		mouse_selection_pos;
+	int			category;
+	int			nb_asset[4];
+	t_vec2f		mouse_pos;
 	t_vec2f		tex_select[3];
 	t_vec2f		btn_floor_height_pos;
 	t_vec2f		btn_ceil_height_pos;
-	t_vec2f		assets_category[4];
+	t_vec2f		category_pos[4];
 }				t_interface;
 
 /*
 **	texture_to_scale = size to resize the image,
-**	texture_to_scale = 32 -> will resuze the image to 32x32 pixels
+**	texture_to_scale = 32 -> will resize the image to 32x32 pixels
 */
 
 typedef struct	s_data
@@ -141,8 +150,8 @@ void			putpixel(t_data *d, int x, int y, uint32_t color);
 **	ed_editor.c
 */
 
-void			change_ceil_height(t_data *d, double val, int16_t sectnum);
-void			change_floor_height(t_data *d, double val, int16_t sectnum);
+void			ceil_height(t_data *d, double val, int16_t sectnum);
+void			floor_height(t_data *d, double val, int16_t sectnum);
 void			cancel_last_wall(t_data *d);
 int16_t			in_which_sector_is_this_wall(t_data *d, t_wall *w);
 void			update_pos(t_data *d, SDL_Event *e);
@@ -189,7 +198,7 @@ void			btn_height(t_data *d, int x, int y, t_interface *i);
 **	ed_interface_properties.c
 */
 
-void			draw_selection_arround_asset(t_data *d);
+void			draw_selection_arround_asset(t_data *d, t_vec2f *category);
 void			print_properties(t_data *d, SDL_Surface **properties);
 
 /*

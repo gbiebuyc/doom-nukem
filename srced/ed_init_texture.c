@@ -42,7 +42,6 @@ static int	new_texture(char *name, t_texture_data **tex_data,
 		return (1);
 	name = ft_strjoin("/", name);
 	name = ft_strjoin(TEXTURE_PATH, name);
-	//(*tex_data)->name = ft_strdup(name);
 	ft_strcpy((*tex_data)->name, name);
 	(*tex_data)->begin = begin;
 	(*tex_data)->prev = prev;
@@ -86,7 +85,6 @@ int			init_texture(t_data *d)
 	{
 		if (get_texture_files(d, dr) || load_texture(d))
 			return (1);
-		// TODO free texture_list, maybe not, filename needed
 	}
 	else
 		return (ft_printf("Couldn't open the textures directory.\n"));

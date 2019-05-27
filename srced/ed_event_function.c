@@ -67,10 +67,10 @@ int		selecting_assets(t_data *d, SDL_Event *e)
 
 	i = -1;
 	limit = 137;
-	d->interface.selection_cat_pos = -1;
+	d->interface.category = -1;
 	while (++i < 4)
 	{
-		y = d->interface.assets_category[i].y;
+		y = d->interface.category_pos[i].y;
 		if (e->motion.x >= W - PROPERTIES_LIMIT && e->motion.y >= y &&
 			e->motion.y <= y + limit)
 		{
@@ -78,7 +78,7 @@ int		selecting_assets(t_data *d, SDL_Event *e)
 			d->temp.y = e->motion.y - (y + 2);
 			d->temp.x = (int)(d->temp.x / 38);
 			d->temp.y = (int)(d->temp.y / 36);
-			return (d->interface.selection_cat_pos = i);
+			return (d->interface.category = i);
 		}
 		if (i == 1)
 			limit = 32;

@@ -66,16 +66,16 @@ void	btn_height(t_data *d, int x, int y, t_interface *i)
 	if (y >= i->btn_floor_height_pos.y && y <= endy)
 	{
 		if (x >= i->btn_floor_height_pos.x && x <= endx)
-			change_floor_height(d, -0.1, d->selected_sector);
+			floor_height(d, -0.1, d->selected_sector);
 		else if (x >= i->btn_floor_height_pos.x + 32 && x <= endx + 32)
-			change_floor_height(d, 0.1, d->selected_sector);
+			floor_height(d, 0.1, d->selected_sector);
 	}
 	endy = i->btn_ceil_height_pos.y + 24;
 	if (y >= i->btn_ceil_height_pos.y && y <= endy)
 	{
 		if (x >= i->btn_ceil_height_pos.x && x <= endx)
-			change_ceil_height(d, -0.1, d->selected_sector);
+			ceil_height(d, -0.1, d->selected_sector);
 		else if (x >= i->btn_ceil_height_pos.x + 32 && x <= endx + 32)
-			change_ceil_height(d, 0.1, d->selected_sector);
+			ceil_height(d, 0.1, d->selected_sector);
 	}
 }

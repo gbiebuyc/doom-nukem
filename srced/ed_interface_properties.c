@@ -12,21 +12,33 @@
 
 #include "editor.h"
 
-// TODO must be displayed depending on the category. (print an asset preview)
+void		show_preview(t_data *d, t_assets *a)
+{
+	int	n;
+	int	x;
+	int	y;
 
-void		draw_selection_arround_asset(t_data *d)
+	n = d->temp.x + d->temp.y * 7;
+	if (d->interface.category < 3)
+	{
+		x = d->interface.mouse_pos.x + 10;
+		y = d->interface.mouse_pos.y + 10;
+		copy_surface_to_surface(a[d->interface.category].assets[n], d->screen,
+															(int[2]){x, y}, d);
+	}
+}
+
+void		draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
 {
 	int		x;
 	int		y;
 	t_vec2f	v;
 
 	v = d->temp;
-	if (v.x > 6)
+	if (v.x + 1 + v.y * 7 > d->interface.nb_asset[d->interface.category])
 		return ;
-	v.x = (v.x * 6) + (v.x * 32) +
-		d->interface.assets_category[d->interface.selection_cat_pos].x;
-	v.y = (v.y * 4) + (v.y * 32) +
-		d->interface.assets_category[d->interface.selection_cat_pos].y;
+	v.x = (v.x * 38) + category_pos[d->interface.category].x;
+	v.y = (v.y * 36) + category_pos[d->interface.category].y;
 	x = -1;
 	while (++x < 32)
 		putpixel(d, x + v.x, v.y, 0xffff00);
@@ -39,6 +51,7 @@ void		draw_selection_arround_asset(t_data *d)
 	y = -1;
 	while (++y < 32)
 		putpixel(d, v.x + 32, y + v.y, 0xffff00);
+	show_preview(d, d->interface.toolbar.assets);
 }
 
 static void	draw_plus_minus_btn(t_data *d)

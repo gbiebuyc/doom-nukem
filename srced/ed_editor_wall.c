@@ -87,7 +87,7 @@ static void	find_wall(t_data *d, t_vec2f *p, double min_dist, t_wall *wall)
 			d->selectedwall = wall;
 			d->selected_wall = wall - d->walls;
 			min_dist = dist;
-			/**/ft_printf("Wall %d selected\n", d->selectedwall - d->walls);
+			ft_printf("Wall [%d] selected\n", d->selectedwall - d->walls);
 			break ;
 		}
 		wall++;

@@ -19,36 +19,34 @@ static void	get_category_position(t_data *d)
 
 	x = W - PROPERTIES_LIMIT + 8;
 	y = d->interface.toolbar.properties[4]->h + 13;
-	d->interface.assets_category[0] = (t_vec2f){x - 1, y - 1};
+	d->interface.category_pos[0] = (t_vec2f){x - 1, y - 1};
 	y = H * 0.15 + d->interface.toolbar.properties[5]->h + 13;
-	d->interface.assets_category[1] = (t_vec2f){x, y};
-	d->interface.assets_category[2] = (t_vec2f){x, y + (H * 0.15)};
+	d->interface.category_pos[1] = (t_vec2f){x, y};
+	d->interface.category_pos[2] = (t_vec2f){x, y + (H * 0.15)};
 	y = H * 0.40 + d->interface.toolbar.properties[7]->h + 20;
-	d->interface.assets_category[3] = (t_vec2f){x, y};
+	d->interface.category_pos[3] = (t_vec2f){x, y};
 }
 
 static void	print_assets(t_data *d, t_assets *a)
 {
-	int	*n;
 	int	m;
 	int	j;
 	int	x;
 	int	y;
 
 	get_category_position(d);
-	n = (int[3]){3, 5, 2};
 	m = -1;
 	while (++m < 3)
 	{
 		j = -1;
-		y = d->interface.assets_category[m].y;
+		y = d->interface.category_pos[m].y;
 		x = W - PROPERTIES_LIMIT - 30;
-		while (++j < n[m])
+		while (++j < d->interface.nb_asset[m])
 			copy_surface_to_surface(a[m].assets_icon[j], d->screen,
 										(int[2]){x += 38, y}, d);
 	}
 	x = W - PROPERTIES_LIMIT + 8;
-	y = d->interface.assets_category[3].y;
+	y = d->interface.category_pos[3].y;
 	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
 													(int[2]){x, y}, d);
 }

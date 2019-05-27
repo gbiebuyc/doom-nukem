@@ -17,25 +17,28 @@ static void	debug_print(t_data *d)
 	t_wall		*wall;
 	int			w;
 	int			s;
+	int			len;
 
-	printf("DEBUG OUTPUT:\n");
 	w = 0;
 	s = 0;
 	while (w < d->numwalls)
 	{
-		if (w == d->sectors[s].firstwallnum)
-			printf("sector %d\n", s++);
 		wall = d->walls + w;
-		printf("wall %d", w);
-		if (wall->neighborsect != -1)
-			printf(" neighbor %d", wall->neighborsect);
-		printf("\n");
-		ft_printf("picnum low :%d | mid : %d | up : %d\n", wall->lowerpicnum,
-									wall->middlepicnum, wall->upperpicnum);
-		ft_printf("texture name = %s\n", wall->texture_name);
-		w++;
+		len = (int)strlen(wall->texture_name);
+		if (w == d->sectors[s].firstwallnum ||
+			w + 1 == d->sectors[s].firstwallnum)
+			printf("++++++\nsector %d\n++++++\n", s++);
+		printf("------           %*c\t\t------\n", len, ' ');
+		printf("wall %d          %*c\t\twall %d\n", w, len, ' ', w + 1);
+		printf("------           %*c\t\t------\n", len, ' ');
+		printf("neighbor : %d    %*c\t\tneighbor : %d\n", wall->neighborsect,
+								len, ' ', (wall + 1)->neighborsect);
+		printf("picnum : %d      %*c\t\tpicnum : %d\n", wall->middlepicnum,
+								len, ' ', (wall + 1)->middlepicnum);
+		printf("texture name = %s   \t\ttexture name = %s\n\n",
+							wall->texture_name, (wall + 1)->texture_name);
+		w += 2;
 	}
-	printf("\n");
 }
 
 /*
@@ -82,10 +85,9 @@ void		event_keypress(t_data *d, SDL_Keycode key)
 	else if (key == SDLK_DELETE && !d->sectordrawing)
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
 	else if (key == SDLK_KP_1 || key == SDLK_KP_3)
-		change_floor_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1),
-													d->selected_sector);
+		floor_height(d, ((key == SDLK_KP_1) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_KP_7 || key == SDLK_KP_9)
-		change_ceil_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1), d->selected_sector);
+		ceil_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_BACKSPACE)
 		cancel_last_wall(d);
 }
@@ -113,7 +115,7 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 		(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
 		update_pos(d, e);
 	if (selecting_assets(d, e) != -1)
-		d->interface.mouse_selection_pos = (t_vec2f){x, y};
+		d->interface.mouse_pos = (t_vec2f){x, y};
 	if (d->interface.show_menu)
 		d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
 }

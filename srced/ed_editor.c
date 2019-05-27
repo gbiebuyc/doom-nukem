@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-void	change_ceil_height(t_data *d, double val, int16_t sectnum)
+void	ceil_height(t_data *d, double val, int16_t sectnum)
 {
 	if (sectnum < 0)
 		return ;
@@ -21,7 +21,7 @@ void	change_ceil_height(t_data *d, double val, int16_t sectnum)
 										d->sectors[sectnum].ceilheight);
 }
 
-void	change_floor_height(t_data *d, double val, int16_t sectnum)
+void	floor_height(t_data *d, double val, int16_t sectnum)
 {
 	if (sectnum < 0)
 		return ;

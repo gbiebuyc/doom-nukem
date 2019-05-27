@@ -60,7 +60,7 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dest,
 			c = get_color(x, y, ((uint32_t*)src->pixels)[pos], d);
 			if (d->texture_to_scale != -1)
 				pos = (int)(p[0] + x * r.x) + (int)(p[1] + y * r.y) * dest->w;
-			else
+			else if (p[0] + x < W && p[1] + y < H)
 				pos = p[0] + x + (p[1] + y) * dest->w;
 			((uint32_t*)dest->pixels)[pos] = c;
 		}
@@ -81,10 +81,13 @@ void			save_selected_texture(t_data *d, int x, int y)
 		{
 			if (d->interface.texture_case_select == 2 && d->selected_wall >= 0)
 				d->walls[d->selected_wall].middlepicnum = d->selected_texture;
-			else if (d->interface.texture_case_select == 1)
-				s->ceilpicnum = d->selected_texture;
-			else if (d->interface.texture_case_select == 0)
-				s->floorpicnum = d->selected_texture;
+			else if (d->selected_sector >= 0)
+			{
+				if (d->interface.texture_case_select == 1)
+					s->ceilpicnum = d->selected_texture;
+				else if (d->interface.texture_case_select == 0)
+					s->floorpicnum = d->selected_texture;
+			}
 		}
 		else
 			d->selected_texture = -1;

@@ -14,26 +14,26 @@
 
 // folder ammo, monster etc...
 
-static int		load_assets(t_toolbar *tb, char **file, char **file32)
+static int		load_assets(t_data *d, t_toolbar *tb, char **file,
+																char **file32)
 {
-	int	*n;
 	int	m;
 	int	j;
 	int	i;
 
 	m = 0;
 	i = 0;
-	n = (int[3]){3, 5, 2};
 	while (m < 3)
 	{
 		j = -1;
-		while (++j < n[m])
+		while (++j < d->interface.nb_asset[m])
 		{
 			if (!(tb->assets[m].assets[j] = SDL_LoadBMP(file[i])))
 				return (ft_printf("Loading failed : %s\n", file[i]));
 			if (!(tb->assets[m].assets_icon[j] = SDL_LoadBMP(file32[i])))
 				return (ft_printf("Loading failed : %s\n", file32[i]));
 			remove_backgorund_image(tb->assets[m].assets_icon[j]);
+			remove_backgorund_image(tb->assets[m].assets[j]);
 			i++;
 		}
 		m++;
@@ -41,7 +41,7 @@ static int		load_assets(t_toolbar *tb, char **file, char **file32)
 	return (0);
 }
 
-static int		init_assets(t_toolbar *tb)
+static int		init_assets(t_data *d, t_toolbar *tb)
 {
 	char	**file;
 	char	**file32;
@@ -57,7 +57,7 @@ static int		init_assets(t_toolbar *tb)
 	if (!(tb->player_start = SDL_LoadBMP("./Menu/playerstart.bmp")))
 		return (ft_printf("Loading failed : playerstart"));
 	remove_backgorund_image(tb->player_start);
-	load_assets(tb, file, file32);
+	load_assets(d, tb, file, file32);
 	return (0);
 }
 
@@ -93,7 +93,7 @@ static int		init_interface(t_data *d)
 	if (!(d->interface.menu = SDL_LoadBMP("./Menu/testmenu.bmp")))
 		return (ft_printf("Error when creating escape menu.\n"));
 	if (init_toolbar(&d->interface.toolbar) ||
-		init_assets(&d->interface.toolbar))
+		init_assets(d, &d->interface.toolbar))
 		return (1);
 	return (0);
 }
@@ -102,20 +102,6 @@ static int		init_interface(t_data *d)
 
 int				init_editor(t_data *d)
 {
-	ft_memset(d, 0, sizeof(t_data));
-	d->scale = W / 64;
-	d->pos = (t_vec2f){0, 0};
-	d->selectedwall = NULL;
-	d->selectedwall2 = NULL;
-	d->grid_locking = true;
-	d->sectordrawing = false;
-	d->interface.show_menu = 0;
-	d->interface.select = 1;
-	d->interface.move = 0;
-	d->texture_to_scale = -1;
-	d->interface.texture_case_select = -1;
-	d->selected_texture = -2;
-	d->interface.selection_cat_pos = -1;
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
 		return (ft_printf("Failed to init SDL.\n"));
 	if (!(d->win = SDL_CreateWindow("editor", SDL_WINDOWPOS_CENTERED,
