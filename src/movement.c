@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/27 15:16:21 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/30 18:27:19 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	collision(t_data *d, int16_t sectnum)
 		if (dist > COLLISION_DIST)
 			continue ;
 		int16_t neighbor = d->walls[i].neighborsect;
-		if (neighbor != -1 && d->doorstate[i] > 0.5)
+		if (neighbor != -1 && d->doorstate[i] > 0.7)
 			collided |= collision(d, neighbor);
 		else
 		{

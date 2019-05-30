@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/27 12:05:53 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/30 17:57:55 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ typedef struct	s_projdata
 	t_wall		*wall;
 	t_sector	*sector;
 	double		*zbuffer;
-	double	n;
-	double	z;
-	int		x;
-	int		y;
-	double	u;
-	double	v;
-	int		ya;
-	int		yb;
-	int		nya;
-	int		nyb;
-	bool	visible[WIDTH];
+	double		n;
+	double		z;
+	int			x;
+	double		u;
+	int			ya;
+	int			yb;
+	int			nya;
+	int			nyb;
+	bool		visible[WIDTH];
+	double		doorheight;
+	double		doorbottom;
 }				t_projdata;
 
 typedef struct	s_frustum
