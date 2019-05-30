@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 16:49:37 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/30 19:05:02 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	update_doors(t_data *d)
 
 void	update(t_data *d)
 {
+	int16_t	sect;
+
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;
 	d->cam.rot += d->keys[SDL_SCANCODE_RIGHT] * TURN_SPEED;
@@ -75,19 +77,12 @@ void	update(t_data *d)
 	d->cam.cos = cos(d->cam.rot);
 	d->keys[SDL_SCANCODE_J] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	movement(d);
-
 	// Update current sector
-	t_sector sect = d->sectors[d->cursectnum];
-	for (int i = 0; i < sect.numwalls; i++)
-	{
-		int16_t neighborsect = d->walls[sect.firstwallnum + i].neighborsect;
-		if (neighborsect != -1 && inside(d, neighborsect))
-		{
-			d->cursectnum = neighborsect;
-			//printf("You are now inside sector %d\n", neighborsect);
-			break ;
-		}
-	}
+	sect = 0;
+	while (sect < d->numsectors && !inside(d, sect))
+		sect++;
+	if (sect < d->numsectors)
+		d->cursectnum = sect;
 	gravity(d, 0);
 	//player action;
 	update_monsters(&d->nummonsters, d->monsters, d);
