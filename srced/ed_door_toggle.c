@@ -14,20 +14,50 @@
 
 t_wall	*get_adjacent_wall(t_data *d, t_wall *w)
 {
-	t_sector *sect = &d->sectors[in_which_sector_is_this_wall(d, w)];
-	int16_t wallnum = w - d->walls;
-	int16_t nextwallnum = ((wallnum - sect->firstwallnum + 1) %
+	t_sector *sect;
+	int16_t wallnum;
+	int16_t nextwallnum;
+
+	sect = &d->sectors[in_which_sector_is_this_wall(d, w)];
+	wallnum = w - d->walls;
+	nextwallnum = ((wallnum - sect->firstwallnum + 1) %
 			sect->numwalls) + sect->firstwallnum;
 	return (&d->walls[nextwallnum]);
 }
 
+/*
+**	get the portal from the neighbor sector and set it as a door too.
+*/
+
+void	find_opposite_portal(t_data *d, t_sector *neighborsect, int16_t *last,
+							t_wall *nextwall)
+{
+	int		i;
+	int		j;
+
+	i = *last - 1;
+	j = neighborsect->firstwallnum;
+	while (j < *last)
+	{
+		if (d->walls[i].neighborsect != -1 &&
+			same_pos(&d->walls[i], nextwall) &&
+			same_pos(&d->walls[j], d->selectedwall))
+		{
+			d->walls[i].is_door = d->selectedwall->is_door;
+			break ;
+		}
+		i = j++;
+	}
+}
+
 void	toggle_isdoor(t_data *d)
 {
+	t_sector	*neighborsect;
+	t_wall		*nextwall;
+	int16_t		last;
+
 	if (d->selected_wall == -1)
-	{
-		ft_printf("No wall selected\n");
 		return ;
-	}
 	d->selectedwall = d->walls + d->selected_wall;
 	if (d->selectedwall->neighborsect == -1)
 	{
@@ -35,20 +65,9 @@ void	toggle_isdoor(t_data *d)
 		return ;
 	}
 	d->selectedwall->is_door = !d->selectedwall->is_door;
-	t_sector *nei = d->sectors + d->selectedwall->neighborsect;
-	t_wall *nextwall = get_adjacent_wall(d, d->selectedwall);
-	int16_t last = nei->firstwallnum + nei->numwalls;
-	// find opposite portal and change is_door
-	for (int i = last - 1, j = nei->firstwallnum; j < last; i = j++)
-	{
-		if (d->walls[i].neighborsect == -1)
-			continue ;
-		if (same_pos(&d->walls[i], nextwall) &&
-				same_pos(&d->walls[j], d->selectedwall))
-		{
-			d->walls[i].is_door = d->selectedwall->is_door;
-			break ;
-		}
-	}
+	neighborsect = d->sectors + d->selectedwall->neighborsect;
+	nextwall = get_adjacent_wall(d, d->selectedwall);
+	last = neighborsect->firstwallnum + neighborsect->numwalls;
+	find_opposite_portal(d, neighborsect, &last, nextwall);
 	printf("is_door: %d\n", d->selectedwall->is_door);
 }
