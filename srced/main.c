@@ -12,6 +12,35 @@
 
 #include "editor.h"
 
+void	debug_print(t_data *d)
+{
+	t_wall		*wall;
+	int			w;
+	int			s;
+	int			len;
+
+	w = 0;
+	s = 0;
+	while (w < d->numwalls)
+	{
+		wall = d->walls + w;
+		len = (int)strlen(wall->texture_name);
+		if (w == d->sectors[s].firstwallnum ||
+			w + 1 == d->sectors[s].firstwallnum)
+			printf("++++++\nsector %d\n++++++\n", s++);
+		printf("------           %*c\t\t------\n", len, ' ');
+		printf("wall %d          %*c\t\twall %d\n", w, len, ' ', w + 1);
+		printf("------           %*c\t\t------\n", len, ' ');
+		printf("neighbor : %d    %*c\t\tneighbor : %d\n", wall->neighborsect,
+								len, ' ', (wall + 1)->neighborsect);
+		printf("picnum : %d      %*c\t\tpicnum : %d\n", wall->middlepicnum,
+								len, ' ', (wall + 1)->middlepicnum);
+		printf("texture name = %s   \t\ttexture name = %s\n\n",
+							wall->texture_name, (wall + 1)->texture_name);
+		w += 2;
+	}
+}
+
 static void	init_structure(t_data *d)
 {
 	ft_memset(d, 0, sizeof(t_data));
@@ -32,17 +61,20 @@ static void	init_structure(t_data *d)
 	d->interface.nb_asset[1] = MONSTER_ASSET;
 	d->interface.nb_asset[2] = HEAL_ASSET;
 	d->interface.nb_asset[3] = 1;
+	d->interface.selected_asset = -1;
+	d->interface.separate_sector = 0;
 }
 
 void		init_sectors(t_data *d)
 {
 	d->sectors[0] = (t_sector){0, 4, 0, 1, 0, {0}, 0, 255, "", ""};
 	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1, "", false};
-	d->walls[1] = (t_wall){(t_vec2f){ 6, 2}, 0, 0, 0, 0, -1, "", false};
+	d->walls[1] = (t_wall){(t_vec2f){ 2, 2}, 0, 0, 0, 0, -1, "", false};
 	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 0, 0, 0, -1, "", false};
 	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, 0, 0, 0, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
+	d->player_start = (t_vec3f){0, 0, 0};
 }
 
 void		main_loop(t_data *d)
@@ -54,8 +86,10 @@ void		main_loop(t_data *d)
 	{
 		if (e.type == SDL_QUIT)
 			break ;
+		else if (e.type == SDL_KEYUP)
+			event_key_up(d, e.key.keysym.sym);
 		else if (e.type == SDL_KEYDOWN)
-			event_keypress(d, e.key.keysym.sym);
+			event_key_down(d, e.key.keysym.sym);
 		else if (e.type == SDL_MOUSEWHEEL)
 			zoom(d, &e);
 		else if (event_mouse_button(d, &e) < 0)

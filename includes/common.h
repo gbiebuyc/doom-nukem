@@ -97,7 +97,6 @@ typedef struct	s_monster
 	bool		activated; // unused for now
 }				t_monster;
 
-/***********/
 typedef struct	s_texture_data
 {
 	char					name[100];
@@ -106,7 +105,6 @@ typedef struct	s_texture_data
 	struct s_texture_data	*prev;
 	struct s_texture_data	*next;
 }				t_texture_data;
-/***********/
 
 /*
 ** vec2.c

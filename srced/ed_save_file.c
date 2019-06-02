@@ -80,7 +80,7 @@ int			save_file(t_data *d)
 	int16_t	startsectnum;
 	int		f;
 
-	startpos = (t_vec3f){0, 0.5, 0};
+	startpos = d->player_start;
 	angle = 0;
 	startsectnum = 0;
 	if (((f = open("map01", O_WRONLY | O_CREAT, 0666)) == -1) ||

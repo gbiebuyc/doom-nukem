@@ -16,10 +16,11 @@ SRC = main.c \
 	  ed_init.c ed_init_texture.c \
 	  ../src/vec2.c \
 	  ../src/vec2_2.c \
-	  ed_draw.c \
+	  ed_draw.c ed_draw_assets.c \
 	  ed_conversion.c \
 	  ed_pixel.c \
 	  ed_editor.c ed_editor_functions.c ed_editor_sector.c ed_editor_wall.c \
+	  ed_editor_assets_handler.c \
 	  ed_event.c ed_event_function.c ed_event_mouse_button.c \
 	  ed_interface.c ed_interface_functions.c \
 	  ed_interface_properties.c ed_interface_properties2.c\

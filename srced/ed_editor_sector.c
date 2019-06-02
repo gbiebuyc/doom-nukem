@@ -24,8 +24,9 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].firstwallnum = d->numwalls;
 	d->sectors[d->numsectors - 1].numwalls = 0;
 	d->sectors[d->numsectors - 1].floorheight = 0;
+	d->sectors[d->numsectors - 1].floorpicnum = 0;
 	d->sectors[d->numsectors - 1].ceilheight = 1;
-	d->sectors[d->numsectors - 1].floorpicnum = 1;
+	d->sectors[d->numsectors - 1].ceilpicnum = 0;
 	add_wall(d);
 	add_wall(d);
 }

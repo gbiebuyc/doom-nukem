@@ -25,7 +25,10 @@ static void	draw_line(t_data *d, t_vec2f v1, t_vec2f v2, uint32_t color)
 	increment.y = delta.y / (double)steps;
 	while (steps--)
 	{
-		if ((int)v1.x < W - PROPERTIES_LIMIT)
+		if (d->interface.texture_case_select == -1 &&
+			(int)v1.x < W - PROPERTIES_LIMIT)
+			putpixel(d, (int)v1.x, (int)v1.y, color);
+		else if ((int)v1.x < W - TEXTURE_TOOLBAR)
 			putpixel(d, (int)v1.x, (int)v1.y, color);
 		v1 = add_vec2f(v1, increment);
 	}
@@ -39,14 +42,12 @@ static void	draw_sector(t_data *d, int16_t sectnum)
 {
 	int		i;
 	int		j;
-	int		npoints;
 	t_vec2f	p[2];
 	t_wall	*w[2];
 
-	npoints = d->sectors[sectnum].numwalls;
 	i = 0;
-	j = npoints - 1;
-	while (i < npoints)
+	j = d->sectors[sectnum].numwalls - 1;
+	while (i < d->sectors[sectnum].numwalls)
 	{
 		w[0] = &d->walls[d->sectors[sectnum].firstwallnum + i];
 		w[1] = &d->walls[d->sectors[sectnum].firstwallnum + j];
@@ -91,8 +92,11 @@ void		draw_screen(t_data *d)
 	s = -1;
 	while (++s < d->numsectors)
 		draw_sector(d, s);
+	draw_assets_to_map(d);
 	show_menu(d);
 	if (d->interface.category != -1)
 		draw_selection_arround_asset(d, d->interface.category_pos);
+	if (d->interface.selected_asset != -1)
+		draw_selection_arround_selected_asset(d);
 	SDL_UpdateWindowSurface(d->win);
 }

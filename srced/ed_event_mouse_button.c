@@ -34,6 +34,13 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e)
 	if ((d->selected_sector >= 0 || d->selected_wall >= 0)
 		&& d->selected_texture != -1)
 		d->interface.texture_case_select = properties_texture_selection(d, e);
+	if (d->interface.category != -1)
+		get_selected_asset(d);
+	else if (d->interface.selected_asset != -1 && x < W - PROPERTIES_LIMIT)
+	{
+		add_asset_to_map(d, x, y);
+		///**/d->interface.selected_asset_position = (t_vec2f){x, y};
+	}
 }
 
 /*
@@ -73,6 +80,7 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 	{
 		d->interface.select = 0;
 		d->interface.btn_right_pressed = 1;
+		d->interface.selected_asset = -1;
 	}
 	return (0);
 }

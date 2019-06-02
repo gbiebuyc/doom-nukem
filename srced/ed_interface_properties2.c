@@ -67,3 +67,19 @@ void		fill_texture_selection(t_data *d, t_interface *i)
 		empty_case(d, 2, i);
 	d->texture_to_scale = -1;
 }
+
+void		show_preview(t_data *d, t_assets *a)
+{
+	int	n;
+	int	x;
+	int	y;
+
+	n = d->temp.x + d->temp.y * 7;
+	if (d->interface.category < 3)
+	{
+		x = d->interface.mouse_pos.x + 10;
+		y = d->interface.mouse_pos.y + 10;
+		copy_surface_to_surface(a[d->interface.category].assets[n], d->screen,
+															(int[2]){x, y}, d);
+	}
+}

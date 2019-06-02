@@ -13,7 +13,7 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <common.h>
+# include "../includes/common.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <stdint.h>
@@ -67,6 +67,8 @@ typedef struct	s_interface
 {
 	SDL_Surface	*menu;
 	t_toolbar	toolbar;
+	int			separate_sector;
+	int			move_wall;
 	int			show_menu;
 	int			is_on_menu;
 	int			select;
@@ -75,11 +77,14 @@ typedef struct	s_interface
 	int			texture_case_select;
 	int			category;
 	int			nb_asset[4];
+	int			selected_asset;
+	int			selected_asset_cat;
 	t_vec2f		mouse_pos;
 	t_vec2f		tex_select[3];
 	t_vec2f		btn_floor_height_pos;
 	t_vec2f		btn_ceil_height_pos;
 	t_vec2f		category_pos[4];
+/**/t_vec2f		selected_asset_position;
 }				t_interface;
 
 /*
@@ -94,6 +99,7 @@ typedef struct	s_data
 	SDL_Surface		**textures;
 	t_texture_data	*texture_list;
 	t_interface		interface;
+	t_vec3f			player_start;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
 	int16_t			numsectors;
@@ -111,7 +117,10 @@ typedef struct	s_data
 	bool			sectordrawing;
 	double			texture_to_scale;
 	t_vec2f			temp;
+	/**/t_monster	monsters[1000];
 }				t_data;
+
+void			debug_print(t_data *d);
 
 /*
 **	ed_init.c
@@ -120,7 +129,7 @@ typedef struct	s_data
 int				init_editor(t_data *d);
 
 /*
-**	ed_texture_init.c
+**	ed_init_texture.c
 */
 
 int				init_texture(t_data *d);
@@ -130,6 +139,12 @@ int				init_texture(t_data *d);
 */
 
 void			draw_screen(t_data *d);
+
+/*
+**	ed_draw_assets.c
+*/
+
+void			draw_assets_to_map(t_data *d);
 
 /*
 **	ed_conversion.c
@@ -180,6 +195,14 @@ void			select_wall_under_cursor(t_data *d, t_vec2f p);
 void			update_wall_pos(t_data *d);
 
 /*
+**	ed_editor_assets_handler.c
+*/
+
+void			draw_selection_arround_selected_asset(t_data *d);
+void			get_selected_asset(t_data *d);
+void			add_asset_to_map(t_data *d, int x, int y);
+
+/*
 **	ed_interface.c
 */
 
@@ -207,6 +230,7 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 
 void			draw_separator(t_data *d, int x, int y, int color);
 void			fill_texture_selection(t_data *d, t_interface *i);
+void			show_preview(t_data *d, t_assets *a);
 
 /*
 **	ed_utils.c
@@ -221,7 +245,8 @@ void			remove_backgorund_image(SDL_Surface *s);
 **	ed_event.c
 */
 
-void			event_keypress(t_data *d, SDL_Keycode key);
+void			event_key_up(t_data *d, SDL_Keycode key);
+void			event_key_down(t_data *d, SDL_Keycode key);
 void			zoom(t_data *d, SDL_Event *e);
 void			event_motion_mouse(t_data *d, SDL_Event *e);
 
