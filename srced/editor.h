@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 16:16:43 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/02 19:21:34 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct	s_data
 	double			texture_to_scale;
 	t_vec2f			temp;
 	/**/t_monster	monsters[1000];
+	t_wall			*highlighted_wall;
 }				t_data;
 
 void			debug_print(t_data *d);
@@ -283,5 +284,11 @@ void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 */
 
 void	toggle_isdoor(t_data *d);
+
+/*
+** ed_detect_wall.c
+*/
+
+void	detect_wall(t_data *d, int x, int y);
 
 #endif

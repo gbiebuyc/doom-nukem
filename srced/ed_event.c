@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 23:45:28 by mikorale          #+#    #+#             */
-/*   Updated: 2019/05/27 16:23:26 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/02 19:15:24 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 		d->interface.mouse_pos = (t_vec2f){x, y};
 	if (d->interface.show_menu)
 		d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
+	detect_wall(d, e->motion.x, e->motion.y);
 }

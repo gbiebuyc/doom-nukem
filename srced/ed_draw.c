@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 11:15:00 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/24 08:24:41 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/02 19:21:15 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static void	draw_sector(t_data *d, int16_t sectnum)
 		p[1] = worldtoscreen(d, w[1]->point);
 		draw_line(d, p[0], p[1],
 				w[1]->neighborsect != -1 ? 0xdd0000 : 0xffffff);
+		if (w[1] == d->highlighted_wall)
+			draw_line(d, p[0], p[1], 0xffff00);
 		j = i++;
 	}
 }
