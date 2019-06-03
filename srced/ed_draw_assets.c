@@ -19,5 +19,6 @@ void	draw_assets_to_map(t_data *d)
 	p = worldtoscreen(d, (t_vec2f){d->player_start.x, d->player_start.z});
 	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
 							(int[2]){p.x - 16, p.y - 16}, d);
-	// TODO monsters assets + select assets on the map + delete + MOVE asseets options
+	// TODO monsters assets + select assets on the map + delete
+	// + MOVE assets options
 }

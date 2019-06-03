@@ -12,11 +12,8 @@
 
 #include "editor.h"
 
-static void	mouse_button_left_handler(t_data *d, SDL_Event *e)
+static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 {
-	int	x;
-	int	y;
-
 	SDL_GetMouseState(&x, &y);
 	if (!is_on_select_move_icon(d, x, y) && d->interface.select &&
 		x < W - PROPERTIES_LIMIT && d->interface.texture_case_select < 0
@@ -75,7 +72,7 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 		return (-1);
 	d->interface.show_menu = 0;
 	if (e->button.button == SDL_BUTTON_LEFT)
-		mouse_button_left_handler(d, e);
+		mouse_button_left_handler(d, e, 0, 0);
 	if (e->button.button == SDL_BUTTON_RIGHT)
 	{
 		d->interface.select = 0;

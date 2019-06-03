@@ -14,9 +14,9 @@
 
 t_wall	*get_adjacent_wall(t_data *d, t_wall *w)
 {
-	t_sector *sect;
-	int16_t wallnum;
-	int16_t nextwallnum;
+	t_sector	*sect;
+	int16_t		wallnum;
+	int16_t		nextwallnum;
 
 	sect = &d->sectors[in_which_sector_is_this_wall(d, w)];
 	wallnum = w - d->walls;

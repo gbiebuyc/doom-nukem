@@ -17,27 +17,20 @@ void	debug_print(t_data *d)
 	t_wall		*wall;
 	int			w;
 	int			s;
-	int			len;
 
 	w = 0;
 	s = 0;
 	while (w < d->numwalls)
 	{
 		wall = d->walls + w;
-		len = (int)strlen(wall->texture_name);
-		if (w == d->sectors[s].firstwallnum ||
-			w + 1 == d->sectors[s].firstwallnum)
+		if (w == d->sectors[s].firstwallnum)
 			printf("++++++\nsector %d\n++++++\n", s++);
-		printf("------           %*c\t\t------\n", len, ' ');
-		printf("wall %d          %*c\t\twall %d\n", w, len, ' ', w + 1);
-		printf("------           %*c\t\t------\n", len, ' ');
-		printf("neighbor : %d    %*c\t\tneighbor : %d\n", wall->neighborsect,
-								len, ' ', (wall + 1)->neighborsect);
-		printf("picnum : %d      %*c\t\tpicnum : %d\n", wall->middlepicnum,
-								len, ' ', (wall + 1)->middlepicnum);
-		printf("texture name = %s   \t\ttexture name = %s\n\n",
-							wall->texture_name, (wall + 1)->texture_name);
-		w += 2;
+		printf("numwalls : %d\n", d->sectors[s].numwalls);
+		printf("------\nwall %d\n------\n", w);
+		printf("neighbor : %d\n", wall->neighborsect);
+		printf("picnum : %d\n", wall->middlepicnum);
+		printf("texture name = %s\n", wall->texture_name);
+		w++;
 	}
 }
 

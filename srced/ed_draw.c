@@ -53,10 +53,12 @@ static void	draw_sector(t_data *d, int16_t sectnum)
 		w[1] = &d->walls[d->sectors[sectnum].firstwallnum + j];
 		p[0] = worldtoscreen(d, w[0]->point);
 		p[1] = worldtoscreen(d, w[1]->point);
-		draw_line(d, p[0], p[1],
-				w[1]->neighborsect != -1 ? 0xdd0000 : 0xffffff);
 		if (w[1] == d->highlighted_wall)
 			draw_line(d, p[0], p[1], 0xffff00);
+		else
+			draw_line(d, p[0], p[1],
+				w[1]->neighborsect != -1 ? 0xdd0000 : 0xffffff);
+
 		j = i++;
 	}
 }
