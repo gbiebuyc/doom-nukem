@@ -27,8 +27,11 @@ void	detect_wall(t_data *d, int x, int y)
 	int16_t	w1;
 	int16_t	w2;
 	int16_t	last;
+	int		selected_sector;
 
 	s = -1;
+	selected_sector = find_sect_under_cursor(d);
+	selected_sector = (selected_sector == -1) ? 0 : selected_sector;
 	while (++s < d->numsectors)
 	{
 		last = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
@@ -49,7 +52,7 @@ void	detect_wall(t_data *d, int x, int y)
 			double	dx = p.x - closest.x;
 			double	dy = p.y - closest.y;
 			double	dist = vec2f_length((t_vec2f){dx, dy});
-			if (dist < 15)
+			if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
 				return ((void)(d->highlighted_wall = &d->walls[w1]));
 			w1 = w2++;
 		}

@@ -65,35 +65,6 @@ void		add_wall(t_data *d)
 	d->selectedwall = &d->walls[d->numwalls - 1];
 }
 
-t_wall		*get_opposite_wall(t_data *d)
-{
-	int		s;
-	int		max_num_walls;
-	int		num_wall;
-	t_wall	*w;
-
-	s = 0;
-	while (s < d->numsectors)
-	{
-		max_num_walls = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
-		if (d->selected_wall >= d->sectors[s].firstwallnum &&
-			d->selected_wall < max_num_walls)
-			break ;
-		s++;
-	}
-	w = (d->selected_wall + 1 >= max_num_walls) ?
-	&d->walls[d->sectors[s].firstwallnum] : &d->walls[d->selected_wall + 1];
-	num_wall = d->sectors[d->selected_sector].firstwallnum - 1;
-	max_num_walls = d->sectors[d->selected_sector].firstwallnum +
-					d->sectors[d->selected_sector].numwalls;
-	while (++num_wall < max_num_walls)
-		if (d->walls[num_wall].neighborsect == s &&
-			same_pos(w, &d->walls[num_wall]))
-			break ;
-	d->selected_wall = num_wall;
-	return (&d->walls[num_wall]);
-}
-
 /*
 **	Find closest wall. Priority to walls that have a neighbor.
 */
@@ -111,11 +82,7 @@ static void	find_wall(t_data *d, t_vec2f *p, double min_dist, t_wall *wall)
 			wall->neighborsect != -1))) || (wall == d->highlighted_wall))
 		{
 			d->selected_wall = wall - d->walls;
-			/**/ft_printf("preselection : [%d]\n", d->selected_wall);
-			d->selectedwall =
-			(d->selected_wall >= d->sectors[d->selected_sector].firstwallnum)
-				? wall : get_opposite_wall(d);
-		//	d->selectedwall = wall;
+			d->selectedwall = wall;
 			min_dist = dist;
 			ft_printf("Wall [%d] selected\n", d->selectedwall - d->walls);
 			if (d->selectedwall != NULL && d->interface.separate_sector)
