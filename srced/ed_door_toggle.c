@@ -56,18 +56,20 @@ void	toggle_isdoor(t_data *d)
 	t_wall		*nextwall;
 	int16_t		last;
 
-	if (d->selected_wall == -1)
-		return ;
-	d->selectedwall = d->walls + d->selected_wall;
-	if (d->selectedwall->neighborsect == -1)
+	if (d->selected_wall != -1 || d->hl_wallnum != -1)
 	{
-		ft_printf("Only portals can be doors !\n");
-		return ;
+		d->selectedwall = d->walls +
+				((d->selected_wall != -1) ? d->selected_wall : d->hl_wallnum);
+		if (d->selectedwall->neighborsect == -1)
+		{
+			ft_printf("Only portals can be doors !\n");
+			return ;
+		}
+		d->selectedwall->is_door = !d->selectedwall->is_door;
+		neighborsect = d->sectors + d->selectedwall->neighborsect;
+		nextwall = get_adjacent_wall(d, d->selectedwall);
+		last = neighborsect->firstwallnum + neighborsect->numwalls;
+		find_opposite_portal(d, neighborsect, &last, nextwall);
+		printf("is_door: %d\n", d->selectedwall->is_door);
 	}
-	d->selectedwall->is_door = !d->selectedwall->is_door;
-	neighborsect = d->sectors + d->selectedwall->neighborsect;
-	nextwall = get_adjacent_wall(d, d->selectedwall);
-	last = neighborsect->firstwallnum + neighborsect->numwalls;
-	find_opposite_portal(d, neighborsect, &last, nextwall);
-	printf("is_door: %d\n", d->selectedwall->is_door);
 }

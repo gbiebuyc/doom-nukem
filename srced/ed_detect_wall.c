@@ -53,9 +53,57 @@ void	detect_wall(t_data *d, int x, int y)
 			double	dy = p.y - closest.y;
 			double	dist = vec2f_length((t_vec2f){dx, dy});
 			if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
-				return ((void)(d->highlighted_wall = &d->walls[w1]));
+			{
+				d->hl_wallnum_draw = w1;
+				return ;
+			}
 			w1 = w2++;
 		}
 	}
-	d->highlighted_wall = NULL;
+	//d->highlighted_wall = NULL;
+}
+
+void	detect_select_wall(t_data *d, int x, int y)
+{
+	int16_t	s;
+	int16_t	w1;
+	int16_t	w2;
+	int16_t	last;
+	int		selected_sector;
+
+	d->hl_wall = NULL;
+	d->hl_wallnum = -1;
+	s = -1;
+	selected_sector = find_sect_under_cursor(d);
+	selected_sector = (selected_sector == -1) ? 0 : selected_sector;
+	while (++s < d->numsectors)
+	{
+		last = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
+		w1 = last - 1;
+		w2 = d->sectors[s].firstwallnum;
+		while (w2 < last)
+		{
+			t_vec2f a = worldtoscreen(d, d->walls[w1].point);
+			t_vec2f b = worldtoscreen(d, d->walls[w2].point);
+			t_vec2f p = (t_vec2f){x, y};
+			t_vec2f a_to_p = {p.x - a.x, p.y - a.y};
+			t_vec2f	a_to_b = {b.x - a.x, b.y - a.y};
+			double	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
+			double	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
+			double	t = atp_dot_atb / atb2;
+			t = fclamp(t, 0, 1);
+			t_vec2f	closest = {a.x + t * a_to_b.x, a.y + t * a_to_b.y};
+			double	dx = p.x - closest.x;
+			double	dy = p.y - closest.y;
+			double	dist = vec2f_length((t_vec2f){dx, dy});
+			if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
+			{
+				d->hl_wallnum = w1;
+				d->hl_wall = &d->walls[d->hl_wallnum];
+				return ;
+			}
+			w1 = w2++;
+		}
+	}
+	//d->highlighted_wall = NULL;
 }

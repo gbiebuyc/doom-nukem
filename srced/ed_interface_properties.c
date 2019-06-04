@@ -133,6 +133,7 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[3], d->screen, (int[2]){x, y + 32}, d);
 	draw_selection_case(d, properties, x, y);
-	fill_texture_selection(d, &d->interface);
+	fill_texture_selection(d, &d->interface, ((d->selected_wall == -1 &&
+				d->hl_wall) ? d->hl_wallnum : d->selected_wall));
 	draw_plus_minus_btn(d);
 }

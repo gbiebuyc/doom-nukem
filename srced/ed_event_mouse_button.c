@@ -22,22 +22,23 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 		d->selected_sector = find_sect_under_cursor(d);
 		ft_printf("[Selected sector] = %d\n", d->selected_sector);
 		select_wall_under_cursor(d, (t_vec2f){e->button.x, e->button.y});
+		d->hl_wall = NULL;
+		if (d->selected_wall == -1)
+			detect_select_wall(d, x, y);
 	}
 	else if (x > W - PROPERTIES_LIMIT)
 		btn_height(d, x, y, &d->interface);
-	if ((d->selected_sector >= 0 || d->selected_wall >= 0)
-		&& d->interface.texture_case_select != -1)
-		save_selected_texture(d, e->button.x, e->button.y);
-	if ((d->selected_sector >= 0 || d->selected_wall >= 0)
-		&& d->selected_texture != -1)
+	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
+		d->hl_wallnum >= 0) && d->interface.texture_case_select != -1)
+		save_selected_texture(d, e->button.x, e->button.y,
+			((d->selected_wall != -1) ? d->selected_wall : d->hl_wallnum));
+	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
+		d->hl_wall >= 0) && d->selected_texture != -1)
 		d->interface.texture_case_select = properties_texture_selection(d, e);
 	if (d->interface.category != -1)
 		get_selected_asset(d);
 	else if (d->interface.selected_asset != -1 && x < W - PROPERTIES_LIMIT)
-	{
 		add_asset_to_map(d, x, y);
-		///**/d->interface.selected_asset_position = (t_vec2f){x, y};
-	}
 }
 
 /*

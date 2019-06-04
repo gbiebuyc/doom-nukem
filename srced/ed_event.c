@@ -48,8 +48,6 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 		d->grid_locking = !d->grid_locking;
 	else if (key == SDLK_x)
 		d->interface.separate_sector = !d->interface.separate_sector;
-/**/	if (key == SDLK_m)
-		d->interface.move_wall = !d->interface.move_wall;
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)
@@ -91,7 +89,6 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 	int	y;
 
 	SDL_GetMouseState(&x, &y);
-	// TODO if d->interface.movewall then do not update wall pos
 	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
 		(d->interface.select) ? update_wall_pos(d) : 1;
 	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))

@@ -39,16 +39,16 @@ static void	empty_case(t_data *d, int n, t_interface *i)
 	}
 }
 
-void		fill_texture_selection(t_data *d, t_interface *i)
+void		fill_texture_selection(t_data *d, t_interface *i, int wallnum)
 {
 	int tex_n;
 
 	if (d->numwalls <= 0 && d->numsectors <= 0)
 		return ;
 	d->texture_to_scale = 64;
-	if (d->selected_wall != -1)
+	if (d->selected_wall != -1 || d->hl_wall)
 	{
-		tex_n = d->walls[d->selected_wall].middlepicnum;
+		tex_n = d->walls[wallnum].middlepicnum;
 		copy_surface_to_surface(d->textures[tex_n], d->screen,
 				(int[2]){i->tex_select[2].x + 1, i->tex_select[2].y + 1}, d);
 	}

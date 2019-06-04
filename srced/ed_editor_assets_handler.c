@@ -59,21 +59,17 @@ void	get_selected_asset(t_data *d)
 
 void	add_asset_to_map(t_data *d, int x, int y)
 {
-	//t_assets *a;
 	int			sectornum;
 	float		mid;
-	t_sector 	*s;
+	t_sector	*s;
 	t_vec2f		xy;
 
 	sectornum = find_sect_under_cursor(d);
 	s = &d->sectors[sectornum];
 	xy = screentoworld(d, (t_vec2f){x, y});
-	// TODO upgrade wall selection then denied playerstart position
-	// if to close from a wall
 	if (d->interface.selected_asset_cat == 3 && sectornum >= 0)
 	{
 		mid = (fabs(s->ceilheight) - fabs(s->floorheight)) * 0.5;
-		//printf("%f %f\n", xy.x, xy.y); // TODO Bug depending on player position, probably doom pb not editor
 		d->player_start = (t_vec3f){xy.x, s->floorheight + mid, xy.y};
 		ft_printf("starting point done\n");
 		d->interface.selected_asset_cat = -1;

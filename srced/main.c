@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-void	debug_print(t_data *d)
+void		debug_print(t_data *d)
 {
 	t_wall		*wall;
 	int			w;

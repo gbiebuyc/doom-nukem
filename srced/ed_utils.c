@@ -67,7 +67,7 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dest,
 	}
 }
 
-void			save_selected_texture(t_data *d, int x, int y)
+void			save_selected_texture(t_data *d, int x, int y, int wallnum)
 {
 	t_sector	*s;
 
@@ -79,8 +79,8 @@ void			save_selected_texture(t_data *d, int x, int y)
 		d->selected_texture = x + y * 4;
 		if (d->selected_texture < d->nb_texture)
 		{
-			if (d->interface.texture_case_select == 2 && d->selected_wall >= 0)
-				d->walls[d->selected_wall].middlepicnum = d->selected_texture;
+			if (d->interface.texture_case_select == 2 && wallnum >= 0)
+				d->walls[wallnum].middlepicnum = d->selected_texture;
 			else if (d->selected_sector >= 0)
 			{
 				if (d->interface.texture_case_select == 1)

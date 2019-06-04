@@ -68,7 +68,6 @@ typedef struct	s_interface
 	SDL_Surface	*menu;
 	t_toolbar	toolbar;
 	int			separate_sector;
-	int			move_wall;
 	int			show_menu;
 	int			is_on_menu;
 	int			select;
@@ -84,12 +83,13 @@ typedef struct	s_interface
 	t_vec2f		btn_floor_height_pos;
 	t_vec2f		btn_ceil_height_pos;
 	t_vec2f		category_pos[4];
-/**/t_vec2f		selected_asset_position;
+	t_vec2f		selected_asset_position;
 }				t_interface;
 
 /*
 **	texture_to_scale = size to resize the image,
 **	texture_to_scale = 32 -> will resize the image to 32x32 pixels
+**	hl_wall = highlighted_wall
 */
 
 typedef struct	s_data
@@ -118,7 +118,9 @@ typedef struct	s_data
 	double			texture_to_scale;
 	t_vec2f			temp;
 	/**/t_monster	monsters[1000];
-	t_wall			*highlighted_wall;
+	t_wall			*hl_wall;
+	int				hl_wallnum;
+	int				hl_wallnum_draw;	
 }				t_data;
 
 void			debug_print(t_data *d);
@@ -230,7 +232,7 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 */
 
 void			draw_separator(t_data *d, int x, int y, int color);
-void			fill_texture_selection(t_data *d, t_interface *i);
+void			fill_texture_selection(t_data *d, t_interface *i, int wallnum);
 void			show_preview(t_data *d, t_assets *a);
 
 /*
@@ -239,7 +241,7 @@ void			show_preview(t_data *d, t_assets *a);
 
 void			copy_surface_to_surface(SDL_Surface *src,
 								SDL_Surface *dest, int p[2], t_data *d);
-void			save_selected_texture(t_data *d, int x, int y);
+void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 void			remove_backgorund_image(SDL_Surface *s);
 
 /*
@@ -283,12 +285,13 @@ void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 ** ed_door_toggle.c
 */
 
-void	toggle_isdoor(t_data *d);
+void			toggle_isdoor(t_data *d);
 
 /*
 ** ed_detect_wall.c
 */
 
-void	detect_wall(t_data *d, int x, int y);
+void			detect_wall(t_data *d, int x, int y);
+void			detect_select_wall(t_data *d, int x, int y);
 
 #endif
