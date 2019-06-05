@@ -26,7 +26,6 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 }
 
 #define MOUSE_SENSITIVTY 1
-#define MAX_Y_OFFSET HEIGHT
 
 void		event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
 {

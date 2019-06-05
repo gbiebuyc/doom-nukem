@@ -14,7 +14,6 @@
 
 void	render(t_data *d)
 {
-	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
 	t_frustum fr;
 	fr.x1 = 0;
 	fr.x2 = WIDTH - 1;

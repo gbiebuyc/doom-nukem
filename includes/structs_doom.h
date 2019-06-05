@@ -55,6 +55,7 @@ typedef struct	s_projdata
 	double		n;
 	double		z;
 	int			x;
+	int			y;
 	double		u;
 	int			ya;
 	int			yb;
@@ -63,6 +64,8 @@ typedef struct	s_projdata
 	bool		visible[WIDTH];
 	double		doorheight;
 	double		doorbottom;
+	double		sin;
+	double		cos;
 }				t_projdata;
 
 typedef struct	s_frustum

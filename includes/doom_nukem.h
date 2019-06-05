@@ -22,6 +22,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define FPS 60
+# define MAX_Y_OFFSET HEIGHT/2
 # include <structs_doom.h>
 
 void	putpixel(t_data *d, int x, int y, uint32_t color);

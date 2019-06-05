@@ -33,8 +33,12 @@ uint32_t	getpixel(SDL_Surface *s, double x, double y)
 // looping on the texture
 uint32_t	getpixel2(SDL_Surface *s, double x, double y)
 {
-	return (getpixel(s, (x >= 0 && x < 1.0) ? x : x - floor(x),
-				(y >= 0 && y < 1.0) ? y : y - floor(y)));
+	int realx;
+	int realy;
+
+	realx = ((int)(s->w * x) % s->w + s->w) % s->w;
+	realy = ((int)(s->h * y) % s->h + s->h) % s->h;
+	return (((uint32_t*)s->pixels)[realx + realy * s->w]);
 }
 
 uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b)

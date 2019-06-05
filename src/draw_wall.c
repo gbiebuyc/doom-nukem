@@ -46,7 +46,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 		v = (p->wall->is_door && y < p->nya) ?
 			norm(y, p->nya - p->doorheight, p->nya) :
 			lerp(norm(y, p->ya, p->yb), 0, p->y_scale);
-		if (p->neighbor && y < p->nya)
+		if (p->neighbor && y <= p->nya)
 			putpixel(d, p->x, y, shade(p->z, getpixel2(
 							d->textures[p->wall->middlepicnum], p->u, v)));
 		else if (p->neighbor && y > p->nyb)
@@ -77,9 +77,12 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 		p->doorheight = p->doorbottom - p->ya;
 		p->nya += (p->doorbottom - ft_max(p->ya, p->nya)) *
 			(1 - d->doorstate[p->wall - d->walls]);
-		nfr->ytop[p->x] = clamp(p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
+		nfr->ytop[p->x] = (p->sector->outdoor && p->neighbor->outdoor) ? 0 :
+			clamp(p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
 		nfr->ybottom[p->x] = clamp(p->nyb, fr->ytop[p->x],
 				fr->ybottom[p->x]);
+		if (p->sector->outdoor && p->neighbor->outdoor)
+			p->ya = p->nya;
 	}
 	draw_wall2bis(d, p, fr);
 }

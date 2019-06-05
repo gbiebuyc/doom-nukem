@@ -57,6 +57,7 @@ typedef struct	s_sector
 	uint8_t		light;
 	char		floor_texture_name[100];
 	char		ceil_texture_name[100];
+	bool		outdoor;
 }				t_sector;
 
 typedef struct	s_wall
