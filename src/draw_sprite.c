@@ -6,59 +6,41 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/07 22:20:20 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/06 20:16:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-// OPEN CIRCLE_ANIM on slack to understand code for 1rst function
-
-uint8_t		get_nb_anim_from_rot(double monster_rot, 
-		t_vec2f monster_pos, t_vec2f player_pos)// get the NB of the animation based on where does it face compared to where you are
-	//code is in circle_anim on slack
+void	display_sprite_one_point(t_data *d, SDL_Surface *s,
+		t_display_data display_data)
 {
-	double	rot;
-	double	vision_rot;
-	t_vec2f	vision;
+	int		x;
+	int		y;
+	int		colo;
 
-	vision = sub_vec2f(monster_pos, player_pos);
-	vision_rot = atan2(vision.y, vision.x);
-	rot = vision_rot - monster_rot;
-	rot += M_PI_2 + M_PI * 2; // PANSEMENT ??
-	if (rot > 2 * M_PI)
-		rot -= 2 * M_PI;
-	if (rot < 0)
-		rot += 2 * M_PI;
-	rot = rot -  0.125 * M_PI;
-	if (rot > M_PI)
+	x = display_data.cut_start;
+	while (x <= display_data.cut_end)
 	{
-		if (rot < 1.25 * M_PI)
-			return (1);
-		if (rot < 1.5 * M_PI)
-			return (0);
-		if (rot < 1.75 * M_PI)
-			return (7);
-		if (rot < 2 * M_PI)
-			return (6);
+		y = ft_max(display_data.ytop[x], display_data.start.y);
+		while (y <= ft_min(display_data.ybot[x], display_data.end.y))
+		{
+			colo = getpixel(s, display_data.scale.x * (x - display_data.start.x),
+					display_data.scale.y * (y - display_data.start.y));
+			colo = alpha(((uint32_t *)d->screen->pixels)[x + y * d->screen->w], colo);
+			putpixel(d, x, y, colo);
+			y++;
+		}
+		x++;
 	}
-	if (rot > 0.75 * M_PI)
-		return (2);
-	if (rot > M_PI_2)
-		return (3);
-	if (rot > M_PI_4)
-		return (4);
-	if (rot < 0)
-		return (6);
-	return (5);
 }
 
-t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos) // projection (for sprites only i think ?, unapplicable somewhere else)
+t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v)
 {
 	t_vec3f	new;
 	t_vec3f dist;
 
-	dist = sub_vec3f(pos, d->cam.pos);
+	dist = sub_vec3f(v, d->cam.pos);
 	new = sub_vec3f(v, d->cam.pos);
 	dist.z = dist.x * d->cam.sin + dist.z * d->cam.cos;
 	new = (t_vec3f){
@@ -68,76 +50,49 @@ t_vec3f		get_projected_vertex(t_data *d, t_vec3f v, t_vec3f pos) // projection (
 	};
 	new.x /= dist.z;
 	new.y /= dist.z;
-	new.x = new.x *  WIDTH + WIDTH / 2;
-	new.y = new.y * -WIDTH + HEIGHT / 2 - d->cam.y_offset;
+	new.x = new.x *  WIDTH + WIDTH * 0.5;
+	new.y = new.y * -WIDTH + HEIGHT * 0.5 - d->cam.y_offset;
 	return (new);
 }
 
-void	display_sprite(t_3vec2f a, t_data *d, SDL_Surface *s, bool rev) // display a sprite
-	//a contains start end and scale values
-	//rev is used to mirror an image
+void	draw_projectile(t_data *d, t_frustum *fr,
+		t_projectile proj)
 {
-	int			x;
-	int			y;
-	int			colo;
+	double			dist;
+	t_display_data	a;
+	t_vec3f			point_in_screen;
 
-	x = a.start.x + 1;
-	while (x <= a.end.x)
-	{
-		y = a.start.y;
-		while(y <= a.end.y)
-		{
-			if (rev)
-				colo = getpixel(s, (1 - a.scale.x * (x - a.start.x)), a.scale.y * (y - a.start.y));
-			else
-				colo = getpixel(s, a.scale.x * (x - a.start.x), a.scale.y * (y - a.start.y));
-			if (colo != 2037515) 
-				putpixel(d, x, y, colo);
-			y++;
-		}
-		x++;
-	}
+	point_in_screen = transform_vec3f_to_screen(d, proj.pos);
+
+	if (point_in_screen.z <= 0)
+		return ;
+	dist = vec3f_length(sub_vec3f(proj.pos, d->cam.pos));
+	a.start.x = point_in_screen.x - (d->projectile_tex[proj.weapon_id][proj.current_anim_playing]->w * d->projectile_type[proj.id_type].size) / dist; // a modifier 
+	a.end.x = point_in_screen.x + (d->projectile_tex[proj.weapon_id][proj.current_anim_playing]->w * d->projectile_type[proj.id_type].size) / dist; //same
+	a.scale.x = fabs(100.0 / (a.start.x - a.end.x) * 0.01);
+	a.cut_start = ft_max(a.start.x, fr->x1);
+	a.cut_end = ft_min(a.end.x, fr->x2);
+
+	a.start.y = point_in_screen.y - (d->projectile_tex[proj.weapon_id][proj.current_anim_playing]->h * d->projectile_type[proj.id_type].size) / dist; //same
+	a.end.y = point_in_screen.y + (d->projectile_tex[proj.weapon_id][proj.current_anim_playing]->h * d->projectile_type[proj.id_type].size) / dist; //same
+	a.scale.y = fabs(100.0 / (a.start.y - a.end.y) * 0.01);
+	a.ytop = &fr->ytop[0];
+	a.ybot = &fr->ybottom[0];
+
+	display_sprite_one_point(d, d->projectile_tex[proj.id_type][proj.current_anim_playing],
+			a);
 }
 
-void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t monster_list) //main function to draw a sprite, need
-	//to adjust start_x with fr (see problem below in comments)
+void	draw_monster_test(t_data *d, t_frustum *fr, t_monster monster);
+
+void	draw_sprite(t_data *d, t_sector *sector, t_frustum *fr, t_sprite_list *sprite)
 {
-	t_monster	monster;
-	t_vec3f		top_left;
-	t_vec3f		bot_right;
-	t_vec3f		monsterpos;
-	t_3vec2f	a;
-
-	monster = d->monsters[p.sector->id_of_monster[monster_list]];
-	monsterpos = (t_vec3f) {monster.pos.x, p.sector->floorheight + d->monster_type[monster.id_type].floating + monster.height, monster.pos.y};
-
-	t_vec2f scale = (t_vec2f){monster.width, 0};
-	actualize_dir(-d->cam.rot, &scale); // add ft_max entre pos du monstre et distance min pour affichage; //ou plutot
-	// faire les collisions avec le joueur et empecher la bestiole d'avancer si trop proche ?
-	top_left = get_projected_vertex(d, (t_vec3f){monsterpos.x - scale.x, monsterpos.y, monsterpos.z - scale.y}, monsterpos);
-	bot_right = get_projected_vertex(d, (t_vec3f){monsterpos.x + scale.x,
-			monsterpos.y + d->monster_type[monster.id_type].floating - monster.height, monsterpos.z + scale.y}, monsterpos);
-
-	if (top_left.z > 0.4) //pansement
+	(void)sector;
+	if (sprite->type == IS_MONSTER)
 	{
-		a.start.x = top_left.x > bot_right.x ? bot_right.x : top_left.x ;
-		//		a.start.x = ft_max(begin_x, fr->x1);// problem : besoin de faire en sorte que le sprite en sorte pas de la fenetre du secteur
-		//		(pas simplement du dernier mur du secteur)
-		a.end.x = top_left.x > bot_right.x ? top_left.x : bot_right.x;
-		//		a.end_x = ft_min(end_x, fr->x2);
-		a.scale.x = fabs(100.0 / (a.start.x - a.end.x) / 100);
-		a.start.y = bot_right.y > top_left.y ? top_left.y : bot_right.y;
-		a.end.y = bot_right.y > top_left.y ? bot_right.y : top_left.y;
-		a.scale.y = fabs((100.0 / (a.start.y - a.end.y)) / 100);
-		int nb_of_anim = get_nb_anim_from_rot(monster.rot, monster.pos, vec3to2(d->cam.pos));
-		if (nb_of_anim > 4)
-		{
-			nb_of_anim = 8 - nb_of_anim; 
-			display_sprite(a, d, d->monster_text[monster.id_type][monster.anim_state][nb_of_anim], false);
-		}
-		else
-			display_sprite(a, d, d->monster_text[monster.id_type][monster.anim_state][nb_of_anim], true);
+		draw_monster_test(d, fr, d->monsters[sprite->id]);
+	//draw_monster(d, sector, fr, d->monsters[sprite->id]);
 	}
-	if (p.sector->id_of_monster[++monster_list] != -1) //recursive call for all monsters in a sector (/!\ need to sort them before first call)
-		draw_sprite(d, p, fr, monster_list);
+	if (sprite->type == IS_PROJECTILE)
+		draw_projectile(d, fr, d->projectiles[sprite->id]);
 }

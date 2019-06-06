@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/02 19:21:34 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 19:57:07 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ typedef struct	s_data
 	bool			sectordrawing;
 	double			texture_to_scale;
 	t_vec2f			temp;
-	/**/t_monster	monsters[1000];
+	/**/t_monster		monsters[MAXNUMMONSTERS];
+	/**/uint16_t		nummonsters;
 	t_wall			*hl_wall;
 	int				hl_wallnum;
 	int				hl_wallnum_draw;	

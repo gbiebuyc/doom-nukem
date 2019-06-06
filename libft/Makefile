@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/03 15:37:26 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/04/26 16:34:00 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/06 19:42:55 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,8 @@ OBJ = $(SRC:.c=.o)
 
 NAME = libft.a
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -94,6 +95,7 @@ $(NAME): $(OBJ)
 
 ./%.o: ./%.c ./libft.h
 	@gcc -o $@ -c $< $(CFLAGS)
+
 
 clean:
 	rm -rf $(OBJ)

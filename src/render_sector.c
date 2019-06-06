@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/27 11:33:59 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 19:37:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,24 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		draw_wall(d, &p, fr);
 		draw_floor(d, &p, fr);
 		draw_ceil(d, &p, fr);
-		/*
-		if (*sect->id_of_monster != -1)
-			draw_sprite(d, p, fr, *sect->id_of_monster);
-		*/
 	}
-}
+	if (sect->sprite_list)
+		reorder_sprite(d, sect);
+	t_sprite_list *sprite_list_tmp;
+	sprite_list_tmp = sect->sprite_list;
+	while (sprite_list_tmp)
+	{
+		draw_sprite(d, sect, fr, sprite_list_tmp); // a modif;
+		sprite_list_tmp = sprite_list_tmp->next;
+	}
+	// sector might not be protected ?
+	/*		if (sect->monster_list) // probleme structuration code (appele 3x et soucis avec frustum)
+			reorder_sprite(d, sect);
+			t_monster_list *monster_list;
+			monster_list = sect->monster_list;
+			while (monster_list)
+			{
+			draw_sprite(d, sect, fr, d->monsters[monster_list->id]); // a modif;
+			monster_list = monster_list->next;
+			}
+			*/}

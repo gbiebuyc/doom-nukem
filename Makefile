@@ -6,8 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/05/27 13:27:08 by gbiebuyc         ###   ########.fr        #
-#    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/06 19:46:44 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +16,20 @@ FILES= main \
 	   exit \
 	   init_sdl \
 	   init_monsters \
+	   init_projectiles \
+	   init_player \
 	   loop \
 	   events \
 	   door_activation \
 	   monster_behaviour \
 	   monster_anim_state \
+	   reorder_sprite \
+	   create_projectile \
+	   player_actions \
+	   projectile_collision \
+	   blaster_col \
 	   update \
+	   draw_weapon \
 	   render \
 	   render_sector \
 	   draw_floor \
@@ -36,7 +43,9 @@ FILES= main \
 	   jump \
 	   movement \
 	   draw_sprite \
+	   draw_monster \
 	   shade \
+	   swap_list \
 	   vec2 \
 	   vec2_2
 
@@ -50,7 +59,7 @@ SDL_CFG = $(SDL_PATH)/bin/sdl2-config
 FT_DIR = libft
 INCLUDE = includes 
 CFLAGS = -Wall -Wextra -Werror -O3 -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
-LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
+LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs` 
 ED_DIR = srced
 
 all: $(NAME) editor

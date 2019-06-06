@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 02:56:31 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/22 02:19:39 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:11:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,15 @@ int		read_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
+int		read_monsters_data(t_data *d, int f)
+{
+	if (read(f, &d->nummonsters, sizeof(d->nummonsters)) < 0)
+		return (ft_printf("Failed to read nummonsters\n"));
+	if (read(f, &d->monsters, sizeof(d->monsters)) < 0)
+		return (ft_printf("Failed to read monsters\n"));
+	return (0);
+}
+
 void	load_map(t_data *d)
 {
 	int f;
@@ -94,5 +103,6 @@ void	load_map(t_data *d)
 	if (read_wall_n_sector_data(d, f) || read_textures_name(d, f) ||
 		read_texture_data(d, f))
 		exit (1);
+	/**/read_monsters_data(d, f);
 	close(f);
 }
