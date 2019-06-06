@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 22:48:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:09:26 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void		player_hit(t_data *d, uint16_t damage)
 	printf("%d\n", d->color_buf.value);
 	if (d->color_buf.value > MAX_BUF_VALUE)
 		d->color_buf.value = MAX_BUF_VALUE;
+	d->inertia.x = 0;
+	d->inertia.y = 0;
 }
 
 # define MIN_DIST_TO_PLAYER 0.15
