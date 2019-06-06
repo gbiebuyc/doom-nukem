@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 19:44:33 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/06 22:49:13 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,16 @@ typedef	struct	s_player
 	uint8_t		weapon_anim[MAX_KIND_OF_WEAP][MAX_ANIM_PER_WEAP];
 }				t_player;
 
+# define IS_GREEN 8
+# define IS_RED 16
+# define MAX_BUF_VALUE 180
+
+typedef struct	s_color_buf
+{
+	uint8_t		colo;
+	uint16_t		value;// 16 needed to not exceed uint8_t with additions
+}				t_color_buf;
+
 # define MAXNBOFANIMATION 5
 # define MAX_PROJECTILE_TEX_PER_WEAP MAX_STATE_OF_PROJ_ANIM
 # define MAX_KIND_OF_PROJECTILE 2
@@ -211,6 +221,7 @@ typedef struct	s_data
 	double			dooranimstep[MAXNUMWALLS];
 	double			doorstate[MAXNUMWALLS];
 	double			lightblink;
+	t_color_buf		color_buf;
 }				t_data;
 
 /*
