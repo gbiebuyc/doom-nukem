@@ -112,6 +112,7 @@ typedef struct	s_data
 	bool			debug_pause;
 	double			dooranimstep[MAXNUMWALLS];
 	double			doorstate[MAXNUMWALLS];
+	double			lightblink;
 }				t_data;
 
 #endif

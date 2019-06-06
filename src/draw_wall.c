@@ -47,13 +47,13 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 			norm(y, p->nya - p->doorheight, p->nya) :
 			lerp(norm(y, p->ya, p->yb), 0, p->y_scale);
 		if (p->neighbor && y <= p->nya)
-			putpixel(d, p->x, y, shade(p->z, getpixel2(
+			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
 							d->textures[p->wall->middlepicnum], p->u, v)));
 		else if (p->neighbor && y > p->nyb)
-			putpixel(d, p->x, y, shade(p->z, getpixel2(
+			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
 							d->textures[p->wall->lowerpicnum], p->u, v)));
 		else if (!p->neighbor)
-			putpixel(d, p->x, y, shade(p->z, getpixel2(
+			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
 							d->textures[p->wall->middlepicnum], p->u, v)));
 	}
 }

@@ -27,6 +27,8 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].floorpicnum = 0;
 	d->sectors[d->numsectors - 1].ceilheight = 1;
 	d->sectors[d->numsectors - 1].ceilpicnum = 0;
+	d->sectors[d->numsectors - 1].light = 1.0;
+	d->sectors[d->numsectors - 1].blinking = false;
 	add_wall(d);
 	add_wall(d);
 }

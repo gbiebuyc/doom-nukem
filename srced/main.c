@@ -60,7 +60,8 @@ static void	init_structure(t_data *d)
 
 void		init_sectors(t_data *d)
 {
-	d->sectors[0] = (t_sector){0, 4, 0, 1, 0, {0}, 0, 255, "", "", false};
+	d->sectors[0] = (t_sector){0, 4, 0, 1, 0, {0}, 0,
+		1.0, false, "", "", false};
 	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, 0, 0, 0, 0, -1, "", false};
 	d->walls[1] = (t_wall){(t_vec2f){ 2, 2}, 0, 0, 0, 0, -1, "", false};
 	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, 0, 0, 0, 0, -1, "", false};

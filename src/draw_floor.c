@@ -26,7 +26,7 @@ void	draw_floor2(t_data *d, t_projdata *p)
 	right_u = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
 	left_v = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
 	right_v = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-	putpixel(d, p->x, p->y, shade(dist, getpixel2(
+	putpixel(d, p->x, p->y, shade(d, p, dist, getpixel2(
 					d->textures[p->sector->floorpicnum],
 					lerp(norm(p->x, 0, WIDTH), left_u, right_u),
 					lerp(norm(p->x, 0, WIDTH), left_v, right_v))));

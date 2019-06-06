@@ -86,4 +86,5 @@ void	update(t_data *d)
 	gravity(d, 0);
 	//player action;
 	update_monsters(&d->nummonsters, d->monsters, d);
+	d->lightblink = sin((double)SDL_GetTicks() / 200) * 0.3 + 0.6;
 }

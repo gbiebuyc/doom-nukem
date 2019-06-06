@@ -293,5 +293,6 @@ void			toggle_isdoor(t_data *d);
 
 void			detect_wall(t_data *d, int x, int y);
 void			detect_select_wall(t_data *d, int x, int y);
+double			fclamp(double x, double min, double max);
 
 #endif

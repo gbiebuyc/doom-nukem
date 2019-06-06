@@ -42,7 +42,7 @@ void	draw_sprite(t_data *d, t_projdata p, t_frustum *fr, int16_t id_of_monster);
 void	init_monsters(t_data *d);
 void	monster_anim_state(t_monster *monster, t_monster_type *monster_type);
 void	monster_behaviour(t_data *d, t_monster *monster);
-uint32_t	shade(double z, uint32_t c);
+uint32_t	shade(t_data *d, t_projdata *p, double z, uint32_t c);
 t_vec3f		vec2to3(t_vec2f v);
 t_vec2f		vec3to2(t_vec3f v);
 void	activate_door(t_data *d);
