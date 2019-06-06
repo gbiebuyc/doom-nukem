@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 19:45:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:17:28 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);
+uint32_t	getpixel3(SDL_Surface *s, short x, short y);
 void	load_map(t_data *d);
 bool	inside(t_data *d, int16_t sectnum, t_vec2f pos);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
@@ -66,6 +67,15 @@ bool	is_inside_vec2f(t_vec2f p1, t_vec2f p2, t_vec2f point);
 bool	is_near(double v1, double v2, double range);
 t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3);
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
+/*
+** color_buffer.c
+*/
+void	change_buf_colo(t_data *d, uint16_t amount, uint8_t colo);
+void	color_screen(t_data *d);
+/*
+** inertia.c
+*/
+void	inertia(t_data *d, t_vec2f mvt);
 /*
 ** create_projectile.c
 */

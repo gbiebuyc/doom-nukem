@@ -6,15 +6,15 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:10:18 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:24:17 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define MINIMUM_HEIGHT_TO_WALK 0.2
-#define MOVE_SPEED 0.02
-#define COLLISION_DIST 0.3
+# define MINIMUM_HEIGHT_TO_WALK 0.22
+# define MOVE_SPEED 0.02//must change MAX_INERTIA in inertia.c to scale properly
+# define COLLISION_DIST 0.3
 
 bool	collision(t_data *d, int16_t sectnum)
 {
@@ -107,7 +107,6 @@ void	collision_with_monster(t_data *d, short	cur_sect, t_vec3f old_pos)
 	}
 }
 
-void	inertia(t_data *d, t_vec2f mvt);
 void	movement(t_data *d)
 {
 	t_vec3f	old_pos;
@@ -142,8 +141,6 @@ void	movement(t_data *d)
 	inertia(d, mvt);
 	d->cam.pos.z += d->inertia.y;
 	d->cam.pos.x += d->inertia.x;
-	d->cam.pos.y += d->keys[SDL_SCANCODE_SPACE] * MOVE_SPEED;
-	d->cam.pos.y -= d->keys[SDL_SCANCODE_LSHIFT] * MOVE_SPEED;
 	while (collision(d, d->cursectnum))
 		;
 	collision_with_monster(d, d->cursectnum, old_pos);

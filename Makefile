@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/07 00:05:48 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/07 00:14:42 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES= main \
 	   blaster_col \
 	   update \
 	   draw_weapon \
+	   color_buffer \
 	   render \
 	   render_sector \
 	   draw_floor \

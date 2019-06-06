@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:09:26 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:22:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,11 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 	return (false);
 }
 
-void		player_hit(t_data *d, uint16_t damage)
+void		player_hit_projectile(t_data *d, t_projectile *projectile)
 {
-	if (d->color_buf.colo == IS_GREEN)
-		d->color_buf.value = 0;
-	d->color_buf.colo = IS_RED;
-	d->color_buf.value += (damage * 25); // a revoir en fonction de vie max
-	printf("%d\n", d->color_buf.value);
-	if (d->color_buf.value > MAX_BUF_VALUE)
-		d->color_buf.value = MAX_BUF_VALUE;
-	d->inertia.x = 0;
-	d->inertia.y = 0;
+	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, IS_RED);
+	d->inertia.x = d->inertia.x * -0.5;// can be change to 0
+	d->inertia.y = d->inertia.y * -0.5;// can be changed to 0
 }
 
 # define MIN_DIST_TO_PLAYER 0.15
@@ -96,7 +90,7 @@ bool		collision_proj_player(t_data *d, t_projectile *projectile)
 	{
 		tmp_pos = sub_vec3f(projectile->pos, d->cam.pos);
 		tmp = (t_vec2f){MIN_DIST_TO_PLAYER, 0.0};
-		player_hit(d, d->projectile_type[projectile->id_type].damage);
+		player_hit_projectile(d, projectile);
 		actualize_dir(atan2(tmp_pos.y, tmp_pos.x) - M_PI_2, &tmp);
 		projectile->pos = (t_vec3f){
 			tmp.x + d->cam.pos.x,

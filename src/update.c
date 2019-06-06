@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 22:27:40 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:24:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	update(t_data *d)
 	d->cam.sin = sin(d->cam.rot);
 	d->cam.cos = cos(d->cam.rot);
 	d->keys[SDL_SCANCODE_J] ? jump(d, 1) : jump(d, 0); // short jump | long jump
+	d->keys[SDL_SCANCODE_SPACE] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	movement(d);
 	// Update current sector
 	sect = 0;
