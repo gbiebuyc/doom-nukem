@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/05 21:01:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:56:21 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int16_t old_sect, t_vec3f pos)
 	short	j;
 	short	ret_value;
 
-	if (inside(d, sect_to_scan, (t_vec2f){pos.x, pos.z}) && pos.y < d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR && pos.y > d->sectors[sect_to_scan].floorheight + DIST_COLL_PROJ_CEIL_FLOOR)
+	if (inside(d, sect_to_scan, (t_vec2f){pos.x, pos.z}) && 
+			(pos.y < d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR || 
+			 d->sectors[sect_to_scan].outdoor) && pos.y > d->sectors[sect_to_scan].floorheight + DIST_COLL_PROJ_CEIL_FLOOR)
 	{
 		return (sect_to_scan);
 	}

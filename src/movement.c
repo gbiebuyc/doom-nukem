@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:24:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 01:02:49 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define MINIMUM_HEIGHT_TO_WALK 0.22
 # define MOVE_SPEED 0.02//must change MAX_INERTIA in inertia.c to scale properly
 # define COLLISION_DIST 0.3
+# define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
 
 bool	collision(t_data *d, int16_t sectnum)
 {
@@ -45,7 +46,9 @@ bool	collision(t_data *d, int16_t sectnum)
 		if (dist > COLLISION_DIST)
 			continue ;
 		int16_t neighbor = d->walls[i].neighborsect;
-		if (neighbor != -1 && d->doorstate[i] > 0.7)
+		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > d->sectors[neighbor].floorheight + MINIMUM_HEIGHT_TO_WALK
+				&& (d->cam.pos.y < d->sectors[neighbor].ceilheight || d->sectors[neighbor].outdoor)
+				&& (d->sectors[neighbor].outdoor || d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight > MINIMUM_HEIGHT_OF_WALKABLE_SECTOR))
 			collided |= collision(d, neighbor);
 		else
 		{

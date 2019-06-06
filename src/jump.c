@@ -6,13 +6,14 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 21:22:40 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/15 18:45:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:57:50 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 #define MINIMUM_HEIGHT 0.5
+# define MINIMUM_CEIL_DIST 0.1
 #define JUMP_FORCE 0.08
 
 void	gravity(t_data *d, int mod)
@@ -28,7 +29,7 @@ void	gravity(t_data *d, int mod)
 	}
 	d->cam.pos.y += accel;
 	accel -= 0.004;
-	if (d->cam.pos.y > d->sectors[d->cursectnum].ceilheight && accel > 0)
+	if (d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST && accel > 0 && !d->sectors[d->cursectnum].outdoor)
 		accel = 0;
 	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT)
 	{
