@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 08:46:52 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/07 01:24:37 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 01:26:38 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	draw_weapon(t_data *d)
 	cur_img->w * 0.5 * SIZE_OF_WEAP;
 	tmp = d->inertia;
 	actualize_dir(d->cam.rot, &tmp);
-	start.x += tmp.x * 100;	
+	start.x -= tmp.x * 150;	
 	end.x = start.x + cur_img->w * SIZE_OF_WEAP;
 	end.y = HEIGHT + d->player.timer_change_weap * HEIGHT * 0.010 + MAX_INERTIA * 50;
 	end.y += tmp.y * 50;
