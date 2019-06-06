@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:01:28 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:24:21 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:36:21 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ void	inertia(t_data *d, t_vec2f mvt)
 		actualize_dir(angle, &d->inertia);
 	}
 	d->inertia = mul_vec2f(d->inertia, 0.9);
+}
+
+void	change_inertia(t_data *d, double angle, double length)
+{
+	d->inertia.x = length;
+	d->inertia.y = 0.0;
+	actualize_dir(angle, &d->inertia);
 }

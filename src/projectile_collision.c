@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:22:10 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:37:46 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 	return (false);
 }
 
+# define BOUNCING_DIST_PROJ 0.12
+
 void		player_hit_projectile(t_data *d, t_projectile *projectile)
 {
 	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, IS_RED);
-	d->inertia.x = d->inertia.x * -0.5;// can be change to 0
-	d->inertia.y = d->inertia.y * -0.5;// can be changed to 0
+	change_inertia(d, atan2(projectile->dir.z, projectile->dir.x), BOUNCING_DIST_PROJ);
 }
 
 # define MIN_DIST_TO_PLAYER 0.15

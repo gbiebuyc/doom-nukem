@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:17:28 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 00:36:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	color_screen(t_data *d);
 /*
 ** inertia.c
 */
+void	change_inertia(t_data *d, double angle, double length);
 void	inertia(t_data *d, t_vec2f mvt);
 /*
 ** create_projectile.c
