@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/07 00:56:21 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:08:06 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	inside(t_data *d, int16_t sectnum, t_vec2f pos)
 
 #define DIST_COLL_PROJ_CEIL_FLOOR 0.1
 
-int16_t	update_cursect(int16_t sect_to_scan, t_data *d, int depth,
+int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth,
 int16_t old_sect, t_vec3f pos)
 {
 	short	i;
@@ -55,12 +55,37 @@ int16_t old_sect, t_vec3f pos)
 //	printf("cur sec: %d, numwalls :%d\n", sect_to_scan, d->sectors[sect_to_scan].numwalls);
 	while (i < j)
 	{
-		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect != old_sect)
-			if ((ret_value = update_cursect(d->walls[i].neighborsect, d, depth - 1, sect_to_scan, pos)) != -1)
+		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect != old_sect && d->doorstate[i] > 0.7)
+			if ((ret_value = update_cursect_proj(d->walls[i].neighborsect, d, depth - 1, sect_to_scan, pos)) != -1)
 			{
 //				printf("%d\n", ret_value);
 				return (ret_value);
 				}
+		i++;
+	}
+	if (old_sect == -1 && d->sectors[sect_to_scan].outdoor && pos.y > d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR)
+		return (-2);
+	return (-1);
+}
+
+int16_t	update_cursect_player(int16_t sect_to_scan, t_data *d, short depth,
+		int16_t old_sect)
+{
+	short	i;
+	short	j;
+	short	ret_value;
+
+	if (inside(d, sect_to_scan, (t_vec2f){d->cam.pos.x, d->cam.pos.z}))
+		return (sect_to_scan);
+	if (!depth)
+		return (-1);
+	i = d->sectors[sect_to_scan].firstwallnum;
+	j = d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls;
+	while (i < j)
+	{
+		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect != old_sect)
+			if ((ret_value = update_cursect_player(d->walls[i].neighborsect, d, depth - 1, sect_to_scan)) != -1)
+				return (ret_value);
 		i++;
 	}
 	return (-1);

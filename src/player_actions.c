@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/05 18:17:49 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 21:57:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	shoot_weapon(t_data *d)
 		if (d->right_mouse_button == MOUSE_PRESSED && d->weapon_type[d->player.current_weapon].has_alt_fire)
 		{
 			d->player.can_shoot = d->weapon_type[d->player.current_weapon].rate_of_fire[1];
-			create_projectile(d, d->weapon_type[d->player.current_weapon].right_projectile);
+			d->player.timer_anim_weap = d->player.speed_anim[d->player.current_weapon];
+			d->player.current_anim_playing = 1;
 		}
 	}
 	if (d->weapon_type[d->player.current_weapon].type == CHARGED)

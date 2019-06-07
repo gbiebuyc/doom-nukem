@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 23:41:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 21:56:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	init_weapons(t_data *d)
 	d->weapon_type[CRYO_BALLISTA].type = NORMAL;
 	d->weapon_type[CRYO_BALLISTA].has_alt_fire = false;
 	d->weapon_type[BLASTER].rate_of_fire[0] = d->player.speed_anim[BLASTER] * 10;
-	d->weapon_type[BLASTER].has_alt_fire = false;
+	d->weapon_type[BLASTER].has_alt_fire = true;
+	d->weapon_type[BLASTER].rate_of_fire[1] = d->player.speed_anim[BLASTER] * 10;
 }
 
 void	init_projectiles(t_data *d)

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/07 01:04:04 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 21:58:09 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 				coll = collision_proj_monster(d, &d->sectors[d->projectiles[i].cursectnum], &d->projectiles[i]); //projectile_collision.c
 			if (d->projectile_type[d->projectiles[i].id_type].threat_to_player)
 				coll = collision_proj_player(d, &d->projectiles[i]); 
-			if (!coll && (update_sect =  update_cursect(d->projectiles[i].cursectnum, d,
-							NB_OF_SECTOR_DEPTH, -1, d->projectiles[i].pos)) != -1)
+			if (!coll && (update_sect =  update_cursect_proj(d->projectiles[i].cursectnum, d,
+							NB_OF_SECTOR_DEPTH, -1, d->projectiles[i].pos)) >= 0)
 			{
 				if (update_sect != d->projectiles[i].cursectnum)
 				{
@@ -95,6 +95,11 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 				}
 				d->projectiles[i].cursectnum = update_sect;
 				update_anim_projectile(&d->projectiles[i], d, i, coll); // in monster_anim_state.c
+			}
+			else if (update_sect == -2)
+			{
+				d->projectiles[i].is_active = false;
+				destroy_mail(i, &d->sectors[d->projectiles[i].cursectnum], IS_PROJECTILE);
 			}
 			else
 			{
@@ -107,7 +112,7 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 
 void	update(t_data *d)
 {
-	//int16_t	sect;
+	int16_t	sect;
 
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;
@@ -118,13 +123,13 @@ void	update(t_data *d)
 	d->keys[SDL_SCANCODE_SPACE] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	movement(d);
 	// Update current sector
-/*	sect = 0;
-	while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))
+	/*while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))
 		sect++;
 	if (sect < d->numsectors)
 		d->cursectnum = sect;
 		printf("%d\n", sect);*/
-	d->cursectnum = update_cursect(d->cursectnum, d, 1000, -1, d->cam.pos);
+	if ((sect = update_cursect_player(d->cursectnum, d, 10, -1)) != -1)
+		d->cursectnum = sect;
 	gravity(d, 0);
 	player_actions(d);
 	update_projectiles(d);

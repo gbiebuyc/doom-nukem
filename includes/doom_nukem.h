@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 18:26:45 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/07 21:33:34 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	init_player(t_data *d, t_player *player);
 void	init_monsters(t_data *d);
 void	init_projectiles(t_data *d);
 void	swap_list(uint8_t type, uint16_t id, t_data *d, uint16_t cursectnum, uint16_t new_sect_num);
-int16_t	update_cursect(int16_t sect_to_scan, t_data *d, int depth, int16_t old_sect, t_vec3f pos);
+int16_t	update_cursect_player(int16_t sect_to_scan, t_data *d, short depth, int16_t old_sect);
+int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth, int16_t old_sect, t_vec3f pos);
+void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy);
 void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		bool has_collided); // in monster_anim_state.c
 void	monster_anim_state(t_monster *monster, t_monster_type *monster_type, t_data *d);

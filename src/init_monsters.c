@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 20:22:28 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 21:38:45 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	init_monsters(t_data *d)
 
 	init_monster_type(d);
 	i = 0;
-	printf("read nummonster: %d\n", d->nummonsters);
 	while (i < d->nummonsters)
 	{
 		initialize_all_monster(d, &(d->monsters[i]), i);

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 01:02:49 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:07:01 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ bool	collision(t_data *d, int16_t sectnum)
 			continue ;
 		int16_t neighbor = d->walls[i].neighborsect;
 		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > d->sectors[neighbor].floorheight + MINIMUM_HEIGHT_TO_WALK
-				&& (d->cam.pos.y < d->sectors[neighbor].ceilheight || d->sectors[neighbor].outdoor)
-				&& (d->sectors[neighbor].outdoor || d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight > MINIMUM_HEIGHT_OF_WALKABLE_SECTOR))
+				&& (d->sectors[neighbor].outdoor || (d->cam.pos.y < d->sectors[neighbor].ceilheight && 
+				d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight > MINIMUM_HEIGHT_OF_WALKABLE_SECTOR)))
 			collided |= collision(d, neighbor);
 		else
 		{

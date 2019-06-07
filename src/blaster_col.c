@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/02 17:50:43 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:09:48 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ void		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist)
 		}
 		tmp = tmp->next;
 	}
-}
-
-bool	is_inside_wall_blaster(t_vec2f wall1,
-		t_vec2f wall2, t_cam cam)
-{
-	printf("real_coord1.x :%f real_coord2.x:%f\n", wall1.x, wall2.x);
-	wall1.x -= cam.pos.x;
-	wall1.y -= cam.pos.y;
-	actualize_dir(cam.rot, &wall1);
-	wall2.x -= cam.pos.x;
-	wall2.y -= cam.pos.y;
-	actualize_dir(cam.rot, &wall2);
-	printf("wall1.x :%f wall2.x:%f\n", wall1.x, wall2.x);
-	if (!(wall1.y > cam.pos.z || wall2.y > cam.pos.z))
-		return (false);
-	if (wall1.x < 0 && wall2.x > 0)
-		return (true);
-	return (false);
 }
 
 double	get_dist_to_intersect_wall(t_data *d, t_vec2f wall1, t_vec2f wall2)
@@ -118,14 +100,13 @@ double	recur_scan_point_line(t_data *d, uint8_t depth, uint16_t sect_to_scan,
 	if (depth)
 		while (i < d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls)
 		{
-			printf("cur_sect :%d curwalls :%d, %d, going to sect:%d\n", sect_to_scan, j, i, d->walls[j].neighborsect);
-			if (d->walls[j].neighborsect != -1 && d->walls[j].neighborsect != old_sect)
+			//printf("cur_sect :%d curwalls :%d, %d, going to sect:%d\n", sect_to_scan, j, i, d->walls[j].neighborsect);
+			if (d->walls[j].neighborsect != -1 && d->walls[j].neighborsect != old_sect && d->doorstate[j] > 0.7)
 			{
 				dist[1] = get_dist_to_intersect_wall(d, d->walls[j].point, d->walls[i].point);
 				if (dist[0] == -1 || dist[1] < dist[0])
 					if (is_inside_vec2f(d->walls[j].point, d->walls[i].point, intersect(vec3to2(d->cam.pos),
 					(t_vec2f){d->cam.pos.x + 1000 * d->cam.sin, d->cam.pos.z + 1000 * d->cam.cos}, d->walls[j].point, d->walls[i].point)))
-					//if (is_inside_wall_blaster(d->walls[j].point, d->walls[i].point, d->cam))
 					{
 						dist[0] = recur_scan_point_line(d, depth -1, d->walls[j].neighborsect, sect_to_scan);
 						break ;
