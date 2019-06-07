@@ -38,24 +38,37 @@ void		draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
 	show_preview(d, d->interface.toolbar.assets);
 }
 
-static void	draw_plus_minus_btn(t_data *d)
+/*
+**	prop = d->interface.toolbar.properties
+*/
+
+static void	draw_plus_minus_btn(t_data *d, SDL_Surface **prop)
 {
 	int	x;
 	int	y;
 
 	x = W - PROPERTIES_LIMIT * 0.25;
-	y = H * 0.5 + d->interface.toolbar.properties[0]->h * 2 + 15;
+	y = H * 0.5 + prop[0]->h * 2 + 15;
 	d->interface.btn_floor_height_pos = (t_vec2f){x, y};
-	copy_surface_to_surface(d->interface.toolbar.properties[8], d->screen,
-													(int[2]){x, y}, d);
-	copy_surface_to_surface(d->interface.toolbar.properties[9], d->screen,
-													(int[2]){x + 32, y}, d);
-	y += d->interface.toolbar.properties[1]->h * 0.5 + 15;
+	copy_surface_to_surface(prop[8], d->screen, (int[2]){x, y}, d);
+	copy_surface_to_surface(prop[9], d->screen, (int[2]){x + 32, y}, d);
+	y += prop[1]->h * 0.5 + 15;
 	d->interface.btn_ceil_height_pos = (t_vec2f){x, y};
-	copy_surface_to_surface(d->interface.toolbar.properties[8], d->screen,
-													(int[2]){x, y}, d);
-	copy_surface_to_surface(d->interface.toolbar.properties[9], d->screen,
-													(int[2]){x + 32, y}, d);
+	copy_surface_to_surface(prop[8], d->screen, (int[2]){x, y}, d);
+	copy_surface_to_surface(prop[9], d->screen, (int[2]){x + 32, y}, d);
+	x = W - PROPERTIES_LIMIT + 8;
+	y = d->interface.tex_select[1].y + 84;
+	copy_surface_to_surface(prop[10], d->screen, (int[2]){x, y}, d);
+	d->interface.cbox_skybox_p = (t_vec2f){d->interface.tex_select[1].x, y};
+	copy_surface_to_surface(((d->selected_sector != -1 &&
+		d->sectors[d->selected_sector].outdoor) ? prop[13] : prop[12]),
+			d->screen, (int[2]){d->interface.tex_select[1].x, y}, d);
+	y = d->interface.tex_select[2].y + 84;
+	copy_surface_to_surface(prop[11], d->screen, (int[2]){x, y}, d);
+	d->interface.cbox_door_p = (t_vec2f){d->interface.tex_select[2].x, y};
+	copy_surface_to_surface((((d->selectedwall && d->selectedwall->is_door) ||
+		(d->hl_wall && d->hl_wall->is_door)) ? prop[13] : prop[12]), d->screen,
+								(int[2]){d->interface.tex_select[2].x, y}, d);
 }
 
 /*
@@ -93,7 +106,7 @@ static void	draw_selection_case(t_data *d, SDL_Surface **prop, int x, int y)
 	draw_texture_selection(d, x, y + (prop[3]->h * 0.5), 0);
 	draw_texture_selection(d, x + 66, y + (prop[3]->h * 0.5), 0);
 	x = W - PROPERTIES_LIMIT + MARGIN + prop[1]->w + 9;
-	y = y - prop[2]->h - prop[2]->h - prop[3]->h * 0.5 - 22;
+	y = y - prop[2]->h - prop[2]->h - prop[3]->h * 0.5 - 62;
 	d->interface.tex_select[1] = (t_vec2f){x, y - 33};
 	draw_texture_selection(d, x, y - 33, 1);
 	draw_texture_selection(d, x, y - 33, 0);
@@ -124,7 +137,7 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[1], d->screen, (int[2]){x, y + 5}, d);
-	y += properties[0]->h + properties[1]->h + 16;
+	y += properties[0]->h + properties[1]->h + 16 + 40;
 	x = W - (PROPERTIES_LIMIT * 0.5) - (properties[2]->w * 0.5);
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
 	copy_surface_to_surface(properties[2], d->screen, (int[2]){x, y}, d);
@@ -135,5 +148,5 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 	draw_selection_case(d, properties, x, y);
 	fill_texture_selection(d, &d->interface, ((d->selected_wall == -1 &&
 				d->hl_wall) ? d->hl_wallnum : d->selected_wall));
-	draw_plus_minus_btn(d);
+	draw_plus_minus_btn(d, d->interface.toolbar.properties);
 }

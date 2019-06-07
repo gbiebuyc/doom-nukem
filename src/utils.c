@@ -6,9 +6,11 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:31:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/26 16:32:48 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/05/08 05:33:57 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "doom_nukem.h"
 
 double	lerp(double norm, double min, double max)
 {

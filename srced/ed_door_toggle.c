@@ -72,4 +72,5 @@ void	toggle_isdoor(t_data *d)
 		find_opposite_portal(d, neighborsect, &last, nextwall);
 		printf("is_door: %d\n", d->selectedwall->is_door);
 	}
+	d->selectedwall = NULL;
 }

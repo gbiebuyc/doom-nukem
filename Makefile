@@ -6,8 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/05/27 13:27:08 by gbiebuyc         ###   ########.fr        #
-#    Updated: 2019/05/05 01:05:50 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/07 18:28:07 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +16,21 @@ FILES= main \
 	   exit \
 	   init_sdl \
 	   init_monsters \
+	   init_projectiles \
+	   init_player \
 	   loop \
 	   events \
 	   door_activation \
 	   monster_behaviour \
 	   monster_anim_state \
+	   reorder_sprite \
+	   create_projectile \
+	   player_actions \
+	   projectile_collision \
+	   blaster_col \
 	   update \
+	   draw_weapon \
+	   color_buffer \
 	   render \
 	   render_sector \
 	   draw_floor \
@@ -34,9 +42,12 @@ FILES= main \
 	   inside \
 	   utils \
 	   jump \
+	   inertia \
 	   movement \
 	   draw_sprite \
+	   draw_monster \
 	   shade \
+	   swap_list \
 	   vec2 \
 	   vec2_2
 

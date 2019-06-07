@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/02 19:21:34 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 19:57:07 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include "bmp_reader.h"
+# include <sys/mman.h>
+# include <sys/stat.h>
 
 # define W 1600
 # define H 1200
@@ -28,39 +31,71 @@
 # define TEXTURE_PATH "./textures"
 
 /*
-**	Numbers of assets for each category
+**	Assets paths
 */
 
-# define AMMO_ASSET 3
-# define MONSTER_ASSET 5
-# define HEAL_ASSET 2
+# define PATH_GROUNDSPRITES "./textures/assets/groundsprites"
+# define PATH_MONSTERS "./textures/assets/monsters"
+# define PATH_WEAPONS "./textures/assets/weapons"
+
+# define PATH_AMMO_ED "./textures/assets/editor/ammo"
+# define PATH_MONSTER_ED "./textures/assets/editor/monsters"
+# define PATH_HEALPACK_ED "./textures/assets/editor/healpack"
+# define PATH_PLAYERSTART_ED "./textures/assets/editor/playerstart"
 
 /*
 **	ed_interface_*.c
 */
 
-# define MARGIN 10
+# define MARGIN 8
 # define PROPERTIES_LIMIT 275
 # define TEXTURE_TOOLBAR 550
+
+// need nb types of monsters  to write in the map
+
+typedef struct	s_monsters_data
+{
+	char	*name;
+	// nb_animations = number of folder inside the monster name folder
+	// TODO count nb subfolder
+	// max state = the number of bmp file inside each animation folder
+	// TODO count nb bmp file
+	// nb of state in each folder must be fthe same;
+	// TODO store everything here
+	// how to store death folder ?
+}				t_mosters_data;
+
+/*
+**	Numbers of asserts for each category is contains in (nb_asset[4])
+**	cf.struct s_interface
+*/
+
+typedef struct	s_assets_data
+{
+	char	*file;
+	int		used;
+	char	*name;
+}				t_assets_data;
 
 typedef struct	s_assets
 {
 	SDL_Surface	*assets[100];
-	SDL_Surface	*assets_icon[100];
 }				t_assets;
+
+# define NB_PROPERTIES 14
 
 typedef struct	s_toolbar
 {
 	SDL_Surface	*select[2];
 	SDL_Surface	*move[2];
-	SDL_Surface	*properties[10];
+	SDL_Surface	*properties[NB_PROPERTIES];
 	SDL_Surface	*player_start;
 	t_assets	assets[3];
 }				t_toolbar;
 
 /*
-**	selection_cat_pos : save the category assets the mouse is currently in
-**						0 = ammo, 1 = Monster, 2 = Healpack, 3 = Playerstart
+**	int	nb_asset[4] : 	[0] = ammo, [1] = monster, [2] = healpack,
+**						[3] = playerstart
 */
 
 typedef struct	s_interface
@@ -84,12 +119,16 @@ typedef struct	s_interface
 	t_vec2f		btn_ceil_height_pos;
 	t_vec2f		category_pos[4];
 	t_vec2f		selected_asset_position;
+	t_vec2f		cbox_door_p;
+	t_vec2f		cbox_skybox_p;
 }				t_interface;
 
 /*
 **	texture_to_scale = size to resize the image,
 **	texture_to_scale = 32 -> will resize the image to 32x32 pixels
 **	hl_wall = highlighted_wall
+**
+**	t_assets_data	assets_data[100]; index given by nb_asset (cf. s_interface)
 */
 
 typedef struct	s_data
@@ -99,13 +138,17 @@ typedef struct	s_data
 	SDL_Surface		**textures;
 	t_texture_data	*texture_list;
 	t_interface		interface;
+	t_assets_data	assets_data[100];
 	t_vec3f			player_start;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
+	t_monster		monsters[MAXNUMMONSTERS];
 	int16_t			numsectors;
 	int16_t			numwalls;
+	uint16_t		nummonsters;
 	int				nb_texture;
 	int32_t			nb_used_texture;
+	int				default_texture;
 	double			scale;
 	t_vec2f			pos;
 	t_wall			*selectedwall;
@@ -117,13 +160,21 @@ typedef struct	s_data
 	bool			sectordrawing;
 	double			texture_to_scale;
 	t_vec2f			temp;
-	/**/t_monster	monsters[1000];
 	t_wall			*hl_wall;
 	int				hl_wallnum;
-	int				hl_wallnum_draw;	
+	int				hl_wallnum_draw;
 }				t_data;
 
+/**/int			bmp_reader(t_data *d);
+
 void			debug_print(t_data *d);
+
+/*
+**	ed_init_structures.c1
+*/
+
+void			init_structure(t_data *d);
+void			init_data(t_data *d);
 
 /*
 **	ed_init.c
@@ -136,6 +187,12 @@ int				init_editor(t_data *d);
 */
 
 int				init_texture(t_data *d);
+
+/*
+**	ed_init_assets.c
+*/
+
+int				get_interface_assets_files(t_data *d, char **path);
 
 /*
 **	ed_draw.c
@@ -219,6 +276,7 @@ t_vec2f			grid_lock(t_data *d, t_vec2f p);
 int				is_on_select_move_icon(t_data *d, int x, int y);
 int				check_if_mouse_on_menu(t_data *d, int x, int y);
 void			btn_height(t_data *d, int x, int y, t_interface *i);
+int				is_on_checkbox(t_data *d, int x, int y);
 
 /*
 **	ed_interface_properties.c
@@ -243,6 +301,7 @@ void			copy_surface_to_surface(SDL_Surface *src,
 								SDL_Surface *dest, int p[2], t_data *d);
 void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 void			remove_backgorund_image(SDL_Surface *s);
+double			fclamp(double x, double min, double max);
 
 /*
 **	ed_event.c

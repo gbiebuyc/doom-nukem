@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/27 13:24:47 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 19:41:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ void		event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
 void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event)
 {
 	(void)d;
-	if (event.state == SDL_PRESSED)
-	{
-	}
-	else
+	if (event.button == SDL_BUTTON_LEFT)
+		d->left_mouse_button = event.state == SDL_PRESSED ? MOUSE_PRESSED : MOUSE_RELEASED;
+	if (event.button == SDL_BUTTON_RIGHT)
+		d->right_mouse_button = event.state == SDL_PRESSED ? MOUSE_PRESSED : MOUSE_RELEASED;
+	if (event.state == SDL_RELEASED)
 	{
 	}
 }

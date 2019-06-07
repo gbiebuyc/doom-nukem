@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 15:36:09 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/06 19:46:15 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@ typedef struct	s_vec2
 	int			y;
 }				t_vec2;
 
+# define IS_PROJECTILE 0
+# define IS_MONSTER 1
+# define CRYO_BALLISTA 0
+# define BLASTER 1
+# define FIREBALL_1 1
+
+typedef struct	s_sprite_list
+{
+	int16_t					id;
+	struct s_sprite_list	*next;
+	uint8_t 				type;
+}				t_sprite_list;
+
 typedef struct	s_sector
 {
 	int16_t		firstwallnum;
@@ -52,13 +65,13 @@ typedef struct	s_sector
 	float		floorheight;
 	float		ceilheight;
 	int16_t		floorpicnum;
-	int16_t		id_of_monster[MAXMONSTERSEC];
 	int16_t		ceilpicnum;
 	float		light;
 	bool		blinking;
 	char		floor_texture_name[100];
 	char		ceil_texture_name[100];
 	bool		outdoor;
+	t_sprite_list	*sprite_list;
 }				t_sector;
 
 typedef struct	s_wall
@@ -81,21 +94,25 @@ typedef struct	s_thing
 	int16_t		flags;
 }				t_thing;
 
+# define MOTHERDEMON 0
+
 typedef struct	s_monster
 {
 	t_vec2f		pos; //position du monstre en x et z
 	double		size; // scale de la taille par rapport a la taille du monstre type (a exprimer em %)
-	double		height; // calculee dans le binaire
-	double		width; // calculee dans le binaire
 	double		health_mult; // scale de la vie par rapport a la vie du monstre type
-	double		rot; // unused for now, will be used to chose animation displayed
-	int16_t		life; //life calculated in binary
-	int16_t		sector; // which sector is the monster from
-	uint8_t		id_type; // which type is the monster
+	double		rot; // set in editor, where is the monster looking at first 
+	int16_t		cursectnum; // set in editor, which sector is the monster from
+	uint8_t		id_type; // which type is the monster (use defines)
 	//double	floating; // might be used to set different floating height for monsters
 	uint8_t		anim_state; // set during behaviour to chose which state of animation is the monster in
 	uint8_t		anim_time;
-	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster
+	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster// not used yet
+	uint8_t		timer; // used to time actions
+	int16_t		life; //life calculated in binary
+	double		height; // calculee dans le binaire
+	double		width; // calculee dans le binaire
+	bool		can_collide; // collides or not with player(used when monster is dead)
 	bool		activated; // unused for now
 }				t_monster;
 

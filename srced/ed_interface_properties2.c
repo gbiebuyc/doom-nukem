@@ -54,9 +54,9 @@ void		fill_texture_selection(t_data *d, t_interface *i, int wallnum)
 	}
 	else
 		empty_case(d, 1, i);
-	tex_n = d->sectors[d->selected_sector].ceilpicnum;
 	if (d->selected_sector != -1)
 	{
+		tex_n = d->sectors[d->selected_sector].ceilpicnum;
 		copy_surface_to_surface(d->textures[tex_n], d->screen,
 				(int[2]){i->tex_select[1].x + 1, i->tex_select[1].y + 1}, d);
 		tex_n = d->sectors[d->selected_sector].floorpicnum;

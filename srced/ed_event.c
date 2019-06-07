@@ -48,6 +48,12 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 		d->grid_locking = !d->grid_locking;
 	else if (key == SDLK_x)
 		d->interface.separate_sector = !d->interface.separate_sector;
+	else if (key == SDLK_i && d->selected_sector >= 0)
+	{
+		d->sectors[d->selected_sector].blinking =
+			!d->sectors[d->selected_sector].blinking;
+		/**/printf("blinking: %d\n", d->sectors[d->selected_sector].blinking);
+	}
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)
@@ -69,28 +75,14 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 	else if (key == SDLK_BACKSPACE || key == SDLK_g)
 		(key == SDLK_BACKSPACE) ? cancel_last_wall(d) : toggle_isdoor(d);
 	else if (key == SDLK_b && d->selected_sector >= 0)
-	{
 		d->sectors[d->selected_sector].outdoor =
 			!d->sectors[d->selected_sector].outdoor;
-		printf("outdoor: %d\n", d->sectors[d->selected_sector].outdoor);
-	}
-	else if (key == SDLK_i && d->selected_sector >= 0)
+	else if (d->selected_sector >= 0 &&
+			((key == SDLK_KP_4 && d->sectors[d->selected_sector].light > 0) ||
+			(key == SDLK_KP_6 && d->sectors[d->selected_sector].light < 1)))
 	{
-		d->sectors[d->selected_sector].blinking =
-			!d->sectors[d->selected_sector].blinking;
-		printf("blinking: %d\n", d->sectors[d->selected_sector].blinking);
-	}
-	else if (key == SDLK_KP_4 && d->selected_sector >= 0)
-	{
-		d->sectors[d->selected_sector].light =
-			fclamp(d->sectors[d->selected_sector].light - 0.1, 0, 1);
-		printf("light: %f\n", d->sectors[d->selected_sector].light);
-	}
-	else if (key == SDLK_KP_6 && d->selected_sector >= 0)
-	{
-		d->sectors[d->selected_sector].light =
-			fclamp(d->sectors[d->selected_sector].light + 0.1, 0, 1);
-		printf("light: %f\n", d->sectors[d->selected_sector].light);
+		d->sectors[d->selected_sector].light += (key == SDLK_KP_4) ? -0.1 : 0.1;
+		/**/printf("Light : %f\n", d->sectors[d->selected_sector].light);
 	}
 }
 

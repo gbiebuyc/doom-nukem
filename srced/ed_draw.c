@@ -101,5 +101,6 @@ void		draw_screen(t_data *d)
 		draw_selection_arround_asset(d, d->interface.category_pos);
 	if (d->interface.selected_asset != -1)
 		draw_selection_arround_selected_asset(d);
+///**/bmp_reader(d);
 	SDL_UpdateWindowSurface(d->win);
 }

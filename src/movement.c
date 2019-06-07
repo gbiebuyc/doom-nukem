@@ -6,14 +6,16 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/30 18:27:19 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/07 01:02:49 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define MOVE_SPEED 0.08
-#define COLLISION_DIST 0.3
+# define MINIMUM_HEIGHT_TO_WALK 0.22
+# define MOVE_SPEED 0.02//must change MAX_INERTIA in inertia.c to scale properly
+# define COLLISION_DIST 0.3
+# define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
 
 bool	collision(t_data *d, int16_t sectnum)
 {
@@ -44,7 +46,9 @@ bool	collision(t_data *d, int16_t sectnum)
 		if (dist > COLLISION_DIST)
 			continue ;
 		int16_t neighbor = d->walls[i].neighborsect;
-		if (neighbor != -1 && d->doorstate[i] > 0.7)
+		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > d->sectors[neighbor].floorheight + MINIMUM_HEIGHT_TO_WALK
+				&& (d->cam.pos.y < d->sectors[neighbor].ceilheight || d->sectors[neighbor].outdoor)
+				&& (d->sectors[neighbor].outdoor || d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight > MINIMUM_HEIGHT_OF_WALKABLE_SECTOR))
 			collided |= collision(d, neighbor);
 		else
 		{
@@ -57,30 +61,90 @@ bool	collision(t_data *d, int16_t sectnum)
 	return (collided);
 }
 
+# define MONSTER_MIN_DIST_HITBOX 0.15
+
+t_vec3f	update_pos_vec3f(t_vec3f old_pos, t_vec3f new_pos, t_vec2f point, double radius)
+{
+	t_vec2f		tmp[2];
+	double		angle;
+	(void)old_pos;
+	(void)new_pos;
+	(void)point;
+	(void)radius;
+
+	tmp[0].x = new_pos.x - point.x;
+	tmp[0].y = new_pos.z - point.y;
+	tmp[1].x = radius;
+	tmp[1].y = 0.0;
+	angle = atan2(tmp[0].y, tmp[0].x);
+	actualize_dir(angle, &tmp[1]);
+	new_pos.x = tmp[1].x + point.x;
+	new_pos.z = tmp[1].y + point.y;
+
+	return (new_pos);
+}
+
+void	collision_with_monster(t_data *d, short	cur_sect, t_vec3f old_pos)
+{
+	t_sprite_list	*tmp;
+//	t_vec2f			result_coll;
+//	short			i;// used for sector loop
+
+	tmp = d->sectors[cur_sect].sprite_list;
+	while (tmp)
+	{
+		if (tmp->type == IS_MONSTER && d->monsters[tmp->id].can_collide)
+		{
+			if (vec2f_length(sub_vec2f(d->monsters[tmp->id].pos, (t_vec2f){d->cam.pos.x, d->cam.pos.z})) <
+					d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius + MONSTER_MIN_DIST_HITBOX)
+				d->cam.pos = update_pos_vec3f(old_pos, d->cam.pos, d->monsters[tmp->id].pos,
+						d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius + MONSTER_MIN_DIST_HITBOX);
+		}
+		if (tmp->type == IS_PROJECTILE && d->projectile_type[d->projectiles[tmp->id].id_type].threat_to_player)
+			if (vec3f_length(sub_vec3f(d->cam.pos, d->projectiles[tmp->id].pos)) <
+					PLAYER_HITBOX + d->projectile_type[d->projectiles[tmp->id].id_type].hitbox_radius)
+			{
+				;//player got hit
+			}
+		tmp = tmp->next;
+	}
+}
+
 void	movement(t_data *d)
 {
-	if (d->keys[SDL_SCANCODE_W])
+	t_vec3f	old_pos;
+	t_vec2f	mvt;
+	short	count;
+
+	count = 0;
+	ft_bzero(&mvt, sizeof(t_vec2f));
+	old_pos = d->cam.pos;
+	if (d->keys[SDL_SCANCODE_W] && ++count)
 	{
-		d->cam.pos.z += d->cam.cos * MOVE_SPEED;
-		d->cam.pos.x += d->cam.sin * MOVE_SPEED;
+		mvt.y += d->cam.cos * MOVE_SPEED;
+		mvt.x += d->cam.sin * MOVE_SPEED;
 	}
-	if (d->keys[SDL_SCANCODE_S])
+	if (d->keys[SDL_SCANCODE_S] && ++count)
 	{
-		d->cam.pos.z -= d->cam.cos * MOVE_SPEED;
-		d->cam.pos.x -= d->cam.sin * MOVE_SPEED;
+		mvt.y -= d->cam.cos * MOVE_SPEED;
+		mvt.x -= d->cam.sin * MOVE_SPEED;
 	}
-	if (d->keys[SDL_SCANCODE_A])
+	if (d->keys[SDL_SCANCODE_A] && ++count)
 	{
-		d->cam.pos.z += d->cam.sin * MOVE_SPEED;
-		d->cam.pos.x -= d->cam.cos * MOVE_SPEED;
+		mvt.y += d->cam.sin * MOVE_SPEED;
+		mvt.x -= d->cam.cos * MOVE_SPEED;
 	}
-	if (d->keys[SDL_SCANCODE_D])
+	if (d->keys[SDL_SCANCODE_D] && ++count)
 	{
-		d->cam.pos.z -= d->cam.sin * MOVE_SPEED;
-		d->cam.pos.x += d->cam.cos * MOVE_SPEED;
+		mvt.y -= d->cam.sin * MOVE_SPEED;
+		mvt.x += d->cam.cos * MOVE_SPEED;
 	}
-	d->cam.pos.y += d->keys[SDL_SCANCODE_SPACE] * MOVE_SPEED;
-	d->cam.pos.y -= d->keys[SDL_SCANCODE_LSHIFT] * MOVE_SPEED;
+	if (count == 2)
+		mvt = mul_vec2f(mvt,  0.707); // 1 / sqrt(2)
+	inertia(d, mvt);
+	d->cam.pos.z += d->inertia.y;
+	d->cam.pos.x += d->inertia.x;
 	while (collision(d, d->cursectnum))
 		;
+	collision_with_monster(d, d->cursectnum, old_pos);
 }
