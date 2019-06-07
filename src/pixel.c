@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 23:47:23 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 22:50:50 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 20:09:32 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo)
 
 //	if(new_colo != 0x1F170B)// trash fix for windows
 //return (new_colo);
+	if (!(new_colo >> 24))
+		return (old_colo);
+	if (new_colo >> 24 == 0xFF)
+		return (new_colo);
 	percent = ((new_colo >> 24) & 0xFF) / 255.0;// >> 24 for mac
 	rev_percent = 1 - percent;
 
