@@ -6,21 +6,20 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:37:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:32:47 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void		monster_hit(t_data *d, uint8_t id_type_proj, uint16_t id_monster)
+void		monster_hit(t_data *d, uint16_t damage, uint16_t id_monster)
 {
-	if ((d->monsters[id_monster].life -= d->projectile_type[id_type_proj].damage) <= 0)
+	if ((d->monsters[id_monster].life -= damage) <= 0)
 	{
 		d->monsters[id_monster].can_collide = false;
 		d->monsters[id_monster].activated = false;
 		d->monsters[id_monster].anim_state = 10;
 		d->monsters[id_monster].anim_time = 20;
-		printf("Monster died\n");
 	}
 }
 /*
@@ -58,7 +57,7 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 				projectile->pos.x = d->monsters[tmp->id].pos.x + vec2f_tmp[1].x;
 				projectile->pos.z = d->monsters[tmp->id].pos.y +  vec2f_tmp[1].y;
 				projectile->pos.y = (newpos.y + projectile->pos.y) * 0.5;
-				monster_hit(d, projectile->id_type, tmp->id);
+				monster_hit(d, d->projectile_type[projectile->id_type].damage, tmp->id);
 				return (true);
 			}
 		}

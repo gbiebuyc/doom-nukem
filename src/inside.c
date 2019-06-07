@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/07 22:08:06 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:12:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int16_t old_sect, t_vec3f pos)
 			{
 //				printf("%d\n", ret_value);
 				return (ret_value);
-				}
+			}
 		i++;
 	}
 	if (old_sect == -1 && d->sectors[sect_to_scan].outdoor && pos.y > d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR)

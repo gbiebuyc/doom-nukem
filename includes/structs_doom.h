@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:06:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:14:04 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ typedef struct	s_monster_type
 
 # define MAX_KIND_OF_WEAP 2
 # define MAX_ANIM_PER_WEAP 15
+# define LEFT_CLICK 1
+# define RIGHT_CLICK 2
 
 typedef	struct	s_player
 {
@@ -172,6 +174,7 @@ typedef	struct	s_player
 	uint8_t		current_anim_playing;//weap
 	uint8_t		speed_anim[MAX_KIND_OF_WEAP];
 	uint8_t		weapon_anim[MAX_KIND_OF_WEAP][MAX_ANIM_PER_WEAP];
+	uint8_t		click;
 }				t_player;
 
 # define IS_GREEN 8

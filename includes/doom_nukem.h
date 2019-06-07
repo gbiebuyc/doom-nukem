@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 21:33:34 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 22:32:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy);
 void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		bool has_collided); // in monster_anim_state.c
 void	monster_anim_state(t_monster *monster, t_monster_type *monster_type, t_data *d);
+void	monster_hit(t_data *d, uint16_t damage, uint16_t id_monster); // projectile_collision.c
 bool	collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projectile);
 bool	collision_proj_player(t_data *d, t_projectile *projectile);
 void	monster_behaviour(t_data *d, t_monster *monster);
