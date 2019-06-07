@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 22:15:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:33:41 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	shoot_weapon(t_data *d)
 			d->player.current_anim_playing = 1;
 			d->player.can_shoot = d->weapon_type[d->player.current_weapon].rate_of_fire[0];
 			d->player.click = LEFT_CLICK;
+			if (d->player.current_weapon == M16)
+				m16_shoot(d);
 		}
 		else if (d->right_mouse_button == MOUSE_PRESSED && d->weapon_type[d->player.current_weapon].has_alt_fire)
 		{
@@ -62,6 +64,11 @@ void	change_weap(t_data *d)
 	else if (cur_weap != BLASTER && d->keys[SDL_SCANCODE_2])
 	{
 		d->player.current_weapon = BLASTER;
+		changed = true;
+	}
+	else if (cur_weap != M16 && d->keys[SDL_SCANCODE_3])
+	{
+		d->player.current_weapon = M16;
 		changed = true;
 	}
 	if (changed)

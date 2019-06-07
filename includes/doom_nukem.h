@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 22:32:27 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:41:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define PLAYER_HITBOX 0.1
 # include <structs_doom.h>
 
+void	m16_shoot(t_data *d);
+double	find_closest_wall_dist(t_data *d, uint16_t sect_to_scan);
+double	get_dist_to_intersect_wall(t_data *d, t_vec2f wall1, t_vec2f wall2);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 18:06:18 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 22:27:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:27:30 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ void	init_player(t_data *d, t_player *player)
 	player->weapon_anim[BLASTER][13] = 14;
 	player->weapon_anim[BLASTER][14] = 0;
 	d->color_buf.value = 0;
+
+	player->speed_anim[M16] = 4;
+	player->weapon_anim[M16][0] = 0;
+	player->weapon_anim[M16][1] = 2;
+	player->weapon_anim[M16][2] = 0;
 }

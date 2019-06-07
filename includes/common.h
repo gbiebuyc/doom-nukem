@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 19:46:15 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:12:23 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct	s_vec2
 # define IS_MONSTER 1
 # define CRYO_BALLISTA 0
 # define BLASTER 1
+# define M16 2
 # define FIREBALL_1 1
 
 typedef struct	s_sprite_list

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 20:05:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:17:34 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,12 @@ void	init_sdl(t_data *d)
 	load_projectile_texture(d, "./textures/sprites/projectiles/fireball_1/BAL1C0.bmp", FIREBALL_1, 2);
 	load_projectile_texture(d, "./textures/sprites/projectiles/fireball_1/BAL1D0.bmp", FIREBALL_1, 3);
 	load_projectile_texture(d, "./textures/sprites/projectiles/fireball_1/BAL1E0.bmp", FIREBALL_1, 4);
+	//proj m16
+	load_projectile_texture(d, "./textures/sprites/projectiles/m16/POOFA0.bmp", M16, 0);
+	load_projectile_texture(d, "./textures/sprites/projectiles/m16/POOFB0.bmp", M16, 1);
+	load_projectile_texture(d, "./textures/sprites/projectiles/m16/POOFC0.bmp", M16, 2);
+	load_projectile_texture(d, "./textures/sprites/projectiles/m16/POOFD0.bmp", M16, 3);
+	load_projectile_texture(d, "./textures/sprites/projectiles/m16/POOFE0.bmp", M16, 4);
 	// weapon part
 	// cryoballista
 	load_weapon_texture(d, "./textures/sprites/weapons/cryo_ballista/BSTAA0.bmp", CRYO_BALLISTA, 0);
@@ -279,6 +285,10 @@ void	init_sdl(t_data *d)
 	load_weapon_texture(d, "./textures/sprites/weapons/blaster/BG2GM0.bmp", BLASTER, 12);
 	load_weapon_texture(d, "./textures/sprites/weapons/blaster/BG2GN0.bmp", BLASTER, 13);
 	load_weapon_texture(d, "./textures/sprites/weapons/blaster/BG2GO0.bmp", BLASTER, 14);
+	//m16
+	load_weapon_texture(d, "./textures/sprites/weapons/m16/M16GA0.bmp", M16, 0);
+	load_weapon_texture(d, "./textures/sprites/weapons/m16/M16FA0.bmp", M16, 1);
+	load_weapon_texture(d, "./textures/sprites/weapons/m16/M16FB0.bmp", M16, 2);
 
 	d->keys = SDL_GetKeyboardState(NULL);
 }

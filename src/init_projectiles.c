@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 22:25:13 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:30:26 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,25 @@ void	init_projectiles_fireball_1(t_data *d)
 	d->projectile_type[FIREBALL_1].anim_order[3] = 4;
 	d->projectile_type[FIREBALL_1].anim_order[4] = MUST_BE_DESTROYED;
 	d->projectile_type[FIREBALL_1].size = 9;
+
+	d->projectile_type[M16].anim_order[0] = 1;
+	d->projectile_type[M16].anim_order[1] = 2;
+	d->projectile_type[M16].anim_order[2] = 3;
+	d->projectile_type[M16].anim_order[3] = 4;
+	d->projectile_type[M16].anim_order[4] = MUST_BE_DESTROYED;
 }
 
 void	init_weapons(t_data *d)
 {
 	d->weapon_type[CRYO_BALLISTA].rate_of_fire[0] = d->player.speed_anim[CRYO_BALLISTA] * 11;
-	d->weapon_type[CRYO_BALLISTA].type = NORMAL;
+	d->weapon_type[CRYO_BALLISTA].type = NORMAL;// a supp ?
 	d->weapon_type[CRYO_BALLISTA].has_alt_fire = false;
 	d->weapon_type[BLASTER].rate_of_fire[0] = d->player.speed_anim[BLASTER] * 10;
 	d->weapon_type[BLASTER].has_alt_fire = true;
 	d->weapon_type[BLASTER].rate_of_fire[1] = d->player.speed_anim[BLASTER] * 10;
+	d->weapon_type[M16].rate_of_fire[0] = d->player.speed_anim[M16] * 2 - 1;
+	d->weapon_type[M16].has_alt_fire = false;
+	d->weapon_type[M16].type = NORMAL;// a supp ?
 }
 
 void	init_projectiles(t_data *d)

@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/07 18:28:07 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/07 23:41:26 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ FILES= main \
 	   monster_anim_state \
 	   reorder_sprite \
 	   create_projectile \
+	   m16 \
 	   player_actions \
 	   projectile_collision \
 	   blaster_col \
@@ -60,6 +61,8 @@ SDL_PATH:=$(ABS_PATH)/SDL/library
 SDL_CFG = $(SDL_PATH)/bin/sdl2-config
 FT_DIR = libft
 INCLUDE = includes 
+INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
+INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
 CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
 LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
 ED_DIR = srced

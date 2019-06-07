@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 22:14:04 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/07 23:22:53 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ typedef struct	s_monster_type
 	uint8_t		anim_order[MAX_STATE_MONSTER];	
 }				t_monster_type;
 
-# define MAX_KIND_OF_WEAP 2
+# define MAX_KIND_OF_WEAP 3
 # define MAX_ANIM_PER_WEAP 15
 # define LEFT_CLICK 1
 # define RIGHT_CLICK 2
@@ -189,7 +189,7 @@ typedef struct	s_color_buf
 
 # define MAXNBOFANIMATION 5
 # define MAX_PROJECTILE_TEX_PER_WEAP MAX_STATE_OF_PROJ_ANIM
-# define MAX_KIND_OF_PROJECTILE 2
+# define MAX_KIND_OF_PROJECTILE 3
 # define MAX_PROJECTILES 100
 # define MOUSE_PRESSED 1
 # define MOUSE_RELEASED 2
