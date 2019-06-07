@@ -295,6 +295,7 @@ void			copy_surface_to_surface(SDL_Surface *src,
 								SDL_Surface *dest, int p[2], t_data *d);
 void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 void			remove_backgorund_image(SDL_Surface *s);
+double			fclamp(double x, double min, double max);
 
 /*
 **	ed_event.c

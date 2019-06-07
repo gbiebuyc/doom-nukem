@@ -12,98 +12,80 @@
 
 #include "editor.h"
 
-double	fclamp(double x, double min, double max)
+int		calc_closest_and_distance(t_data *d, int w1, t_vec2f *p,
+															t_vec2f closest)
 {
-	if (x < min)
-		return (min);
-	if (x > max)
-		return (max);
-	return (x);
+	float	dx;
+	float	dy;
+	float	dist;
+	int		selected_sector;
+
+	dx = p->x - closest.x;
+	dy = p->y - closest.y;
+	dist = vec2f_length((t_vec2f){dx, dy});
+	selected_sector = find_sect_under_cursor(d);
+	selected_sector = (selected_sector == -1) ? 0 : selected_sector;
+	if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
+		return (1);
+	return (0);
+}
+
+int		is_on_wall(t_data *d, int w1, t_vec2f *ab, t_vec2f *p)
+{
+	t_vec2f a_to_p;
+	t_vec2f	a_to_b;
+	float	atb2;
+	float	atp_dot_atb;
+	float	t;
+
+	a_to_p = (t_vec2f){p->x - ab[0].x, p->y - ab[0].y};
+	a_to_b = (t_vec2f){ab[1].x - ab[0].x, ab[1].y - ab[0].y};
+	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
+	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
+	t = atp_dot_atb / atb2;
+	t = fclamp(t, 0, 1);
+	if (calc_closest_and_distance(d, w1, p,
+		(t_vec2f){ab[0].x + t * a_to_b.x, ab[0].y + t * a_to_b.y}))
+		return (1);
+	return (0);
+}
+
+int		search_wall(t_data *d, int x, int y)
+{
+	int16_t	s;
+	int16_t	w1;
+	int16_t	w2;
+	int16_t	last;
+
+	s = -1;
+	while (++s < d->numsectors)
+	{
+		last = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
+		w1 = last - 1;
+		w2 = d->sectors[s].firstwallnum;
+		while (w2 < last)
+		{
+			if (is_on_wall(d, w1,
+				(t_vec2f[2]){worldtoscreen(d, d->walls[w1].point),
+				worldtoscreen(d, d->walls[w2].point)}, &(t_vec2f){x, y}))
+				return (w1);
+			w1 = w2++;
+		}
+	}
+	return (-1);
 }
 
 void	detect_wall(t_data *d, int x, int y)
 {
-	int16_t	s;
-	int16_t	w1;
-	int16_t	w2;
-	int16_t	last;
-	int		selected_sector;
-
-	s = -1;
-	selected_sector = find_sect_under_cursor(d);
-	selected_sector = (selected_sector == -1) ? 0 : selected_sector;
-	while (++s < d->numsectors)
-	{
-		last = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
-		w1 = last - 1;
-		w2 = d->sectors[s].firstwallnum;
-		while (w2 < last)
-		{
-			t_vec2f a = worldtoscreen(d, d->walls[w1].point);
-			t_vec2f b = worldtoscreen(d, d->walls[w2].point);
-			t_vec2f p = (t_vec2f){x, y};
-			t_vec2f a_to_p = {p.x - a.x, p.y - a.y};
-			t_vec2f	a_to_b = {b.x - a.x, b.y - a.y};
-			double	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
-			double	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
-			double	t = atp_dot_atb / atb2;
-			t = fclamp(t, 0, 1);
-			t_vec2f	closest = {a.x + t * a_to_b.x, a.y + t * a_to_b.y};
-			double	dx = p.x - closest.x;
-			double	dy = p.y - closest.y;
-			double	dist = vec2f_length((t_vec2f){dx, dy});
-			if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
-			{
-				d->hl_wallnum_draw = w1;
-				return ;
-			}
-			w1 = w2++;
-		}
-	}
-	d->hl_wallnum_draw = -1;
+	d->hl_wallnum_draw = search_wall(d, x, y);
 }
 
 void	detect_select_wall(t_data *d, int x, int y)
 {
-	int16_t	s;
-	int16_t	w1;
-	int16_t	w2;
-	int16_t	last;
-	int		selected_sector;
-
-	d->hl_wall = NULL;
-	d->hl_wallnum = -1;
-	s = -1;
-	selected_sector = find_sect_under_cursor(d);
-	selected_sector = (selected_sector == -1) ? 0 : selected_sector;
-	while (++s < d->numsectors)
+	d->hl_wallnum = search_wall(d, x, y);
+	if (d->hl_wallnum != -1)
 	{
-		last = d->sectors[s].firstwallnum + d->sectors[s].numwalls;
-		w1 = last - 1;
-		w2 = d->sectors[s].firstwallnum;
-		while (w2 < last)
-		{
-			t_vec2f a = worldtoscreen(d, d->walls[w1].point);
-			t_vec2f b = worldtoscreen(d, d->walls[w2].point);
-			t_vec2f p = (t_vec2f){x, y};
-			t_vec2f a_to_p = {p.x - a.x, p.y - a.y};
-			t_vec2f	a_to_b = {b.x - a.x, b.y - a.y};
-			double	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
-			double	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
-			double	t = atp_dot_atb / atb2;
-			t = fclamp(t, 0, 1);
-			t_vec2f	closest = {a.x + t * a_to_b.x, a.y + t * a_to_b.y};
-			double	dx = p.x - closest.x;
-			double	dy = p.y - closest.y;
-			double	dist = vec2f_length((t_vec2f){dx, dy});
-			if (dist < 15 && w1 >= d->sectors[selected_sector].firstwallnum)
-			{
-				d->hl_wallnum = w1;
-				d->hl_wall = &d->walls[d->hl_wallnum];
-				ft_printf("[Selected wall] = %d\n", d->hl_wallnum);
-				return ;
-			}
-			w1 = w2++;
-		}
+		d->hl_wall = &d->walls[d->hl_wallnum];
+		ft_printf("[Selected wall] = %d\n", d->hl_wallnum);
 	}
 }

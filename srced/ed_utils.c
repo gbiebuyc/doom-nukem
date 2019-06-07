@@ -111,3 +111,12 @@ void			remove_backgorund_image(SDL_Surface *s)
 				((uint32_t*)s->pixels)[x + y * s->w] = 0xFF000000;
 	}
 }
+
+double	fclamp(double x, double min, double max)
+{
+	if (x < min)
+		return (min);
+	if (x > max)
+		return (max);
+	return (x);
+}

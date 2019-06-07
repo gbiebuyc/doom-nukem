@@ -78,7 +78,7 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 		d->sectors[d->selected_sector].outdoor =
 			!d->sectors[d->selected_sector].outdoor;
 	else if (d->selected_sector >= 0 &&
-			((key == SDLK_KP_4 && d->sectors[d->selected_sector].light > 0)	||
+			((key == SDLK_KP_4 && d->sectors[d->selected_sector].light > 0) ||
 			(key == SDLK_KP_6 && d->sectors[d->selected_sector].light < 1)))
 	{
 		d->sectors[d->selected_sector].light += (key == SDLK_KP_4) ? -0.1 : 0.1;
