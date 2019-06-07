@@ -1,6 +1,6 @@
 #!/bin/sh
 
-prefix=/Users/gbiebuyc/doom-nukem/SDL/library
+prefix=/Users/gbiebuyc/qwerty/SDL/library
 exec_prefix=${prefix}
 exec_prefix_set=no
 libdir=${exec_prefix}/lib
