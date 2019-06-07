@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-void	init_structure(t_data *d)
+void		init_data(t_data *d)
 {
 	ft_memset(d, 0, sizeof(t_data));
 	d->scale = W / 64;
@@ -33,7 +33,7 @@ void	init_structure(t_data *d)
 	d->default_texture = 0;
 }
 
-void	init_sectors(t_data *d)
+static void	init_sectors(t_data *d)
 {
 	int		dt;
 
@@ -49,7 +49,7 @@ void	init_sectors(t_data *d)
 	d->player_start = (t_vec3f){0, 0, 0};
 }
 
-void	init_monsters(t_data *d)
+static void	init_monsters(t_data *d)
 {
 	t_monster	monster;
 	t_vec2f		pos;
@@ -66,4 +66,10 @@ void	init_monsters(t_data *d)
 	monster.cursectnum = 0;
 	d->monsters[0] = monster;
 //	monster.behavior = &basic_monster;
+}
+
+void		init_structure(t_data *d)
+{
+	init_sectors(d);
+	init_monsters(d);
 }

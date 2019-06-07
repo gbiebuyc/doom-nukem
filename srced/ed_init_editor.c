@@ -90,8 +90,6 @@ static int		init_interface(t_data *d)
 	return (0);
 }
 
-// TODO init monster structure
-
 int				init_editor(t_data *d)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))

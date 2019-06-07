@@ -64,11 +64,10 @@ int			main(void)
 {
 	t_data	d;
 
-	init_structure(&d);
+	init_data(&d);
 	if (init_editor(&d))
 		return (EXIT_FAILURE);
-	init_sectors(&d);
-	init_monsters(&d);
+	init_structure(&d);
 	main_loop(&d);
 	return (EXIT_SUCCESS);
 }

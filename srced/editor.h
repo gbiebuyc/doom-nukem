@@ -52,7 +52,7 @@
 # define TEXTURE_TOOLBAR 550
 
 // need nb types of monsters  to write in the map
-// 
+
 typedef struct	s_monsters_data
 {
 	char	*name;
@@ -76,7 +76,6 @@ typedef struct	s_assets_data
 	int		used;
 	char	*name;
 }				t_assets_data;
-
 
 typedef struct	s_assets
 {
@@ -128,7 +127,7 @@ typedef struct	s_interface
 **	texture_to_scale = size to resize the image,
 **	texture_to_scale = 32 -> will resize the image to 32x32 pixels
 **	hl_wall = highlighted_wall
-**	
+**
 **	t_assets_data	assets_data[100]; index given by nb_asset (cf. s_interface)
 */
 
@@ -143,8 +142,10 @@ typedef struct	s_data
 	t_vec3f			player_start;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
+	t_monster		monsters[MAXNUMMONSTERS];
 	int16_t			numsectors;
 	int16_t			numwalls;
+	uint16_t		nummonsters;
 	int				nb_texture;
 	int32_t			nb_used_texture;
 	int				default_texture;
@@ -159,14 +160,12 @@ typedef struct	s_data
 	bool			sectordrawing;
 	double			texture_to_scale;
 	t_vec2f			temp;
-	/**/t_monster		monsters[MAXNUMMONSTERS];
-	/**/uint16_t		nummonsters;
 	t_wall			*hl_wall;
 	int				hl_wallnum;
-	int				hl_wallnum_draw;	
+	int				hl_wallnum_draw;
 }				t_data;
 
-/**/int		bmp_reader(t_data *d);
+/**/int			bmp_reader(t_data *d);
 
 void			debug_print(t_data *d);
 
@@ -175,8 +174,7 @@ void			debug_print(t_data *d);
 */
 
 void			init_structure(t_data *d);
-void			init_sectors(t_data *d);
-void			init_monsters(t_data *d);
+void			init_data(t_data *d);
 
 /*
 **	ed_init.c
