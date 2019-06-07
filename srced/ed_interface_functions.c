@@ -79,3 +79,19 @@ void	btn_height(t_data *d, int x, int y, t_interface *i)
 			ceil_height(d, 0.1, d->selected_sector);
 	}
 }
+
+int		is_on_checkbox(t_data *d, int x, int y)
+{
+	int	endx;
+	int	endy;
+
+	endx = d->interface.cbox_door_p.x;
+	endy = d->interface.cbox_door_p.y;
+	if (x >= endx && x < endx + 24 && y >= endy && y < endy + 24)
+		return (1);
+	endx = d->interface.cbox_skybox_p.x;
+	endy = d->interface.cbox_skybox_p.y;
+	if (x >= endx && x <= endx + 24 && y >= endy && y < endy + 24)
+		return (2);
+	return (0);
+}

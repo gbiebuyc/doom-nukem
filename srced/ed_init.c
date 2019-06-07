@@ -12,14 +12,12 @@
 
 #include "editor.h"
 
-// folder ammo, monster etc...
-
-static int		load_assets(t_data *d, t_toolbar *tb, char **file,
-																char **file32)
+static int		load_assets(t_data *d, t_toolbar *tb)
 {
-	int	m;
-	int	j;
-	int	i;
+	int		m;
+	int		j;
+	int		i;
+	char	*file;
 
 	m = 0;
 	i = 0;
@@ -28,36 +26,28 @@ static int		load_assets(t_data *d, t_toolbar *tb, char **file,
 		j = -1;
 		while (++j < d->interface.nb_asset[m])
 		{
-			if (!(tb->assets[m].assets[j] = SDL_LoadBMP(file[i])))
-				return (ft_printf("Loading failed : %s\n", file[i]));
-			if (!(tb->assets[m].assets_icon[j] = SDL_LoadBMP(file32[i])))
-				return (ft_printf("Loading failed : %s\n", file32[i]));
-			remove_backgorund_image(tb->assets[m].assets_icon[j]);
+			file = d->assets_data[i].file;
+			if (!(tb->assets[m].assets[j] = SDL_LoadBMP(file)))
+				return (ft_printf("Loading failed : %s\n", file));
 			remove_backgorund_image(tb->assets[m].assets[j]);
 			i++;
 		}
 		m++;
 	}
+	if (!(tb->player_start = SDL_LoadBMP(d->assets_data[i].file)))
+		return (ft_printf("Loading failed : %s\n", d->assets_data[i].file));
+	remove_backgorund_image(tb->player_start);
 	return (0);
 }
 
 static int		init_assets(t_data *d, t_toolbar *tb)
 {
-	char	**file;
-	char	**file32;
-
-	file = (char*[]){"./Menu/ammo_energy.bmp", "./Menu/ammo_energy.bmp",
-	"./Menu/ammo_energy.bmp", "./Menu/momDemon.bmp", "./Menu/momDemon.bmp",
-	"./Menu/momDemon.bmp", "./Menu/momDemon.bmp", "./Menu/momDemon.bmp",
-	"./Menu/healpack.bmp", "./Menu/healpack.bmp"};
-	file32 = (char*[]){"./Menu/ammo_energy.bmp", "./Menu/ammo_energy.bmp",
-	"./Menu/ammo_energy.bmp", "./Menu/momDemon32.bmp", "./Menu/momDemon32.bmp",
-	"./Menu/momDemon32.bmp", "./Menu/momDemon32.bmp", "./Menu/momDemon32.bmp",
-	"./Menu/healpack32.bmp", "./Menu/healpack32.bmp"};
-	if (!(tb->player_start = SDL_LoadBMP("./Menu/playerstart.bmp")))
-		return (ft_printf("Loading failed : playerstart"));
-	remove_backgorund_image(tb->player_start);
-	load_assets(d, tb, file, file32);
+	if (get_interface_assets_files(d, (char*[]){PATH_AMMO_ED, PATH_MONSTER_ED,
+								PATH_HEALPACK_ED, PATH_PLAYERSTART_ED}))
+		return (1);
+	// if (get_monsters_file(d))
+	if (load_assets(d, tb))
+		return (1);
 	return (0);
 }
 
@@ -74,7 +64,9 @@ static int		init_toolbar(t_toolbar *tb)
 		"./Menu/wall_title.bmp", "./Menu/lblTexture.bmp",
 		"./Menu/lblAmmo.bmp", "./Menu/lblMonsters.bmp",
 		"./Menu/lblHealPack.bmp", "./Menu/lblPlayerStart.bmp",
-		"./Menu/minus.bmp", "./Menu/plus.bmp"};
+		"./Menu/minus.bmp", "./Menu/plus.bmp",
+		"/Menu/lblSkybox.bmp", "/Menu/lblDoor.bmp",
+		"/Menu/checkBoxEmpty.bmp", "/Menu/checkBox.bmp"};
 	i = -1;
 	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
 		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||
@@ -82,7 +74,7 @@ static int		init_toolbar(t_toolbar *tb)
 		!(tb->move[1] = SDL_LoadBMP(file[++i])))
 		return (ft_printf("Failed to load %s\n", file[i]));
 	j = -1;
-	while (++j < 10)
+	while (++j < NB_PROPERTIES)
 		if (!(tb->properties[j] = SDL_LoadBMP(file[++i])))
 			return (ft_printf("Failed to load %s\n", file[i]));
 	return (0);

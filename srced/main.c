@@ -24,12 +24,12 @@ void		debug_print(t_data *d)
 	{
 		wall = d->walls + w;
 		if (w == d->sectors[s].firstwallnum)
-			printf("++++++\nsector %d\n++++++\n", s++);
-		printf("numwalls : %d\n", d->sectors[s].numwalls);
-		printf("------\nwall %d\n------\n", w);
-		printf("neighbor : %d\n", wall->neighborsect);
-		printf("picnum : %d\n", wall->middlepicnum);
-		printf("texture name = %s\n", wall->texture_name);
+			ft_printf("++++++\nsector %d\n++++++\n", s++);
+		ft_printf("numwalls : %d\n", d->sectors[s].numwalls);
+		ft_printf("------\nwall %d\n------\n", w);
+		ft_printf("neighbor : %d\n", wall->neighborsect);
+		ft_printf("picnum : %d\n", wall->middlepicnum);
+		ft_printf("texture name = %s\n", wall->texture_name);
 		w++;
 	}
 }
@@ -50,10 +50,6 @@ static void	init_structure(t_data *d)
 	d->interface.texture_case_select = -1;
 	d->selected_texture = -2;
 	d->interface.category = -1;
-	d->interface.nb_asset[0] = AMMO_ASSET;
-	d->interface.nb_asset[1] = MONSTER_ASSET;
-	d->interface.nb_asset[2] = HEAL_ASSET;
-	d->interface.nb_asset[3] = 1;
 	d->interface.selected_asset = -1;
 	d->interface.separate_sector = 0;
 }

@@ -95,7 +95,6 @@ void	load_map(t_data *d)
 	int f;
 
 	if (((f = open("map01", O_RDONLY)) == -1) ||
-		// Load starting position
 		read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
 		read(f, &d->cam.rot, sizeof(double)) == -1 ||
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)

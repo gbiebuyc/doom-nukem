@@ -41,9 +41,11 @@ static void	print_assets(t_data *d, t_assets *a)
 		j = -1;
 		y = d->interface.category_pos[m].y;
 		x = W - PROPERTIES_LIMIT - 30;
+		d->texture_to_scale = 32;
 		while (++j < d->interface.nb_asset[m])
-			copy_surface_to_surface(a[m].assets_icon[j], d->screen,
+			copy_surface_to_surface(a[m].assets[j], d->screen,
 										(int[2]){x += 38, y}, d);
+		d->texture_to_scale = -1;
 	}
 	x = W - PROPERTIES_LIMIT + 8;
 	y = d->interface.category_pos[3].y;

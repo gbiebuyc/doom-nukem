@@ -12,9 +12,8 @@
 
 #include "editor.h"
 
-static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
+static int	selecting_wall_or_sector(t_data *d, SDL_Event *e, int x, int y)
 {
-	SDL_GetMouseState(&x, &y);
 	if (!is_on_select_move_icon(d, x, y) && d->interface.select &&
 		x < W - PROPERTIES_LIMIT && d->interface.texture_case_select < 0
 		&& !d->sectordrawing)
@@ -25,9 +24,21 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 		d->hl_wall = NULL;
 		if (d->selected_wall == -1)
 			detect_select_wall(d, x, y);
+		return (1);
 	}
-	else if (x > W - PROPERTIES_LIMIT)
+	return (0);
+}
+
+static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
+{
+	SDL_GetMouseState(&x, &y);
+	if (!selecting_wall_or_sector(d, e, x, y) && x > W - PROPERTIES_LIMIT)
 		btn_height(d, x, y, &d->interface);
+	if (is_on_checkbox(d, x, y) == 1)
+		toggle_isdoor(d);
+	else if (is_on_checkbox(d, x, y) == 2)
+		d->sectors[d->selected_sector].outdoor =
+			!d->sectors[d->selected_sector].outdoor;
 	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
 		d->hl_wallnum >= 0) && d->interface.texture_case_select != -1)
 		save_selected_texture(d, e->button.x, e->button.y,

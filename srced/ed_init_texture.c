@@ -85,6 +85,7 @@ int			init_texture(t_data *d)
 	{
 		if (get_texture_files(d, dr) || load_texture(d))
 			return (1);
+		closedir(dr);
 	}
 	else
 		return (ft_printf("Couldn't open the textures directory.\n"));

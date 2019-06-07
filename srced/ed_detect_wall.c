@@ -60,7 +60,7 @@ void	detect_wall(t_data *d, int x, int y)
 			w1 = w2++;
 		}
 	}
-	//d->highlighted_wall = NULL;
+	d->hl_wallnum_draw = -1;
 }
 
 void	detect_select_wall(t_data *d, int x, int y)
@@ -100,10 +100,10 @@ void	detect_select_wall(t_data *d, int x, int y)
 			{
 				d->hl_wallnum = w1;
 				d->hl_wall = &d->walls[d->hl_wallnum];
+				ft_printf("[Selected wall] = %d\n", d->hl_wallnum);
 				return ;
 			}
 			w1 = w2++;
 		}
 	}
-	//d->highlighted_wall = NULL;
 }
