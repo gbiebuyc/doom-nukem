@@ -30,14 +30,13 @@ uint32_t	getpixel(SDL_Surface *s, double x, double y)
 	return (0);
 }
 
-// looping on the texture
 uint32_t	getpixel2(SDL_Surface *s, double x, double y)
 {
-	int realx;
-	int realy;
+	unsigned int realx;
+	unsigned int realy;
 
-	realx = ((int)(s->w * x) % s->w + s->w) % s->w;
-	realy = ((int)(s->h * y) % s->h + s->h) % s->h;
+	realx = (unsigned int)(s->w * x) % s->w;
+	realy = (unsigned int)(s->h * y) % s->h;
 	return (((uint32_t*)s->pixels)[realx + realy * s->w]);
 }
 

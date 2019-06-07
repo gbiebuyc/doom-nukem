@@ -66,6 +66,7 @@ typedef struct	s_projdata
 	double		doorbottom;
 	double		sin;
 	double		cos;
+	double		altitude;
 }				t_projdata;
 
 typedef struct	s_frustum

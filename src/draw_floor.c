@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+#define RATIO (2.0 * WIDTH / HEIGHT)
 
 void	draw_floor2(t_data *d, t_projdata *p)
 {
@@ -20,13 +21,14 @@ void	draw_floor2(t_data *d, t_projdata *p)
 	double	left_v;
 	double	right_v;
 
-	dist = (d->cam.pos.y - p->sector->floorheight) * 2.66 /
-		norm(p->y - HEIGHT * 0.5 + d->cam.y_offset, 0, HEIGHT * 0.5);
+	dist = p->altitude /
+		((p->y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
 	left_u = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
 	right_u = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
 	left_v = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
 	right_v = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-	putpixel(d, p->x, p->y, shade(d, p, dist, getpixel2(
+	p->z = dist;
+	putpixel(d, p->x, p->y, shade(getshadefactor(d, p), getpixel2(
 					d->textures[p->sector->floorpicnum],
 					lerp(norm(p->x, 0, WIDTH), left_u, right_u),
 					lerp(norm(p->x, 0, WIDTH), left_v, right_v))));
@@ -34,7 +36,7 @@ void	draw_floor2(t_data *d, t_projdata *p)
 
 void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	if ((d->cam.pos.y - p->sector->floorheight) <= 0)
+	if ((p->altitude = (d->cam.pos.y - p->sector->floorheight) * RATIO) <= 0)
 		return ;
 	p->sin = sin(-d->cam.rot + M_PI_2);
 	p->cos = cos(-d->cam.rot + M_PI_2);

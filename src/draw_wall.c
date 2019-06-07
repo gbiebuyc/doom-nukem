@@ -37,24 +37,52 @@ void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible)
 
 void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	double	v;
+	int		u;
+	int		v;
 	int		y;
+	SDL_Surface *tex;
+	double	shadefactor;
 
-	y = ft_max(fr->ytop[p->x], p->ya) - 1;
-	while (++y <= ft_min(fr->ybottom[p->x], p->yb))
+	if ((shadefactor = getshadefactor(d, p)) <= 0)
 	{
-		v = (p->wall->is_door && y < p->nya) ?
-			norm(y, p->nya - p->doorheight, p->nya) :
-			lerp(norm(y, p->ya, p->yb), 0, p->y_scale);
-		if (p->neighbor && y <= p->nya)
-			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
-							d->textures[p->wall->middlepicnum], p->u, v)));
-		else if (p->neighbor && y > p->nyb)
-			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
-							d->textures[p->wall->lowerpicnum], p->u, v)));
-		else if (!p->neighbor)
-			putpixel(d, p->x, y, shade(d, p, p->z, getpixel2(
-							d->textures[p->wall->middlepicnum], p->u, v)));
+		y = ft_max(fr->ytop[p->x], p->ya) - 1;
+		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
+			putpixel(d, p->x, y, 0);
+	}
+	if (!p->neighbor)
+	{
+		tex = d->textures[p->wall->middlepicnum];
+		u = (int)(p->u * tex->w) % tex->w;
+		y = ft_max(fr->ytop[p->x], p->ya) - 1;
+		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
+		{
+			v = (int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
+			putpixel(d, p->x, y, shade(shadefactor,
+						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+		}
+	}
+	else if (p->neighbor)
+	{
+		tex = d->textures[p->wall->middlepicnum];
+		u = (int)(p->u * tex->w) % tex->w;
+		y = ft_max(fr->ytop[p->x], p->ya) - 1;
+		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
+		{
+			v = (p->wall->is_door) ? (int)(norm(y,
+						p->nya - p->doorheight, p->nya) * tex->h) % tex->h :
+				(int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
+			putpixel(d, p->x, y, shade(shadefactor,
+						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+		}
+		tex = d->textures[p->wall->lowerpicnum];
+		u = (int)(p->u * tex->w) % tex->w;
+		y = ft_max(fr->ytop[p->x], p->nyb) - 1;
+		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
+		{
+			v = (int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
+			putpixel(d, p->x, y, shade(shadefactor,
+						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+		}
 	}
 }
 

@@ -49,7 +49,7 @@ SDL_PATH:=$(ABS_PATH)/SDL/library
 SDL_CFG = $(SDL_PATH)/bin/sdl2-config
 FT_DIR = libft
 INCLUDE = includes 
-CFLAGS = -Wall -Wextra -Werror -O3 -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
+CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
 LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
 ED_DIR = srced
 

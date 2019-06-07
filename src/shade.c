@@ -12,16 +12,22 @@
 
 #include "doom_nukem.h"
 
-#define SHADOWDIST 20
-
-uint32_t	shade(t_data *d, t_projdata *p, double z, uint32_t c)
+double		getshadefactor(t_data *d, t_projdata *p)
 {
 	double factor;
 
 	factor = (p->sector->blinking) ? d->lightblink : p->sector->light;
-	if (z && !p->sector->outdoor)
-		factor -= norm(z, 0, SHADOWDIST);
-	factor = fclamp(factor, 0, 1);
+	if (p->z && !p->sector->outdoor)
+		factor -= p->z / 20;
+	return (factor);
+}
+
+uint32_t	shade(double factor, uint32_t c)
+{
+	if (factor <= 0)
+		return (0);
+	if (factor >= 1)
+		return (c);
 	return (((int)(((c >> 16) & 0xff) * factor) << 16) |
 			((int)(((c >> 8) & 0xff) * factor) << 8) |
 			((int)(((c >> 0) & 0xff) * factor) << 0));

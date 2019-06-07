@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+#define RATIO (2.0 * WIDTH / HEIGHT)
 
 void	draw_sky(t_data *d, t_projdata *p)
 {
@@ -30,13 +31,14 @@ void	draw_ceil2(t_data *d, t_projdata *p)
 	double	left_v;
 	double	right_v;
 
-	dist = (p->sector->ceilheight - d->cam.pos.y) * 2.66 /
-		-norm(p->y - HEIGHT * 0.5 + d->cam.y_offset, 0, HEIGHT * 0.5);
+	dist = p->altitude /
+		-((p->y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
 	left_u = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
 	right_u = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
 	left_v = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
 	right_v = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-	putpixel(d, p->x, p->y, shade(d, p, dist, getpixel2(
+	p->z = dist;
+	putpixel(d, p->x, p->y, shade(getshadefactor(d, p), getpixel2(
 					d->textures[p->sector->ceilpicnum],
 					lerp(norm(p->x, 0, WIDTH), left_u, right_u),
 					lerp(norm(p->x, 0, WIDTH), left_v, right_v))));
@@ -44,7 +46,8 @@ void	draw_ceil2(t_data *d, t_projdata *p)
 
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	if (!p->sector->outdoor && (p->sector->ceilheight - d->cam.pos.y) <= 0)
+	if (!p->sector->outdoor && (p->altitude =
+				(p->sector->ceilheight - d->cam.pos.y) * RATIO) <= 0)
 		return ;
 	if (p->sector->outdoor && p->neighbor && p->neighbor->outdoor)
 		return ;
