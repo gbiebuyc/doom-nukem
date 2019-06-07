@@ -18,7 +18,7 @@ void	render(t_data *d)
 	fr.x1 = 0;
 	fr.x2 = WIDTH - 1;
 	ft_memset(fr.visitedportals, 0, sizeof(fr.visitedportals));
-	for(int x = 0; x < WIDTH; ++x) // to change with HUD ?
+	for(int x = 0; x < WIDTH; ++x)
 	{
 		fr.ytop[x] = 0;
 		fr.ybottom[x] = HEIGHT-1;
@@ -37,5 +37,8 @@ void	render(t_data *d)
 	while (++i < 32)
 		putpixel(d, WIDTH >> 1, (HEIGHT >> 1) - 16 + i, 0x22FF00);
 	/***/
+
+	draw_string(d, "Ceci est un test 1234567890", 50, 50, 0x0);
+
 	SDL_UpdateWindowSurface(d->win);
 }

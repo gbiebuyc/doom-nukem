@@ -49,6 +49,7 @@ FILES= main \
 	   draw_monster \
 	   shade \
 	   swap_list \
+	   font \
 	   vec2 \
 	   vec2_2
 
