@@ -107,7 +107,7 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 
 void	update(t_data *d)
 {
-//	int16_t	sect;
+	//int16_t	sect;
 
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;

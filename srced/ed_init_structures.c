@@ -32,6 +32,7 @@ void		init_data(t_data *d)
 	d->interface.separate_sector = 0;
 	d->default_texture = 0;
 	/**/d->interface.monster_list = NULL;
+	d->startsectnum = 0;
 }
 
 static void	init_sectors(t_data *d)
@@ -47,7 +48,7 @@ static void	init_sectors(t_data *d)
 	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
-	d->player_start = (t_vec3f){0, 0, 0};
+	d->player_start = (t_vec3f){0, 0.2, 0};
 }
 
 static void	init_monsters(t_data *d)

@@ -159,7 +159,7 @@ typedef struct	s_data
 	t_interface		interface;
 	t_assets_data	assets_data[100];
 	t_vec3f			player_start;
-	int				startsectnum;
+	int16_t			startsectnum;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
 	t_monster		monsters[MAXNUMMONSTERS];

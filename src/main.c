@@ -23,7 +23,6 @@ int		main(int argc, char **argv)
 	init_player(&d, &d.player);
 	init_monsters(&d);
 	init_projectiles(&d);
-	d.cursectnum = 1;
 	loop(&d);
 	return (0);//windows wont compile
 }
