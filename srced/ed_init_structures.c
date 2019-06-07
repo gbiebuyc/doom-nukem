@@ -31,6 +31,7 @@ void		init_data(t_data *d)
 	d->interface.selected_asset = -1;
 	d->interface.separate_sector = 0;
 	d->default_texture = 0;
+	/**/d->interface.monster_list = NULL;
 }
 
 static void	init_sectors(t_data *d)
@@ -40,10 +41,10 @@ static void	init_sectors(t_data *d)
 	dt = d->default_texture;
 	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt,
 		1.0, false, "", "", false, NULL};
-	d->walls[0] = (t_wall){(t_vec2f){-2, 2}, dt, dt, dt, 0, -1, "", false};
-	d->walls[1] = (t_wall){(t_vec2f){ 2, 2}, dt, dt, dt, 0, -1, "", false};
-	d->walls[2] = (t_wall){(t_vec2f){ 2, -2}, dt, dt, dt, 0, -1, "", false};
-	d->walls[3] = (t_wall){(t_vec2f){-2, -2}, dt, dt, dt, 0, -1, "", false};
+	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", false};
+	d->walls[1] = (t_wall){(t_vec2f){4, 4}, dt, dt, dt, 0, -1, "", false};
+	d->walls[2] = (t_wall){(t_vec2f){4, -4}, dt, dt, dt, 0, -1, "", false};
+	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
 	d->player_start = (t_vec3f){0, 0, 0};
@@ -54,7 +55,7 @@ static void	init_monsters(t_data *d)
 	t_monster	monster;
 	t_vec2f		pos;
 
-	pos.x = 0.0;
+	pos.x = 1.0;
 	pos.y = -3.0;
 	d->nummonsters = 1;
 	monster.pos = pos;

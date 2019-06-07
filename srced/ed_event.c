@@ -89,7 +89,7 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 void		zoom(t_data *d, SDL_Event *e)
 {
 	if (e->wheel.y > 0)
-		d->scale *= (d->scale < 50) ? 1.1 : 1;
+		d->scale *= (d->scale < 200) ? 1.1 : 1;
 	else if (e->wheel.y < 0)
 		d->scale *= (d->scale > 10) ? 0.9 : 1;
 }

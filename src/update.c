@@ -107,7 +107,7 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 
 void	update(t_data *d)
 {
-	int16_t	sect;
+//	int16_t	sect;
 
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;
@@ -118,11 +118,13 @@ void	update(t_data *d)
 	d->keys[SDL_SCANCODE_SPACE] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	movement(d);
 	// Update current sector
-	sect = 0;
+/*	sect = 0;
 	while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))
 		sect++;
 	if (sect < d->numsectors)
 		d->cursectnum = sect;
+		printf("%d\n", sect);*/
+	d->cursectnum = update_cursect(d->cursectnum, d, 1000, -1, d->cam.pos);
 	gravity(d, 0);
 	player_actions(d);
 	update_projectiles(d);

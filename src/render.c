@@ -28,5 +28,14 @@ void	render(t_data *d)
 	if (d->color_buf.value)
 		color_screen(d);
 	//draw_hud(d);
+	/***/
+	int i = -1;
+
+	while (++i < 32)
+		putpixel(d, (WIDTH >> 1) - 16 + i, HEIGHT >> 1, 0x22FF00);
+	i = -1;
+	while (++i < 32)
+		putpixel(d, WIDTH >> 1, (HEIGHT >> 1) - 16 + i, 0x22FF00);
+	/***/
 	SDL_UpdateWindowSurface(d->win);
 }

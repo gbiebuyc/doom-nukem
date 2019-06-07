@@ -57,27 +57,29 @@ void	get_selected_asset(t_data *d)
 **	4 category (0 to 3)
 */
 
-void	add_asset_to_map(t_data *d, int x, int y)
+int		add_asset_to_map(t_data *d, int x, int y)
 {
 	int			sectornum;
-	float		mid;
 	t_sector	*s;
 	t_vec2f		xy;
 
-	sectornum = find_sect_under_cursor(d);
+	if ((sectornum = find_sect_under_cursor(d)) < 0)
+		return (ft_printf("Assets must be place inside a sector\n"));
 	s = &d->sectors[sectornum];
 	xy = screentoworld(d, (t_vec2f){x, y});
-	if (d->interface.selected_asset_cat == 3 && sectornum >= 0)
+	if (d->interface.selected_asset_cat == 3)
 	{
-		mid = (fabs(s->ceilheight) - fabs(s->floorheight)) * 0.5;
-		d->player_start = (t_vec3f){xy.x, s->floorheight + mid, xy.y};
-		ft_printf("starting point done\n");
+		d->player_start = (t_vec3f){xy.x, s->floorheight + 0.5, xy.y};
+		d->startsectnum = d->selected_sector;
 		d->interface.selected_asset_cat = -1;
 		d->interface.selected_asset = -1;
 		d->interface.select = 1;
 	}
-	else
-		ft_printf("The player starting point must be place inside a sector\n");
+	else if (d->interface.selected_asset_cat == 1)
+	{
+		add_monster_to_list(d, &xy, sectornum);
+	}
+	return (0);
 //	a = &d->interface.toolbar.assets[d->interface.selected_asset_cat];
 //	copy_surface_to_surface(a->assets_icon[d->interface.selected_asset],
 //							d->screen, (int[2]){x, y}, d);

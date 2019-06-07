@@ -51,6 +51,10 @@
 # define PROPERTIES_LIMIT 275
 # define TEXTURE_TOOLBAR 550
 
+/*
+**	########### ed_init_assets.c ###########
+*/
+
 // need nb types of monsters  to write in the map
 
 typedef struct	s_monsters_data
@@ -77,6 +81,20 @@ typedef struct	s_assets_data
 	char	*name;
 }				t_assets_data;
 
+/*
+**	#######################################
+*/
+
+typedef struct	s_monster_list
+{
+	char					*name;
+	t_vec2f					pos;
+	int						sectnunm;
+	struct s_monster_list	*begin;
+	struct s_monster_list	*prev;
+	struct s_monster_list	*next;
+}				t_monster_list;
+
 typedef struct	s_assets
 {
 	SDL_Surface	*assets[100];
@@ -89,8 +107,8 @@ typedef struct	s_toolbar
 	SDL_Surface	*select[2];
 	SDL_Surface	*move[2];
 	SDL_Surface	*properties[NB_PROPERTIES];
-	SDL_Surface	*player_start;
 	t_assets	assets[3];
+	SDL_Surface	*player_start;
 }				t_toolbar;
 
 /*
@@ -100,27 +118,28 @@ typedef struct	s_toolbar
 
 typedef struct	s_interface
 {
-	SDL_Surface	*menu;
-	t_toolbar	toolbar;
-	int			separate_sector;
-	int			show_menu;
-	int			is_on_menu;
-	int			select;
-	int			move;
-	int			btn_right_pressed;
-	int			texture_case_select;
-	int			category;
-	int			nb_asset[4];
-	int			selected_asset;
-	int			selected_asset_cat;
-	t_vec2f		mouse_pos;
-	t_vec2f		tex_select[3];
-	t_vec2f		btn_floor_height_pos;
-	t_vec2f		btn_ceil_height_pos;
-	t_vec2f		category_pos[4];
-	t_vec2f		selected_asset_position;
-	t_vec2f		cbox_door_p;
-	t_vec2f		cbox_skybox_p;
+	SDL_Surface		*menu;
+	t_toolbar		toolbar;
+	int				separate_sector;
+	int				show_menu;
+	int				is_on_menu;
+	int				select;
+	int				move;
+	int				btn_right_pressed;
+	int				texture_case_select;
+	int				category;
+	int				nb_asset[4];
+	int				selected_asset;
+	int				selected_asset_cat;
+	t_monster_list	*monster_list;
+	t_vec2f			mouse_pos;
+	t_vec2f			tex_select[3];
+	t_vec2f			btn_floor_height_pos;
+	t_vec2f			btn_ceil_height_pos;
+	t_vec2f			category_pos[4];
+	t_vec2f			selected_asset_position;
+	t_vec2f			cbox_door_p;
+	t_vec2f			cbox_skybox_p;
 }				t_interface;
 
 /*
@@ -140,6 +159,7 @@ typedef struct	s_data
 	t_interface		interface;
 	t_assets_data	assets_data[100];
 	t_vec3f			player_start;
+	int				startsectnum;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
 	t_monster		monsters[MAXNUMMONSTERS];
@@ -166,6 +186,7 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
+/**/void	add_monster_to_list(t_data *d, t_vec2f *xy,int sectn);
 
 void			debug_print(t_data *d);
 
@@ -260,7 +281,7 @@ void			update_wall_pos(t_data *d);
 
 void			draw_selection_arround_selected_asset(t_data *d);
 void			get_selected_asset(t_data *d);
-void			add_asset_to_map(t_data *d, int x, int y);
+int				add_asset_to_map(t_data *d, int x, int y);
 
 /*
 **	ed_interface.c
