@@ -112,7 +112,7 @@ void			remove_backgorund_image(SDL_Surface *s)
 	}
 }
 
-double	fclamp(double x, double min, double max)
+double			fclamp(double x, double min, double max)
 {
 	if (x < min)
 		return (min);

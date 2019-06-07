@@ -171,6 +171,14 @@ typedef struct	s_data
 void			debug_print(t_data *d);
 
 /*
+**	ed_init_structures.c1
+*/
+
+void			init_structure(t_data *d);
+void			init_sectors(t_data *d);
+void			init_monsters(t_data *d);
+
+/*
 **	ed_init.c
 */
 

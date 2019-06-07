@@ -14,7 +14,7 @@ NAME = ../editor
 
 SRC = main.c \
 	ed_bmp_reader.c \
-	ed_init.c ed_init_texture.c ed_init_assets.c \
+	ed_init_structures.c ed_init_editor.c ed_init_texture.c ed_init_assets.c \
 	../src/vec2.c \
 	../src/vec2_2.c \
 	ed_draw.c ed_draw_assets.c \

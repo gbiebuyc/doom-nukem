@@ -15,9 +15,9 @@
 int		calc_closest_and_distance(t_data *d, int w1, t_vec2f *p,
 															t_vec2f closest)
 {
-	float	dx;
-	float	dy;
-	float	dist;
+	double	dx;
+	double	dy;
+	double	dist;
 	int		selected_sector;
 
 	dx = p->x - closest.x;
@@ -34,9 +34,9 @@ int		is_on_wall(t_data *d, int w1, t_vec2f *ab, t_vec2f *p)
 {
 	t_vec2f a_to_p;
 	t_vec2f	a_to_b;
-	float	atb2;
-	float	atp_dot_atb;
-	float	t;
+	double	atb2;
+	double	atp_dot_atb;
+	double	t;
 
 	a_to_p = (t_vec2f){p->x - ab[0].x, p->y - ab[0].y};
 	a_to_b = (t_vec2f){ab[1].x - ab[0].x, ab[1].y - ab[0].y};
