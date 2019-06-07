@@ -147,6 +147,7 @@ typedef struct	s_data
 	int16_t			numwalls;
 	int				nb_texture;
 	int32_t			nb_used_texture;
+	int				default_texture;
 	double			scale;
 	t_vec2f			pos;
 	t_wall			*selectedwall;

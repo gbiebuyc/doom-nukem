@@ -62,6 +62,8 @@ static int	get_texture_files(t_data *d, DIR *dr)
 		if (de->d_type == DT_REG && de->d_name[0] != '.'
 			&& ft_strcmp(&de->d_name[de->d_namlen - 4], ".bmp") == 0)
 		{
+			if (ft_strequ(de->d_name, "no_texture.bmp"))
+				d->default_texture = d->nb_texture;
 			if (new_texture(de->d_name, (list) ? &list->next : &d->texture_list,
 									(!list) ? NULL : list->begin, save_prev))
 				return (ft_printf("Failed to craete new texture.\n"));
