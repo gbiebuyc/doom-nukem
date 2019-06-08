@@ -44,6 +44,8 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 		(key == SDLK_r) ? run_game(d) : debug_print(d);
 	else if (key == SDLK_s)
 		(save_file(d)) ? ft_printf("Error during file saving.\n") : 1;
+	else if (key == SDLK_DELETE && !d->sectordrawing && !delete_monster(d))
+		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
 	else if (key == SDLK_l)
 		d->grid_locking = !d->grid_locking;
 	else if (key == SDLK_x)
@@ -66,8 +68,6 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 	}
 	else if (key == SDLK_SPACE)
 		(d->sectordrawing) ? add_wall(d) : add_sector(d);
-	else if (key == SDLK_DELETE && !d->sectordrawing)
-		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
 	else if (key == SDLK_KP_1 || key == SDLK_KP_3)
 		floor_height(d, ((key == SDLK_KP_1) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_KP_7 || key == SDLK_KP_9)
@@ -118,4 +118,5 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 	if (d->interface.show_menu)
 		d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
 	detect_wall(d, e->motion.x, e->motion.y);
+	detect_assets(d, e->motion.x, e->motion.y);
 }

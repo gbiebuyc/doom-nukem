@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/08 19:21:52 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/08 20:29:54 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FILES= main \
 	   shade \
 	   swap_list \
 	   draw_aim_cross \
+	   font \
 	   vec2 \
 	   vec2_2
 

@@ -45,7 +45,7 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dst,
 	int			y;
 
 	y = -1;
-	while (++y < src->h && d->texture_to_scale == -1)
+	while (++y < src->h && d->texture_to_scale == -1 /*&& (x = -1) < 0*/)
 	{
 		x = -1;
 		while (++x < src->w)
