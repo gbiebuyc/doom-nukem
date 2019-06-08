@@ -43,29 +43,21 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	SDL_Surface *tex;
 	double	shadefactor;
 
+	tex = d->textures[p->wall->middlepicnum];
+	u = (int)(p->u * tex->w) % tex->w;
+	y = ft_max(fr->ytop[p->x], p->ya) - 1;
 	if ((shadefactor = getshadefactor(d, p)) <= 0)
-	{
-		y = ft_max(fr->ytop[p->x], p->ya) - 1;
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 			putpixel(d, p->x, y, 0);
-	}
-	if (!p->neighbor)
-	{
-		tex = d->textures[p->wall->middlepicnum];
-		u = (int)(p->u * tex->w) % tex->w;
-		y = ft_max(fr->ytop[p->x], p->ya) - 1;
+	else if (!p->neighbor)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 		{
 			v = (int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
 			putpixel(d, p->x, y, shade(shadefactor,
 						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
 		}
-	}
 	else if (p->neighbor)
 	{
-		tex = d->textures[p->wall->middlepicnum];
-		u = (int)(p->u * tex->w) % tex->w;
-		y = ft_max(fr->ytop[p->x], p->ya) - 1;
 		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
 		{
 			v = (p->wall->is_door) ? (int)(norm(y,
