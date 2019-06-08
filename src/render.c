@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:06:49 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/07 00:36:59 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 19:22:45 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,7 @@ void	render(t_data *d)
 		color_screen(d);
 	//draw_hud(d);
 	/***/
-	int i = -1;
-
-	while (++i < 32)
-		putpixel(d, (WIDTH >> 1) - 16 + i, HEIGHT >> 1, 0x22FF00);
-	i = -1;
-	while (++i < 32)
-		putpixel(d, WIDTH >> 1, (HEIGHT >> 1) - 16 + i, 0x22FF00);
+	draw_aim_cross(d);
 	/***/
 	SDL_UpdateWindowSurface(d->win);
 }

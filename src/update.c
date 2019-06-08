@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/07 21:58:09 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:05:14 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 	//	t_vec3f dist = sub_vec3f(vec2to3(monsters[i].pos), d->cam.pos);
 	while (i < *nummonsters)
 	{
-		if (monsters[i].behaviour == 0 && monsters[i].activated)
+		if (monsters[i].can_collide)
 			monster_behaviour(d, &monsters[i]);
 		monster_anim_state(&monsters[i], d->monster_type, d);
 	//			monsters[i].pos.x -= 0.001 * dist.x;
@@ -121,6 +121,14 @@ void	update(t_data *d)
 	d->cam.cos = cos(d->cam.rot);
 	d->keys[SDL_SCANCODE_J] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 	d->keys[SDL_SCANCODE_SPACE] ? jump(d, 1) : jump(d, 0); // short jump | long jump
+//	if (d->keys[SDL_SCANCODE_K])
+//	{
+//		t_vec2f tmp;
+//		tmp = sub_vec2f(vec3to2(d->cam.pos), d->monsters[0].pos);
+//		d->monsters[0].anim_state = 4;
+//		d->monsters[0].anim_time = 10;
+//		d->monsters[0].rot = atan2(tmp.y, tmp.x);
+//	}
 	movement(d);
 	// Update current sector
 	/*while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))

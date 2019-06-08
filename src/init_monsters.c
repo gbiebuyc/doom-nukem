@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 21:38:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:02:29 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	init_monster_type(t_data *d)
 	d->monster_type[MOTHERDEMON].anim_order[16] = 17;
 	d->monster_type[MOTHERDEMON].anim_order[17] = 18;
 	d->monster_type[MOTHERDEMON].anim_order[18] = 18;
+	d->monster_type[MOTHERDEMON].id_of_proj = FIREBALL_1;
 //	d->monster_type[MOTHERDEMON].anim_order = (uint9_t[MAX_STATE]){1, 2, 3, 1}
 }
 

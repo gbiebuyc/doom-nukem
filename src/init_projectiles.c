@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 23:30:26 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:10:21 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_projectiles_type_cryo_bow(t_data *d)
 	d->projectile_type[CRYO_BALLISTA].threat_to_monster = true;
 	d->projectile_type[CRYO_BALLISTA].hitbox_radius = 0.1;
 	d->projectile_type[CRYO_BALLISTA].speed = 0.25;
-	d->projectile_type[CRYO_BALLISTA].damage = 650;
+	d->projectile_type[CRYO_BALLISTA].damage = 22;
 	d->projectile_type[CRYO_BALLISTA].anim_order[0] = 1;
 	d->projectile_type[CRYO_BALLISTA].anim_order[1] = 2;
 	d->projectile_type[CRYO_BALLISTA].anim_order[2] = 3;
@@ -41,7 +41,7 @@ void	init_projectiles_type_cryo_bow(t_data *d)
 	d->projectile_type[CRYO_BALLISTA].anim_order[18] = 19;
 	d->projectile_type[CRYO_BALLISTA].anim_order[19] = MUST_BE_DESTROYED;
 	d->projectile_type[CRYO_BALLISTA].anim_order[COLLISION_ID] = 7; //21 == id of collision
-	d->projectile_type[CRYO_BALLISTA].size = 0.5;
+	d->projectile_type[CRYO_BALLISTA].size = 1;
 }
 
 void	init_projectiles_fireball_1(t_data *d)
@@ -57,8 +57,10 @@ void	init_projectiles_fireball_1(t_data *d)
 	d->projectile_type[FIREBALL_1].anim_order[2] = 3;
 	d->projectile_type[FIREBALL_1].anim_order[3] = 4;
 	d->projectile_type[FIREBALL_1].anim_order[4] = MUST_BE_DESTROYED;
-	d->projectile_type[FIREBALL_1].size = 9;
+	d->projectile_type[FIREBALL_1].size = 12;
 
+	d->projectile_type[M16].size = 3;
+	d->projectile_type[M16].anim_order[COLLISION_ID] = 0; // not needed but safer
 	d->projectile_type[M16].anim_order[0] = 1;
 	d->projectile_type[M16].anim_order[1] = 2;
 	d->projectile_type[M16].anim_order[2] = 3;

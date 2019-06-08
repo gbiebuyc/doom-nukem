@@ -6,13 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:16:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/05 21:00:22 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:10:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define Y_OFFSET_TO_ROT -0.00125
+# define Y_OFFSET_TO_ROT -0.00125// defined in m16 too
 
 void	set_projectile_id(t_data *d, short i, short id_of_proj_type)
 {
@@ -65,6 +65,7 @@ void	set_projectile_id_monster(t_data *d, short i, short id_of_proj_type, t_mons
 	d->projectiles[i].dir.x = cos(monster->rot) * d->projectile_type[id_of_proj_type].speed;
 	d->projectiles[i].current_anim_playing = d->projectile_type[id_of_proj_type].anim_order[0];
 	d->projectiles[i].has_collided = false;
+	d->projectiles[i].weapon_id = d->monster_type[monster->id_type].id_of_proj;
 	d->projectiles[i].cursectnum = monster->cursectnum;
 	d->projectiles[i].time_remaining_anim = 5;
 	d->projectiles[i].current_anim_playing = 0;

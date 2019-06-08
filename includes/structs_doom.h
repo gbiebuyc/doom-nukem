@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 23:22:53 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:26:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ typedef struct	s_display_data
 	int			*ytop;
 	int			*ybot;
 }				t_display_data;
+
+typedef	struct	s_m16_inf
+{
+	double		dist;
+	int16_t		id_of_monst;
+}				t_m16_inf;
 
 typedef struct	s_col_inf
 {
@@ -155,6 +161,7 @@ typedef struct	s_monster_type
 	double		floating;
 	double		hitbox_radius;
 	uint8_t		id_sprite;
+	uint8_t		id_of_proj;
 	uint8_t		anim_order[MAX_STATE_MONSTER];	
 }				t_monster_type;
 
