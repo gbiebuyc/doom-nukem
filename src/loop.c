@@ -12,6 +12,20 @@
 
 #include "doom_nukem.h"
 
+void	print_fps(void)
+{
+	static int		i;
+	static uint32_t	last;
+
+	if (SDL_GetTicks() - last > 1000)
+	{
+		printf("%d fps\n", i);
+		last = SDL_GetTicks();
+		i = 0;
+	}
+	i++;
+}
+
 void	loop(t_data *d)
 {
 	SDL_Event	e;
@@ -34,6 +48,7 @@ void	loop(t_data *d)
 		}
 		update(d);
 		render(d);
+		//print_fps();
 		if (1000 / FPS > SDL_GetTicks() - start)
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 	}

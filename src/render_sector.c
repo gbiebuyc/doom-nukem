@@ -14,6 +14,7 @@
 
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
+	int		i;
 	double	u_begin;
 	double	u_end;
 	double	len1;
@@ -21,7 +22,15 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	yceil;
 	double	yfloor;
 	double	zbuffer[WIDTH];
+	t_projdata p;
 
+	p.floor_alt[0] = (d->cam.pos.y - sect->floorheight) * 2.0 * WIDTH / HEIGHT;
+	p.floor_alt[1] = (sect->ceilheight - d->cam.pos.y) * 2.0 * WIDTH / HEIGHT;
+	p.sin = d->floor_sin;
+	p.cos = d->floor_cos;
+	i = -1;
+	while (++i < HEIGHT)
+		p.floor_u1[i] = 0;
 	for (int i = 0; i < WIDTH; i++)
 		zbuffer[i] = INFINITY;
 	for (int i = 0; i < sect->numwalls; i++)
@@ -32,8 +41,9 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		double z1 = d->walls[wallnum].point.y - d->cam.pos.z;
 		double x2 = d->walls[wallnextnum].point.x - d->cam.pos.x;
 		double z2 = d->walls[wallnextnum].point.y - d->cam.pos.z;
-		t_projdata p = {.zbuffer = zbuffer, .sector = sect,
-			.wall = &d->walls[wallnum]};
+		p.zbuffer = zbuffer;
+		p.sector = sect;
+		p.wall = &d->walls[wallnum];
 		p.neighbor = (p.wall->neighborsect == -1) ? NULL :
 			&d->sectors[p.wall->neighborsect];
 		p.wall->lowerpicnum = d->walls[wallnextnum].middlepicnum;

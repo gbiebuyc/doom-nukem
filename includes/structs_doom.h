@@ -92,7 +92,13 @@ typedef struct	s_projdata
 	double		doorbottom;
 	double		sin;
 	double		cos;
-	double		altitude;
+	double		xnorm;
+	double		floor_u1[HEIGHT];
+	double		floor_u2[HEIGHT];
+	double		floor_v1[HEIGHT];
+	double		floor_v2[HEIGHT];
+	double		floor_shade[HEIGHT];
+	double		floor_alt[2];
 }				t_projdata;
 
 typedef struct	s_frustum
@@ -235,6 +241,8 @@ typedef struct	s_data
 	t_color_buf		color_buf;
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
+	double			floor_sin;
+	double			floor_cos;
 }				t_data;
 
 /*

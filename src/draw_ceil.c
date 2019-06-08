@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#define RATIO (2.0 * WIDTH / HEIGHT)
 
 void	draw_sky(t_data *d, t_projdata *p)
 {
@@ -23,43 +22,38 @@ void	draw_sky(t_data *d, t_projdata *p)
 				((double)p->y + d->cam.y_offset + MAX_Y_OFFSET) / h));
 }
 
-void	draw_ceil2(t_data *d, t_projdata *p)
+void	draw_ceil2(t_data *d, t_projdata *p, int y)
 {
-	double	dist;
-	double	left_u;
-	double	right_u;
-	double	left_v;
-	double	right_v;
-
-	dist = p->altitude /
-		-((p->y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
-	left_u = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
-	right_u = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
-	left_v = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
-	right_v = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-	p->z = dist;
-	putpixel(d, p->x, p->y, shade(getshadefactor(d, p), getpixel2(
+	if (p->floor_u1[y] == 0)
+	{
+		p->z = p->floor_alt[1] /
+			-((p->y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
+		p->floor_u1[y] = d->cam.pos.x + p->cos * p->z - p->sin * p->z * 0.5;
+		p->floor_u2[y] = d->cam.pos.x + p->cos * p->z + p->sin * p->z * 0.5;
+		p->floor_v1[y] = d->cam.pos.z + p->sin * p->z + p->cos * p->z * 0.5;
+		p->floor_v2[y] = d->cam.pos.z + p->sin * p->z - p->cos * p->z * 0.5;
+		p->floor_shade[y] = getshadefactor(d, p);
+	}
+	putpixel(d, p->x, p->y, shade(p->floor_shade[y], getpixel2(
 					d->textures[p->sector->ceilpicnum],
-					lerp(norm(p->x, 0, WIDTH), left_u, right_u),
-					lerp(norm(p->x, 0, WIDTH), left_v, right_v))));
+					lerp(p->xnorm, p->floor_u1[y], p->floor_u2[y]),
+					lerp(p->xnorm, p->floor_v1[y], p->floor_v2[y]))));
 }
 
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	if (!p->sector->outdoor && (p->altitude =
-				(p->sector->ceilheight - d->cam.pos.y) * RATIO) <= 0)
+	if (!p->sector->outdoor && p->floor_alt[1] <= 0)
 		return ;
 	if (p->sector->outdoor && p->neighbor && p->neighbor->outdoor)
 		return ;
-	p->sin = sin(-d->cam.rot + M_PI_2);
-	p->cos = cos(-d->cam.rot + M_PI_2);
 	p->x = p->cx1 - 1;
 	while (++p->x <= p->cx2)
 	{
+		p->xnorm = (double)p->x / WIDTH;
 		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
 		while (--p->y >= fr->ytop[p->x])
 			(p->sector->outdoor) ? draw_sky(d, p) :
-				draw_ceil2(d, p);
+				draw_ceil2(d, p, p->y);
 	}
 }
