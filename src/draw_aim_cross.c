@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:18:06 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 19:25:26 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 21:18:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_aim_cross(t_data *d)
 	if (d->player.current_weapon == M16)
 		colo = 0xFF0000;
 	if (d->player.current_weapon == BLASTER)
-		colo = 0xFF00;
+		colo = GREEN_BLAST;
 	if (d->player.current_weapon == CRYO_BALLISTA)
 		colo = 0xDDFF;
 	i = -1;

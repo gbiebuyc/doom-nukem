@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:09:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:58:34 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 
 void		player_hit_projectile(t_data *d, t_projectile *projectile)
 {
-	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, IS_RED);
+	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, RED);
 	change_inertia(d, atan2(projectile->dir.z, projectile->dir.x), BOUNCING_DIST_PROJ);
 }
 

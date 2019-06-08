@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:03:22 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 20:47:44 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void	monster_behaviour(t_data *d, t_monster *monster)
 {
-	static	int i;
 	t_vec2f	tmp;
 
 	if (!monster->can_collide) // all monster collide so far, used for monster is dead
@@ -28,13 +27,13 @@ void	monster_behaviour(t_data *d, t_monster *monster)
 		else
 			return ;
 	}
-	if (i == 100)
+	monster->timer++;
+	if (monster->timer == 100)
 	{
 		tmp = sub_vec2f(vec3to2(d->cam.pos), monster->pos);
 		monster->anim_state = 4;
 		monster->anim_time = 10;
 		monster->rot = atan2(tmp.y, tmp.x);
-		i = 0;
+		monster->timer = 0;
 	}
-	i++;
 }

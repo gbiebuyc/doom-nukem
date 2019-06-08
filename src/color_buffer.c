@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:13:32 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 00:19:16 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 21:21:55 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		set_find_alpha(double *scale_x, double *scale_y)
 		scale_y[y] = fabs(y - HEIGHT * 0.5) / (HEIGHT * 0.5);
 }
 
-double		find_alpha(short x, short y)// a mettre en statique plutot que de calculer
+double		find_alpha(short x, short y, uint32_t which_ret)// a mettre en statique plutot que de calculer
 {
 	static bool		set;
 	static double	scale_x[WIDTH];
@@ -41,10 +41,11 @@ double		find_alpha(short x, short y)// a mettre en statique plutot que de calcul
 //	scale_x = scale_x / (WIDTH * 0.5);
 //	scale_y = fabs(y - HEIGHT * 0.5);
 //	scale_y = scale_y / (HEIGHT * 0.5);
-	return ((scale_x[x] + scale_y[y]) * 0.5);
-	//if (scale_x > scale_y)
-	//	return (scale_x);
-	//return (scale_y);
+	if (which_ret == GREEN_BLAST)
+		return ((scale_x[x] + scale_y[y]) * 0.5);
+	if (scale_x[x] > scale_y[y])
+		return (scale_x[x]);
+	return (scale_y[y]);
 }
 
 void	color_screen(t_data *d)
@@ -60,17 +61,22 @@ void	color_screen(t_data *d)
 		y = -1;
 		while (++y < HEIGHT)
 		{
-			tmp = (uint8_t)(find_alpha(x, y) * d->color_buf.value);
-			colo = (0xFF << d->color_buf.colo) + (tmp << 24);
+			if (d->color_buf.colo == GREEN_BLAST)
+				tmp = (uint8_t)((1 - find_alpha(x, y, d->color_buf.colo)) * d->color_buf.value);
+			else
+				tmp = (uint8_t)((find_alpha(x,y, d->color_buf.colo)) * d->color_buf.value);
+			colo = d->color_buf.colo + (tmp << 24);
 			putpixel(d, x, y, alpha(getpixel3(d->screen, x, y), colo));
 		}
 	}
-	if (d->color_buf.value < 3)
-		d->color_buf.value = 0;
+	if (d->color_buf.colo == GREEN_BLAST)
+		d->color_buf.value -= 6;
 	else
-	d->color_buf.value -= 2;
+		d->color_buf.value -= 1;
+	if (d->color_buf.value < 0)
+		d->color_buf.value = 0;
 }
-void	change_buf_colo(t_data *d, uint16_t amount, uint8_t colo)
+void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo)
 {
 	if (d->color_buf.colo != colo)
 	{

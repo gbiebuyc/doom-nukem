@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:26:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 21:20:54 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,14 +190,14 @@ typedef	struct	s_player
 	uint8_t		click;
 }				t_player;
 
-# define IS_GREEN 8
-# define IS_RED 16
-# define MAX_BUF_VALUE 180
+# define RED 0xFF0000
+# define GREEN_BLAST 0x5CE26E
+# define MAX_BUF_VALUE 240
 
 typedef struct	s_color_buf
 {
-	uint8_t		colo;
-	uint16_t		value;// 16 needed to not exceed uint8_t with additions
+	uint32_t		colo;
+	int16_t		value;// 16 needed to not exceed uint8_t with additions
 }				t_color_buf;
 
 # define MAXNBOFANIMATION 5

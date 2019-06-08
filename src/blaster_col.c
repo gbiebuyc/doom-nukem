@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:26:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/08 21:20:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void		blaster_shot(t_data *d)
 	if (d->player.click == RIGHT_CLICK)
 	{
 	recur_scan_point_line(d, 30, d->cursectnum, -1, true);
+	change_buf_colo(d, 10, GREEN_BLAST);
 	//remove ammo
 	}
 	if (d->player.click == LEFT_CLICK)
@@ -143,6 +144,7 @@ void		blaster_shot(t_data *d)
 	id_of_monst = recur_scan_point_line(d, 30, d->cursectnum, -1, false);
 	if (id_of_monst != -1)
 		monster_hit(d, LEFT_MOUSE_BLASTER_DAMAGE, id_of_monst);
+	change_buf_colo(d, 5, GREEN_BLAST);
 		//remove ammo
 	}
 }
