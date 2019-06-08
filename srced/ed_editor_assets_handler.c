@@ -12,28 +12,45 @@
 
 #include "editor.h"
 
-void	draw_selection_arround_selected_asset(t_data *d)
+int		select_assets_on_map(t_data *d)
+{
+	t_monster_list	*lst;
+	int				found;
+
+	found = 0;
+	lst = d->interface.monster_list;
+	while (lst)
+	{
+		lst->is_select = 0;
+		if (lst->is_highlighted)
+		{
+			lst->is_select = 1;
+			found = 1;
+		}
+		lst = lst->prev;
+	}
+	return (found);
+}
+
+void	draw_selection_arround_selected_asset(t_data *d, t_vec2f *v, int c)
 {
 	int		x;
 	int		y;
-	t_vec2f	v;
 
 	x = d->temp.x;
 	y = d->temp.y;
-	v.x = d->interface.selected_asset_position.x;
-	v.y = d->interface.selected_asset_position.y;
 	x = -1;
 	while (++x < 32)
-		putpixel(d, x + v.x, v.y, 0x00ff00);
+		putpixel(d, x + v->x, v->y, c);
 	x = -1;
 	while (++x < 32)
-		putpixel(d, x + v.x, v.y + 32, 0x00ff00);
+		putpixel(d, x + v->x, v->y + 32, c);
 	y = -1;
 	while (++y < 32)
-		putpixel(d, v.x, y + v.y, 0x00ff00);
+		putpixel(d, v->x, y + v->y, c);
 	y = -1;
 	while (++y < 32)
-		putpixel(d, v.x + 32, y + v.y, 0x00ff00);
+		putpixel(d, v->x + 32, y + v->y, c);
 }
 
 void	get_selected_asset(t_data *d)
@@ -71,16 +88,13 @@ int		add_asset_to_map(t_data *d, int x, int y)
 	{
 		d->player_start = (t_vec3f){xy.x, s->floorheight + 0.5, xy.y};
 		d->startsectnum = d->selected_sector;
-		d->interface.selected_asset_cat = -1;
-		d->interface.selected_asset = -1;
-		d->interface.select = 1;
 	}
 	else if (d->interface.selected_asset_cat == 1)
 	{
 		add_monster_to_list(d, &xy, sectornum);
 	}
+	d->interface.selected_asset_cat = -1;
+	d->interface.selected_asset = -1;
+	d->interface.select = 1;
 	return (0);
-//	a = &d->interface.toolbar.assets[d->interface.selected_asset_cat];
-//	copy_surface_to_surface(a->assets_icon[d->interface.selected_asset],
-//							d->screen, (int[2]){x, y}, d);
 }

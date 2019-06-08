@@ -33,7 +33,8 @@ static int	selecting_wall_or_sector(t_data *d, SDL_Event *e, int x, int y)
 static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 {
 	SDL_GetMouseState(&x, &y);
-	if (!selecting_wall_or_sector(d, e, x, y) && x > W - PROPERTIES_LIMIT)
+	if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y) &&
+		x > W - PROPERTIES_LIMIT)
 		btn_height(d, x, y, &d->interface);
 	if (is_on_checkbox(d, x, y) == 1)
 		toggle_isdoor(d);

@@ -90,6 +90,10 @@ typedef struct	s_monster_list
 	char					*name;
 	t_vec2f					pos;
 	int						sectnunm;
+	int						category;
+	int						selected_asset;
+	int						is_highlighted;
+	int						is_select;
 	struct s_monster_list	*begin;
 	struct s_monster_list	*prev;
 	struct s_monster_list	*next;
@@ -129,15 +133,15 @@ typedef struct	s_interface
 	int				texture_case_select;
 	int				category;
 	int				nb_asset[4];
+	t_vec2f			category_pos[4];
 	int				selected_asset;
 	int				selected_asset_cat;
+	t_vec2f			selected_asset_position;
 	t_monster_list	*monster_list;
 	t_vec2f			mouse_pos;
 	t_vec2f			tex_select[3];
 	t_vec2f			btn_floor_height_pos;
 	t_vec2f			btn_ceil_height_pos;
-	t_vec2f			category_pos[4];
-	t_vec2f			selected_asset_position;
 	t_vec2f			cbox_door_p;
 	t_vec2f			cbox_skybox_p;
 }				t_interface;
@@ -187,6 +191,7 @@ typedef struct	s_data
 
 /**/int			bmp_reader(t_data *d);
 /**/void	add_monster_to_list(t_data *d, t_vec2f *xy,int sectn);
+/**/int			delete_monster(t_data *d);
 
 void			debug_print(t_data *d);
 
@@ -225,7 +230,7 @@ void			draw_screen(t_data *d);
 **	ed_draw_assets.c
 */
 
-void			draw_assets_to_map(t_data *d);
+void			draw_assets_to_map(t_data *d, t_assets *a);
 
 /*
 **	ed_conversion.c
@@ -279,7 +284,9 @@ void			update_wall_pos(t_data *d);
 **	ed_editor_assets_handler.c
 */
 
-void			draw_selection_arround_selected_asset(t_data *d);
+int				select_assets_on_map(t_data *d);
+void			draw_selection_arround_selected_asset(t_data *d, t_vec2f *v,
+																	int c);
 void			get_selected_asset(t_data *d);
 int				add_asset_to_map(t_data *d, int x, int y);
 
@@ -366,6 +373,12 @@ void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 */
 
 void			toggle_isdoor(t_data *d);
+
+/*
+** ed_detect_assets.c
+*/
+
+void			detect_assets(t_data *d, int x, int y);
 
 /*
 ** ed_detect_wall.c

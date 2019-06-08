@@ -14,7 +14,7 @@
 
 void		debug_print(t_data *d)
 {
-	t_wall		*wall;
+/*	t_wall		*wall;
 	int			w;
 	int			s;
 
@@ -31,7 +31,20 @@ void		debug_print(t_data *d)
 		ft_printf("picnum : %d\n", wall->middlepicnum);
 		ft_printf("texture name = %s\n", wall->texture_name);
 		w++;
+	}*/
+	t_monster_list	*tmp;
+
+	if (d->interface.monster_list)
+	{
+		tmp = d->interface.monster_list->begin;
+		while (tmp)
+		{
+			ft_printf("%s\n", tmp->name);
+			printf("%5.2f %5.2f\n", tmp->pos.x, tmp->pos.y);
+			tmp = tmp->next;
+		}
 	}
+	/**/
 }
 
 void		main_loop(t_data *d)

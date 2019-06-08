@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 11:15:00 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/02 19:21:15 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/08 16:15:39 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ void		draw_screen(t_data *d)
 	s = -1;
 	while (++s < d->numsectors)
 		draw_sector(d, s);
-	draw_assets_to_map(d);
+	draw_assets_to_map(d, d->interface.toolbar.assets);
 	show_menu(d);
 	if (d->interface.category != -1)
 		draw_selection_arround_asset(d, d->interface.category_pos);
 	if (d->interface.selected_asset != -1)
-		draw_selection_arround_selected_asset(d);
+		draw_selection_arround_selected_asset(d,
+						&d->interface.selected_asset_position, 0x00ff00);
 ///**/bmp_reader(d);
 	SDL_UpdateWindowSurface(d->win);
 }
