@@ -57,3 +57,12 @@ void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 				draw_ceil2(d, p, p->y);
 	}
 }
+
+void	*draw_ceil_thread(void *void_arg)
+{
+	t_thread_arg	*arg;
+
+	arg = (t_thread_arg*)void_arg;
+	draw_ceil(arg->d, arg->p, arg->fr);
+	return (NULL);
+}

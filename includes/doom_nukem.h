@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <pthread.h>
 
 # define WIDTH 1000
 # define HEIGHT 750
@@ -41,6 +42,7 @@ bool	clip_wall(double *x1, double *z1, double x2, double z2);
 void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr);
+void	*draw_ceil_thread(void *arg);
 void	clamp_wall(bool visible[], int *x1, int *x2);
 void	player_actions(t_data *d);
 void	update(t_data *d);

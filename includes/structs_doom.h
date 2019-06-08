@@ -245,6 +245,13 @@ typedef struct	s_data
 	double			floor_cos;
 }				t_data;
 
+typedef struct	s_thread_arg
+{
+	t_data		*d;
+	t_projdata	*p;
+	t_frustum	*fr;
+}				t_thread_arg;
+
 /*
 ** Animation defines
 */

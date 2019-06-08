@@ -66,7 +66,7 @@ INCLUDE = includes
 INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
 CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
-LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
+LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
 ED_DIR = srced
 
 all: $(NAME) editor

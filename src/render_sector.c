@@ -22,7 +22,10 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	yceil;
 	double	yfloor;
 	double	zbuffer[WIDTH];
-	t_projdata p;
+	t_projdata		p;
+	t_projdata		pouet;
+	pthread_t		thread;
+	t_thread_arg	t;
 
 	p.floor_alt[0] = (d->cam.pos.y - sect->floorheight) * 2.0 * WIDTH / HEIGHT;
 	p.floor_alt[1] = (sect->ceilheight - d->cam.pos.y) * 2.0 * WIDTH / HEIGHT;
@@ -94,8 +97,13 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.u_end = u_end * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_wall(d, &p, fr);
+		pouet = p;
+		t = (t_thread_arg){d, &pouet, fr};
+		if (pthread_create(&thread, NULL, draw_ceil_thread, &t))
+			exit(printf("pthread_create error\n"));
 		draw_floor(d, &p, fr);
-		draw_ceil(d, &p, fr);
+		if (pthread_join(thread, NULL))
+			exit(printf("pthread_join error\n"));
 	}
 	if (sect->sprite_list)
 		reorder_sprite(d, sect);
