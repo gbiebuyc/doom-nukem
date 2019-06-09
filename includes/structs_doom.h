@@ -77,7 +77,6 @@ typedef struct	s_projdata
 	double		y_scale;
 	t_wall		*wall;
 	t_sector	*sector;
-	double		*zbuffer;
 	double		n;
 	double		z;
 	int			x;
@@ -243,6 +242,7 @@ typedef struct	s_data
 	unsigned char	font[96][5];
 	double			floor_sin;
 	double			floor_cos;
+	double			zbuffer[WIDTH];
 }				t_data;
 
 typedef struct	s_thread_arg

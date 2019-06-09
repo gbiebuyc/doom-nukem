@@ -23,6 +23,8 @@ void	render(t_data *d)
 		fr.ytop[x] = 0;
 		fr.ybottom[x] = HEIGHT-1;
 	}
+	for (int i = 0; i < WIDTH; i++)
+		d->zbuffer[i] = INFINITY;
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);
 	if (d->color_buf.value)

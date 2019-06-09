@@ -21,7 +21,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	len2;
 	double	yceil;
 	double	yfloor;
-	double	zbuffer[WIDTH];
 	t_projdata		p;
 	t_projdata		pouet;
 	pthread_t		thread;
@@ -34,8 +33,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	i = -1;
 	while (++i < HEIGHT)
 		p.floor_u1[i] = 0;
-	for (int i = 0; i < WIDTH; i++)
-		zbuffer[i] = INFINITY;
 	for (int i = 0; i < sect->numwalls; i++)
 	{
 		int wallnum = sect->firstwallnum + i;
@@ -44,7 +41,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		double z1 = d->walls[wallnum].point.y - d->cam.pos.z;
 		double x2 = d->walls[wallnextnum].point.x - d->cam.pos.x;
 		double z2 = d->walls[wallnextnum].point.y - d->cam.pos.z;
-		p.zbuffer = zbuffer;
 		p.sector = sect;
 		p.wall = &d->walls[wallnum];
 		p.neighbor = (p.wall->neighborsect == -1) ? NULL :
