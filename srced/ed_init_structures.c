@@ -15,23 +15,21 @@
 void		init_data(t_data *d)
 {
 	ft_memset(d, 0, sizeof(t_data));
-	d->scale = W / 64;
-	d->pos = (t_vec2f){0, 0};
-	d->selectedwall = NULL;
-	d->selectedwall2 = NULL;
-	d->grid_locking = true;
-	d->sectordrawing = false;
+	*d = (t_data){.win = NULL, .screen = NULL, .textures = NULL,
+		.texture_list = NULL, .pos = {0, 0}, .startsectnum = 0,
+		.monsters = NULL, .nbmonsters = 0, .scale = W >> 6,
+		.selectedwall = NULL, .selectedwall2 = NULL, .grid_locking = true,
+		.sectordrawing = false, .default_texture = 0, .selected_texture = -2};
+	d->player_start = (t_vec3f){0, 0.2, 0};
 	d->interface.show_menu = 0;
 	d->interface.select = 1;
 	d->interface.move = 0;
 	d->texture_to_scale = -1;
 	d->interface.texture_case_select = -1;
-	d->selected_texture = -2;
 	d->interface.category = -1;
 	d->interface.selected_asset = -1;
 	d->interface.separate_sector = 0;
-	d->default_texture = 0;
-	/**/d->interface.monster_list = NULL;
+	d->interface.monster_list = NULL;
 	d->startsectnum = 0;
 }
 
@@ -48,18 +46,14 @@ static void	init_sectors(t_data *d)
 	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
-	d->player_start = (t_vec3f){0, 0.2, 0};
 }
-
+/*
 static void	init_monsters(t_data *d)
 {
 	t_monster	monster;
-	t_vec2f		pos;
 
-	pos.x = 1.0;
-	pos.y = -3.0;
-	d->nummonsters = 1;
-	monster.pos = pos;
+	d->nbmonsters = 1;
+	monster.pos = (t_vec2f){1.0, -3.0};
 	monster.activated = true;
 	monster.rot = 0.0;
 	monster.health_mult = 1;
@@ -69,9 +63,9 @@ static void	init_monsters(t_data *d)
 	d->monsters[0] = monster;
 //	monster.behavior = &basic_monster;
 }
-
+*/
 void		init_structure(t_data *d)
 {
 	init_sectors(d);
-	init_monsters(d);
+//	init_monsters(d);
 }

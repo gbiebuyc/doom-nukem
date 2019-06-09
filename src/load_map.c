@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-int		read_texture_data(t_data *d, int f)
+static int		read_texture_data(t_data *d, int f)
 {
 	int	i;
 	int w;
@@ -35,7 +35,7 @@ int		read_texture_data(t_data *d, int f)
 	return (0);
 }
 
-int		read_textures_name(t_data *d, int f)
+static int		read_textures_name(t_data *d, int f)
 {
 	int		i;
 
@@ -59,34 +59,25 @@ int		read_textures_name(t_data *d, int f)
 **	And get all the data structure
 */
 
-int		read_wall_n_sector_data(t_data *d, int f)
+static int		read_wall_n_sector_data(t_data *d, int f)
 {
 	int		i;
 
 	if (read(f, &d->numsectors, sizeof(int16_t)) < 0)
-		return (ft_printf("Faield to read numsectors\n"));
+		return (ft_printf("Faield to read numsectors.\n"));
 	i = -1;
 	while (++i < d->numsectors)
 		if (read(f, &d->sectors[i], sizeof(t_sector)) < 0 ||
 			read(f, d->sectors[i].floor_texture_name, 100) < 0 ||
 			read(f, d->sectors[i].ceil_texture_name, 100) < 0)
-			return (ft_printf("failed to read sector structure\n"));
+			return (ft_printf("failed to read sector structure.\n"));
 	if (read(f, &d->numwalls, sizeof(int16_t)) < 0)
-		return (ft_printf("Faield to read numwwalls\n"));
+		return (ft_printf("Faield to read numwwalls.\n"));
 	i = -1;
 	while (++i < d->numwalls)
 		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
 			read(f, d->walls[i].texture_name, 100) < 0)
-			return (ft_printf("failed to read wall structure\n"));
-	return (0);
-}
-
-int		read_monsters_data(t_data *d, int f)
-{
-	if (read(f, &d->nummonsters, sizeof(d->nummonsters)) < 0)
-		return (ft_printf("Failed to read nummonsters\n"));
-	if (read(f, &d->monsters, sizeof(d->monsters)) < 0)
-		return (ft_printf("Failed to read monsters\n"));
+			return (ft_printf("failed to read wall structure.\n"));
 	return (0);
 }
 
@@ -100,8 +91,7 @@ void	load_map(t_data *d)
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)
 		exit(ft_printf("map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_textures_name(d, f) ||
-		read_texture_data(d, f))
+		read_texture_data(d, f) || read_monsters_data(d, f))
 		exit (1);
-	/**/read_monsters_data(d, f);
 	close(f);
 }

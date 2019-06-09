@@ -14,6 +14,20 @@
 
 void		debug_print(t_data *d)
 {
+	t_monster_list	*tmp;
+
+	ft_printf("%d\n", d->nbmonsters);
+	if (d->interface.monster_list)
+	{
+		tmp = d->interface.monster_list->begin;
+		while (tmp)
+		{
+			ft_printf("%s\n", tmp->name);
+			printf("%5.2f %5.2f\n", tmp->pos.x, tmp->pos.y);
+			ft_printf("sector : %d\n", tmp->sectnunm);
+			tmp = tmp->next;
+		}
+	}
 /*	t_wall		*wall;
 	int			w;
 	int			s;
@@ -32,19 +46,6 @@ void		debug_print(t_data *d)
 		ft_printf("texture name = %s\n", wall->texture_name);
 		w++;
 	}*/
-	t_monster_list	*tmp;
-
-	if (d->interface.monster_list)
-	{
-		tmp = d->interface.monster_list->begin;
-		while (tmp)
-		{
-			ft_printf("%s\n", tmp->name);
-			printf("%5.2f %5.2f\n", tmp->pos.x, tmp->pos.y);
-			tmp = tmp->next;
-		}
-	}
-	/**/
 }
 
 void		main_loop(t_data *d)

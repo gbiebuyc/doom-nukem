@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ed_monster_list_manager.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/09 13:31:37 by mikorale          #+#    #+#             */
+/*   Updated: 2019/06/09 13:31:38 by mikorale         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "editor.h"
-void		fix_list(t_data *d, t_monster_list *prev, t_monster_list *next)
+
+static void		fix_list(t_data *d, t_monster_list *prev, t_monster_list *next)
 {
 	t_monster_list	*lst;
 
@@ -18,8 +31,7 @@ void		fix_list(t_data *d, t_monster_list *prev, t_monster_list *next)
 	d->interface.monster_list = lst;
 }
 
-// TODO removed methode bourin
-int			delete_monster(t_data *d)
+int				delete_monster(t_data *d)
 {
 	t_monster_list	*lst;
 	t_monster_list	*prev;
@@ -41,6 +53,7 @@ int			delete_monster(t_data *d)
 				d->interface.monster_list = NULL;
 			else
 				fix_list(d, prev, next);
+			d->nbmonsters--;
 			return (1);
 		}
 		lst = lst->prev;
@@ -56,7 +69,7 @@ t_monster_list	*new_monster(char *name, t_vec2f *p, int sectnum,
 	if (!(monster = (t_monster_list*)malloc(sizeof(t_monster_list))))
 		return (NULL);
 	monster->name = name;
-	monster->pos = *p;
+	monster->pos = *p; // TODO handle collision, monster superposition
 	monster->sectnunm = sectnum;
 	monster->category = -1;
 	monster->selected_asset = -1;
@@ -67,28 +80,32 @@ t_monster_list	*new_monster(char *name, t_vec2f *p, int sectnum,
 	return (monster);
 }
 
-void			add_monster_to_list(t_data *d, t_vec2f *xy, int sectn)
+int				add_monster_to_list(t_data *d, t_vec2f *p, int sectn,
+															t_interface *i)
 {
 	int			selected_asset;
 	char		*name;
-	t_interface	*i;
 
-	i = &d->interface;
 	selected_asset = d->interface.selected_asset;
 	name = d->assets_data[d->interface.nb_asset[0] + selected_asset].name;
 	if (!d->interface.monster_list)
 	{
-		i->monster_list = new_monster(name, xy, sectn, NULL);
+		if (!(i->monster_list = new_monster(name, p, sectn, NULL)))
+			return (ft_printf("Failed to add monster.\n"));
 		i->monster_list->begin = d->interface.monster_list;
 		i->monster_list->category = d->interface.selected_asset_cat;
 		i->monster_list->selected_asset = selected_asset;
 	}
 	else
 	{
-		i->monster_list->next = new_monster(name, xy, sectn, i->monster_list);
+		if (!(i->monster_list->next = new_monster(name, p, sectn,
+														i->monster_list)))
+			return (ft_printf("Failed to add next monster.\n"));
 		i->monster_list->next->begin = d->interface.monster_list->begin;
 		i->monster_list->next->category = d->interface.selected_asset_cat;
 		i->monster_list->next->selected_asset = selected_asset;
 		i->monster_list = d->interface.monster_list->next;
 	}
+	d->nbmonsters++;
+	return (0);
 }

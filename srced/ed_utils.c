@@ -45,25 +45,19 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dst,
 	int			y;
 
 	y = -1;
-	while (++y < src->h && d->texture_to_scale == -1 /*&& (x = -1) < 0*/)
-	{
-		x = -1;
+	while (++y < src->h && d->texture_to_scale == -1 && (x = -1))
 		while (++x < src->w)
 			if (p[0] + x >= 0 && p[0] + x < W && p[1] + y >= 0 && p[1] + y < H)
 				((uint32_t*)dst->pixels)[p[0] + x + (p[1] + y) * dst->w] =
 				get_color(x, y, ((uint32_t*)src->pixels)[x + y * src->w], d);
-	}
 	y = -1;
-	while (++y < d->texture_to_scale && d->texture_to_scale != -1)
-	{
-		x = -1;
+	while (++y < d->texture_to_scale && d->texture_to_scale > 0 && (x = -1))
 		while (++x < d->texture_to_scale)
 			if (p[0] + x >= 0 && p[0] + x < W && p[1] + y >= 0 && p[1] + y < H)
 				((uint32_t*)dst->pixels)[(x + p[0]) + (y + p[1]) * dst->w] =
 				((uint32_t*)src->pixels)[
 					(int)((double)x / d->texture_to_scale * src->w) +
 					(int)((double)y / d->texture_to_scale * src->h) * src->w];
-	}
 }
 
 void			save_selected_texture(t_data *d, int x, int y, int wallnum)

@@ -30,6 +30,7 @@ int		get_weapons_files(t_data *d, char *path)
 	if ((dr = opendir(path)))
 	{
 		(void)d; //TODO
+		closedir(dr);
 	}
 	return (0);
 }
@@ -41,6 +42,7 @@ int		get_monsters_files(t_data *d, char *path)
 	if ((dr = opendir(path)))
 	{
 		(void)d; //TODO
+		closedir(dr);
 	}
 	return (0);
 }

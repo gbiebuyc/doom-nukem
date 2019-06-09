@@ -70,8 +70,8 @@ static void	draw_grid(t_data *d)
 	int	limit;
 
 	i = -GRIDSIZE;
-	limit = W - PROPERTIES_LIMIT -
-			(d->interface.texture_case_select != -1 ? PROPERTIES_LIMIT : 0);
+	limit = W - (d->interface.texture_case_select != -1 ? TEXTURE_TOOLBAR
+														: PROPERTIES_LIMIT);
 	while (i++ <= GRIDSIZE)
 	{
 		x = worldtoscreen(d, (t_vec2f){i, 0}).x;

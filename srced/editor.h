@@ -163,18 +163,18 @@ typedef struct	s_data
 	t_interface		interface;
 	t_assets_data	assets_data[100];
 	t_vec3f			player_start;
+	t_vec2f			pos;
 	int16_t			startsectnum;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
-	t_monster		monsters[MAXNUMMONSTERS];
+	t_monster		*monsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
-	uint16_t		nummonsters;
+	uint16_t		nbmonsters;
 	int				nb_texture;
 	int32_t			nb_used_texture;
 	int				default_texture;
 	double			scale;
-	t_vec2f			pos;
 	t_wall			*selectedwall;
 	t_wall			*selectedwall2;
 	int				selected_sector;
@@ -190,13 +190,12 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-/**/void	add_monster_to_list(t_data *d, t_vec2f *xy,int sectn);
-/**/int			delete_monster(t_data *d);
+/***/int		write_monster_list(t_data *d, int f);
 
 void			debug_print(t_data *d);
 
 /*
-**	ed_init_structures.c1
+**	ed_init_structures.c
 */
 
 void			init_structure(t_data *d);
@@ -387,5 +386,13 @@ void			detect_assets(t_data *d, int x, int y);
 void			detect_wall(t_data *d, int x, int y);
 void			detect_select_wall(t_data *d, int x, int y);
 double			fclamp(double x, double min, double max);
+
+/*
+**	ed_monster_list_manager.c
+*/
+
+int				add_monster_to_list(t_data *d, t_vec2f *xy,int sectn,
+															t_interface *i);
+int				delete_monster(t_data *d);
 
 #endif

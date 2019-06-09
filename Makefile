@@ -39,7 +39,7 @@ FILES= main \
 	   draw_wall \
 	   clip_wall \
 	   pixel \
-	   load_map \
+	   load_map load_assets \
 	   inside \
 	   utils \
 	   jump \

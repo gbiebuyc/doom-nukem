@@ -73,15 +73,6 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
-static int	write_monster_data(t_data *d, int f)
-{
-	if (write(f, &d->nummonsters, sizeof(d->nummonsters)) < 0)
-		return (ft_printf("Failed to write nummonsters\n"));
-	if (write(f, &d->monsters, sizeof(d->monsters)) < 0)
-		return (ft_printf("Failed to write monsters\n"));
-	return (0);
-}
-
 int			save_file(t_data *d)
 {
 	t_vec3f	startpos;
@@ -102,7 +93,7 @@ int			save_file(t_data *d)
 	if (write_wall_n_sector_data(d, f) || write_texture_list(d, f) ||
 		write_texture_data(d, f))
 		return (1);
-	/**/write_monster_data(d, f);
+	/**/write_monster_list(d, f);
 	close(f);
 	ft_printf("saved map01\n");
 	return (0);

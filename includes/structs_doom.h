@@ -225,7 +225,7 @@ typedef struct	s_data
 	t_cam			cam;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
-	t_monster		monsters[MAXNUMMONSTERS];
+	t_monster		*monsters;
 	t_monster_type	monster_type[MAXTYPEMONSTERS];
 	t_projectile	projectiles[MAX_PROJECTILES];
 	t_proj_type		projectile_type[MAX_KIND_OF_PROJECTILE];
