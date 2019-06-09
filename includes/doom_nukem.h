@@ -76,7 +76,7 @@ bool	is_inside_vec2f(t_vec2f p1, t_vec2f p2, t_vec2f point);
 bool	is_near(double v1, double v2, double range);
 t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3);
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
-void	draw_string(t_data *d, const char* str, int x, int y, uint32_t color);
+void	draw_string(t_data *d, t_font f);
 void	init_font(t_data *d);
 
 /*
