@@ -48,11 +48,6 @@ uint32_t		getpixel3(SDL_Surface *s, short x, short y)
 	return (((uint32_t*)s->pixels)[x + y * s->w]);
 }
 
-uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b)
-{
-	return (SDL_MapRGBA(surface->format, r, g, b, 255));
-}
-
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo)
 {
 	double			percent;

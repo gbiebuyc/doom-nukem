@@ -54,7 +54,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 		{
 			v = (int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
 			putpixel(d, p->x, y, shade(shadefactor,
-						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+						((uint32_t*)tex->pixels)[u + v * tex->w]));
 		}
 	else if (p->neighbor)
 	{
@@ -64,7 +64,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 						p->nya - p->doorheight, p->nya) * tex->h) % tex->h :
 				(int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
 			putpixel(d, p->x, y, shade(shadefactor,
-						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+						((uint32_t*)tex->pixels)[u + v * tex->w]));
 		}
 		tex = d->textures[p->wall->lowerpicnum];
 		u = (int)(p->u * tex->w) % tex->w;
@@ -73,7 +73,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 		{
 			v = (int)(norm(y, p->ya, p->yb) * p->y_scale * tex->h) % tex->h;
 			putpixel(d, p->x, y, shade(shadefactor,
-						((uint32_t*)tex->pixels)[(int)u + v * tex->w]));
+						((uint32_t*)tex->pixels)[u + v * tex->w]));
 		}
 	}
 }
@@ -97,8 +97,8 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 		p->doorheight = p->doorbottom - p->ya;
 		p->nya += (p->doorbottom - ft_max(p->ya, p->nya)) *
 			(1 - d->doorstate[p->wall - d->walls]);
-		nfr->ytop[p->x] = (p->sector->outdoor && p->neighbor->outdoor) ? 0 :
-			clamp(p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
+		nfr->ytop[p->x] = clamp((p->sector->outdoor && p->neighbor->outdoor) ?
+				0 : p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
 		nfr->ybottom[p->x] = clamp(p->nyb, fr->ytop[p->x],
 				fr->ybottom[p->x]);
 		if (p->sector->outdoor && p->neighbor->outdoor)

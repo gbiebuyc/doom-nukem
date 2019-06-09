@@ -12,14 +12,30 @@
 
 #include "doom_nukem.h"
 
-void	draw_sky(t_data *d, t_projdata *p)
+void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	int	h;
+	SDL_Surface *tex;
+	int			h;
+	int			v;
 
+	if (p->neighbor && p->neighbor->outdoor)
+		return ;
+	tex = d->textures[p->sector->ceilpicnum];
 	h = HEIGHT + MAX_Y_OFFSET * 2;
-	putpixel(d, p->x, p->y, getpixel2(d->textures[p->sector->ceilpicnum],
-				((double)p->x + d->cam.rot * 1000) / (WIDTH * (h / HEIGHT)),
-				((double)p->y + d->cam.y_offset + MAX_Y_OFFSET) / h));
+	p->x = p->cx1 - 1;
+	while (++p->x <= p->cx2)
+	{
+		p->u = (int)(((double)p->x + d->cam.rot * 1000) /
+				(WIDTH * (h / HEIGHT)) * tex->w) % tex->w;
+		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
+							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
+		while (--p->y >= fr->ytop[p->x])
+		{
+			v = ((double)p->y + d->cam.y_offset + MAX_Y_OFFSET) / h * tex->h;
+			putpixel(d, p->x, p->y, ((uint32_t*)tex->pixels)[
+					(int)p->u + v * tex->w]);
+		}
+	}
 }
 
 void	draw_ceil2(t_data *d, t_projdata *p, int y)
@@ -42,9 +58,7 @@ void	draw_ceil2(t_data *d, t_projdata *p, int y)
 
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	if (!p->sector->outdoor && p->floor_alt[1] <= 0)
-		return ;
-	if (p->sector->outdoor && p->neighbor && p->neighbor->outdoor)
+	if (p->floor_alt[1] <= 0)
 		return ;
 	p->x = p->cx1 - 1;
 	while (++p->x <= p->cx2)
@@ -53,8 +67,7 @@ void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
 		while (--p->y >= fr->ytop[p->x])
-			(p->sector->outdoor) ? draw_sky(d, p) :
-				draw_ceil2(d, p, p->y);
+			draw_ceil2(d, p, p->y);
 	}
 }
 
@@ -63,6 +76,9 @@ void	*draw_ceil_thread(void *void_arg)
 	t_thread_arg	*arg;
 
 	arg = (t_thread_arg*)void_arg;
-	draw_ceil(arg->d, arg->p, arg->fr);
+	if (arg->p->sector->outdoor)
+		draw_sky(arg->d, arg->p, arg->fr);
+	else
+		draw_ceil(arg->d, arg->p, arg->fr);
 	return (NULL);
 }
