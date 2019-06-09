@@ -25,7 +25,7 @@ void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 	p->x = p->cx1 - 1;
 	while (++p->x <= p->cx2)
 	{
-		p->u = (int)(((double)p->x + d->cam.rot * 1000) /
+		p->u = (unsigned int)(((double)p->x + d->cam.rot * 1000) /
 				(WIDTH * (h / HEIGHT)) * tex->w) % tex->w;
 		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
