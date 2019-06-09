@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/08 20:29:54 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/09 23:50:24 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ FILES= main \
 	   draw_wall \
 	   clip_wall \
 	   pixel \
+	   player_damage \
 	   load_map load_assets \
 	   inside \
 	   utils \

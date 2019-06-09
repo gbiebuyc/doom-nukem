@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 19:41:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 22:44:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 		d->debug_pause = true;
 	else if (event.keysym.sym == SDLK_e)
 		activate_door(d);
+}
+
+void	event_key_up(t_data *d, SDL_KeyboardEvent event)
+{
+	(void)d;
+	(void)event;
 }
 
 #define MOUSE_SENSITIVTY 1

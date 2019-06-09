@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:58:34 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 23:47:53 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 
 	newpos = add_vec3f(projectile->pos, projectile->dir);
 	tmp = sector->sprite_list;
+	//add while with neighbor sectors
 	while (tmp)
 	{
 		if (tmp->type == IS_MONSTER && d->monsters[tmp->id].can_collide)
@@ -65,14 +66,6 @@ bool		collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projecti
 	}
 	projectile->pos = newpos;
 	return (false);
-}
-
-# define BOUNCING_DIST_PROJ 0.12
-
-void		player_hit_projectile(t_data *d, t_projectile *projectile)
-{
-	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, RED);
-	change_inertia(d, atan2(projectile->dir.z, projectile->dir.x), BOUNCING_DIST_PROJ);
 }
 
 # define MIN_DIST_TO_PLAYER 0.15

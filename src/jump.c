@@ -6,53 +6,113 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 21:22:40 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 21:45:57 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/10 00:08:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define MINIMUM_HEIGHT 0.5
-# define MINIMUM_CEIL_DIST 0.1
-#define JUMP_FORCE 0.08
+# define MINIMUM_HEIGHT 0.5// used in init_player
+# define MINIMUM_CROUCH_HEIGHT 0.2 // defined in player_damage too
+# define CROUCH_SPEED 0.01
+# define MINIMUM_CEIL_DIST 0.1 // defined in movement aswell
 
-void	gravity(t_data *d, int mod)
+void	check_crouch(t_data *d)
 {
-	static double	accel;
-
-	if (mod == 1 && (accel = JUMP_FORCE))
-		return ;
-	if (mod == 2)
+	if (d->cam.pos.y <= d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
 	{
-		accel += 0.0015;
-		return ;
+		if (d->keys[SDL_SCANCODE_LCTRL] && d->player.minimum_height > MINIMUM_CROUCH_HEIGHT + CROUCH_SPEED)
+			d->player.minimum_height -= CROUCH_SPEED;
+		if (!d->keys[SDL_SCANCODE_LCTRL] && d->player.minimum_height < MINIMUM_HEIGHT)
+			if ((d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST) >
+					d->player.minimum_height + CROUCH_SPEED) // used for crouching in small sector
+			d->player.minimum_height += CROUCH_SPEED;
 	}
-	d->cam.pos.y += accel;
-	accel -= 0.004;
-	if (d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST && accel > 0 && !d->sectors[d->cursectnum].outdoor)
-		accel = 0;
-	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT)
+	if (d->keys[SDL_SCANCODE_SPACE])
 	{
-		accel = 0;
-		// if (accel < INSERT_NUMBER == degat_chute(time, d->player))
-		d->cam.pos.y = d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT;
+		if (d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST <= MINIMUM_HEIGHT)
+			d->player.minimum_height = d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST -
+				CROUCH_SPEED;
+		else
+			d->player.minimum_height = MINIMUM_HEIGHT;
+	}
+	if (d->player.minimum_height < MINIMUM_CROUCH_HEIGHT)
+		d->player.minimum_height += CROUCH_SPEED + CROUCH_SPEED + CROUCH_SPEED;
+}
+
+# define JUMP_FORCE 0.08
+
+void	normal_gravity(t_data *d)
+{
+	if (d->cam.pos.y == d->sectors[d->cursectnum].floorheight + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
+		d->player.gravity = JUMP_FORCE;
+	if (d->cam.pos.y > d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	{
+		d->player.gravity -= 0.004;
+		if (d->player.gravity > 0 && d->keys[SDL_SCANCODE_SPACE])
+			d->player.gravity += 0.0015;
+	}
+	check_crouch(d);
+	d->cam.pos.y += d->player.gravity;
+	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	{
+		if (d->player.gravity < -0.16)
+			player_fell(d);
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->sectors[d->cursectnum].floorheight + d->player.minimum_height;
+	}
+	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST)
+	{
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST;
 	}
 }
 
-void	jump(t_data *d, bool pressed)
-{
-	static bool is_jumping;
+#define FLYING_SPEED 0.01
 
-	if (!pressed)
+void	fly_gravity(t_data *d)
+{
+	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y == d->sectors[d->cursectnum].floorheight +
+			d->player.minimum_height)
 	{
-		is_jumping = false;
-		return;
-	}
-	if (d->cam.pos.y <= d->sectors[d->cursectnum].floorheight + MINIMUM_HEIGHT)
+		normal_gravity(d);
+		return ;
+	}	
+	d->player.gravity -= 0.002;
+	if (d->keys[SDL_SCANCODE_SPACE])
 	{
-		gravity(d, 1);
-		is_jumping = 1;
+		d->player.gravity += (FLYING_SPEED * (d->player.gravity < 0 ? 0.6 : 0.3));
+		d->cam.pos.y += FLYING_SPEED;
 	}
-	else if (is_jumping)
-		gravity(d, 2);
+	else if (d->keys[SDL_SCANCODE_LCTRL])
+	{
+		d->player.gravity -= (FLYING_SPEED * 0.5);
+		d->cam.pos.y -= FLYING_SPEED;
+	}
+	if (d->cam.pos.y > d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+		d->player.is_flying -= 1;
+	else
+		d->player.gravity = 0.0;
+	if (!d->player.is_flying)
+		d->player.gravity = 0.0;
+	d->cam.pos.y += d->player.gravity;
+	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	{
+		// do damage with d->player.gravity
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->sectors[d->cursectnum].floorheight + d->player.minimum_height;
+	}
+	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST)
+	{
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST;
+	}
+}
+
+void	jump(t_data *d)
+{
+	if (d->player.is_flying)
+		fly_gravity(d);
+	else
+		normal_gravity(d);
 }

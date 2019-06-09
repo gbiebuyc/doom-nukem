@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/08 20:05:14 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/10 00:04:57 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ void	update(t_data *d)
 	d->cam.rot += d->keys[SDL_SCANCODE_RIGHT] * TURN_SPEED;
 	d->cam.sin = sin(d->cam.rot);
 	d->cam.cos = cos(d->cam.rot);
-	d->keys[SDL_SCANCODE_J] ? jump(d, 1) : jump(d, 0); // short jump | long jump
-	d->keys[SDL_SCANCODE_SPACE] ? jump(d, 1) : jump(d, 0); // short jump | long jump
 //	if (d->keys[SDL_SCANCODE_K])
 //	{
 //		t_vec2f tmp;
@@ -137,8 +135,12 @@ void	update(t_data *d)
 		d->cursectnum = sect;
 		printf("%d\n", sect);*/
 	if ((sect = update_cursect_player(d->cursectnum, d, 10, -1)) != -1)
+	{
+		if (sect != d->cursectnum && d->cam.pos.y < d->sectors[sect].floorheight + d->player.minimum_height)
+			d->player.minimum_height = d->cam.pos.y - d->sectors[sect].floorheight;
 		d->cursectnum = sect;
-	gravity(d, 0);
+	}
+	jump(d);
 	player_actions(d);
 	update_projectiles(d);
 	update_monsters(&d->nummonsters, d->monsters, d);

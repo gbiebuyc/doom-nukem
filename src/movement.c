@@ -6,16 +6,17 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 22:07:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/10 00:03:13 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define MINIMUM_HEIGHT_TO_WALK 0.22
+# define MINIMUM_HEIGHT_TO_WALK 0.32
 # define MOVE_SPEED 0.02//must change MAX_INERTIA in inertia.c to scale properly
 # define COLLISION_DIST 0.3
 # define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
+# define MINIMUM_CEIL_DIST 0.1 // defined in jump aswell
 
 bool	collision(t_data *d, int16_t sectnum)
 {
@@ -48,8 +49,8 @@ bool	collision(t_data *d, int16_t sectnum)
 		int16_t neighbor = d->walls[i].neighborsect;
 		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > d->sectors[neighbor].floorheight + MINIMUM_HEIGHT_TO_WALK
 				&& (d->sectors[neighbor].outdoor || (d->cam.pos.y < d->sectors[neighbor].ceilheight && 
-				d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight > MINIMUM_HEIGHT_OF_WALKABLE_SECTOR)))
-			collided |= collision(d, neighbor);
+				d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight - MINIMUM_CEIL_DIST > d->player.minimum_height)))
+				collided |= collision(d, neighbor);
 		else
 		{
 			d->cam.pos.x = closest.x + dx * COLLISION_DIST * 1.001 / dist;
@@ -116,34 +117,39 @@ void	movement(t_data *d)
 	t_vec2f	mvt;
 	short	count;
 
-	count = 0;
-	ft_bzero(&mvt, sizeof(t_vec2f));
 	old_pos = d->cam.pos;
-	if (d->keys[SDL_SCANCODE_W] && ++count)
+	if (!d->player.can_move)
 	{
-		mvt.y += d->cam.cos * MOVE_SPEED;
-		mvt.x += d->cam.sin * MOVE_SPEED;
+		count = 0;
+		ft_bzero(&mvt, sizeof(t_vec2f));
+		if (d->keys[SDL_SCANCODE_W] && ++count)
+		{
+			mvt.y += d->cam.cos * MOVE_SPEED;
+			mvt.x += d->cam.sin * MOVE_SPEED;
+		}
+		if (d->keys[SDL_SCANCODE_S] && ++count)
+		{
+			mvt.y -= d->cam.cos * MOVE_SPEED;
+			mvt.x -= d->cam.sin * MOVE_SPEED;
+		}
+		if (d->keys[SDL_SCANCODE_A] && ++count)
+		{
+			mvt.y += d->cam.sin * MOVE_SPEED;
+			mvt.x -= d->cam.cos * MOVE_SPEED;
+		}
+		if (d->keys[SDL_SCANCODE_D] && ++count)
+		{
+			mvt.y -= d->cam.sin * MOVE_SPEED;
+			mvt.x += d->cam.cos * MOVE_SPEED;
+		}
+		if (count == 2)
+			mvt = mul_vec2f(mvt,  0.707); // 1 / sqrt(2)
+		inertia(d, mvt);
+		d->cam.pos.z += d->inertia.y;
+		d->cam.pos.x += d->inertia.x;
 	}
-	if (d->keys[SDL_SCANCODE_S] && ++count)
-	{
-		mvt.y -= d->cam.cos * MOVE_SPEED;
-		mvt.x -= d->cam.sin * MOVE_SPEED;
-	}
-	if (d->keys[SDL_SCANCODE_A] && ++count)
-	{
-		mvt.y += d->cam.sin * MOVE_SPEED;
-		mvt.x -= d->cam.cos * MOVE_SPEED;
-	}
-	if (d->keys[SDL_SCANCODE_D] && ++count)
-	{
-		mvt.y -= d->cam.sin * MOVE_SPEED;
-		mvt.x += d->cam.cos * MOVE_SPEED;
-	}
-	if (count == 2)
-		mvt = mul_vec2f(mvt,  0.707); // 1 / sqrt(2)
-	inertia(d, mvt);
-	d->cam.pos.z += d->inertia.y;
-	d->cam.pos.x += d->inertia.x;
+	else
+		d->player.can_move--;
 	while (collision(d, d->cursectnum))
 		;
 	collision_with_monster(d, d->cursectnum, old_pos);

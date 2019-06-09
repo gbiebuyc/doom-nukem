@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 20:11:42 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 23:52:13 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,10 @@ typedef	struct	s_player
 	uint8_t		speed_anim[MAX_KIND_OF_WEAP];
 	uint8_t		weapon_anim[MAX_KIND_OF_WEAP][MAX_ANIM_PER_WEAP];
 	uint8_t		click;
+	uint16_t	is_flying;
+	uint8_t		can_move;
+	double		minimum_height;
+	double		gravity;
 }				t_player;
 
 # define RED 0xFF0000

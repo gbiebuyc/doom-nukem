@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 20:26:13 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 23:29:40 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define M16_DAMAGE 80
 # define M16_HITBOX 0.4
-# define Y_OFFSET_TO_ROT -0.00125
+# define Y_OFFSET_TO_ROT -0.001
 // MUST HAD MONSTER.SIZE * MONSTER.HITBOX
 
 t_m16_inf	m16_inside_sector(t_data *d, uint16_t sect_to_scan, double dist)

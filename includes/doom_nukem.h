@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 20:05:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 23:53:18 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3);
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
 void	draw_string(t_data *d, t_font f);
 void	init_font(t_data *d);
-
+/*
+** player_damage.c
+*/
+void		player_hit_projectile(t_data *d, t_projectile *projectile);
+void		player_fell(t_data *d);
 /*
 ** color_buffer.c
 */
@@ -127,6 +131,7 @@ void	loop(t_data *d);
 ** events.c
 */
 
+void	event_key_up(t_data *d, SDL_KeyboardEvent event);
 void	event_mouse_motion(t_data *d, SDL_MouseMotionEvent event);
 void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event);
 void	event_key_down(t_data *d, SDL_KeyboardEvent event);
@@ -136,7 +141,7 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event);
 */
 
 void	gravity(t_data *d, int mod);
-void	jump(t_data *d, bool pressed);
+void	jump(t_data *d);
 
 /*
 **	movement.c

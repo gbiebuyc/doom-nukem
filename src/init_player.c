@@ -6,11 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 18:06:18 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/07 23:27:30 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/10 00:08:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+# define MINIMUM_HEIGHT 0.5// defined in jump.c
 
 void	init_player(t_data *d, t_player *player)
 {
@@ -54,4 +56,9 @@ void	init_player(t_data *d, t_player *player)
 	player->weapon_anim[M16][0] = 0;
 	player->weapon_anim[M16][1] = 2;
 	player->weapon_anim[M16][2] = 0;
+
+	player->is_flying = 0;// set to 0 = false, otherwise it is the duration in frame (divide by 60 to get duration in sec)
+	player->minimum_height = MINIMUM_HEIGHT;
+	player->gravity = 0.0;// dont touch
+	player->can_move = 0;// set to 0 unless you don't want to move, same than is_flying
 }
