@@ -20,8 +20,8 @@ t_wall	*get_adjacent_wall(t_data *d, t_wall *w)
 
 	sect = &d->sectors[in_which_sector_is_this_wall(d, w)];
 	wallnum = w - d->walls;
-	nextwallnum = ((wallnum - sect->firstwallnum + 1) %
-			sect->numwalls) + sect->firstwallnum;
+	nextwallnum = ((wallnum - sect->firstwallnum + 1) % sect->numwalls)
+													+ sect->firstwallnum;
 	return (&d->walls[nextwallnum]);
 }
 
@@ -63,6 +63,7 @@ void	toggle_isdoor(t_data *d)
 		if (d->selectedwall->neighborsect == -1)
 		{
 			ft_printf("Only portals can be doors !\n");
+			d->selectedwall = NULL;
 			return ;
 		}
 		d->selectedwall->is_door = !d->selectedwall->is_door;

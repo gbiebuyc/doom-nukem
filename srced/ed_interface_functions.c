@@ -87,11 +87,18 @@ int		is_on_checkbox(t_data *d, int x, int y)
 
 	endx = d->interface.cbox_door_p.x;
 	endy = d->interface.cbox_door_p.y;
-	if (x >= endx && x < endx + 24 && y >= endy && y < endy + 24)
+	if (x > endx && x <= endx + 24 && y > endy && y <= endy + 24)
+	{
+		toggle_isdoor(d);
 		return (1);
+	}
 	endx = d->interface.cbox_skybox_p.x;
 	endy = d->interface.cbox_skybox_p.y;
-	if (x >= endx && x <= endx + 24 && y >= endy && y < endy + 24)
+	if (x > endx && x <= endx + 24 && y >= endy && y < endy + 24)
+	{
+		d->sectors[d->selected_sector].outdoor =
+			!d->sectors[d->selected_sector].outdoor;
 		return (2);
+	}
 	return (0);
 }

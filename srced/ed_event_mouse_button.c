@@ -36,11 +36,7 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 	if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y) &&
 		x > W - PROPERTIES_LIMIT)
 		btn_height(d, x, y, &d->interface);
-	if (is_on_checkbox(d, x, y) == 1)
-		toggle_isdoor(d);
-	else if (is_on_checkbox(d, x, y) == 2)
-		d->sectors[d->selected_sector].outdoor =
-			!d->sectors[d->selected_sector].outdoor;
+	is_on_checkbox(d, x, y);
 	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
 		d->hl_wallnum >= 0) && d->interface.texture_case_select != -1)
 		save_selected_texture(d, e->button.x, e->button.y,

@@ -83,3 +83,32 @@ void		show_preview(t_data *d, t_assets *a)
 															(int[2]){x, y}, d);
 	}
 }
+
+void		draw_ligth_bar(t_data *d)
+{
+	int	x;
+	int	y;
+	int	limit;
+	int	px;
+	int	py;
+
+	px = d->interface.cbox_skybox_p.x;
+	py = d->interface.tex_select[1].y + 80;
+	y = -1;
+	while (++y <= 17 && (x = -1))
+	{
+		putpixel(d, px, py + y, 0x008800);
+		while ((y == 0 || y == 17) && ++x < 101)
+			putpixel(d, px + x, py + y, 0x008800);
+	}
+	y = -1;
+	while (++y < 17)
+		putpixel(d, px + 101, py + y, 0x008800);
+	if (d->selected_sector == -1)
+		return ;
+	limit = d->sectors[d->selected_sector].light * 100;
+	y = -1;
+	while (++y < 16 && (x = -1))
+		while (++x < limit)
+			putpixel(d, x + px + 1, y + py + 1, 0xcccc00);
+}

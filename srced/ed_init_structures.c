@@ -33,7 +33,7 @@ void		init_data(t_data *d)
 	d->startsectnum = 0;
 }
 
-static void	init_sectors(t_data *d)
+void		init_sectors(t_data *d)
 {
 	int		dt;
 
@@ -46,26 +46,4 @@ static void	init_sectors(t_data *d)
 	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false};
 	d->numsectors = 1;
 	d->numwalls = 4;
-}
-/*
-static void	init_monsters(t_data *d)
-{
-	t_monster	monster;
-
-	d->nbmonsters = 1;
-	monster.pos = (t_vec2f){1.0, -3.0};
-	monster.activated = true;
-	monster.rot = 0.0;
-	monster.health_mult = 1;
-	monster.id_type = MOTHERDEMON;
-	monster.size = 1.0;
-	monster.cursectnum = 0;
-	d->monsters[0] = monster;
-//	monster.behavior = &basic_monster;
-}
-*/
-void		init_structure(t_data *d)
-{
-	init_sectors(d);
-//	init_monsters(d);
 }

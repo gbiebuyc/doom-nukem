@@ -47,7 +47,7 @@
 **	ed_interface_*.c
 */
 
-# define MARGIN 8
+# define MARGIN 6
 # define PROPERTIES_LIMIT 275
 # define TEXTURE_TOOLBAR 550
 
@@ -104,7 +104,7 @@ typedef struct	s_assets
 	SDL_Surface	*assets[100];
 }				t_assets;
 
-# define NB_PROPERTIES 14
+# define NB_PROPERTIES 15
 
 typedef struct	s_toolbar
 {
@@ -195,17 +195,17 @@ typedef struct	s_data
 void			debug_print(t_data *d);
 
 /*
-**	ed_init_structures.c
-*/
-
-void			init_structure(t_data *d);
-void			init_data(t_data *d);
-
-/*
 **	ed_init.c
 */
 
 int				init_editor(t_data *d);
+
+/*
+**	ed_init_structures.c
+*/
+
+void			init_data(t_data *d);
+void			init_sectors(t_data *d);
 
 /*
 **	ed_init_texture.c
@@ -237,6 +237,8 @@ void			draw_assets_to_map(t_data *d, t_assets *a);
 
 t_vec2f			worldtoscreen(t_data *d, t_vec2f p);
 t_vec2f			screentoworld(t_data *d, t_vec2f p);
+double			vec2f_length(t_vec2f v);
+t_vec2f			add_vec2f(t_vec2f v1, t_vec2f v2);
 
 /*
 **	pixel.c
@@ -319,6 +321,7 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 void			draw_separator(t_data *d, int x, int y, int color);
 void			fill_texture_selection(t_data *d, t_interface *i, int wallnum);
 void			show_preview(t_data *d, t_assets *a);
+void			draw_ligth_bar(t_data *d);
 
 /*
 **	ed_utils.c

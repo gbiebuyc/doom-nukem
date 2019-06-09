@@ -81,7 +81,7 @@ int			main(void)
 	init_data(&d);
 	if (init_editor(&d))
 		return (EXIT_FAILURE);
-	init_structure(&d);
+	init_sectors(&d);
 	main_loop(&d);
 	return (EXIT_SUCCESS);
 }

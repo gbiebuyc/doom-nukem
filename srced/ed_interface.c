@@ -136,4 +136,5 @@ void		show_menu(t_data *d)
 		putpixel(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	print_properties(d, d->interface.toolbar.properties);
 	print_assets_toolbar(d, d->interface.toolbar.properties);
+	draw_ligth_bar(d);
 }

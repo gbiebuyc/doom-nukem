@@ -64,7 +64,7 @@ static int		init_toolbar(t_toolbar *tb)
 		"./Menu/wall_title.bmp", "./Menu/lblTexture.bmp",
 		"./Menu/lblAmmo.bmp", "./Menu/lblMonsters.bmp",
 		"./Menu/lblHealPack.bmp", "./Menu/lblPlayerStart.bmp",
-		"./Menu/minus.bmp", "./Menu/plus.bmp",
+		"./Menu/minus.bmp", "./Menu/plus.bmp", "/Menu/lblLight.bmp",
 		"/Menu/lblSkybox.bmp", "/Menu/lblDoor.bmp",
 		"/Menu/checkBoxEmpty.bmp", "/Menu/checkBox.bmp"};
 	i = -1;
