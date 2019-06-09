@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 21:20:54 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 20:11:42 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,13 @@ typedef struct	s_thread_arg
 	t_projdata	*p;
 	t_frustum	*fr;
 }				t_thread_arg;
+
+typedef	struct	s_args_multi_colo_buf
+{
+	t_data *d;
+	short	start_x;
+	short	max_x;
+}				t_args_multi_colo_buf;
 
 /*
 ** Animation defines

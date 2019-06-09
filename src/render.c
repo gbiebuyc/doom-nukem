@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:06:49 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/08 20:54:32 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 20:13:46 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	render(t_data *d)
 		d->zbuffer[i] = INFINITY;
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);
-	if (d->color_buf.value)
-		color_screen(d);
+	color_buffer(d);
 	//draw_hud(d);
 	/***/
 	draw_aim_cross(d);

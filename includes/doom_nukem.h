@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:59:57 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 20:05:35 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	init_font(t_data *d);
 ** color_buffer.c
 */
 void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo);
-void	color_screen(t_data *d);
+void	color_buffer(t_data *d);
 /*
 ** inertia.c
 */

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 21:20:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 20:25:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define BLASTER_HITBOX 0.4
 # define LEFT_MOUSE_BLASTER_DAMAGE 1000
 # define RIGHT_MOUSE_BLASTER_DAMAGE 750
+// MUST ADD SIZE * HITBOX
 
 int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist, bool hit_all)
 {

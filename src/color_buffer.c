@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:13:32 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 21:21:55 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 20:21:49 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,61 @@ double		find_alpha(short x, short y, uint32_t which_ret)// a mettre en statique 
 	return (scale_y[y]);
 }
 
-void	color_screen(t_data *d)
+void	color_screen(t_args_multi_colo_buf *data)
 {
 	int		x;
 	int		y;
 	uint32_t	colo;
 	uint8_t		tmp;
 
-	x = -1;
-	while (++x < WIDTH)
+	x = data->start_x;
+	while (++x < data->max_x)
 	{
 		y = -1;
 		while (++y < HEIGHT)
 		{
-			if (d->color_buf.colo == GREEN_BLAST)
-				tmp = (uint8_t)((1 - find_alpha(x, y, d->color_buf.colo)) * d->color_buf.value);
+			if (data->d->color_buf.colo == GREEN_BLAST)
+				tmp = (uint8_t)((1 - find_alpha(x, y, data->d->color_buf.colo)) * data->d->color_buf.value);
 			else
-				tmp = (uint8_t)((find_alpha(x,y, d->color_buf.colo)) * d->color_buf.value);
-			colo = d->color_buf.colo + (tmp << 24);
-			putpixel(d, x, y, alpha(getpixel3(d->screen, x, y), colo));
+				tmp = (uint8_t)((find_alpha(x,y, data->d->color_buf.colo)) * data->d->color_buf.value);
+			colo = data->d->color_buf.colo + (tmp << 24);
+			putpixel(data->d, x, y, alpha(getpixel3(data->d->screen, x, y), colo));
 		}
 	}
-	if (d->color_buf.colo == GREEN_BLAST)
-		d->color_buf.value -= 6;
-	else
-		d->color_buf.value -= 1;
-	if (d->color_buf.value < 0)
-		d->color_buf.value = 0;
 }
+
+# define MAX_THREADS 8
+
+void	color_buffer(t_data *d)
+{
+	pthread_t				threads[MAX_THREADS];
+	t_args_multi_colo_buf	data[MAX_THREADS];
+	short					i;
+
+	if (!d->color_buf.value)
+		return ;
+	i = 0;
+	while (i < MAX_THREADS)
+	{
+		data[i].d = d;
+		if (i == 0)
+			data[i].start_x = -1;
+		else
+			data[i].start_x = data[i - 1].max_x - 1;
+		data[i].max_x = WIDTH / MAX_THREADS * (i + 1);
+		pthread_create(&threads[i], NULL, (void *)color_screen, &data[i]);
+		i++;
+	}
+	while (--i >= 0)
+		pthread_join(threads[i], NULL);
+	if (data->d->color_buf.colo == GREEN_BLAST)
+		data->d->color_buf.value -= 6;
+	else
+		data->d->color_buf.value -= 1;
+	if (data->d->color_buf.value < 0)
+		data->d->color_buf.value = 0;
+}
+
 void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo)
 {
 	if (d->color_buf.colo != colo)

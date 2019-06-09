@@ -6,11 +6,26 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:18:06 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 21:18:00 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/09 19:58:48 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+void	draw_blaster_aim(t_data *d)
+{
+	short 	i;
+
+	i = (WIDTH * 0.5) - 10;
+	while (--i > (WIDTH >> 1) - 22)
+		putpixel(d, i, HEIGHT >> 1, GREEN_BLAST);
+	i = (WIDTH *  0.5) + 10;
+	while (++i < (WIDTH >> 1) + 22)
+		putpixel(d, i, HEIGHT >> 1, GREEN_BLAST);
+	putpixel(d, (WIDTH >> 1) + 1, HEIGHT >> 1, GREEN_BLAST);
+	putpixel(d, (WIDTH >> 1) - 1, HEIGHT >> 1, GREEN_BLAST);
+	putpixel(d, WIDTH >> 1, HEIGHT >> 1, GREEN_BLAST);
+}
 
 void	draw_aim_cross(t_data *d)
 {
@@ -20,7 +35,10 @@ void	draw_aim_cross(t_data *d)
 	if (d->player.current_weapon == M16)
 		colo = 0xFF0000;
 	if (d->player.current_weapon == BLASTER)
-		colo = GREEN_BLAST;
+	{
+		draw_blaster_aim(d);
+		return ;
+	}
 	if (d->player.current_weapon == CRYO_BALLISTA)
 		colo = 0xDDFF;
 	i = -1;
