@@ -116,34 +116,16 @@ void	init_sdl(t_data *d)
 /********************/
 	fix_picnum(d);
 /********************/
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA1.bmp", (int[3]){0, 0, 0});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA2A8.bmp", (int[3]){0, 0, 1});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA3A7.bmp", (int[3]){0, 0, 2});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA4A6.bmp", (int[3]){0, 0, 3});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk1_idle/MOMDA5.bmp", (int[3]){0, 0, 4});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk2/MOMDB1.bmp", (int[3]){0, 1, 0});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk2/MOMDB2B8.bmp", (int[3]){0, 1, 1});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk2/MOMDB3B7.bmp", (int[3]){0, 1, 2});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk2/MOMDB4B6.bmp", (int[3]){0, 1, 3});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk2/MOMDB5.bmp", (int[3]){0, 1, 4});
-	d->monster_text[0][2][0] = d->monster_text[0][0][0];
-	d->monster_text[0][2][1] = d->monster_text[0][0][1];
-	d->monster_text[0][2][2] = d->monster_text[0][0][2];
-	d->monster_text[0][2][3] = d->monster_text[0][0][3];
-	d->monster_text[0][2][4] = d->monster_text[0][0][4];
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD1.bmp", (int[3]){0, 3, 0});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD2D8.bmp", (int[3]){0, 3, 1});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD3D7.bmp", (int[3]){0, 3, 2});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD4D6.bmp", (int[3]){0, 3, 3});
-	load_monster_texture(d, "./textures/sprites/motherdemon/walk3/MOMDD5.bmp", (int[3]){0, 3, 4});
 	//monster part
 	//motherdemon part
 	// walking anim and idle part
+	// 5 orientation of animation 1
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk1_idle/MOMDA1.bmp", (int[3]){MOTHERDEMON, 0, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk1_idle/MOMDA2A8.bmp", (int[3]){MOTHERDEMON, 0, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk1_idle/MOMDA3A7.bmp", (int[3]){MOTHERDEMON, 0, 2});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk1_idle/MOMDA4A6.bmp", (int[3]){MOTHERDEMON, 0, 3});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk1_idle/MOMDA5.bmp", (int[3]){MOTHERDEMON, 0, 4});
+	// 5 orientation of animation 2
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk2/MOMDB1.bmp", (int[3]){MOTHERDEMON, 1, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk2/MOMDB2B8.bmp", (int[3]){MOTHERDEMON, 1, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk2/MOMDB3B7.bmp", (int[3]){MOTHERDEMON, 1, 2});
@@ -154,21 +136,25 @@ void	init_sdl(t_data *d)
 	d->monster_text[MOTHERDEMON][2][2] = d->monster_text[MOTHERDEMON][0][2];
 	d->monster_text[MOTHERDEMON][2][3] = d->monster_text[MOTHERDEMON][0][3];
 	d->monster_text[MOTHERDEMON][2][4] = d->monster_text[MOTHERDEMON][0][4];
+	// 5 orientation of animation 3
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk3/MOMDD1.bmp", (int[3]){MOTHERDEMON, 3, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk3/MOMDD2D8.bmp", (int[3]){MOTHERDEMON, 3, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk3/MOMDD3D7.bmp", (int[3]){MOTHERDEMON, 3, 2});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk3/MOMDD4D6.bmp", (int[3]){MOTHERDEMON, 3, 3});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/walk3/MOMDD5.bmp", (int[3]){MOTHERDEMON, 3, 4});
+
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_1/MOMDE1.bmp", (int[3]){MOTHERDEMON, 4, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_1/MOMDE2E8.bmp", (int[3]){MOTHERDEMON, 4, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_1/MOMDE3E7.bmp", (int[3]){MOTHERDEMON, 4, 2});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_1/MOMDE4E6.bmp", (int[3]){MOTHERDEMON, 4, 3});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_1/MOMDE5.bmp", (int[3]){MOTHERDEMON, 4, 4});
+
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_2/MOMDF1.bmp", (int[3]){MOTHERDEMON, 5, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_2/MOMDF2F8.bmp", (int[3]){MOTHERDEMON, 5, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_2/MOMDF3F7.bmp", (int[3]){MOTHERDEMON, 5, 2});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_2/MOMDF4F6.bmp", (int[3]){MOTHERDEMON, 5, 3});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_2/MOMDF5.bmp", (int[3]){MOTHERDEMON, 5, 4});
+
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_3/MOMDG1.bmp", (int[3]){MOTHERDEMON, 6, 0});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_3/MOMDG2G8.bmp", (int[3]){MOTHERDEMON, 6, 1});
 	load_monster_texture(d, "./textures/sprites/monsters/motherdemon/attack_1_3/MOMDG3G7.bmp", (int[3]){MOTHERDEMON, 6, 2});

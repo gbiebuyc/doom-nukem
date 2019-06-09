@@ -42,7 +42,7 @@ int		fill_monster_structure(t_data *d)
 	return (0);
 }
 
-int		write_monster_list(t_data *d, int f)
+int		write_monster_data(t_data *d, int f)
 {
 	int	i;
 

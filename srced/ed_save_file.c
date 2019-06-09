@@ -90,10 +90,10 @@ int			save_file(t_data *d)
 		return (ft_printf("Write starting data failed\n"));
 	set_texture_used(d, d->sectors, d->walls);
 	set_texture_name(d, d->sectors, d->walls);
-	if (write_wall_n_sector_data(d, f) || write_texture_list(d, f) ||
-		write_texture_data(d, f))
+	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
+		write_texture_list(d, f) || write_texture_data(d, f))
 		return (1);
-	/**/write_monster_list(d, f);
+	// TODO Write assets_texture
 	close(f);
 	ft_printf("saved map01\n");
 	return (0);

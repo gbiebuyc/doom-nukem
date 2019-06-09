@@ -90,8 +90,8 @@ void	load_map(t_data *d)
 		read(f, &d->cam.rot, sizeof(double)) == -1 ||
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)
 		exit(ft_printf("map error\n"));
-	if (read_wall_n_sector_data(d, f) || read_textures_name(d, f) ||
-		read_texture_data(d, f) || read_monsters_data(d, f))
+	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
+		read_textures_name(d, f) || read_texture_data(d, f))
 		exit (1);
 	close(f);
 }

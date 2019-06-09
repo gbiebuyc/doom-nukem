@@ -64,7 +64,7 @@ typedef struct	s_monsters_data
 	// TODO count nb subfolder
 	// max state = the number of bmp file inside each animation folder
 	// TODO count nb bmp file
-	// nb of state in each folder must be fthe same;
+	// nb of state in each folder must be the same;
 	// TODO store everything here
 	// how to store death folder ?
 }				t_mosters_data;
@@ -154,6 +154,8 @@ typedef struct	s_interface
 **	t_assets_data	assets_data[100]; index given by nb_asset (cf. s_interface)
 */
 
+# define MAX_ASSETS 100
+
 typedef struct	s_data
 {
 	SDL_Window		*win;
@@ -161,7 +163,7 @@ typedef struct	s_data
 	SDL_Surface		**textures;
 	t_texture_data	*texture_list;
 	t_interface		interface;
-	t_assets_data	assets_data[100];
+	t_assets_data	assets_data[MAX_ASSETS];
 	t_vec3f			player_start;
 	t_vec2f			pos;
 	int16_t			startsectnum;
@@ -190,7 +192,6 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-/***/int		write_monster_list(t_data *d, int f);
 
 void			debug_print(t_data *d);
 
@@ -369,6 +370,13 @@ int				save_file(t_data *d);
 
 void			set_texture_name(t_data *d, t_sector *s, t_wall *w);
 void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
+void			set_assets_used(t_data *d);
+
+/*
+**	ed_save_assets.c
+*/
+
+int				write_monster_data(t_data *d, int f);
 
 /*
 ** ed_door_toggle.c

@@ -20,6 +20,7 @@ static void	reset_used(t_data *d)
 {
 	t_texture_data *tmp;
 
+	d->nb_used_texture = 0;
 	tmp = d->texture_list->begin;
 	while (tmp)
 	{
@@ -70,7 +71,8 @@ void		set_texture_used(t_data *d, t_sector *s, t_wall *w)
 	int				j;
 	int				tex_num;
 
-	d->nb_used_texture = 0;
+	if (!d->texture_list)
+		return ;
 	reset_used(d);
 	tmp = d->texture_list->begin;
 	tex_num = 0;
@@ -89,5 +91,32 @@ void		set_texture_used(t_data *d, t_sector *s, t_wall *w)
 					(tmp->used = 1);
 		tex_num++;
 		tmp = tmp->next;
+	}
+}
+
+static void	reset_assets_used(t_data *d)
+{
+	int		i;
+
+	i = -1;
+	while (++i < MAX_ASSETS)
+		d->assets_data[i].used = 0;
+}
+
+void		set_assets_used(t_data *d)
+{
+	int				i;
+	t_monster_list	*lst;
+
+	if (!d->assets_data[0].file || !d->interface.monster_list)
+		return ;
+	reset_assets_used(d);
+	lst = d->interface.monster_list->begin;
+	while (lst && (i = -1))
+	{
+		while (++i < MAX_ASSETS)
+			if (ft_strequ(lst->name, d->assets_data[i].name))
+				d->assets_data[i].used = 1;
+		lst = lst->next;
 	}
 }
