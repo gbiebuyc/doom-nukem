@@ -22,7 +22,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	yceil;
 	double	yfloor;
 	t_projdata		p;
-	t_projdata		pouet;
 	pthread_t		thread;
 	t_thread_arg	t;
 
@@ -93,8 +92,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.u_end = u_end * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
 		draw_wall(d, &p, fr);
-		pouet = p;
-		t = (t_thread_arg){d, &pouet, fr};
+		t = (t_thread_arg){d, &p, fr};
 		if (pthread_create(&thread, NULL, draw_ceil_thread, &t))
 			exit(printf("pthread_create error\n"));
 		draw_floor(d, &p, fr);

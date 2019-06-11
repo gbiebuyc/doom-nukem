@@ -17,57 +17,65 @@ void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 	SDL_Surface *tex;
 	int			h;
 	int			v;
+	int			x;
+	int			y;
 
 	if (p->neighbor && p->neighbor->outdoor)
 		return ;
 	tex = d->textures[p->sector->ceilpicnum];
 	h = HEIGHT + MAX_Y_OFFSET * 2;
-	p->x = p->cx1 - 1;
-	while (++p->x <= p->cx2)
+	x = p->cx1 - 1;
+	while (++x <= p->cx2)
 	{
-		p->u = (unsigned int)(((double)p->x + d->cam.rot * 1000) /
+		p->u = (unsigned int)(((double)x + d->cam.rot * 1000) /
 				(WIDTH * (h / HEIGHT)) * tex->w) % tex->w;
-		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
+		y = ft_min(fr->ybottom[x], lerp(fclamp(norm(x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
-		while (--p->y >= fr->ytop[p->x])
+		while (--y >= fr->ytop[x])
 		{
-			v = ((double)p->y + d->cam.y_offset + MAX_Y_OFFSET) / h * tex->h;
-			putpixel(d, p->x, p->y, ((uint32_t*)tex->pixels)[
+			v = ((double)y + d->cam.y_offset + MAX_Y_OFFSET) / h * tex->h;
+			putpixel(d, x, y, ((uint32_t*)tex->pixels)[
 					(int)p->u + v * tex->w]);
 		}
 	}
 }
 
-void	draw_ceil2(t_data *d, t_projdata *p, int y)
+void	draw_ceil2(t_data *d, t_projdata *p, int y, double x[2])
 {
+	double dist;
+
 	if (p->floor_u1[y] == 0)
 	{
-		p->z = p->floor_alt[1] /
-			-((p->y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
-		p->floor_u1[y] = d->cam.pos.x + p->cos * p->z - p->sin * p->z * 0.5;
-		p->floor_u2[y] = d->cam.pos.x + p->cos * p->z + p->sin * p->z * 0.5;
-		p->floor_v1[y] = d->cam.pos.z + p->sin * p->z + p->cos * p->z * 0.5;
-		p->floor_v2[y] = d->cam.pos.z + p->sin * p->z - p->cos * p->z * 0.5;
-		p->floor_shade[y] = getshadefactor(d, p);
+		dist = p->floor_alt[1] /
+			-((y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
+		p->floor_u1[y] = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
+		p->floor_u2[y] = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
+		p->floor_v1[y] = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
+		p->floor_v2[y] = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
+		p->floor_shade[y] = getshadefactor(d, p, dist);
 	}
-	putpixel(d, p->x, p->y, shade(p->floor_shade[y], getpixel2(
+	putpixel(d, x[0], y, shade(p->floor_shade[y], getpixel2(
 					d->textures[p->sector->ceilpicnum],
-					lerp(p->xnorm, p->floor_u1[y], p->floor_u2[y]),
-					lerp(p->xnorm, p->floor_v1[y], p->floor_v2[y]))));
+					lerp(x[1], p->floor_u1[y], p->floor_u2[y]),
+					lerp(x[1], p->floor_v1[y], p->floor_v2[y]))));
 }
 
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 {
+	int		x;
+	int		y;
+	double	xnorm;
+
 	if (p->floor_alt[1] <= 0)
 		return ;
-	p->x = p->cx1 - 1;
-	while (++p->x <= p->cx2)
+	x = p->cx1 - 1;
+	while (++x <= p->cx2)
 	{
-		p->xnorm = (double)p->x / WIDTH;
-		p->y = ft_min(fr->ybottom[p->x], lerp(fclamp(norm(p->x,
+		xnorm = (double)x / WIDTH;
+		y = ft_min(fr->ybottom[x], lerp(fclamp(norm(x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
-		while (--p->y >= fr->ytop[p->x])
-			draw_ceil2(d, p, p->y);
+		while (--y >= fr->ytop[x])
+			draw_ceil2(d, p, y, (double[2]){x, xnorm});
 	}
 }
 

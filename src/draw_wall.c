@@ -44,8 +44,8 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 
 	tex = d->textures[p->wall->middlepicnum];
 	u = (unsigned int)(p->u * tex->w) % tex->w;
-	y = ft_max(fr->ytop[p->x], p->ya) - 1;
-	if ((shadefactor = getshadefactor(d, p)) <= 0)
+	y = ft_max(fr->ytop[p->x], p->ya);
+	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 			putpixel(d, p->x, y, 0);
 	else if (!p->neighbor)

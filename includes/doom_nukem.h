@@ -65,7 +65,7 @@ void	monster_hit(t_data *d, uint16_t damage, uint16_t id_monster); // projectile
 bool	collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projectile);
 bool	collision_proj_player(t_data *d, t_projectile *projectile);
 void	monster_behaviour(t_data *d, t_monster *monster);
-double		getshadefactor(t_data *d, t_projdata *p);
+double		getshadefactor(t_data *d, t_projdata *p, double dist);
 uint32_t	shade(double factor, uint32_t c);
 void	activate_door(t_data *d);
 void	reorder_sprite(t_data *d, t_sector *sect);
