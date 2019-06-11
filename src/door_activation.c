@@ -39,6 +39,8 @@ void	activate_door(t_data *d)
 	int16_t	door;
 	int16_t	nextwall;
 
+	door = 0;
+	nextwall = 0;
 	double closest_dist = INFINITY;
 	t_sector *sect = d->sectors + d->cursectnum;
 	int16_t last = sect->firstwallnum + sect->numwalls;

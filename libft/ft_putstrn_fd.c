@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freestrarr.c                                       :+:      :+:    :+:   */
+/*   ft_putstrn_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/03 02:29:31 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/02/03 22:34:55 by gbiebuyc         ###   ########.fr       */
+/*   Created: 2018/10/07 09:41:32 by gbiebuyc          #+#    #+#             */
+/*   Updated: 2019/01/18 23:25:19 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	freestrarr(char **arr)
+void	ft_putstrn_fd(int fd, char const *s, int len)
 {
-	size_t	i;
-
-	if (!arr)
+	if (write(fd, s, len))
 		return ;
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
 }

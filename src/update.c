@@ -70,6 +70,7 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 
 	i = 0;
 	coll = false;
+	update_sect = 0;
 	while (i < MAX_PROJECTILES)
 	{
 		if (d->projectiles[i].is_active)

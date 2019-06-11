@@ -56,7 +56,7 @@ void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 	d->assets_data[index].file = ft_strjoin(path, tmp);
 	free(tmp);
 	d->assets_data[index].used = 0;
-	d->assets_data[index].name = ft_strsub(de->d_name, 0, de->d_namlen - 4);
+	d->assets_data[index].name = ft_strsub(de->d_name, 0, ft_strlen(de->d_name) - 4);
 }
 
 int		get_interface_assets_files(t_data *d, char **path)
@@ -76,7 +76,7 @@ int		get_interface_assets_files(t_data *d, char **path)
 		{
 			while ((de = readdir(dr)))
 				if (de->d_type == DT_REG && de->d_name[0] != '.' &&
-					!ft_strcmp(&de->d_name[de->d_namlen - 4], ".bmp") && ++i)
+					!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 4], ".bmp") && ++i)
 					new_asset_data(d, de, path[n], j++);
 			d->interface.nb_asset[n] = i;
 			closedir(dr);

@@ -16,15 +16,15 @@ void	super_unoptimized_reorder_sprite(t_data *d, t_sector *sec,
 		double *vla)
 {
 	double			tmp_dist;
-	t_sprite_list	*main;
+	t_sprite_list	*mainlist;
 	t_sprite_list	*tmp_prev;
 	t_sprite_list	*tmp_prev_prev;
 	short			i;
 
 	i = 0;
-	main = sec->sprite_list->next;
+	mainlist = sec->sprite_list->next;
 	tmp_prev = sec->sprite_list;
-	while (main)
+	while (mainlist)
 	{
 		if (vla[i] < vla[i + 1])
 		{
@@ -33,22 +33,22 @@ void	super_unoptimized_reorder_sprite(t_data *d, t_sector *sec,
 			vla[i + 1] = tmp_dist;
 			if (i == 0)
 			{
-				tmp_prev->next = main->next;
-				main->next = sec->sprite_list;;
-				sec->sprite_list = main;
+				tmp_prev->next = mainlist->next;
+				mainlist->next = sec->sprite_list;;
+				sec->sprite_list = mainlist;
 				super_unoptimized_reorder_sprite(d, sec, vla);
 				return ;
 			}
-			tmp_prev_prev->next = main;
-			tmp_prev->next = main->next;
-			main->next = tmp_prev;
+			tmp_prev_prev->next = mainlist;
+			tmp_prev->next = mainlist->next;
+			mainlist->next = tmp_prev;
 			super_unoptimized_reorder_sprite(d, sec, vla);
 			return ;
 		}
 		i++;
 		tmp_prev_prev = tmp_prev;
-		tmp_prev = main;
-		main = main->next;
+		tmp_prev = mainlist;
+		mainlist = mainlist->next;
 	}
 }
 

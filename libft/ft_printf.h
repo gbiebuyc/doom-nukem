@@ -3,130 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/28 17:55:47 by mikorale          #+#    #+#             */
-/*   Updated: 2018/10/23 17:51:34 by mikorale         ###   ########.fr       */
+/*   Created: 2018/12/11 15:49:04 by gbiebuyc          #+#    #+#             */
+/*   Updated: 2019/06/11 20:30:04 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
-# include <stdarg.h>
-# include <limits.h>
-# include <stdint.h>
-# include <wchar.h>
 # include "libft.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include <stdint.h>
+# include <stdbool.h>
 
-#ifdef _WIN32
-    #include <stdio.h>
-    #define FPURGE(x) fpurge(x)
-#elif __APPLE__
-   #include "TargetConditionals.h"
-   #if TARGET_OS_MAC
-        #include <stdio.h>
-        #define FPURGE(x) fpurge(x)
-   #endif
-#elif __linux__
-    #include <stdio_ext.h>
-    #define FPURGE(x) __fpurge(x)
-#endif
+# define BIGNUMDIGITS 200
 
-typedef struct	s_flag
+typedef	char	t_bignum[BIGNUMDIGITS];
+
+typedef struct	s_data
 {
-	int		hyphen;
-	int		plus;
-	int		hash;
-	int		zero;
-	int		blank;
-}				t_flag;
+	bool		alternate_form;
+	bool		zero_padding;
+	bool		left_ajusted;
+	bool		space_before_positive_num;
+	bool		show_plus_sign;
+	int			field_width;
+	int			precision;
+	int			len_mod;
+	char		prefix[3];
+	int			prefix_len;
+	char		base[20];
+	int			base_len;
+	char		converted[BIGNUMDIGITS];
+	int			conv_len;
+	t_bignum	big;
+	int			*print_count;
+	int			fd;
+}				t_data;
 
-/*
-** conv_id = the index of the argument(conversion) type
-** conv_type = the argument type (sSpdDioOuUxXcCeEfFgGaAn%)
-** field = the minimum field size
-** period = dot '.'
-** preci = lol ?
-** arg_int/arg_uint = the current (va_arg)/argument
-** base = (8,10,16) see get_base()
-** i = the index of the *format string
-** con_res = the result of any conversion
-*/
-
-typedef struct	s_format_id
-{
-	int				conv_id;
-	char			conv_type;
-	char			conv_type_origin;
-	int				modifier[6];
-	size_t			field;
-	int				period;
-	int				preci;
-	intmax_t		arg_int;
-	uintmax_t		arg_uint;
-	unsigned int	base;
-	size_t			i;
-	char			*conv_res;
-	int				nbchar;
-	int				invalid;
-	int				error;
-	t_flag			*flag;
-}				t_f_id;
-
-int				(*g_conv_list[15])(const char*, va_list, t_f_id*);
-int				ft_printf(const char *s, ...);
-
-/*
-** utils.c
-*/
-
-void			get_field_n_preci(const char *format, t_f_id *id);
-void			get_flags(const char *format, t_f_id *id);
-void			get_modifier(const char *format, t_f_id *id);
-int				get_base(char c);
-int				tododge(char c);
-
-/*
-** wide_utils.c
-*/
-
-size_t			my_wcharlen(wchar_t wc);
-size_t			my_wstrlen(wchar_t *ws);
-int				my_putwchar(wint_t wc);
-int				my_putwstr(wchar_t *wstr, size_t len);
-size_t			get_wpreci(wchar_t *wstr, int idpreci, size_t preci);
-
-/*
-** conv_*.c
-*/
-
-int				conv_int(const char *f, va_list ap, t_f_id *id);
-int				conv_char(const char *f, va_list ap, t_f_id *id);
-int				conv_string(const char *f, va_list ap, t_f_id *id);
-int				conv_percent(const char *f, va_list ap, t_f_id *id);
-
-/*
-** print.c
-*/
-
-size_t			my_strlen (const char *s);
-int				write_n(const char c, int len);
-int				print(size_t len, t_f_id *id);
-
-/*
-** itoa.c
-*/
-
-char			*my_itoa(t_f_id *id, char sign);
-char			*my_uitoa_base(uintmax_t nb, t_f_id *id, int size);
-
-/*
-** init.c
-*/
-
-void			get_conv_list(void);
-void			init(t_f_id *id);
+int				ft_dprintf(int fd, const char *format, ...);
+int				ft_printf(const char *format, ...);
+void			bignum_from_int(t_bignum big, unsigned int n);
+void			bignum_add(t_bignum dst, t_bignum src);
+void			bignum_mul(t_bignum big, int n);
+void			bignum_rshift(t_bignum big, unsigned int shift);
+void			bignum_pow(t_bignum big, unsigned int x, unsigned int y);
+int				ft_wcharlen(wchar_t c);
+void			ft_putwchar_fd(wchar_t c, int fd);
+void			parse_color(char **format, int *print_count, int fd);
+void			parse_flags(char **s, t_data *d);
+void			parse_field_width(char **s, t_data *d, va_list valist);
+void			parse_precision(char **s, t_data *d, va_list valist);
+void			parse_len_modifier(char **s, t_data *d);
+void			diuoxb_padding_and_print(t_data *d);
+void			get_sign(bool is_neg, t_data *d);
+void			di_conv(intmax_t n, t_data *d);
+void			uoxb_conv(uintmax_t n, char c, t_data *d);
+void			c_conv(char c, t_data *d);
+void			wchar_conv(wchar_t c, t_data *d);
+void			s_conv(char *s, t_data *d);
+void			wstr_conv(wchar_t *s, t_data *d);
+void			non_printable_str_conv(char *s, t_data *d);
+void			float128_conv(long double f, bool uppercase, t_data *d);
+void			print_bits(uintmax_t bits, int shift, t_data *d);
+void			print_iso8601_date(int32_t date, t_data *d);
+intmax_t		get_signed(t_data *d, va_list valist);
+uintmax_t		get_unsigned(t_data *d, va_list valist);
+long double		get_float(t_data *d, va_list valist);
+void			convert(char **s, t_data *d, va_list valist);
 
 #endif

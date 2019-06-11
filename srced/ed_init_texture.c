@@ -60,7 +60,7 @@ static int	get_texture_files(t_data *d, DIR *dr)
 	while ((de = readdir(dr)))
 	{
 		if (de->d_type == DT_REG && de->d_name[0] != '.'
-			&& ft_strcmp(&de->d_name[de->d_namlen - 4], ".bmp") == 0)
+			&& ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 4], ".bmp") == 0)
 		{
 			if (ft_strequ(de->d_name, "no_texture.bmp"))
 				d->default_texture = d->nb_texture;

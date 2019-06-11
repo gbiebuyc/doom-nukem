@@ -64,9 +64,9 @@ static int		init_toolbar(t_toolbar *tb)
 		"./Menu/wall_title.bmp", "./Menu/lblTexture.bmp",
 		"./Menu/lblAmmo.bmp", "./Menu/lblMonsters.bmp",
 		"./Menu/lblHealPack.bmp", "./Menu/lblPlayerStart.bmp",
-		"./Menu/minus.bmp", "./Menu/plus.bmp", "/Menu/lblLight.bmp",
-		"/Menu/lblSkybox.bmp", "/Menu/lblDoor.bmp",
-		"/Menu/checkBoxEmpty.bmp", "/Menu/checkBox.bmp"};
+		"./Menu/minus.bmp", "./Menu/plus.bmp", "./Menu/lblLight.bmp",
+		"./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp",
+		"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp"};
 	i = -1;
 	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
 		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||

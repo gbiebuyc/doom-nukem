@@ -40,6 +40,7 @@ SRC = ft_atoi.c \
 	  ft_putnbr_fd.c \
 	  ft_putstr.c \
 	  ft_putstr_fd.c \
+	  ft_putstrn_fd.c \
 	  ft_strcat.c \
 	  ft_strchr.c \
 	  ft_strclr.c \
@@ -69,8 +70,6 @@ SRC = ft_atoi.c \
 	  ft_tolower.c \
 	  ft_toupper.c \
 	  ft_wordcount.c \
-	  freestrarr.c \
-	  dupstrarr.c \
 	  get_next_line.c \
 	  ft_atof.c \
 	  ft_itoa_static.c \
@@ -78,24 +77,29 @@ SRC = ft_atoi.c \
 	  ft_max.c \
 	  ft_abs.c \
 	  ft_pow.c \
-	  conv_char.c conv_int.c conv_percent.c conv_string.c ft_printf.c init_printf.c \
-	  my_itoa.c print.c utils.c wide_utils.c my_fputs.c ft_fputc.c
+	  ft_printf.c \
+	  ft_printf_bignum.c \
+	  ft_printf_widechar.c \
+	  ft_printf_parse.c \
+	  ft_printf_conv_signed.c \
+	  ft_printf_conv_unsigned.c \
+	  ft_printf_conv_char.c \
+	  ft_printf_conv_str.c \
+	  ft_printf_conv_non_printable_str.c \
+	  ft_printf_conv_float.c \
+	  ft_printf_conv_misc.c \
+	  ft_printf_get_args.c \
+	  ft_printf_dispatch.c
 
 OBJ = $(SRC:.c=.o)
-
 NAME = libft.a
-
 CFLAGS = -Wall -Wextra -Werror -O3
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rs $(NAME) $(OBJ)
-
-./%.o: ./%.c ./libft.h
-	@gcc -o $@ -c $< $(CFLAGS)
-
+	ar rs $(NAME) $(OBJ)
 
 clean:
 	rm -rf $(OBJ)
@@ -104,5 +108,3 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re

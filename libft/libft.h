@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 16:11:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/04/26 16:33:48 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/11 20:28:46 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdbool.h>
-# include "ft_printf.h"
 
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
@@ -71,6 +70,7 @@ void			ft_putendl(char const *s);
 void			ft_putnbr(int n);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char const *s, int fd);
+void			ft_putstrn_fd(int fd, char const *s, int len);
 void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
@@ -89,8 +89,6 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
 size_t			ft_wordcount(const char *s, char c);
-void			freestrarr(char **arr);
-char			**dupstrarr(char **arr1);
 int				get_next_line(const int fd, char **line);
 double			ft_atof(const char *s);
 char			*ft_itoa_static(intmax_t n);
@@ -99,7 +97,7 @@ int				ft_max(int a, int b);
 int				ft_abs(int n);
 uintmax_t		ft_pow(unsigned int x, unsigned int y);
 
-int				ft_fputc(int c, FILE *stream);
-int				my_fputs(char *s, FILE *stream, size_t len);
+int				ft_printf(const char *format, ...);
+int				ft_dprintf(int fd, const char *format, ...);
 
 #endif
