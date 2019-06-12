@@ -19,7 +19,7 @@ void	convert2(char **s, t_data *d, va_list valist)
 	else if (**s == 'F')
 		float128_conv(get_float(d, valist), 1, d);
 	else if ((**s == 'c' && d->len_mod == 3) || **s == 'C')
-		wchar_conv(va_arg(valist, wchar_t), d);
+		wchar_conv(va_arg(valist, int), d);
 	else if ((**s == 's' && d->len_mod == 3) || **s == 'S')
 		wstr_conv(va_arg(valist, wchar_t*), d);
 	else if (**s == 'c')
@@ -50,7 +50,7 @@ void	convert(char **s, t_data *d, va_list valist)
 	else if (**s == 'u' || **s == 'o' || **s == 'x' || **s == 'X')
 		uoxb_conv(get_unsigned(d, valist), **s, d);
 	else if (**s == 'p')
-		uoxb_conv((uintmax_t)va_arg(valist, void*), **s, d);
+		uoxb_conv((intptr_t)va_arg(valist, void*), **s, d);
 	else if (**s == 'D')
 		di_conv(va_arg(valist, long int), d);
 	else if (**s == 'O')

@@ -38,7 +38,7 @@ int		get_weapons_files(t_data *d, char *path)
 int		is_bmp(struct dirent *de)
 {
 	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
-			!ft_strcmp(&de->d_name[de->d_namlen - 4], ".bmp"));
+			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 4], ".bmp"));
 }
 
 void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
@@ -54,13 +54,13 @@ void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 		if (path[i] && j == 0)
 			d->assets_data[index].file[i] = path[i];
 		else
-			d->assets_data[index].file[i] = (j < de->d_namlen) ? de->d_name[j++]
-																: 0;
+			d->assets_data[index].file[i] =
+				(j < (int)ft_strlen(de->d_name)) ? de->d_name[j++] : 0;
 	}
 	i = -1;
 	while (++i < 50)
-		d->assets_data[index].name[i] = (i < de->d_namlen - 4) ? de->d_name[i]
-																: 0;
+		d->assets_data[index].name[i] =
+			(i < (int)ft_strlen(de->d_name) - 4) ? de->d_name[i] : 0;
 }
 
 int		get_interface_assets_files(t_data *d, char **path)

@@ -12,8 +12,11 @@
 
 #include "ft_printf.h"
 
-int		ft_wcharlen(wchar_t c)
+int		ft_wcharlen(wchar_t cc)
 {
+	uint32_t	c;
+
+	c = cc;
 	if (c <= 0x7F)
 		return (1);
 	else if (c <= 0x7FF)
@@ -23,8 +26,11 @@ int		ft_wcharlen(wchar_t c)
 	return (4);
 }
 
-void	ft_putwchar_fd(wchar_t c, int fd)
+void	ft_putwchar_fd(wchar_t cc, int fd)
 {
+	uint32_t	c;
+
+	c = cc;
 	if (c <= 0x7F)
 		ft_putchar_fd(c, fd);
 	else if (c <= 0x7FF)

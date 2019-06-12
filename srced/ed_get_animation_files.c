@@ -71,7 +71,8 @@ char	**load_animation_list(t_data *d, char *path)
 			if (!(list[nb] = (char*)malloc(sizeof(char) * 11)))
 				return (NULL);
 			while (++i < 10)
-				list[nb][i] = (i < de->d_namlen) ? de->d_name[i] : 0;
+				list[nb][i] = (i < (int)ft_strlen(de->d_name)) ?
+					de->d_name[i] : 0;
 			list[nb][i] = '\0';
 			nb++;
 		}
