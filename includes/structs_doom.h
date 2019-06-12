@@ -67,6 +67,8 @@ typedef struct	s_projdata
 	int			y2a;
 	int			y1b;
 	int			y2b;
+	int			y1c;
+	int			y2c;
 	t_sector	*neighbor;
 	int			ny1a;
 	int			ny2a;
@@ -84,6 +86,7 @@ typedef struct	s_projdata
 	double		u;
 	int			ya;
 	int			yb;
+	int			yc;
 	int			nya;
 	int			nyb;
 	bool		visible[WIDTH];

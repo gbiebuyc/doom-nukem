@@ -82,6 +82,18 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 			((key == SDLK_KP_4 && d->sectors[d->selected_sector].light > 0) ||
 			(key == SDLK_KP_6 && d->sectors[d->selected_sector].light < 1)))
 		d->sectors[d->selected_sector].light += (key == SDLK_KP_4) ? -0.1 : 0.1;
+	else if (d->selected_sector >= 0 &&
+			key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -90)
+	{
+		d->sectors[d->selected_sector].slope -= 2;
+		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
+	}
+	else if (d->selected_sector >= 0 &&
+			key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 90)
+	{
+		d->sectors[d->selected_sector].slope += 2;
+		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
+	}
 }
 
 void		zoom(t_data *d, SDL_Event *e)

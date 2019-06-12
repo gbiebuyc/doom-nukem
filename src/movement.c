@@ -22,7 +22,7 @@ bool	collision(t_data *d, int16_t sectnum)
 {
 	static int	recursion;
 
-	if (recursion >= 2)
+	if (recursion >= 3)
 		return (false);
 	recursion++;
 	t_sector *sect = d->sectors + sectnum;

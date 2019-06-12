@@ -73,6 +73,7 @@ typedef struct	s_sector
 	char		ceil_texture_name[100];
 	bool		outdoor;
 	t_sprite_list	*sprite_list;
+	int16_t		slope; // between -90 and 90 degrees
 }				t_sector;
 
 typedef struct	s_wall

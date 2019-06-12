@@ -51,7 +51,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	else if (!p->neighbor)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-						(unsigned int)(norm(y, p->ya, p->yb) * p->y_scale *
+						(unsigned int)(norm(y, p->ya, p->yc) * p->y_scale *
 							tex->h) % tex->h * tex->w]));
 	else if (p->neighbor)
 	{
@@ -82,6 +82,7 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	p->visible[p->x] = true;
 	p->ya = lerp(p->n, p->y1a, p->y2a);
 	p->yb = lerp(p->n, p->y1b, p->y2b);
+	p->yc = lerp(p->n, p->y1c, p->y2c);
 	if (p->neighbor)
 	{
 		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->ya);
