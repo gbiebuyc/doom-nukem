@@ -161,4 +161,6 @@ void	load_map(t_data *d);
 
 int		read_monsters_data(t_data *d, int f);
 
+/**/int     load_monsters_texture(t_data *d, int f);
+
 #endif

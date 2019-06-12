@@ -229,6 +229,13 @@ typedef struct	s_data
 	int32_t			nb_textures;
 	char			**tex_name_list;
 	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE_MONSTER][MAXNBOFANIMATION];
+/**/
+//	SDL_Surface		**monster_text[4];
+	// monster_text[nb_monster_type][nb_animation][nb_orientation][*SDL_Surface]
+//	uint16_t		nb_monster_type; // give up
+	int16_t			*nb_animation;
+	int16_t			*nb_orientation;
+/**/
 	SDL_Surface		*projectile_tex[MAX_KIND_OF_PROJECTILE][MAX_PROJECTILE_TEX_PER_WEAP];
 	SDL_Surface		*weapon_tex[MAX_KIND_OF_WEAP][MAX_ANIM_PER_WEAP];
 	const Uint8		*keys;

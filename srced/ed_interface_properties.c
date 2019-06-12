@@ -56,7 +56,7 @@ static void	draw_plus_minus_btn_n_checkbox(t_data *d, SDL_Surface **prop,
 	copy_surface_to_surface(prop[9], d->screen, (int[2]){x + 32, y}, d);
 	x = W - PROPERTIES_LIMIT + MARGIN;
 	y = d->interface.tex_select[1].y + 110;
-	copy_surface_to_surface(prop[10], d->screen, (int[2]){x, y - 30}, d); // light
+	copy_surface_to_surface(prop[10], d->screen, (int[2]){x, y - 30}, d);
 	copy_surface_to_surface(prop[11], d->screen, (int[2]){x, y}, d);
 	d->interface.cbox_skybox_p = (t_vec2f){d->interface.tex_select[1].x - 30,
 																		y};

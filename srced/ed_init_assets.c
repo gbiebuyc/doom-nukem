@@ -35,28 +35,32 @@ int		get_weapons_files(t_data *d, char *path)
 	return (0);
 }
 
-int		get_monsters_files(t_data *d, char *path)
+int		is_bmp(struct dirent *de)
 {
-	DIR		*dr;
-
-	if ((dr = opendir(path)))
-	{
-		(void)d; //TODO
-		closedir(dr);
-	}
-	return (0);
+	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
+			!ft_strcmp(&de->d_name[de->d_namlen - 4], ".bmp"));
 }
 
 void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 {
-	char	*tmp;
+	int		i;
+	int		j;
 
-	d->assets_data[index].file = ft_strjoin("/", de->d_name);
-	tmp = d->assets_data[index].file;
-	d->assets_data[index].file = ft_strjoin(path, tmp);
-	free(tmp);
 	d->assets_data[index].used = 0;
-	d->assets_data[index].name = ft_strsub(de->d_name, 0, ft_strlen(de->d_name) - 4);
+	i = -1;
+	j = 0;
+	while (++i < 100)
+	{
+		if (path[i] && j == 0)
+			d->assets_data[index].file[i] = path[i];
+		else
+			d->assets_data[index].file[i] = (j < de->d_namlen) ? de->d_name[j++]
+																: 0;
+	}
+	i = -1;
+	while (++i < 50)
+		d->assets_data[index].name[i] = (i < de->d_namlen - 4) ? de->d_name[i]
+																: 0;
 }
 
 int		get_interface_assets_files(t_data *d, char **path)
@@ -75,8 +79,7 @@ int		get_interface_assets_files(t_data *d, char **path)
 		if ((dr = opendir(path[n])))
 		{
 			while ((de = readdir(dr)))
-				if (de->d_type == DT_REG && de->d_name[0] != '.' &&
-					!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 4], ".bmp") && ++i)
+				if (is_bmp(de) && ++i)
 					new_asset_data(d, de, path[n], j++);
 			d->interface.nb_asset[n] = i;
 			closedir(dr);

@@ -108,7 +108,7 @@ void		set_assets_used(t_data *d)
 	int				i;
 	t_monster_list	*lst;
 
-	if (!d->assets_data[0].file || !d->interface.monster_list)
+	if (!d->assets_data[0].file[0] || !d->interface.monster_list)
 		return ;
 	reset_assets_used(d);
 	lst = d->interface.monster_list->begin;
@@ -119,4 +119,8 @@ void		set_assets_used(t_data *d)
 				d->assets_data[i].used = 1;
 		lst = lst->next;
 	}
+/*	d->nb_monster_type = 0;
+	i = d->interface.nb_asset[0];
+	while (i < d->interface.nb_asset[0])
+		d->nb_monster_type++;*/
 }

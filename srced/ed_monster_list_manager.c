@@ -31,13 +31,11 @@ static void		fix_list(t_data *d, t_monster_list *prev, t_monster_list *next)
 	d->interface.monster_list = lst;
 }
 
-int				delete_monster(t_data *d)
+int				delete_monster(t_data *d, t_monster_list *lst)
 {
-	t_monster_list	*lst;
 	t_monster_list	*prev;
 	t_monster_list	*next;
 
-	lst = d->interface.monster_list;
 	while (lst)
 	{
 		if (lst->is_select)
@@ -69,7 +67,7 @@ t_monster_list	*new_monster(char *name, t_vec2f *p, int sectnum,
 	if (!(monster = (t_monster_list*)malloc(sizeof(t_monster_list))))
 		return (NULL);
 	monster->name = name;
-	monster->pos = *p; // TODO handle collision, monster superposition
+	monster->pos = *p;
 	monster->sectnunm = sectnum;
 	monster->category = -1;
 	monster->selected_asset = -1;

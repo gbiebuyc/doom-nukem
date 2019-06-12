@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-static int		load_assets(t_data *d, t_toolbar *tb)
+static int		load_interface_assets(t_data *d, t_toolbar *tb)
 {
 	int		m;
 	int		j;
@@ -45,8 +45,12 @@ static int		init_assets(t_data *d, t_toolbar *tb)
 	if (get_interface_assets_files(d, (char*[]){PATH_AMMO_ED, PATH_MONSTER_ED,
 								PATH_HEALPACK_ED, PATH_PLAYERSTART_ED}))
 		return (1);
-	// if (get_monsters_file(d))
-	if (load_assets(d, tb))
+	if (load_interface_assets(d, tb))
+		return (1);
+	if (!(d->texture_monster = (t_monsters_texture*)malloc(
+		sizeof(t_monsters_texture) * d->interface.nb_asset[1])))
+		return (ft_printf("Failed to allocate texture_monster.\n"));
+	if (get_monsters_files(d, PATH_MONSTERS, d->interface.nb_asset[1]))
 		return (1);
 	return (0);
 }

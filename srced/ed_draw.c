@@ -102,6 +102,65 @@ void		draw_screen(t_data *d)
 	if (d->interface.selected_asset != -1)
 		draw_selection_arround_selected_asset(d,
 						&d->interface.selected_asset_position, 0x00ff00);
+/********** test */
+
+// int n;
+// 	int i = -1;
+// 	int x = 0;
+// 	int y = 20;
+// static int check = 1;
+
+// n = 0;
+// while (n < 1) //  modify 1 only if more assets
+// {
+// 	if (check)
+// {
+// 	check = 0;
+// 	ft_printf("nb walk anim = %d\n", d->texture_monster[n].nb_walk_anim);
+// 	ft_printf("nb walk orientation = %d\n", d->texture_monster[n].nb_walk_orientation);
+// 	ft_printf("nb attack anim = %d\n", d->texture_monster[n].nb_attack_anim);
+// 	ft_printf("nb attack orientation = %d\n", d->texture_monster[n].nb_attack_orientation);
+// 	ft_printf("nb death anim = %d\n", d->texture_monster[n].nb_death_anim);
+// }
+// 	while (++i < d->texture_monster[n].nb_walk_anim)
+// 	{
+// 		if (i % 5 == 0)
+// 		{
+// 			x = 0;
+// 			y += x+=d->texture_monster[n].walk[i]->h;
+// 		}
+// 		copy_surface_to_surface(d->texture_monster[0].walk[i], d->screen,
+// 							(int[2]){x, y}, d);
+// 		x += d->texture_monster[0].walk[i]->w;
+// 	}
+// 	i = -1;
+// 	x = 0;
+// 	y = 500;
+// 	while (++i < d->texture_monster[n].nb_attack_anim)
+// 	{
+// 		if (i % 5 == 0)
+// 		{
+// 			x = 0;
+// 			y += x+=d->texture_monster[n].attack[i]->h;
+// 		}
+// 		copy_surface_to_surface(d->texture_monster[n].attack[i], d->screen,
+// 							(int[2]){x, y}, d);
+// 		x += d->texture_monster[0].attack[i]->w;
+// 	}
+
+// 	i = -1;
+// 	x = 100;
+// 	y = 1000;
+// 	while (++i < d->texture_monster[n].nb_death_anim)
+// 	{
+// 		copy_surface_to_surface(d->texture_monster[n].death[i], d->screen,
+// 							(int[2]){x, y}, d);
+// 		x += d->texture_monster[0].death[i]->w;
+// 	}
+// 	n++;
+// }
+
+/**************** */
 ///**/bmp_reader(d);
 	SDL_UpdateWindowSurface(d->win);
 }

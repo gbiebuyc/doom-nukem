@@ -28,6 +28,10 @@ void		debug_print(t_data *d)
 			tmp = tmp->next;
 		}
 	}
+	int i = -1;
+	while (++i < 4)
+		ft_printf("%s\n", d->assets_data[i].file);
+
 /*	t_wall		*wall;
 	int			w;
 	int			s;

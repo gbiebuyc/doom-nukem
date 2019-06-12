@@ -64,20 +64,20 @@ static int		read_wall_n_sector_data(t_data *d, int f)
 	int		i;
 
 	if (read(f, &d->numsectors, sizeof(int16_t)) < 0)
-		return (ft_printf("Faield to read numsectors.\n"));
+		return (ft_printf("Failed to read numsectors.\n"));
 	i = -1;
 	while (++i < d->numsectors)
 		if (read(f, &d->sectors[i], sizeof(t_sector)) < 0 ||
 			read(f, d->sectors[i].floor_texture_name, 100) < 0 ||
 			read(f, d->sectors[i].ceil_texture_name, 100) < 0)
-			return (ft_printf("failed to read sector structure.\n"));
+			return (ft_printf("Failed to read sector structure.\n"));
 	if (read(f, &d->numwalls, sizeof(int16_t)) < 0)
 		return (ft_printf("Faield to read numwwalls.\n"));
 	i = -1;
 	while (++i < d->numwalls)
 		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
 			read(f, d->walls[i].texture_name, 100) < 0)
-			return (ft_printf("failed to read wall structure.\n"));
+			return (ft_printf("Failed to read wall structure.\n"));
 	return (0);
 }
 
@@ -93,5 +93,9 @@ void	load_map(t_data *d)
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_textures_name(d, f) || read_texture_data(d, f))
 		exit (1);
+	/********** */
+	if (load_monsters_texture(d, f))
+		exit(1);
+	/********** */
 	close(f);
 }

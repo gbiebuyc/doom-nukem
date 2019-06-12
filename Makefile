@@ -53,7 +53,8 @@ FILES= main \
 	   draw_aim_cross \
 	   font \
 	   vec2 \
-	   vec2_2
+	   vec2_2 \
+	   load_monsters_texture
 
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))

@@ -56,20 +56,20 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 	int i;
 
 	if (write(f, &d->numsectors, sizeof(d->numsectors)) < 0)
-		return (ft_printf("Failed to write numsectors\n"));
+		return (ft_printf("Failed to write numsectors.\n"));
 	i = -1;
 	while (++i < d->numsectors)
 		if (write(f, &d->sectors[i], sizeof(t_sector)) < 0 ||
 			write(f, d->sectors[i].floor_texture_name, 100) < 0 ||
 			write(f, d->sectors[i].ceil_texture_name, 100) < 0)
-			return (ft_printf("error print sector structure\n"));
+			return (ft_printf("Failed to write sector structure.\n"));
 	if (write(f, &d->numwalls, sizeof(d->numwalls)) < 0)
-		return (ft_printf("Faield to write numwwalls"));
+		return (ft_printf("Failed to write numwwalls."));
 	i = -1;
 	while (++i < d->numwalls)
 		if (write(f, &d->walls[i], sizeof(t_wall)) < 0 ||
 			write(f, d->walls[i].texture_name, 100) < 0)
-			return (ft_printf("error print wall structure\n"));
+			return (ft_printf("Failed to write wall structure.\n"));
 	return (0);
 }
 
@@ -93,7 +93,14 @@ int			save_file(t_data *d)
 	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
 		write_texture_list(d, f) || write_texture_data(d, f))
 		return (1);
-	// TODO Write assets_texture
+	//set_assets_used(d);
+	/*************/
+	// write nb monster type
+	// write nb animation for each texture
+	// write monster texture
+	//write(f, &d->nb_monster_type, sizeof(uint16_t)); // give up
+	write_monster_texture(d, f, d->texture_monster);
+	/****************/
 	close(f);
 	ft_printf("saved map01\n");
 	return (0);

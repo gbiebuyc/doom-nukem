@@ -104,7 +104,7 @@ typedef struct	s_monster
 	double		health_mult; // scale de la vie par rapport a la vie du monstre type
 	double		rot; // set in editor, where is the monster looking at first 
 	int16_t		cursectnum; // set in editor, which sector is the monster from
-	uint8_t		id_type; // which type is the monster (use defines)
+	uint8_t		id_type; // which type is the monster (use defines <- NO !)
 	//double	floating; // might be used to set different floating height for monsters
 	uint8_t		anim_state; // set during behaviour to chose which state of animation is the monster in
 	uint8_t		anim_time;

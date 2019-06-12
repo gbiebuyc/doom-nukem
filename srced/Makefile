@@ -26,7 +26,8 @@ SRC = main.c \
 	ed_utils.c \
 	ed_door_toggle.c \
 	ed_detect_wall.c ed_detect_assets.c \
-	ed_save_file.c ed_fix_data_to_save.c ed_save_assets.c 
+	ed_save_file.c ed_fix_data_to_save.c ed_save_assets.c \
+	ed_get_monster_files.c ed_get_animation_files.c
 
 OBJ1 = $(SRC:.c=.o)
 OBJ2 = $(OBJ1:../src/%=%)

@@ -53,8 +53,41 @@ int		write_monster_data(t_data *d, int f)
 		fill_monster_structure(d);
 		i = -1;
 		while (++i < d->nbmonsters)
-			 if (write(f, &d->monsters[i], sizeof(t_monster)) < 0)
-			 	return (ft_printf("Failed to write monsters\n"));
+			if (write(f, &d->monsters[i], sizeof(t_monster)) < 0)
+				return (ft_printf("Failed to write monsters\n"));
+	}
+	return (0);
+}
+
+int		write_anim_texture(SDL_Surface **s, int f, int nb_anim)
+{
+	int		i;
+
+	i = -1;
+	while (++i < nb_anim)
+	{
+		write(f, &s[i]->w, sizeof(int));
+		write(f, &s[i]->h, sizeof(int));
+		write(f, s[i]->pixels, s[i]->w * s[i]->h * 4);
+	}
+	return (0);
+}
+
+/*
+**	i = monster_type_id
+*/
+
+int		write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
+{
+	int		i;
+
+	i = -1;
+	while (++i < d->interface.nb_asset[1])
+	{
+		write(f, &mt[i].nb_walk_orientation, sizeof(int));
+		write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim);
+		write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim);
+		write_anim_texture(mt[i].death, f, mt[i].nb_death_anim);
 	}
 	return (0);
 }
