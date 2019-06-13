@@ -76,13 +76,16 @@ static void	mouse_button_up(t_data *d, SDL_Event *e)
 
 static int	mouse_button_down(t_data *d, SDL_Event *e)
 {
-	if (menu_open_button(d, e)) //TODO
+	if (d->interface.prompt_map_open)
 	{
-		ft_printf("TODO open\n");
-		// function call to get mapfile to open
-		// d.open_map_path = "./map_test";
-		// save confirmation before leave
-		return (-2);
+		d->open_map_path = get_map_to_open(d, e);
+		if (d->open_map_path) // save confirmation before leave
+			return (-2);
+	}
+	if (menu_open_button(d, e))
+	{
+		d->interface.map_list = get_map_list(d);
+		d->interface.prompt_map_open = 1;
 	}
 	else if (menu_save_button(d, e))
 		save_file(d);

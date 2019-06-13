@@ -19,9 +19,10 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include "bmp_reader.h" // TODO
+# include "bmp_reader.h"
 # include <sys/mman.h>
 # include <sys/stat.h>
+# include "font.h"
 
 # define W 1600
 # define H 1200
@@ -43,6 +44,8 @@
 # define PATH_HEALPACK_ED "./textures/assets/editor/healpack/"
 # define PATH_PLAYERSTART_ED "./textures/assets/editor/playerstart/"
 
+# define PATH_MAP "./maps/"
+
 /*
 **	ed_interface_*.c
 */
@@ -55,18 +58,16 @@
 **	########### ed_init_assets.c ###########
 */
 
-// need nb types of monsters  to write in the map
-
 typedef struct	s_monsters_texture
 {
 	char		*name;
-	int		nb_walk_anim;
-	int		nb_walk_orientation;
+	int			nb_walk_anim;
+	int			nb_walk_orientation;
 	SDL_Surface	**walk;
-	int		nb_attack_anim;
-	int		nb_attack_orientation;
+	int			nb_attack_anim;
+	int			nb_attack_orientation;
 	SDL_Surface	**attack;
-	int		nb_death_anim;
+	int			nb_death_anim;
 	SDL_Surface	**death;
 }				t_monsters_texture;
 
@@ -85,6 +86,12 @@ typedef struct	s_assets_data
 /*
 **	#######################################
 */
+
+typedef struct	s_map_list
+{
+	char				*filename;
+	struct s_map_list	*next;
+}				t_map_list;
 
 typedef struct	s_monster_list
 {
@@ -145,6 +152,8 @@ typedef struct	s_interface
 	t_vec2f			btn_ceil_height_pos;
 	t_vec2f			cbox_door_p;
 	t_vec2f			cbox_skybox_p;
+	t_map_list		*map_list;
+	int				prompt_map_open;
 }				t_interface;
 
 /*
@@ -178,7 +187,6 @@ typedef struct	s_data
 	uint16_t			nbmonsters;
 	int					nb_texture;
 	int32_t				nb_used_texture;
-//	int16_t				nb_monster_type;
 	int					nb_anim_tmp;
 	int					nb_orientation_tnp;
 	double				scale;
@@ -195,13 +203,13 @@ typedef struct	s_data
 	t_wall				*hl_wall;
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
+	unsigned char		font[96][5];
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-/**/int			get_monsters_files(t_data *d, char *path, int nb_monster);
-/**/char		**load_animation_list(t_data *d, char *path);
-/**/int		write_monster_texture(t_data *d, int f, t_monsters_texture *mt);
-int			is_bmp(struct dirent *de);
+
+/**/char			*get_map_to_open(t_data *d, SDL_Event *e);
+
 
 void			debug_print(t_data *d);
 
@@ -228,7 +236,20 @@ int				init_texture(t_data *d);
 **	ed_init_assets.c
 */
 
+int				is_bmp(struct dirent *de);
 int				get_interface_assets_files(t_data *d, char **path);
+
+/*
+**	ed_get_monsters_files.c
+*/
+
+int				get_monsters_files(t_data *d, char *path, int nb_monster);
+
+/*
+**	ed_get_animation_files.c
+*/
+
+char			**load_animation_list(t_data *d, char *path);
 
 /*
 **	ed_draw.c
@@ -335,6 +356,13 @@ void			show_preview(t_data *d, t_assets *a);
 void			draw_ligth_bar(t_data *d);
 
 /*
+**	ed_interface_open_map.c
+*/
+
+t_map_list		*get_map_list(t_data *d);
+void			draw_map_list(t_data *d);
+
+/*
 **	ed_utils.c
 */
 
@@ -348,10 +376,16 @@ double			fclamp(double x, double min, double max);
 **	ed_event.c
 */
 
-void			event_key_up(t_data *d, SDL_Keycode key);
-void			event_key_down(t_data *d, SDL_Keycode key);
+void			run_game(t_data *d);
 void			zoom(t_data *d, SDL_Event *e);
 void			event_motion_mouse(t_data *d, SDL_Event *e);
+
+/*
+**	ed_event_keyboard.c
+*/
+
+void			event_key_up(t_data *d, SDL_Keycode key);
+void			event_key_down(t_data *d, SDL_Keycode key);
 
 /*
 **	ed_event_function.c
@@ -370,7 +404,7 @@ int				selecting_assets(t_data *d, SDL_Event *e);
 int				event_mouse_button(t_data *d, SDL_Event *e);
 
 /*
-**	ed_open_map.c
+**	ed_read_map.c
 */
 
 void			load_map(t_data *d, char *path);
@@ -394,6 +428,7 @@ void			set_assets_used(t_data *d);
 */
 
 int				write_monster_data(t_data *d, int f);
+int				write_monster_texture(t_data *d, int f, t_monsters_texture *mt);
 
 /*
 ** ed_door_toggle.c
@@ -419,8 +454,15 @@ double			fclamp(double x, double min, double max);
 **	ed_monster_list_manager.c
 */
 
-int				add_monster_to_list(t_data *d, t_vec2f *xy,int sectn,
+int				add_monster_to_list(t_data *d, t_vec2f *xy, int sectn,
 															t_interface *i);
 int				delete_monster(t_data *d, t_monster_list *lst);
+
+/*
+**	ed_font.c
+*/
+
+void			init_font(t_data *d);
+void			draw_string(t_data *d, t_font f);
 
 #endif

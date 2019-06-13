@@ -73,8 +73,7 @@ char	**load_animation_list(t_data *d, char *path)
 			while (++i < 10)
 				list[nb][i] = (i < (int)ft_strlen(de->d_name)) ?
 					de->d_name[i] : 0;
-			list[nb][i] = '\0';
-			nb++;
+			list[nb++][i] = '\0';
 		}
 	}
 	d->nb_anim_tmp = nb;

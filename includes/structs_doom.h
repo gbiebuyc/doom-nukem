@@ -214,15 +214,6 @@ typedef struct	s_color_buf
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
 
-typedef struct	s_font
-{
-	char		*str;
-	int			x;
-	int			y;
-	uint32_t	col;
-	int			scale;
-}				t_font;
-
 typedef struct	s_data
 {
 	t_player		player;

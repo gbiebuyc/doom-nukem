@@ -98,7 +98,6 @@ int		main(int ac, char **av)
 		init_sectors(&d);
 	else if (ac == 2)
 		load_map(&d, av[1]);
-	d.open_map_path = "./map_test"; // temp TODO // remove ??
 	if (main_loop(&d))
 	{
 		argv = (char*[]){"editor", d.open_map_path, NULL};

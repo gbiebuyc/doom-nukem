@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ed_open_map.c                                      :+:      :+:    :+:   */
+/*   ed_read_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-int		read_monsters_data(t_data *d, int f)
+static int		read_monsters_data(t_data *d, int f)
 {
 	int	i;
 

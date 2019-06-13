@@ -16,15 +16,24 @@
 # include <SDL.h>
 # include <libft.h>
 
+/*
+** This header is used both by the editor and the game
+*/
+
 # define MAXMONSTERSEC 20
 # define MAXNUMSECTORS 1024
 # define MAXNUMMONSTERS 256
 # define MAXNUMWALLS 8192
 # define MAXTYPEMONSTERS 2
 
-/*
-** This header is used both by the editor and the game
-*/
+typedef struct	s_font
+{
+	char		*str;
+	int			x;
+	int			y;
+	uint32_t	col;
+	int			scale;
+}				t_font;
 
 typedef struct	s_vec3f
 {

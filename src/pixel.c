@@ -18,7 +18,7 @@
 void	putpixel(t_data *d, int x, int y, uint32_t color)
 {
 	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
-		((uint32_t*)d->screen->pixels)[(int)x + (int)y * WIDTH] = color;
+		((uint32_t*)d->screen->pixels)[x + y * WIDTH] = color;
 }
 
 uint32_t	getpixel(SDL_Surface *s, double x, double y)

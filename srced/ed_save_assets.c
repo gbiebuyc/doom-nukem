@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-void	clear_list(t_data *d)
+void		clear_list(t_data *d)
 {
 	if (!d->monsters)
 		return ;
@@ -20,7 +20,7 @@ void	clear_list(t_data *d)
 	d->monsters = NULL;
 }
 
-int		fill_monster_structure(t_data *d)
+int			fill_monster_structure(t_data *d)
 {
 	t_monster_list	*lst;
 	int				i;
@@ -42,7 +42,7 @@ int		fill_monster_structure(t_data *d)
 	return (0);
 }
 
-int		write_monster_data(t_data *d, int f)
+int			write_monster_data(t_data *d, int f)
 {
 	int	i;
 
@@ -62,7 +62,7 @@ int		write_monster_data(t_data *d, int f)
 	return (0);
 }
 
-int		write_anim_texture(SDL_Surface **s, int f, int nb_anim)
+static int	write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 {
 	int		i;
 
@@ -81,7 +81,7 @@ int		write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 **	i = monster_type_id
 */
 
-int		write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
+int			write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 {
 	int		i;
 
