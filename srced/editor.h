@@ -19,7 +19,7 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include "bmp_reader.h"
+# include "bmp_reader.h" // TODO
 # include <sys/mman.h>
 # include <sys/stat.h>
 
@@ -168,6 +168,7 @@ typedef struct	s_data
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
 	t_vec2f				pos;
+	char				*open_map_path;
 	int16_t				startsectnum;
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
@@ -356,6 +357,7 @@ void			event_motion_mouse(t_data *d, SDL_Event *e);
 **	ed_event_function.c
 */
 
+int				menu_open_button(t_data *d, SDL_Event *e);
 int				menu_save_button(t_data *d, SDL_Event *e);
 int				menu_exit_button(t_data *d, SDL_Event *e);
 int				properties_texture_selection(t_data *d, SDL_Event *e);
@@ -366,6 +368,12 @@ int				selecting_assets(t_data *d, SDL_Event *e);
 */
 
 int				event_mouse_button(t_data *d, SDL_Event *e);
+
+/*
+**	ed_open_map.c
+*/
+
+void			load_map(t_data *d, char *path);
 
 /*
 **	ed_save_file.c

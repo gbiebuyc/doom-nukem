@@ -12,6 +12,13 @@
 
 #include "editor.h"
 
+int		menu_open_button(t_data *d, SDL_Event *e)
+{
+	return (d->interface.show_menu &&
+			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
+			e->button.y >= 6 && e->button.y < 34);
+}
+
 int		menu_save_button(t_data *d, SDL_Event *e)
 {
 	return (d->interface.show_menu &&

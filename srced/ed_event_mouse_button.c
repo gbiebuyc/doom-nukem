@@ -76,7 +76,15 @@ static void	mouse_button_up(t_data *d, SDL_Event *e)
 
 static int	mouse_button_down(t_data *d, SDL_Event *e)
 {
-	if (menu_save_button(d, e))
+	if (menu_open_button(d, e)) //TODO
+	{
+		ft_printf("TODO open\n");
+		// function call to get mapfile to open
+		// d.open_map_path = "./map_test";
+		// save confirmation before leave
+		return (-2);
+	}
+	else if (menu_save_button(d, e))
 		save_file(d);
 	else if (menu_exit_button(d, e))
 		return (-1);
@@ -94,10 +102,12 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 
 int			event_mouse_button(t_data *d, SDL_Event *e)
 {
+	int	exit_state;
+
 	if (e->type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (mouse_button_down(d, e) == -1)
-			return (-1);
+		if ((exit_state = mouse_button_down(d, e)) < 0)
+			return (exit_state);
 	}
 	else if (e->type == SDL_MOUSEBUTTONUP)
 		mouse_button_up(d, e);

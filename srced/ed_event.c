@@ -20,13 +20,13 @@ static void	run_game(t_data *d)
 {
 	pid_t		pid;
 	char *const	argv[] = {"doom-nukem", NULL};
-	extern char	**environ;
+	char	**env;
 
 	if (!save_file(d))
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(argv[0], argv, environ);
+			execve(argv[0], argv, env);
 		else
 		{
 			waitpid(pid, 0, 0);

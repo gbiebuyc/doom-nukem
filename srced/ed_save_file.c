@@ -91,16 +91,9 @@ int			save_file(t_data *d)
 	set_texture_used(d, d->sectors, d->walls);
 	set_texture_name(d, d->sectors, d->walls);
 	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
-		write_texture_list(d, f) || write_texture_data(d, f))
+		write_texture_list(d, f) || write_texture_data(d, f) ||
+		write_monster_texture(d, f, d->texture_monster))
 		return (1);
-	//set_assets_used(d);
-	/*************/
-	// write nb monster type
-	// write nb animation for each texture
-	// write monster texture
-	//write(f, &d->nb_monster_type, sizeof(uint16_t)); // give up
-	write_monster_texture(d, f, d->texture_monster);
-	/****************/
 	close(f);
 	ft_printf("saved map01\n");
 	return (0);

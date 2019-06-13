@@ -1,0 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ed_open_map.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/13 13:38:01 by mikorale          #+#    #+#             */
+/*   Updated: 2019/06/13 13:38:02 by mikorale         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "editor.h"
+
+int		read_monsters_data(t_data *d, int f)
+{
+	int	i;
+
+	if (read(f, &d->nbmonsters, sizeof(uint16_t)) < 0)
+		return (ft_printf("Failed to read nummonsters.\n"));
+	if (d->nbmonsters > 0)
+	{
+		if (!(d->monsters = (t_monster*)malloc(sizeof(t_monster) *
+														d->nbmonsters)))
+			return (ft_printf("Failed to allocate monster stucture.n"));
+		i = -1;
+		while (++i < d->nbmonsters)
+			 if (read(f, &d->monsters[i], sizeof(t_monster)) < 0)
+			 	return (ft_printf("Failed to read monsters.\n"));
+	}
+	return (0);
+}
+
+/*
+**	Read the number of sectors and walls
+**	And get all the data structure
+*/
+
+static int		read_wall_n_sector_data(t_data *d, int f)
+{
+	int		i;
+
+	if (read(f, &d->numsectors, sizeof(int16_t)) < 0)
+		return (ft_printf("Failed to read numsectors.\n"));
+	i = -1;
+	while (++i < d->numsectors)
+		if (read(f, &d->sectors[i], sizeof(t_sector)) < 0 ||
+			read(f, d->sectors[i].floor_texture_name, 100) < 0 ||
+			read(f, d->sectors[i].ceil_texture_name, 100) < 0)
+			return (ft_printf("Failed to read sector structure.\n"));
+	if (read(f, &d->numwalls, sizeof(int16_t)) < 0)
+		return (ft_printf("Faield to read numwwalls.\n"));
+	i = -1;
+	while (++i < d->numwalls)
+		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
+			read(f, d->walls[i].texture_name, 100) < 0)
+			return (ft_printf("Failed to read wall structure.\n"));
+	return (0);
+}
+
+/*
+**  camrot not use in editor but the data exist in map file cause it's need
+**  for doom.
+*/
+
+void	load_map(t_data *d, char *path)
+{
+	int		f;
+	double	camrot;
+
+	camrot = 0;
+	if (((f = open(path, O_RDONLY)) < 0) ||
+		read(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
+		read(f, &camrot, sizeof(double)) < 0 ||
+		read(f, &d->startsectnum, sizeof(int16_t)) < 0)
+		exit(ft_printf("map error\n"));
+	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
+		exit (1);
+	close(f);
+}

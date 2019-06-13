@@ -50,11 +50,14 @@ int		write_monster_data(t_data *d, int f)
 		return (ft_printf("Failed to write nummonsters\n"));
 	if (d->nbmonsters > 0)
 	{
-		fill_monster_structure(d);
+		if (fill_monster_structure(d))
+			return (1);
 		i = -1;
 		while (++i < d->nbmonsters)
+		{
 			if (write(f, &d->monsters[i], sizeof(t_monster)) < 0)
 				return (ft_printf("Failed to write monsters\n"));
+		}
 	}
 	return (0);
 }
@@ -66,9 +69,10 @@ int		write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 	i = -1;
 	while (++i < nb_anim)
 	{
-		write(f, &s[i]->w, sizeof(int));
-		write(f, &s[i]->h, sizeof(int));
-		write(f, s[i]->pixels, s[i]->w * s[i]->h * 4);
+		if (write(f, &s[i]->w, sizeof(int)) < 0 ||
+			write(f, &s[i]->h, sizeof(int)) < 0 ||
+			write(f, s[i]->pixels, s[i]->w * s[i]->h * 4) < 0)
+			return (ft_printf("Failed to write animation size or texture.\n"));
 	}
 	return (0);
 }
@@ -84,10 +88,11 @@ int		write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 	i = -1;
 	while (++i < d->interface.nb_asset[1])
 	{
-		write(f, &mt[i].nb_walk_orientation, sizeof(int));
-		write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim);
-		write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim);
-		write_anim_texture(mt[i].death, f, mt[i].nb_death_anim);
+		if (write(f, &mt[i].nb_walk_orientation, sizeof(int)) < 0 ||
+			write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim) ||
+			write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim) ||
+			write_anim_texture(mt[i].death, f, mt[i].nb_death_anim))
+			return (1);
 	}
 	return (0);
 }
