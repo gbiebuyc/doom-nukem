@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:48:46 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 19:54:41 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/14 19:01:07 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ int		main(int ac, char **av)
 	if (ac == 1)
 		init_sectors(&d);
 	else if (ac == 2)
-		load_map(&d, (d.current_loaded_map = ft_strjoin(PATH_MAP, av[1])));
+		load_map(&d, (d.current_loaded_map = av[1]));
 	if (event_loop(&d))
 	{
-		argv = (char*[]){"editor", d.open_map_path, NULL};
+		argv = (char*[]){"editor", d.map_to_open, NULL};
 		pid = fork();
 		if (pid == 0)
 			execve((const char*)argv[0], (char *const *)argv, env);

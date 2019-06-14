@@ -87,7 +87,7 @@ char	*get_map_to_open(t_data *d, SDL_Event *e)
 		i = -1;
 		while (++i < d->interface.selected_map)
 			d->interface.map_list = d->interface.map_list->next;
-		path = /*ft_strjoin(PATH_MAP, */d->interface.map_list->filename;
+		path = d->interface.map_list->filename;
 	}
 	return (path);
 }

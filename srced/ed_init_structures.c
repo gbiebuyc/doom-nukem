@@ -23,7 +23,7 @@ void		init_data(t_data *d)
 		.startsectnum = 0, .monsters = NULL, .nbmonsters = 0, .scale = W >> 6,
 		.selectedwall = NULL, .selectedwall2 = NULL, .grid_locking = true,
 		.sectordrawing = false, .default_texture = 0, .selected_texture = -2,
-		.open_map_path = NULL, .current_loaded_map = "./maps/newmap.DNMAP"};
+		.map_to_open = NULL, .current_loaded_map = "newmap.DNMAP"};
 	d->player_start = (t_vec3f){0, 0.2, 0};
 	d->interface.show_menu = 0;
 	d->interface.select = 1;

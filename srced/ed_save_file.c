@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/26 13:54:11 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/06 20:37:39 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/14 19:00:36 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int			save_file(t_data *d)
 	startpos = d->player_start;
 	angle = 0;
 	startsectnum = d->startsectnum;
-	if (((f = open(d->current_loaded_map, O_WRONLY | O_CREAT, 0666)) == -1) ||
+	d->path_to_save = ft_strjoin(PATH_MAP, d->current_loaded_map);
+	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT, 0666)) == -1) ||
 		write(f, &startpos, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
 		write(f, &startsectnum, sizeof(int16_t)) < 0)

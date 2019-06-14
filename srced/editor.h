@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 19:57:07 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/14 19:00:54 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,9 @@ typedef struct	s_data
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
 	t_vec2f				pos;
-	char				*open_map_path;
+	char				*map_to_open;
+	char				*current_loaded_map;
+	char				*path_to_save;
 	int16_t				startsectnum;
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
@@ -211,7 +213,6 @@ typedef struct	s_data
 	t_wall				*hl_wall;
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
-	char				*current_loaded_map;
 	unsigned char		font[96][CHAR_WIDTH];
 }				t_data;
 

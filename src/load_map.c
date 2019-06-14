@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/13 02:56:31 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 20:11:00 by nallani          ###   ########.fr       */
+/*   Created: 2019/05/26 19:02:13 by mikorale          #+#    #+#             */
+/*   Updated: 2019/06/14 19:02:36 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void	load_map(t_data *d, char *map)
 		exit(1);
 	/********** */
 	close(f);
+	free(map_path);
 }

@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 23:45:28 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/02 19:15:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/14 18:56:55 by mikorale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@
 void		run_game(t_data *d)
 {
 	pid_t		pid;
-	char *const	argv[] = {"doom-nukem", NULL};
+	char *const	argv[] = {"doom-nukem", "newmap.DNMAP", NULL};
+//	char		**argv;
 	char		**env;
-
+	
 	if (!save_file(d))
 	{
+//		argv = (char*[]){"doom-nukem", d->current_loaded_map, NULL};
 		pid = fork();
 		if (pid == 0)
 			execve(argv[0], argv, env);
