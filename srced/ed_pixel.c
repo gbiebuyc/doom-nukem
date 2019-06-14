@@ -21,28 +21,12 @@ void		put_pixel_to_surface(SDL_Surface *sur, int x, int y, uint32_t color)
 void		putpixel(t_data *d, int x, int y, uint32_t color)
 {
 	if (x >= 0 && y >= 0 && x < W && y < H)
-		((uint32_t*)d->screen->pixels)[x + y * W] = color;
-}
-
-uint32_t	getpixel(SDL_Surface *s, double x, double y)
-{
-	int realx;
-	int realy;
-
-	realx = s->w * x;
-	realy = s->h * y;
-	if (realx >= 0 && realy >= 0 && realx < s->w && realy < s->h)
-		return (((uint32_t*)s->pixels)[realx + realy * s->w]);
-	return (0);
-}
-
-uint32_t	getpixel2(SDL_Surface *s, double x, double y)
-{
-	return (getpixel(s, (x >= 0 && x < 1.0) ? x : x - floor(x),
-				(y >= 0 && y < 1.0) ? y : y - floor(y)));
-}
-
-uint32_t	rgb_to_pixel(SDL_Surface *surface, int r, int g, int b)
-{
-	return (SDL_MapRGBA(surface->format, r, g, b, 255));
+	{
+		if (!d->interface.prompt_map_open)
+			((uint32_t*)d->screen->pixels)[x + y * W] = color;
+		else if (d->interface.prompt_map_open &&
+				(x < MAP_PROMPT_X || x > MAP_PROMPT_ENDX ||
+				y < MAP_PROMPT_Y - 25 || y > MAP_PROMPT_ENDY))
+			((uint32_t*)d->screen->pixels)[x + y * W] = color;
+	}
 }

@@ -54,8 +54,13 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dst,
 	while (++y < d->texture_to_scale && d->texture_to_scale > 0 && (x = -1))
 		while (++x < d->texture_to_scale)
 			if (p[0] + x >= 0 && p[0] + x < W && p[1] + y >= 0 && p[1] + y < H)
-				((uint32_t*)dst->pixels)[(x + p[0]) + (y + p[1]) * dst->w] =
-				((uint32_t*)src->pixels)[
+				if (!d->interface.prompt_map_open ||
+					(d->interface.prompt_map_open &&
+					(x + p[0] < MAP_PROMPT_X || x + p[0] > MAP_PROMPT_ENDX ||
+					y + p[1] < MAP_PROMPT_Y - 25 ||
+					y + p[1] > MAP_PROMPT_ENDY)))
+					((uint32_t*)dst->pixels)[(x + p[0]) + (y + p[1]) *
+					dst->w] = ((uint32_t*)src->pixels)[
 					(int)((double)x / d->texture_to_scale * src->w) +
 					(int)((double)y / d->texture_to_scale * src->h) * src->w];
 }

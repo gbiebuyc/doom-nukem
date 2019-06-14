@@ -12,6 +12,15 @@
 
 #include "editor.h"
 
+static void	handle_escape(t_data *d)
+{
+	if (!d->interface.prompt_map_open)
+		d->interface.show_menu = !d->interface.show_menu;
+	d->interface.texture_case_select = -1;
+	d->interface.selected_asset = -1;
+	d->interface.prompt_map_open = 0;
+}
+
 void		event_key_up(t_data *d, SDL_Keycode key)
 {
 	if (key == SDLK_r || key == SDLK_d)
@@ -52,13 +61,10 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 void		event_key_down(t_data *d, SDL_Keycode key)
 {
 	if (key == SDLK_ESCAPE)
-	{
-		d->interface.show_menu = !d->interface.show_menu;
-		d->interface.texture_case_select = -1;
-		d->interface.selected_asset = -1;
-		d->interface.prompt_map_open = 0;
-	}
-	else if (key == SDLK_SPACE)
+		handle_escape(d);
+	if (d->interface.prompt_map_open)
+		return ;
+	if (key == SDLK_SPACE)
 		(d->sectordrawing) ? add_wall(d) : add_sector(d);
 	else if (key == SDLK_KP_1 || key == SDLK_KP_3)
 		floor_height(d, ((key == SDLK_KP_1) ? -0.1 : 0.1), d->selected_sector);

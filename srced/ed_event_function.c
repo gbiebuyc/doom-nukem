@@ -16,21 +16,24 @@ int		menu_open_button(t_data *d, SDL_Event *e)
 {
 	return (d->interface.show_menu &&
 			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 6 && e->button.y < 34);
+			e->button.y >= 6 && e->button.y < 34 &&
+			!(d->interface.show_menu = 0));
 }
 
 int		menu_save_button(t_data *d, SDL_Event *e)
 {
 	return (d->interface.show_menu &&
 			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 34 && e->button.y < 62);
+			e->button.y >= 34 && e->button.y < 62 &&
+			!(d->interface.show_menu = 0));
 }
 
 int		menu_exit_button(t_data *d, SDL_Event *e)
 {
 	return (d->interface.show_menu &&
 			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 62 && e->button.y < d->interface.menu->h - 6);
+			e->button.y >= 62 && e->button.y < d->interface.menu->h - 6 &&
+			!(d->interface.show_menu = 0));
 }
 
 /*

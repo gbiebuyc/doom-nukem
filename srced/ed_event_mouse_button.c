@@ -57,6 +57,8 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 
 static void	mouse_button_up(t_data *d, SDL_Event *e)
 {
+	if (d->interface.prompt_map_open)
+		return ;
 	if (e->button.button == SDL_BUTTON_LEFT && !d->sectordrawing)
 	{
 		if (!is_on_select_move_icon(d, e->button.x, e->button.y) &&
@@ -76,25 +78,23 @@ static void	mouse_button_up(t_data *d, SDL_Event *e)
 
 static int	mouse_button_down(t_data *d, SDL_Event *e)
 {
-	if (d->interface.prompt_map_open)
-	{
-		d->open_map_path = get_map_to_open(d, e);
-		if (d->open_map_path) // save confirmation before leave
-			return (-2);
-	}
-	if (menu_open_button(d, e))
-	{
-		d->interface.map_list = get_map_list(d);
-		d->interface.prompt_map_open = 1;
-	}
-	else if (menu_save_button(d, e))
-		save_file(d);
-	else if (menu_exit_button(d, e))
-		return (-1);
-	d->interface.show_menu = 0;
 	if (e->button.button == SDL_BUTTON_LEFT)
-		mouse_button_left_handler(d, e, 0, 0);
-	if (e->button.button == SDL_BUTTON_RIGHT)
+	{
+		if (d->interface.prompt_map_open)
+		{
+			if ((d->open_map_path = get_map_to_open(d, e)))
+				return (-2);// TODO save confirmation before leave
+		}
+		else if (menu_open_button(d, e))
+			d->interface.prompt_map_open = (!get_map_list(d)) ? 1 : 0;
+		else if (menu_save_button(d, e))
+			save_file(d);
+		else if (menu_exit_button(d, e))
+			return (-1);
+		if (!d->interface.prompt_map_open)
+			mouse_button_left_handler(d, e, 0, 0);
+	}
+	if (e->button.button == SDL_BUTTON_RIGHT && !d->interface.prompt_map_open)
 	{
 		d->interface.select = 0;
 		d->interface.btn_right_pressed = 1;

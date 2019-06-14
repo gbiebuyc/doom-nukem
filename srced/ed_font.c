@@ -12,9 +12,6 @@
 
 #include "editor.h"
 
-#define CHAR_WIDTH 5
-#define CHAR_HEIGHT 8
-
 void	draw_char(t_data *d, t_font *f)
 {
 	int		i;
@@ -31,8 +28,10 @@ void	draw_char(t_data *d, t_font *f)
 	{
 		i = -1;
 		while (++i < CHAR_HEIGHT * f->scale)
-			if (d->font[(int)c][j / f->scale] & (1 << i / f->scale))
-				putpixel(d, f->x + j, f->y + i, f->col);
+			if (d->font[(int)c][j / f->scale] & (1 << i / f->scale) &&
+				f->x >= 0 && f->y >= 0 && f->x < W && f->y < H)
+				((uint32_t*)d->screen->pixels)[f->x + j + (f->y + i) * W] =
+																	f->color;
 	}
 }
 

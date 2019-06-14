@@ -84,14 +84,14 @@ int				add_monster_to_list(t_data *d, t_vec2f *p, int sectn,
 	int			selected_asset;
 	char		*name;
 
-	selected_asset = d->interface.selected_asset;
-	name = d->assets_data[d->interface.nb_asset[0] + selected_asset].name;
+	selected_asset = i->selected_asset;
+	name = d->assets_data[i->nb_asset[0] + selected_asset].name;
 	if (!d->interface.monster_list)
 	{
 		if (!(i->monster_list = new_monster(name, p, sectn, NULL)))
 			return (ft_printf("Failed to add monster.\n"));
-		i->monster_list->begin = d->interface.monster_list;
-		i->monster_list->category = d->interface.selected_asset_cat;
+		i->monster_list->begin = i->monster_list;
+		i->monster_list->category = i->selected_asset_cat;
 		i->monster_list->selected_asset = selected_asset;
 	}
 	else
@@ -99,10 +99,10 @@ int				add_monster_to_list(t_data *d, t_vec2f *p, int sectn,
 		if (!(i->monster_list->next = new_monster(name, p, sectn,
 														i->monster_list)))
 			return (ft_printf("Failed to add next monster.\n"));
-		i->monster_list->next->begin = d->interface.monster_list->begin;
-		i->monster_list->next->category = d->interface.selected_asset_cat;
+		i->monster_list->next->begin = i->monster_list->begin;
+		i->monster_list->next->category = i->selected_asset_cat;
 		i->monster_list->next->selected_asset = selected_asset;
-		i->monster_list = d->interface.monster_list->next;
+		i->monster_list = i->monster_list->next;
 	}
 	d->nbmonsters++;
 	return (0);

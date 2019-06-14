@@ -83,7 +83,7 @@ int			save_file(t_data *d)
 	startpos = d->player_start;
 	angle = 0;
 	startsectnum = d->startsectnum;
-	if (((f = open("map01.DNMAP", O_WRONLY | O_CREAT, 0666)) == -1) ||
+	if (((f = open(d->current_loaded_map, O_WRONLY | O_CREAT, 0666)) == -1) ||
 		write(f, &startpos, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
 		write(f, &startsectnum, sizeof(int16_t)) < 0)
@@ -95,6 +95,6 @@ int			save_file(t_data *d)
 		write_monster_texture(d, f, d->texture_monster))
 		return (1);
 	close(f);
-	ft_printf("Map saved\n");
+	ft_printf("Map %s saved\n", d->current_loaded_map);
 	return (0);
 }

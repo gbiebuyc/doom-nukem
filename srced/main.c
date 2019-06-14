@@ -55,7 +55,7 @@ void	debug_print(t_data *d)
 		ft_printf("%s\n", d->assets_data[i].file);
 }
 
-int		main_loop(t_data *d)
+int		event_loop(t_data *d)
 {
 	SDL_Event	e;
 	int			open;
@@ -71,7 +71,7 @@ int		main_loop(t_data *d)
 		else if (e.type == SDL_KEYDOWN)
 			event_key_down(d, e.key.keysym.sym);
 		else if (e.type == SDL_MOUSEWHEEL)
-			zoom(d, &e);
+			mouse_wheel(d, &e);
 		else if ((open = event_mouse_button(d, &e)) < 0)
 			break ;
 		else if (e.type == SDL_MOUSEMOTION)
@@ -90,15 +90,21 @@ int		main(int ac, char **av)
 	pid_t	pid;
 	char	**argv;
 	char	**env;
-
+// TODO open new map with argv[1], will be used ot save the new map under that name
+// ./editor "with argument" will be mandatory
+// to open existing map or new one
+// save the name in current_loaded_map
+// need difference between new map in argv[1] and existing map
+// parse folder and find is file already exist
+// load it if yes, create it if no
 	init_data(&d);
 	if (init_editor(&d))
 		return (EXIT_FAILURE);
 	if (ac == 1)
 		init_sectors(&d);
 	else if (ac == 2)
-		load_map(&d, av[1]);
-	if (main_loop(&d))
+		load_map(&d, (d.current_loaded_map = ft_strjoin(PATH_MAP, av[1])));
+	if (event_loop(&d))
 	{
 		argv = (char*[]){"editor", d.open_map_path, NULL};
 		pid = fork();

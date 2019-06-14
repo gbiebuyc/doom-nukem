@@ -21,7 +21,8 @@ SRC = main.c \
 	ed_editor.c ed_editor_functions.c ed_editor_sector.c ed_editor_wall.c \
 	ed_editor_assets_handler.c ed_monster_list_manager.c \
 	ed_event.c ed_event_keyboard.c ed_event_function.c ed_event_mouse_button.c \
-	ed_interface.c ed_interface_functions.c ed_interface_open_map.c \
+	ed_interface.c ed_interface_functions.c \
+	ed_interface_map_list.c ed_interface_select_map.c \
 	ed_interface_properties.c ed_interface_properties2.c\
 	ed_utils.c \
 	ed_door_toggle.c \
@@ -57,7 +58,7 @@ fclean:
 
 re: fclean all
 
-./obj/%.o: ./%.c ./editor.h ../includes/common.h ./bmp_reader.h
+./obj/%.o: ./%.c ./editor.h ../includes/common.h ./bmp_reader.h ./font.h
 	@mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
 

@@ -27,6 +27,7 @@
 # define MAX_Y_OFFSET (HEIGHT/2)
 # define PLAYER_HITBOX 0.1
 # include <structs_doom.h>
+# define PATH_MAP "./maps/"
 
 void	draw_aim_cross(t_data *d);
 void	m16_shoot(t_data *d);
@@ -153,7 +154,7 @@ void	movement(t_data *d);
 **	load_map.c
 */
 
-void	load_map(t_data *d);
+void	load_map(t_data *d, char *map);
 
 /*
 **	load_assets.c

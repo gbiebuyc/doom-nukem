@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ed_interface_open_map.c                            :+:      :+:    :+:   */
+/*   ed_interface_map_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,36 +12,9 @@
 
 #include "editor.h"
 
-
-char	*get_map_to_open(t_data *d, SDL_Event *e)
+static void	free_list(t_data *d)
 {
-	char	*path;
-
-	path = NULL;
-	(void)d;
-	(void)e;
-	return (path);
-}
-
-void		draw_map_list(t_data *d)
-{
-	int			x;
-	int			y;
-	t_map_list	*tmp;
-
-	tmp = d->interface.map_list;
-	x = 0;
-	y = 0;
-	while (tmp)
-	{
-		draw_string(d, (t_font){tmp->filename, x, y += 30, 0x008800, 2});
-		tmp = tmp->next;
-	}
-}
-
-void		free_list(t_data *d)
-{
-	t_map_list	*tmp;
+	t_map_list *tmp;
 
 	while (d->interface.map_list)
 	{
@@ -53,22 +26,42 @@ void		free_list(t_data *d)
 	d->interface.map_list = NULL;
 }
 
-void	*new_map_file(t_map_list **file, char *name)
-{
-	if (!((*file) = (t_map_list*)malloc(sizeof(t_map_list))))
-		return (NULL);
-	(*file)->filename = ft_strdup(name);
-	(*file)->next = NULL;
-	return (*file);
-}
-
-int			is_validd_map_name(struct dirent *de)
+static int	is_valid_map_name(struct dirent *de)
 {
 	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
 			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 6], ".DNMAP"));
 }
 
-t_map_list	*get_map_list(t_data *d)
+static void	*new_map_file(t_map_list **file, char *name, t_map_list *prev)
+{
+	if (!((*file) = (t_map_list *)malloc(sizeof(t_map_list))))
+		return (NULL);
+	(*file)->filename = ft_strdup(name);
+	(*file)->prev = prev;
+	(*file)->next = NULL;
+	return (*file);
+}
+
+static void	*create_new_link(t_interface *i, struct dirent *de,
+													t_map_list *begin)
+{
+	if (!i->map_list)
+	{
+		new_map_file(&i->map_list, de->d_name, NULL);
+		i->map_list->begin = i->map_list;
+	}
+	else
+	{
+		new_map_file(&i->map_list->next, de->d_name, i->map_list);
+		i->map_list->next->begin = i->map_list->next->prev->begin;
+	}
+	if (i->map_list->next)
+		i->map_list = i->map_list->next;
+	i->nb_map++;
+	return ((!begin) ? i->map_list : begin);
+}
+
+int			get_map_list(t_data *d)
 {
 	DIR				*dr;
 	struct dirent	*de;
@@ -76,23 +69,14 @@ t_map_list	*get_map_list(t_data *d)
 
 	free_list(d);
 	if (!(dr = opendir(PATH_MAP)))
-	{
-		d->interface.prompt_map_open = 0;
-		ft_printf("Failed to open maps direcory : %s.\n", PATH_MAP);
-		return (NULL);
-	}
+		return (ft_printf("Failed to open maps direcory : %s.\n", PATH_MAP));
 	begin = NULL;
+	d->interface.nb_map = 0;
+	d->interface.map_list_start_i = 0;
 	while ((de = readdir(dr)))
-	{
-		if (is_validd_map_name(de))
-		{
-			if (!new_map_file((!d->interface.map_list) ? &d->interface.map_list
-							: &d->interface.map_list->next, de->d_name))
-				return (NULL);
-			begin = (!begin) ? d->interface.map_list : begin;
-			if (d->interface.map_list->next)
-				d->interface.map_list = d->interface.map_list->next;
-		}
-	}
-	return (begin);
+		if (is_valid_map_name(de))
+			if (!(begin = create_new_link(&d->interface, de, begin)))
+				return (ft_printf("Failed to create new link to map_list.\n"));
+	d->interface.map_list = begin;
+	return (0);
 }

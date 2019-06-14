@@ -115,7 +115,7 @@ static void	print_texture_toolbar(t_data *d)
 **	can get the height using : d->interface.toolbar.select[0]->h
 */
 
-void		show_menu(t_data *d)
+void		print_interface(t_data *d)
 {
 	int	y;
 	int	i;

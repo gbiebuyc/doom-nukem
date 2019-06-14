@@ -81,11 +81,13 @@ static int		read_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
-void	load_map(t_data *d)
+void	load_map(t_data *d, char *map)
 {
-	int f;
-// nap_path in argv[1]
-	if (((f = open("map01.DNMAP", O_RDONLY)) == -1) ||
+	int		f;
+	char	*map_path;
+
+	if (!(map_path = ft_strjoin(PATH_MAP, map)) ||
+		((f = open(map_path, O_RDONLY)) == -1) ||
 		read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
 		read(f, &d->cam.rot, sizeof(double)) == -1 ||
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)

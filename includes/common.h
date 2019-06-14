@@ -23,7 +23,7 @@
 # define MAXMONSTERSEC 20
 # define MAXNUMSECTORS 1024
 # define MAXNUMMONSTERS 256
-# define MAXNUMWALLS 8192
+# define MAXNUMWALLS 4096
 # define MAXTYPEMONSTERS 2
 
 typedef struct	s_font
@@ -31,7 +31,7 @@ typedef struct	s_font
 	char		*str;
 	int			x;
 	int			y;
-	uint32_t	col;
+	uint32_t	color;
 	int			scale;
 }				t_font;
 
@@ -125,6 +125,7 @@ typedef struct	s_monster
 	double		width; // calculee dans le binaire
 	bool		can_collide; // collides or not with player(used when monster is dead)
 	bool		activated; // unused for now
+
 }				t_monster;
 
 typedef struct	s_texture_data

@@ -12,7 +12,25 @@
 
 #include "editor.h"
 
-static int		read_monsters_data(t_data *d, int f)
+static void	fix_monster_list(t_data *d)
+{
+	int		i;
+	int		nb;
+
+	i = -1;
+	nb = d->nbmonsters;
+	d->nbmonsters = 0;
+	d->interface.selected_asset_cat = 1;
+	while (++i < nb)
+	{
+		d->interface.selected_asset = d->monsters[i].id_type;
+		add_monster_to_list(d, &d->monsters[i].pos, d->monsters[i].cursectnum,
+															&d->interface);
+	}
+	d->interface.selected_asset = -1;
+}
+
+static int	read_monsters_data(t_data *d, int f)
 {
 	int	i;
 
@@ -25,8 +43,8 @@ static int		read_monsters_data(t_data *d, int f)
 			return (ft_printf("Failed to allocate monster stucture.n"));
 		i = -1;
 		while (++i < d->nbmonsters)
-			 if (read(f, &d->monsters[i], sizeof(t_monster)) < 0)
-			 	return (ft_printf("Failed to read monsters.\n"));
+			if (read(f, &d->monsters[i], sizeof(t_monster)) < 0)
+				return (ft_printf("Failed to read monsters.\n"));
 	}
 	return (0);
 }
@@ -36,7 +54,7 @@ static int		read_monsters_data(t_data *d, int f)
 **	And get all the data structure
 */
 
-static int		read_wall_n_sector_data(t_data *d, int f)
+static int	read_wall_n_sector_data(t_data *d, int f)
 {
 	int		i;
 
@@ -63,7 +81,7 @@ static int		read_wall_n_sector_data(t_data *d, int f)
 **  for doom.
 */
 
-void	load_map(t_data *d, char *path)
+void		load_map(t_data *d, char *path)
 {
 	int		f;
 	double	camrot;
@@ -75,6 +93,7 @@ void	load_map(t_data *d, char *path)
 		read(f, &d->startsectnum, sizeof(int16_t)) < 0)
 		exit(ft_printf("map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
-		exit (1);
+		exit(1);
 	close(f);
+	fix_monster_list(d);
 }

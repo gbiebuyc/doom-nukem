@@ -20,7 +20,7 @@ void		run_game(t_data *d)
 {
 	pid_t		pid;
 	char *const	argv[] = {"doom-nukem", NULL};
-	char	**env;
+	char		**env;
 
 	if (!save_file(d))
 	{
@@ -38,12 +38,23 @@ void		run_game(t_data *d)
 		ft_printf("Error saving file\nAbort running game...\n");
 }
 
-void		zoom(t_data *d, SDL_Event *e)
+void		mouse_wheel(t_data *d, SDL_Event *e)
 {
-	if (e->wheel.y > 0)
+	int	index;
+
+	if (!d->interface.prompt_map_open && e->wheel.y > 0)
 		d->scale *= (d->scale < 200) ? 1.1 : 1;
-	else if (e->wheel.y < 0)
+	else if (!d->interface.prompt_map_open && e->wheel.y < 0)
 		d->scale *= (d->scale > 10) ? 0.9 : 1;
+	if (d->interface.prompt_map_open)
+	{
+		index = d->interface.map_list_start_i;
+		if (e->wheel.y > 0)
+			index -= (index > 0) ? 1 : 0;
+		if (e->wheel.y < 0)
+			index += (index < d->interface.nb_map - 10) ? 1 : 0;
+		d->interface.map_list_start_i = index;
+	}
 }
 
 /*
@@ -57,18 +68,23 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 	int	y;
 
 	SDL_GetMouseState(&x, &y);
-	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
-		(d->interface.select) ? update_wall_pos(d) : 1;
-	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
-		(d->interface.move) ? update_pos(d, e) : 1;
-	if (e->motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)
-		&& x < W - PROPERTIES_LIMIT &&
-		(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
-		update_pos(d, e);
-	if (selecting_assets(d, e) != -1)
-		d->interface.mouse_pos = (t_vec2f){x, y};
-	if (d->interface.show_menu)
-		d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
-	detect_wall(d, e->motion.x, e->motion.y);
-	detect_assets(d, e->motion.x, e->motion.y);
+	if (!d->interface.prompt_map_open)
+	{
+		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
+			(d->interface.select) ? update_wall_pos(d) : 1;
+		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
+			(d->interface.move) ? update_pos(d, e) : 1;
+		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)
+			&& x < W - PROPERTIES_LIMIT &&
+			(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
+			update_pos(d, e);
+		if (selecting_assets(d, e) != -1)
+			d->interface.mouse_pos = (t_vec2f){x, y};
+		if (d->interface.show_menu)
+			d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
+		detect_wall(d, e->motion.x, e->motion.y);
+		detect_assets(d, e->motion.x, e->motion.y);
+	}
+	else
+		detect_selected_map(d, x, y); //TODO
 }

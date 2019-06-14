@@ -91,14 +91,14 @@ void		draw_screen(t_data *d)
 	int	s;
 
 	ft_memset(d->screen->pixels, 0, W * H * 4);
+	draw_grid(d);
+	s = -1;
+	while (++s < d->numsectors)
+		draw_sector(d, s);
+	draw_assets_to_map(d, d->interface.toolbar.assets);
+	print_interface(d);
 	if (!d->interface.prompt_map_open)
 	{
-		draw_grid(d);
-		s = -1;
-		while (++s < d->numsectors)
-			draw_sector(d, s);
-		draw_assets_to_map(d, d->interface.toolbar.assets);
-		show_menu(d);
 		if (d->interface.category != -1)
 			draw_selection_arround_asset(d, d->interface.category_pos);
 		if (d->interface.selected_asset != -1)

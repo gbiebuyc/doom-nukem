@@ -26,8 +26,6 @@
 
 # define W 1600
 # define H 1200
-# define MAXNUMSECTORS 1024
-# define MAXNUMWALLS 8192
 # define GRIDSIZE 64
 # define TEXTURE_PATH "./textures"
 
@@ -45,6 +43,10 @@
 # define PATH_PLAYERSTART_ED "./textures/assets/editor/playerstart/"
 
 # define PATH_MAP "./maps/"
+# define MAP_PROMPT_X (W >> 2)
+# define MAP_PROMPT_Y (H >> 1) - 125
+# define MAP_PROMPT_ENDX MAP_PROMPT_X + 575
+# define MAP_PROMPT_ENDY (H >> 1) + 125
 
 /*
 **	ed_interface_*.c
@@ -90,6 +92,8 @@ typedef struct	s_assets_data
 typedef struct	s_map_list
 {
 	char				*filename;
+	struct s_map_list	*begin;
+	struct s_map_list	*prev;
 	struct s_map_list	*next;
 }				t_map_list;
 
@@ -153,7 +157,11 @@ typedef struct	s_interface
 	t_vec2f			cbox_door_p;
 	t_vec2f			cbox_skybox_p;
 	t_map_list		*map_list;
+	int				nb_map;
+	int				map_list_start_i;
 	int				prompt_map_open;
+	int				selected_map;
+	t_vec2			selected_map_pos;
 }				t_interface;
 
 /*
@@ -203,11 +211,13 @@ typedef struct	s_data
 	t_wall				*hl_wall;
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
-	unsigned char		font[96][5];
+	char				*current_loaded_map;
+	unsigned char		font[96][CHAR_WIDTH];
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
 
+/**/void	detect_selected_map(t_data *d, int x, int y);
 /**/char			*get_map_to_open(t_data *d, SDL_Event *e);
 
 
@@ -327,7 +337,7 @@ int				add_asset_to_map(t_data *d, int x, int y);
 **	ed_interface.c
 */
 
-void			show_menu(t_data *d);
+void			print_interface(t_data *d);
 
 /*
 **	ed_interface_functions.c
@@ -359,7 +369,7 @@ void			draw_ligth_bar(t_data *d);
 **	ed_interface_open_map.c
 */
 
-t_map_list		*get_map_list(t_data *d);
+int				get_map_list(t_data *d);
 void			draw_map_list(t_data *d);
 
 /*
@@ -377,7 +387,7 @@ double			fclamp(double x, double min, double max);
 */
 
 void			run_game(t_data *d);
-void			zoom(t_data *d, SDL_Event *e);
+void			mouse_wheel(t_data *d, SDL_Event *e);
 void			event_motion_mouse(t_data *d, SDL_Event *e);
 
 /*
