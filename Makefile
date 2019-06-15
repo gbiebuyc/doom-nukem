@@ -51,6 +51,7 @@ FILES= main \
 	   shade \
 	   swap_list \
 	   draw_aim_cross \
+	   draw_slope \
 	   font \
 	   vec2 \
 	   vec2_2 \
@@ -67,7 +68,8 @@ FT_DIR = libft
 INCLUDE = includes 
 INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
-CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags`
+CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags` \
+		 -Wno-unused-variable -Wno-unused-parameter
 LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
 ED_DIR = srced
 

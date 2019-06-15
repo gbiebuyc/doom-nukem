@@ -55,6 +55,16 @@ typedef struct	s_sprite_list
 	uint8_t 				type;
 }				t_sprite_list;
 */
+
+typedef struct	s_frustum
+{
+	int			ytop[WIDTH];
+	int			ybottom[WIDTH];
+	int			x1;
+	int			x2;
+	bool		visitedportals[MAXNUMWALLS];
+}				t_frustum;
+
 typedef struct	s_projdata
 {
 	double		x1;
@@ -101,16 +111,10 @@ typedef struct	s_projdata
 	double		floor_v2[HEIGHT];
 	double		floor_shade[HEIGHT];
 	double		floor_alt[2];
+	uint32_t	slope_col;
+	int			slopetop[WIDTH];
+	t_frustum	*fr;
 }				t_projdata;
-
-typedef struct	s_frustum
-{
-	int			ytop[WIDTH];
-	int			ybottom[WIDTH];
-	int			x1;
-	int			x2;
-	bool		visitedportals[MAXNUMWALLS];
-}				t_frustum;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes
 # define COLLISION_ID MAX_STATE_OF_PROJ_ANIM - 1

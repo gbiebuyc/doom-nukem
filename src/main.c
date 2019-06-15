@@ -20,7 +20,7 @@ int		main(int ac, char **av)
 	{
 		init_font(&d);
 		ft_printf("doom\n-------\n%s\n", av[1]);
-		load_map(&d, (ac == 2) ? av[1] : "map01.DNMAP");
+		load_map(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 		init_sdl(&d);
 		init_player(&d, &d.player);
 		init_monsters(&d);

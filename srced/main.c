@@ -129,7 +129,7 @@ int		main(int ac, char **av)
 	t_data	d;
 	pid_t	pid;
 	char	**argv;
-	char	**env;
+	extern char	**environ;
 
 	init_data(&d);
 	if (init_editor(&d))
@@ -144,7 +144,7 @@ int		main(int ac, char **av)
 		argv = (char*[]){"editor", d.map_to_open, NULL};
 		pid = fork();
 		if (pid == 0)
-			execve((const char*)argv[0], (char *const *)argv, env);
+			execve((const char*)argv[0], (char *const *)argv, environ);
 		else
 			return (EXIT_SUCCESS);
 	}

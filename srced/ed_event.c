@@ -21,7 +21,7 @@ void		run_game(t_data *d)
 	pid_t	pid;
 	char	name[100];
 	char	**argv;
-	char	**env;
+	extern char	**environ;
 
 	ft_strcpy(name, d->current_loaded_map);
 	argv = (char*[]){"doom-nukem", name, NULL};
@@ -30,11 +30,15 @@ void		run_game(t_data *d)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve((const char*)argv[0], (char *const *)argv, env) < 0)
+			if (execve((const char*)argv[0], (char *const *)argv, environ) < 0)
 				ft_printf("Failed to start doom.\n");
 		}
 		else
+		{
 			waitpid(pid, 0, 0);
+			SDL_Delay(300);
+			SDL_FlushEvent(SDL_KEYDOWN);
+		}
 	}
 	else
 		ft_printf("Error saving file\nAbort running game...\n");

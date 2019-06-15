@@ -16,8 +16,6 @@ void	draw_floor2(t_data *d, t_projdata *p, int y, double x[2])
 {
 	double	dist;
 
-	if (p->sector->slope)
-		return (putpixel(d, x[0], y, 0xff0000));
 	if (p->floor_u1[y] == 0)
 	{
 		dist = p->floor_alt[0] /
@@ -40,6 +38,8 @@ void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
 	int		y;
 	double	xnorm;
 
+	if (p->sector->slope)
+		return ;
 	if (p->floor_alt[0] <= 0)
 		return ;
 	x = p->cx1 - 1;

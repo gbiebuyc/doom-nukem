@@ -49,6 +49,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	p.sin = d->floor_sin;
 	p.cos = d->floor_cos;
 	p.sector = sect;
+	p.fr = fr;
 	i = -1;
 	while (++i < HEIGHT)
 		p.floor_u1[i] = 0;
@@ -118,6 +119,8 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		if (pthread_join(thread, NULL))
 			exit(printf("pthread_join error\n"));
 	}
+	if (sect->slope)
+		draw_slope(d, &p);
 	if (sect->sprite_list)
 		reorder_sprite(d, sect);
 	t_sprite_list *sprite_list_tmp;
