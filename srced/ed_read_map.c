@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-static int	in_correct_folder(char *path)
+int			contain_map_path(char *path)
 {
 	char	*check;
 
@@ -97,7 +97,7 @@ int			load_map(t_data *d, char *map)
 	double		camrot;
 	struct stat	sb;
 
-	map = (in_correct_folder(map)) ? map : ft_strjoin(PATH_MAP, map);
+	map = (contain_map_path(map)) ? map : ft_strjoin(PATH_MAP, map);
 	camrot = 0;
 	if (((f = open(map, O_RDONLY)) < 0) ||
 		(fstat(f, &sb) == -1) ||
@@ -109,7 +109,7 @@ int			load_map(t_data *d, char *map)
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
 		return (1);
 	close(f);
-	if (!(in_correct_folder(map)))
+	if (!(contain_map_path(map)))
 		free(map);
 	fix_monster_list(d);
 	return (0);

@@ -185,11 +185,12 @@ typedef struct	s_data
 	t_interface			interface;
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
+	int16_t				startsectnum;
 	t_vec2f				pos;
 	char				*map_to_open;
 	char				*current_loaded_map;
 	char				*path_to_save;
-	int16_t				startsectnum;
+
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
 	t_monster			*monsters;
@@ -428,6 +429,7 @@ int				event_mouse_button(t_data *d, SDL_Event *e);
 **	ed_read_map.c
 */
 
+int				contain_map_path(char *path);
 int				load_map(t_data *d, char *path);
 
 /*

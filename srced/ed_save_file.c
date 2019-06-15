@@ -73,21 +73,29 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
+void		add_extension_file(t_data *d)
+{
+	char	*tmp;
+
+	if (ft_strequ(&d->path_to_save[ft_strlen(d->path_to_save) - 6], ".DNMAP"))
+		return ;
+	tmp = d->path_to_save;
+	d->path_to_save = ft_strjoin(d->path_to_save, ".DNMAP");
+	free(tmp);
+}
+
 int			save_file(t_data *d)
 {
-	t_vec3f	startpos;
 	double	angle;
-	int16_t	startsectnum;
 	int		f;
 
-	startpos = d->player_start;
 	angle = 0;
-	startsectnum = d->startsectnum;
 	d->path_to_save = ft_strjoin(PATH_MAP, d->current_loaded_map);
+	add_extension_file(d);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT, 0666)) == -1) ||
-		write(f, &startpos, sizeof(t_vec3f)) < 0 ||
+		write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
-		write(f, &startsectnum, sizeof(int16_t)) < 0)
+		write(f, &d->startsectnum, sizeof(int16_t)) < 0)
 		return (ft_printf("Write starting data failed\n"));
 	set_texture_used(d, d->sectors, d->walls);
 	set_texture_name(d, d->sectors, d->walls);
@@ -96,6 +104,6 @@ int			save_file(t_data *d)
 		write_monster_texture(d, f, d->texture_monster))
 		return (1);
 	close(f);
-	ft_printf("Map %s saved\n", d->current_loaded_map);
+	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);
 }

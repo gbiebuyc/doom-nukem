@@ -36,6 +36,22 @@ int		ed_usage(t_data *d)
 	return (EXIT_FAILURE);
 }
 
+int		map_exist(t_data *d, char *map)
+{
+	int		i;
+	char	*check;
+
+	check = map;
+	if (contain_map_path(map))
+		check = &map[5];
+	get_map_list(d);
+	i = -1;
+	while (++i < d->interface.nb_map)
+		if (ft_strequ(check, d->interface.map_list_sort[i]->name))
+			return (1);
+	d->current_loaded_map = map;
+	return (0);
+}
 /*
 **	t_wall		*wall;
 **	int			w;
@@ -114,22 +130,16 @@ int		main(int ac, char **av)
 	pid_t	pid;
 	char	**argv;
 	char	**env;
-// TODO open new map with argv[1], will be used to save the new map under that name
-// ./editor "with argument" will be mandatory
-// to open existing map or new one
-// save the name in current_loaded_map
-// need difference between new map in argv[1] and existing map
-// parse folder and find is file already exist
-// load it if yes, create it if no
+
 	init_data(&d);
 	if (init_editor(&d))
 		return (EXIT_FAILURE);
-	if (ac == 1)
+	if (ac == 1 || (ac == 2 && !map_exist(&d, av[1])))
 		init_sectors(&d);
 	else if (ac == 2)
 		if (load_map(&d, (d.current_loaded_map = av[1])))
 			return (ed_usage(&d));
-	if (event_loop(&d))
+	if ((ac == 1 || ac == 2) && event_loop(&d))
 	{
 		argv = (char*[]){"editor", d.map_to_open, NULL};
 		pid = fork();
@@ -138,5 +148,7 @@ int		main(int ac, char **av)
 		else
 			return (EXIT_SUCCESS);
 	}
+	else if (ac != 1 && ac != 2)
+		ed_usage(&d);
 	return (EXIT_SUCCESS);
 }
