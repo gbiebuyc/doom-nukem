@@ -18,17 +18,21 @@
 
 void		run_game(t_data *d)
 {
-	pid_t		pid;
-	char *const	argv[] = {"doom-nukem", "newmap.DNMAP", NULL};
-//	char		**argv;
-	char		**env;
-	
+	pid_t	pid;
+	char	name[100];
+	char	**argv;
+	char	**env;
+
+	ft_strcpy(name, d->current_loaded_map);
+	argv = (char*[]){"doom-nukem", name, NULL};
 	if (!save_file(d))
 	{
-//		argv = (char*[]){"doom-nukem", d->current_loaded_map, NULL};
 		pid = fork();
 		if (pid == 0)
-			execve(argv[0], argv, env);
+		{
+			if (execve((const char*)argv[0], (char *const *)argv, env) < 0)
+				ft_printf("Failed to start doom.\n");
+		}
 		else
 		{
 			waitpid(pid, 0, 0);
@@ -88,5 +92,5 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 		detect_assets(d, e->motion.x, e->motion.y);
 	}
 	else
-		detect_selected_map(d, x, y); //TODO
+		detect_selected_map(d, x, y);
 }

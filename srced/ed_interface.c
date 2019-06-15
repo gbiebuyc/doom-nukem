@@ -95,8 +95,7 @@ static void	print_texture_toolbar(t_data *d)
 	y = 10;
 	while (i < d->nb_texture)
 	{
-		// todo size < 64x64 scale up
-		if (d->textures[i]->w > 64 || d->textures[i]->h > 64)
+		if (d->textures[i]->w != 64 || d->textures[i]->h != 64)
 			d->texture_to_scale = 64;
 		copy_surface_to_surface(d->textures[i], d->screen, (int[2]){x, y}, d);
 		x += 64;

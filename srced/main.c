@@ -90,7 +90,7 @@ int		main(int ac, char **av)
 	pid_t	pid;
 	char	**argv;
 	char	**env;
-// TODO open new map with argv[1], will be used ot save the new map under that name
+// TODO open new map with argv[1], will be used to save the new map under that name
 // ./editor "with argument" will be mandatory
 // to open existing map or new one
 // save the name in current_loaded_map

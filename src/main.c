@@ -19,6 +19,7 @@ int		main(int ac, char **av)
 	if (ac == 1 || ac == 2)
 	{
 		init_font(&d);
+		ft_printf("doom\n-------\n%s\n", av[1]);
 		load_map(&d, (ac == 2) ? av[1] : "map01.DNMAP");
 		init_sdl(&d);
 		init_player(&d, &d.player);
@@ -31,5 +32,5 @@ int		main(int ac, char **av)
 		ft_printf("Usage : ./doom-nukem \"Map_name\"\n");
 		ft_printf("The map must be in the \"maps\" folder.\n");
 	}
-	return (0);//windows wont compile
+	return (EXIT_SUCCESS);
 }
