@@ -84,8 +84,5 @@ void	detect_select_wall(t_data *d, int x, int y)
 {
 	d->hl_wallnum = search_wall(d, x, y);
 	if (d->hl_wallnum != -1)
-	{
 		d->hl_wall = &d->walls[d->hl_wallnum];
-		ft_printf("[Selected wall] = %d\n", d->hl_wallnum);
-	}
 }

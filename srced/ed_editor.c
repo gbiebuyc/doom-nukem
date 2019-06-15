@@ -16,18 +16,22 @@ void	ceil_height(t_data *d, double val, int16_t sectnum)
 {
 	if (sectnum < 0)
 		return ;
-	d->sectors[sectnum].ceilheight += val;
-	ft_printf("Sector %d ceil H = %f\n", sectnum,
-										d->sectors[sectnum].ceilheight);
+	if (d->sectors[sectnum].ceilheight < 50 &&
+		d->sectors[sectnum].ceilheight > -50)
+		d->sectors[sectnum].ceilheight += val;
+	if (d->sectors[sectnum].ceilheight < d->sectors[sectnum].floorheight)
+		d->sectors[sectnum].floorheight += val;
 }
 
 void	floor_height(t_data *d, double val, int16_t sectnum)
 {
 	if (sectnum < 0)
 		return ;
-	d->sectors[sectnum].floorheight += val;
-	ft_printf("Sector %d floor H = %f\n", sectnum,
-										d->sectors[sectnum].floorheight);
+	if (d->sectors[sectnum].floorheight < 50 &&
+		d->sectors[sectnum].floorheight > -50)
+		d->sectors[sectnum].floorheight += val;
+	if (d->sectors[sectnum].floorheight > d->sectors[sectnum].ceilheight)
+		d->sectors[sectnum].ceilheight += val;
 }
 
 void	cancel_last_wall(t_data *d)

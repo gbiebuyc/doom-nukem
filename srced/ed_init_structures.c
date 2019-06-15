@@ -35,6 +35,7 @@ void		init_data(t_data *d)
 	d->interface.separate_sector = 0;
 	d->interface.monster_list = NULL;
 	d->interface.map_list = NULL;
+	d->interface.map_list_sort = NULL;
 	d->interface.prompt_map_open = 0;
 	d->interface.selected_map = -1;
 	d->startsectnum = 0;

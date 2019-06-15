@@ -12,6 +12,30 @@
 
 #include "editor.h"
 
+int		ed_usage(t_data *d)
+{
+	int	i;
+
+	get_map_list(d);
+	ft_printf("# ##########################################");
+	ft_printf("########################################### #\n");
+	ft_printf("# usage : ./editor [MAP_NAME] \t\t\t\t\t\t\t\t#\n");
+	ft_printf("#\t- The MAP_NAME must be the name of a map inside the");
+	ft_printf(" \"maps\" direcotry.\t\t#\n");
+	ft_printf("#\t- example :\t\t\t\t\t\t\t\t\t#\n");
+	ft_printf("#\t\t You can specify the name directly : ");
+	ft_printf("./editor map01.DNMAP\t\t#\n");
+	ft_printf("#\t\t Or you can specify the path with map_name : ");
+	ft_printf("./editor maps/map01.DNMAP\t#\n");
+	ft_printf("# ##########################################");
+	ft_printf("########################################### #\n");
+	ft_printf("# Current map list : \t\t\t\t\t\t\t\t\t\n");
+	i = -1;
+	while (++i < d->interface.nb_map)
+		ft_printf("# \t- %s\n",	d->interface.map_list_sort[i]->name);
+	return (EXIT_FAILURE);
+}
+
 /*
 **	t_wall		*wall;
 **	int			w;
@@ -104,7 +128,7 @@ int		main(int ac, char **av)
 		init_sectors(&d);
 	else if (ac == 2)
 		if (load_map(&d, (d.current_loaded_map = av[1])))
-			return (EXIT_FAILURE);
+			return (ed_usage(&d));
 	if (event_loop(&d))
 	{
 		argv = (char*[]){"editor", d.map_to_open, NULL};

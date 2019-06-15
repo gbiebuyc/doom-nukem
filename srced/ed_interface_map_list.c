@@ -19,24 +19,50 @@ static void	free_list(t_data *d)
 	while (d->interface.map_list)
 	{
 		tmp = d->interface.map_list->next;
-		free(d->interface.map_list->filename);
+		free(d->interface.map_list->name);
 		free(d->interface.map_list);
 		d->interface.map_list = tmp;
 	}
+	if (d->interface.map_list_sort)
+		free(d->interface.map_list_sort);
+	d->interface.map_list_sort = NULL;
 	d->interface.map_list = NULL;
 }
 
-static int	is_valid_map_name(struct dirent *de)
+static void	sort_map_list(t_data *d)
 {
-	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
-			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 6], ".DNMAP"));
+	int			i;
+	int			j;
+	t_map_list	*tmp;
+
+	if (!(d->interface.map_list_sort =
+		(t_map_list**)malloc(sizeof(t_map_list*) * d->interface.nb_map)))
+		return ;
+	tmp = d->interface.map_list;
+	i = 0;
+	while ((d->interface.map_list_sort[i++] = tmp))
+		tmp = tmp->next;
+	i = -1;
+	while (++i < d->interface.nb_map - 1 && (j = i) > -1)
+	{
+		while (++j < d->interface.nb_map)
+		{
+			if (ft_strcmp(d->interface.map_list_sort[i]->name,
+							d->interface.map_list_sort[j]->name) > 0)
+			{
+				tmp = d->interface.map_list_sort[i];
+				d->interface.map_list_sort[i] = d->interface.map_list_sort[j];
+				d->interface.map_list_sort[j] = tmp;
+			}
+		}
+	}
 }
 
 static void	*new_map_file(t_map_list **file, char *name, t_map_list *prev)
 {
 	if (!((*file) = (t_map_list *)malloc(sizeof(t_map_list))))
 		return (NULL);
-	(*file)->filename = ft_strdup(name);
+	(*file)->name = ft_strdup(name);
 	(*file)->prev = prev;
 	(*file)->next = NULL;
 	return (*file);
@@ -74,9 +100,11 @@ int			get_map_list(t_data *d)
 	d->interface.nb_map = 0;
 	d->interface.map_list_start_i = 0;
 	while ((de = readdir(dr)))
-		if (is_valid_map_name(de))
+		if (de->d_type == DT_REG && de->d_name[0] != '.' &&
+			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 6], ".DNMAP"))
 			if (!(begin = create_new_link(&d->interface, de, begin)))
 				return (ft_printf("Failed to create new link to map_list.\n"));
 	d->interface.map_list = begin;
+	sort_map_list(d);
 	return (0);
 }

@@ -91,7 +91,7 @@ typedef struct	s_assets_data
 
 typedef struct	s_map_list
 {
-	char				*filename;
+	char				*name;
 	struct s_map_list	*begin;
 	struct s_map_list	*prev;
 	struct s_map_list	*next;
@@ -157,6 +157,7 @@ typedef struct	s_interface
 	t_vec2f			cbox_door_p;
 	t_vec2f			cbox_skybox_p;
 	t_map_list		*map_list;
+	t_map_list		**map_list_sort;
 	int				nb_map;
 	int				map_list_start_i;
 	int				prompt_map_open;
@@ -361,6 +362,12 @@ void			draw_separator(t_data *d, int x, int y, int color);
 void			fill_texture_selection(t_data *d, t_interface *i, int wallnum);
 void			show_preview(t_data *d, t_assets *a);
 void			draw_ligth_bar(t_data *d);
+
+/*
+**	ed_interface_print_values.c
+*/
+
+void			print_interface_values(t_data *d);
 
 /*
 **	ed_interface_map_list.c

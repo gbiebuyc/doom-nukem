@@ -19,8 +19,6 @@ static int	selecting_wall_or_sector(t_data *d, SDL_Event *e, int x, int y)
 		&& !d->sectordrawing)
 	{
 		d->selected_sector = find_sect_under_cursor(d);
-		if (d->selected_sector != -1)
-			ft_printf("[Selected sector] = %d\n", d->selected_sector);
 		select_wall_under_cursor(d, (t_vec2f){e->button.x, e->button.y});
 		d->hl_wall = NULL;
 		if (d->selected_wall == -1)
