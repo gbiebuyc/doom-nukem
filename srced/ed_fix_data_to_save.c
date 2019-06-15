@@ -119,8 +119,4 @@ void		set_assets_used(t_data *d)
 				d->assets_data[i].used = 1;
 		lst = lst->next;
 	}
-/*	d->nb_monster_type = 0;
-	i = d->interface.nb_asset[0];
-	while (i < d->interface.nb_asset[0])
-		d->nb_monster_type++;*/
 }

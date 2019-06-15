@@ -34,11 +34,7 @@ void		run_game(t_data *d)
 				ft_printf("Failed to start doom.\n");
 		}
 		else
-		{
 			waitpid(pid, 0, 0);
-			SDL_Delay(300);
-			SDL_FlushEvent(SDL_KEYDOWN);
-		}
 	}
 	else
 		ft_printf("Error saving file\nAbort running game...\n");

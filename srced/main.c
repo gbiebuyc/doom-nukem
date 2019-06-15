@@ -103,7 +103,8 @@ int		main(int ac, char **av)
 	if (ac == 1)
 		init_sectors(&d);
 	else if (ac == 2)
-		load_map(&d, (d.current_loaded_map = av[1]));
+		if (load_map(&d, (d.current_loaded_map = av[1])))
+			return (EXIT_FAILURE);
 	if (event_loop(&d))
 	{
 		argv = (char*[]){"editor", d.map_to_open, NULL};

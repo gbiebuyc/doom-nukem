@@ -12,6 +12,16 @@
 
 #include "editor.h"
 
+static int	in_correct_folder(char *path)
+{
+	char	*check;
+
+	check = PATH_MAP;
+	if (ft_strncmp(path, &check[2], 5) == 0)
+		return (1);
+	return (0);
+}
+
 static void	fix_monster_list(t_data *d)
 {
 	int		i;
@@ -81,21 +91,26 @@ static int	read_wall_n_sector_data(t_data *d, int f)
 **  for doom.
 */
 
-void		load_map(t_data *d, char *map)
+int			load_map(t_data *d, char *map)
 {
-	int		f;
-	double	camrot;
+	int			f;
+	double		camrot;
+	struct stat	sb;
 
+	map = (in_correct_folder(map)) ? map : ft_strjoin(PATH_MAP, map);
 	camrot = 0;
-	map = ft_strjoin(PATH_MAP, map);
 	if (((f = open(map, O_RDONLY)) < 0) ||
+		(fstat(f, &sb) == -1) ||
+		((sb.st_mode & S_IFMT) != S_IFREG) ||
 		read(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		read(f, &camrot, sizeof(double)) < 0 ||
 		read(f, &d->startsectnum, sizeof(int16_t)) < 0)
-		exit(ft_printf("map error\n"));
+		return (ft_printf("map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
-		exit(1);
+		return (1);
 	close(f);
-	free(map);
+	if (!(in_correct_folder(map)))
+		free(map);
 	fix_monster_list(d);
+	return (0);
 }

@@ -58,7 +58,7 @@ void		draw_map_list(t_data *d)
 		draw_rect(d, x, y, 0xcccc00);
 }
 
-void	detect_selected_map(t_data *d, int x, int y)
+void		detect_selected_map(t_data *d, int x, int y)
 {
 	int select_y;
 
@@ -75,19 +75,19 @@ void	detect_selected_map(t_data *d, int x, int y)
 	}
 }
 
-char	*get_map_to_open(t_data *d, SDL_Event *e)
+char		*get_map_to_open(t_data *d, SDL_Event *e)
 {
-	char	*path;
+	char	*name;
 	int		i;
 
-	path = NULL;
+	name = NULL;
 	if (e->button.x >= MAP_PROMPT_X && e->button.x < MAP_PROMPT_ENDX &&
 		e->button.y >= MAP_PROMPT_Y && e->button.y <= MAP_PROMPT_ENDY)
 	{
 		i = -1;
 		while (++i < d->interface.selected_map)
 			d->interface.map_list = d->interface.map_list->next;
-		path = d->interface.map_list->filename;
+		name = d->interface.map_list->filename;
 	}
-	return (path);
+	return (name);
 }

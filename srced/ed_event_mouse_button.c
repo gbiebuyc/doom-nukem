@@ -83,7 +83,7 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 		if (d->interface.prompt_map_open)
 		{
 			if ((d->map_to_open = get_map_to_open(d, e)))
-				return (-2);// TODO save confirmation before leave // or not
+				return (-2);
 		}
 		else if (menu_open_button(d, e))
 			d->interface.prompt_map_open = (!get_map_list(d)) ? 1 : 0;

@@ -15,13 +15,13 @@
 
 # include "../includes/common.h"
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
+# include <sys/mman.h>
 # include <stdint.h>
 # include <fcntl.h>
 # include <dirent.h>
 # include "bmp_reader.h"
-# include <sys/mman.h>
-# include <sys/stat.h>
 # include "font.h"
 
 # define W 1600
@@ -218,10 +218,6 @@ typedef struct	s_data
 
 /**/int			bmp_reader(t_data *d);
 
-/**/void	detect_selected_map(t_data *d, int x, int y);
-/**/char			*get_map_to_open(t_data *d, SDL_Event *e);
-
-
 void			debug_print(t_data *d);
 
 /*
@@ -367,11 +363,18 @@ void			show_preview(t_data *d, t_assets *a);
 void			draw_ligth_bar(t_data *d);
 
 /*
-**	ed_interface_open_map.c
+**	ed_interface_map_list.c
 */
 
 int				get_map_list(t_data *d);
+
+/*
+**	ed_interface_select_map.c
+*/
+
 void			draw_map_list(t_data *d);
+void			detect_selected_map(t_data *d, int x, int y);
+char			*get_map_to_open(t_data *d, SDL_Event *e);
 
 /*
 **	ed_utils.c
@@ -418,7 +421,7 @@ int				event_mouse_button(t_data *d, SDL_Event *e);
 **	ed_read_map.c
 */
 
-void			load_map(t_data *d, char *path);
+int				load_map(t_data *d, char *path);
 
 /*
 **	ed_save_file.c
