@@ -86,8 +86,8 @@ typedef struct	s_projdata
 	int			ny2a;
 	int			ny1b;
 	int			ny2b;
-	double		u_begin;
-	double		u_end;
+	double		u1;
+	double		u2;
 	double		y_scale;
 	t_wall		*wall;
 	t_sector	*sector;
@@ -119,6 +119,9 @@ typedef struct	s_projdata
 	int			slopebottom[WIDTH];
 	bool		floor_or_ceil;
 	t_frustum	*fr;
+	double		u1_poster;
+	double		u2_poster;
+	double		poster_h;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes

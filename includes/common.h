@@ -84,6 +84,7 @@ typedef struct	s_sector
 	t_sprite_list	*sprite_list;
 	int16_t		slope; // between -90 and 90 degrees
 	int16_t		slopeceil;
+	int16_t		posterpicnum;
 }				t_sector;
 
 typedef struct	s_wall

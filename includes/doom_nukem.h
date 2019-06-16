@@ -28,6 +28,7 @@
 # define PLAYER_HITBOX 0.1
 # include <structs_doom.h>
 # define PATH_MAP "./maps/"
+# define POSTER_W 1.3
 
 void	draw_aim_cross(t_data *d);
 void	m16_shoot(t_data *d);

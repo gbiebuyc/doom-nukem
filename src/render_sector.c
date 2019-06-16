@@ -47,8 +47,8 @@ double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall)
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
 	int		i;
-	double	u_begin;
-	double	u_end;
+	double	u1;
+	double	u2;
 	double	len1;
 	double	len2;
 	double	yceil;
@@ -81,21 +81,21 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		if (p.z1 <= 0 && p.z2 <= 0)
 			continue ;
 		len1 = vec2f_length((t_vec2f){x2 - x1, p.z2 - p.z1});
-		u_begin = 0;
-		u_end = 1;
+		u1 = 0;
+		u2 = 1;
 		if (p.z1 <= 0)
 		{
 			if (!clip_wall(&x1, &p.z1, x2, p.z2))
 				continue ;
 			len2 = vec2f_length((t_vec2f){x2 - x1, p.z2 - p.z1});
-			u_begin = 1.0 - len2 / len1;
+			u1 = 1.0 - len2 / len1;
 		}
 		if (p.z2 <= 0)
 		{
 			if (!clip_wall(&x2, &p.z2, x1, p.z1))
 				continue ;
 			len2 = vec2f_length((t_vec2f){x2 - x1, p.z2 - p.z1});
-			u_end = len2 / len1;
+			u2 = len2 / len1;
 		}
 		double scale1 = (1.0 / p.z1) * WIDTH;
 		double scale2 = (1.0 / p.z2) * WIDTH;
@@ -129,9 +129,15 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 				* -scale2 + y_offset;
 			p.sector = sect;
 		}
-		p.u_begin = u_begin * len1;
-		p.u_end = u_end * len1;
+		p.u1 = u1 * len1;
+		p.u2 = u2 * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
+		/*** Posters ***/
+		p.u1_poster = (len1 - POSTER_W) / 2.0;
+		p.u2_poster = len1 - p.u1_poster;
+		p.poster_h = POSTER_W * ((double)d->textures[sect->floorpicnum]->h /
+				d->textures[sect->floorpicnum]->w) / p.y_scale;
+		/***/
 		draw_wall(d, &p, fr);
 		t = (t_thread_arg){d, &p, fr};
 		if (pthread_create(&thread, NULL, draw_ceil_thread, &t))

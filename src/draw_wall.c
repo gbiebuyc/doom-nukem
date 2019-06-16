@@ -40,8 +40,22 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	int		u;
 	int		y;
 	SDL_Surface *tex;
+	SDL_Surface *poster;
+	int		u_poster;
+	int		ya_poster;
+	int		yb_poster;
 	double	shadefactor;
 
+	if (p->sector->posterpicnum >= 0 && p->u > p->u1_poster &&
+			p->u < p->u2_poster)
+	{
+		poster = d->textures[p->sector->floorpicnum];
+		u_poster = (unsigned int)(norm(p->u, p->u1_poster, p->u2_poster) *
+				poster->w) % poster->w;
+		int	margin = (double)(p->yd - p->yc) * (1.0 - p->poster_h) / 2.0;
+		ya_poster = p->yc + margin;
+		yb_poster = p->yd - margin;
+	}
 	tex = d->textures[p->wall->middlepicnum];
 	u = (unsigned int)(p->u * tex->w) % tex->w;
 	y = ft_max(fr->ytop[p->x], p->ya);
@@ -50,9 +64,16 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 			putpixel(d, p->x, y, 0);
 	else if (!p->neighbor)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-						(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
-							tex->h) % tex->h * tex->w]));
+		{
+			if (p->sector->posterpicnum >= 0 && y > ya_poster && y < yb_poster)
+				putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)poster->pixels)[
+							u_poster + (unsigned int)(norm(y, ya_poster, yb_poster) *
+								poster->h) % poster->h * poster->w]));
+			else
+				putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
+							(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
+								tex->h) % tex->h * tex->w]));
+		}
 	else if (p->neighbor)
 	{
 		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
@@ -78,7 +99,7 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 {
 	p->n = fclamp(norm(p->x, p->x1, p->x2), 0, 1);
 	p->z = 1 / lerp(p->n, p->z1, p->z2);
-	p->u = lerp(p->n, p->u_begin, p->u_end) * p->z;
+	p->u = lerp(p->n, p->u1, p->u2) * p->z;
 	if (p->z >= d->zbuffer[p->x])
 		return ((void)(p->visible[p->x] = false));
 	if (!p->neighbor)
@@ -117,8 +138,8 @@ void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr)
 		nfr = *fr;
 		nfr.visitedportals[p->wall - d->walls] = true;
 	}
-	p->u_begin /= p->z1;
-	p->u_end /= p->z2;
+	p->u1 /= p->z1;
+	p->u2 /= p->z2;
 	p->z1 = 1 / p->z1;
 	p->z2 = 1 / p->z2;
 	p->cx1 = ft_max(p->x1, fr->x1);
