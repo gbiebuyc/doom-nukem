@@ -40,16 +40,27 @@ int		map_exist(t_data *d, char *map)
 {
 	int		i;
 	char	*check;
+	int		len;
+	int		have_extension;
 
-	check = map;
-	if (contain_map_path(map))
-		check = &map[5];
+	len = (int)ft_strlen(map);
+	have_extension = (len < 7) ? 0 : ft_strequ(&map[len - 6], ".DNMAP");
+	check = (contain_map_path(map) == 1) ? &map[5] : map;
+	check = (contain_map_path(map) == 2) ? &map[7] : check;
+	check = (!have_extension) ? ft_strjoin(check, ".DNMAP") : check;
 	get_map_list(d);
 	i = -1;
 	while (++i < d->interface.nb_map)
+	{
 		if (ft_strequ(check, d->interface.map_list_sort[i]->name))
+		{
+			d->current_loaded_map = check;
 			return (1);
+		}
+	}
 	d->current_loaded_map = map;
+	if (!have_extension)
+		free(check);
 	return (0);
 }
 
@@ -129,10 +140,10 @@ int		event_loop(t_data *d)
 
 int		main(int ac, char **av)
 {
-	t_data	d;
-	pid_t	pid;
-	char	**argv;
-	char	**environ;
+	t_data		d;
+	pid_t		pid;
+	char		**argv;
+	extern char	**environ;
 
 	init_data(&d);
 	if (init_editor(&d))
@@ -140,7 +151,7 @@ int		main(int ac, char **av)
 	if (ac == 1 || (ac == 2 && !map_exist(&d, av[1])))
 		init_sectors(&d);
 	else if (ac == 2)
-		if (load_map(&d, (d.current_loaded_map = av[1])))
+		if (load_map(&d, d.current_loaded_map))
 			return (ed_usage(&d));
 	if ((ac == 1 || ac == 2) && event_loop(&d))
 	{

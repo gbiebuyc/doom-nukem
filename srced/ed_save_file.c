@@ -73,26 +73,43 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
-void		add_extension_file(t_data *d)
+int			add_extension_file_and_path(t_data *d, char *map_name)
 {
 	char	*tmp;
+	int		have_extension;
+	int		have_path;
+	int		len;
 
-	if (ft_strequ(&d->path_to_save[ft_strlen(d->path_to_save) - 6], ".DNMAP"))
-		return ;
-	tmp = d->path_to_save;
-	d->path_to_save = ft_strjoin(d->path_to_save, ".DNMAP");
-	free(tmp);
+	len = (int)ft_strlen(map_name);
+	have_extension = (len < 7) ? 0 : ft_strequ(&map_name[len - 6], ".DNMAP");
+	have_path = contain_map_path(map_name);
+	if (have_extension && have_path)
+	{
+		d->path_to_save = map_name;
+		return (1);
+	}
+	else if (!have_extension && !have_path)
+	{
+		d->path_to_save = ft_strjoin(map_name, ".DNMAP");
+		tmp = d->path_to_save;
+		d->path_to_save = ft_strjoin(PATH_MAP, tmp);
+		free(tmp);
+	}
+	else if (!have_extension)
+		d->path_to_save = ft_strjoin(map_name, ".DNMAP");
+	else if (!have_path)
+		d->path_to_save = ft_strjoin(PATH_MAP, map_name);
+	return (0);
 }
 
 int			save_file(t_data *d, char *map_name)
 {
 	double	angle;
 	int		f;
+	int		is_valid_file;
 
 	angle = 0;
-	d->path_to_save = contain_map_path(map_name)
-					? map_name : ft_strjoin(PATH_MAP, map_name);
-	add_extension_file(d);
+	is_valid_file = add_extension_file_and_path(d, map_name);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT, 0666)) == -1) ||
 		write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
@@ -105,7 +122,7 @@ int			save_file(t_data *d, char *map_name)
 		write_monster_texture(d, f, d->texture_monster))
 		return (1);
 	close(f);
-	if (!contain_map_path(map_name))
+	if (!is_valid_file)
 		free(d->path_to_save);
 	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);

@@ -72,7 +72,7 @@ static int		read_wall_n_sector_data(t_data *d, int f)
 			read(f, d->sectors[i].ceil_texture_name, 100) < 0)
 			return (ft_printf("Failed to read sector structure.\n"));
 	if (read(f, &d->numwalls, sizeof(int16_t)) < 0)
-		return (ft_printf("Faield to read numwwalls.\n"));
+		return (ft_printf("Failed to read numwwalls.\n"));
 	i = -1;
 	while (++i < d->numwalls)
 		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
@@ -86,7 +86,8 @@ int			contain_map_path(char *path)
 	char	*check;
 
 	check = PATH_MAP;
-	if (ft_strncmp(path, &check[2], 5) == 0)
+	if (ft_strncmp(path, &check[2], 5) == 0 ||
+		ft_strncmp(path, PATH_MAP, 7) == 0)
 		return (1);
 	return (0);
 }
@@ -101,7 +102,7 @@ void	load_map(t_data *d, char *map)
 		read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
 		read(f, &d->cam.rot, sizeof(double)) == -1 ||
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)
-		exit(ft_printf("map error\n"));
+		exit(ft_printf("Doom : Map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_textures_name(d, f) || read_texture_data(d, f) ||
 		load_monsters_texture(d, f))

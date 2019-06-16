@@ -18,15 +18,15 @@
 
 void		run_game(t_data *d)
 {
-	pid_t	pid;
-	char	name[100];
-	char	**argv;
-	char	**environ;
+	pid_t		pid;
+	char		name[100];
+	char		**argv;
+	extern char	**environ;
 
-	ft_strcpy(name, d->current_loaded_map);
-	argv = (char*[]){"doom-nukem", name, NULL};
 	if (!save_file(d, d->current_loaded_map))
 	{
+		ft_strcpy(name, d->path_to_save);
+		argv = (char*[]){"doom-nukem", name, NULL};
 		pid = fork();
 		if (pid == 0)
 		{

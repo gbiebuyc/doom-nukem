@@ -19,6 +19,8 @@ int			contain_map_path(char *path)
 	check = PATH_MAP;
 	if (ft_strncmp(path, &check[2], 5) == 0)
 		return (1);
+	if (ft_strncmp(path, PATH_MAP, 7) == 0)
+		return (2);
 	return (0);
 }
 
@@ -98,6 +100,7 @@ int			load_map(t_data *d, char *map)
 	struct stat	sb;
 
 	map = (contain_map_path(map)) ? map : ft_strjoin(PATH_MAP, map);
+	ft_printf("%s\n", map);
 	camrot = 0;
 	if (((f = open(map, O_RDONLY)) < 0) ||
 		(fstat(f, &sb) == -1) ||

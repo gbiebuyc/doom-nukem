@@ -190,7 +190,6 @@ typedef struct	s_data
 	char				*map_to_open;
 	char				*current_loaded_map;
 	char				*path_to_save;
-
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
 	t_monster			*monsters;
