@@ -30,6 +30,7 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].light = 1.0;
 	d->sectors[d->numsectors - 1].blinking = false;
 	d->sectors[d->numsectors - 1].slope = 0;
+	d->sectors[d->numsectors - 1].slopeceil = 0;
 	d->sectors[d->numsectors - 1].outdoor = 0;
 	add_wall(d);
 	add_wall(d);

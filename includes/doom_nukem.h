@@ -80,7 +80,7 @@ uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
 void	draw_string(t_data *d, t_font f);
 void	init_font(t_data *d);
 void	transformvertex(t_data *d, t_vec2f v, double *x, double *z);
-double	get_floor_slope_dy(t_data *d, t_sector *sect, t_vec2f wall);
+double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall);
 void	draw_slope(t_data *d, t_projdata *p);
 
 /*

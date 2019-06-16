@@ -14,8 +14,20 @@
 
 void	putpixelslope(t_data *d, t_projdata *p, int x, int y)
 {
-	if (x >= p->fr->x1 && x <= p->fr->x2 && y >= p->slopetop[x] &&
-			y >= p->fr->ytop[x] && y <= p->fr->ybottom[x])
+	int ytop;
+	int ybottom;
+
+	if (p->floor_or_ceil == 0)
+	{
+		ytop = ft_max(p->slopetop[x], p->fr->ytop[x]);
+		ybottom = p->fr->ybottom[x];
+	}
+	else
+	{
+		ytop = p->fr->ytop[x];
+		ybottom = ft_min(p->slopebottom[x], p->fr->ybottom[x]);
+	}
+	if (x >= p->fr->x1 && x <= p->fr->x2 && y >= ytop && y <= ybottom)
 		((uint32_t*)d->screen->pixels)[x + y * WIDTH] = p->slope_col;
 }
 
@@ -52,9 +64,8 @@ void	proj_line(t_data *d, t_vec2f p1, t_vec2f p2, t_projdata *p)
 	double x1, x2, z1, z2, y1, y2;
 	transformvertex(d, p1, &x1, &z1);
 	transformvertex(d, p2, &x2, &z2);
-	double yfloor = p->sector->floorheight - d->cam.pos.y;
-	y1 = yfloor + get_floor_slope_dy(d, p->sector, (t_vec2f){x1, z1});
-	y2 = yfloor + get_floor_slope_dy(d, p->sector, (t_vec2f){x2, z2});
+	y1 = get_slope_y(d, p, (t_vec2f){x1, z1});
+	y2 = get_slope_y(d, p, (t_vec2f){x2, z2});
 	if (z1 < CLIPDIST && z2 < CLIPDIST)
 		return ;
 	if (z1 < CLIPDIST)
@@ -104,9 +115,18 @@ void	clear_slope(t_data *d, t_projdata *p, uint32_t c)
 	x = p->fr->x1 - 1;
 	while (++x <= p->fr->x2)
 	{
-		y = ft_max(p->slopetop[x], p->fr->ytop[x]) - 1;
-		while (++y < p->fr->ybottom[x])
-			((uint32_t*)d->screen->pixels)[x + y * WIDTH] = c;
+		if (p->sector->slope)
+		{
+			y = ft_max(p->slopetop[x], p->fr->ytop[x]) - 1;
+			while (++y < p->fr->ybottom[x])
+				((uint32_t*)d->screen->pixels)[x + y * WIDTH] = c;
+		}
+		if (p->sector->slopeceil)
+		{
+			y = p->fr->ytop[x] - 1;
+			while (++y < ft_min(p->slopebottom[x], p->fr->ybottom[x]))
+				((uint32_t*)d->screen->pixels)[x + y * WIDTH] = c;
+		}
 	}
 }
 
@@ -138,10 +158,24 @@ void	draw_slope(t_data *d, t_projdata *p)
 	p->slope_col = shade(shadefactor, 0x505050);
 	clear_slope(d, p, shade(shadefactor, 0x707070));
 	double x, y;
-	x = xmin;
-	while ((x += .5) < xmax)
-		proj_line(d, (t_vec2f){x, -999}, (t_vec2f){x, 999}, p);
-	y = ymin;
-	while ((y += .5) < ymax)
-		proj_line(d, (t_vec2f){-999, y}, (t_vec2f){999, y}, p);
+	if (p->sector->slope)
+	{
+		p->floor_or_ceil = 0;
+		x = xmin;
+		while ((x += .5) < xmax)
+			proj_line(d, (t_vec2f){x, -999}, (t_vec2f){x, 999}, p);
+		y = ymin;
+		while ((y += .5) < ymax)
+			proj_line(d, (t_vec2f){-999, y}, (t_vec2f){999, y}, p);
+	}
+	if (p->sector->slopeceil)
+	{
+		p->floor_or_ceil = 1;
+		x = xmin;
+		while ((x += .5) < xmax)
+			proj_line(d, (t_vec2f){x, -999}, (t_vec2f){x, 999}, p);
+		y = ymin;
+		while ((y += .5) < ymax)
+			proj_line(d, (t_vec2f){-999, y}, (t_vec2f){999, y}, p);
+	}
 }

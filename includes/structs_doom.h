@@ -79,6 +79,8 @@ typedef struct	s_projdata
 	int			y2b;
 	int			y1c;
 	int			y2c;
+	int			y1d;
+	int			y2d;
 	t_sector	*neighbor;
 	int			ny1a;
 	int			ny2a;
@@ -97,6 +99,7 @@ typedef struct	s_projdata
 	int			ya;
 	int			yb;
 	int			yc;
+	int			yd;
 	int			nya;
 	int			nyb;
 	bool		visible[WIDTH];
@@ -113,6 +116,8 @@ typedef struct	s_projdata
 	double		floor_alt[2];
 	uint32_t	slope_col;
 	int			slopetop[WIDTH];
+	int			slopebottom[WIDTH];
+	bool		floor_or_ceil;
 	t_frustum	*fr;
 }				t_projdata;
 

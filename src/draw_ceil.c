@@ -66,6 +66,8 @@ void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 	int		y;
 	double	xnorm;
 
+	if (p->sector->slopeceil)
+		return ;
 	if (p->floor_alt[1] <= 0)
 		return ;
 	x = p->cx1 - 1;
