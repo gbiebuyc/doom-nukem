@@ -12,17 +12,17 @@
 
 #include "doom_nukem.h"
 
-int read_anim_death_texture(t_data *d, int f, int *i, int nb_o)
+static int	read_anim_death_texture(t_data *d, int f, int *i, int nb_o)
 {
-	int 	o;
-	int 	w;
-	int 	h;
+	int	o;
+	int	w;
+	int	h;
 
 	if (read(f, &w, sizeof(int)) < 0 || read(f, &h, sizeof(int)) < 0)
 		return (ft_printf("Failed to read death texture size.\n"));
 	if (!(d->monster_text[i[0]][i[1]][0] = SDL_CreateRGBSurfaceWithFormat(
-			  0, w, h, 32, SDL_PIXELFORMAT_ARGB8888)))
-		return (1);
+								0, w, h, 32, SDL_PIXELFORMAT_ARGB8888)))
+		return (ft_printf("Failed to create monster death SDL_Surface.\n"));
 	if (read(f, d->monster_text[i[0]][i[1]][0]->pixels, w * h * 4) < 0)
 		return (ft_printf("Failed to read monster texture.\n"));
 	o = 0;
@@ -31,11 +31,11 @@ int read_anim_death_texture(t_data *d, int f, int *i, int nb_o)
 	return (0);
 }
 
-int read_anim_texture(t_data *d, int f, int *i, int nb_o)
+static int	read_anim_texture(t_data *d, int f, int *i, int nb_o)
 {
-	int 	o;
-	int 	w;
-	int 	h;
+	int	o;
+	int	w;
+	int	h;
 
 	o = -1;
 	while (++o < nb_o)
@@ -43,15 +43,15 @@ int read_anim_texture(t_data *d, int f, int *i, int nb_o)
 		if (read(f, &w, sizeof(int)) < 0 || read(f, &h, sizeof(int)) < 0)
 			return (ft_printf("Failed to read texture size.\n"));
 		if (!(d->monster_text[i[0]][i[1]][o] = SDL_CreateRGBSurfaceWithFormat(
-				  0, w, h, 32, SDL_PIXELFORMAT_ARGB8888)))
-			return (ft_printf("error\n"));
+									0, w, h, 32, SDL_PIXELFORMAT_ARGB8888)))
+			return (ft_printf("Failed to create monster anim SDL_Surface.\n"));
 		if (read(f, d->monster_text[i[0]][i[1]][o]->pixels, w * h * 4) < 0)
 			return (ft_printf("Failed to read monster texture.\n"));
 	}
 	return (0);
 }
 
-int load_monsters_texture(t_data *d, int f)
+int			load_monsters_texture(t_data *d, int f)
 {
 	int i;
 	int a;

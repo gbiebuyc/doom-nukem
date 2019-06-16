@@ -167,6 +167,9 @@ void	load_map(t_data *d, char *map);
 
 int		read_monsters_data(t_data *d, int f);
 
-/**/int     load_monsters_texture(t_data *d, int f);
+int     load_monsters_texture(t_data *d, int f);
+
+int     load_weapons_texture(t_data *d, int f, int *nb_tex,
+													int *nb_projectiles);
 
 #endif

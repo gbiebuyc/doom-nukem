@@ -55,7 +55,9 @@ FILES= main \
 	   font \
 	   vec2 \
 	   vec2_2 \
-	   load_monsters_texture
+	   load_monsters_texture \
+	   load_weapons_texture
+
 
 SRC= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))

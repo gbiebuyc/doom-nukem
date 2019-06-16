@@ -21,7 +21,7 @@
 bool	collision(t_data *d, int16_t sectnum)
 {
 	static int	recursion;
-
+/* */int test = 0;
 	if (recursion >= 3)
 		return (false);
 	recursion++;

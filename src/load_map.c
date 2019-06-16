@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-static int		read_texture_data(t_data *d, int f)
+static int	read_texture_data(t_data *d, int f)
 {
 	int	i;
 	int w;
@@ -35,7 +35,7 @@ static int		read_texture_data(t_data *d, int f)
 	return (0);
 }
 
-static int		read_textures_name(t_data *d, int f)
+static int	read_textures_name(t_data *d, int f)
 {
 	int		i;
 
@@ -59,7 +59,7 @@ static int		read_textures_name(t_data *d, int f)
 **	And get all the data structure
 */
 
-static int		read_wall_n_sector_data(t_data *d, int f)
+static int	read_wall_n_sector_data(t_data *d, int f)
 {
 	int		i;
 
@@ -92,7 +92,10 @@ int			contain_map_path(char *path)
 	return (0);
 }
 
-void	load_map(t_data *d, char *map)
+#define NB_TEX (int[3]){13, 15, 3}
+#define NB_PROJECTILE (int[3]){20, 0, 5}
+
+void		load_map(t_data *d, char *map)
 {
 	int		f;
 	char	*map_path;
@@ -105,8 +108,9 @@ void	load_map(t_data *d, char *map)
 		exit(ft_printf("Doom : Map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_textures_name(d, f) || read_texture_data(d, f) ||
-		load_monsters_texture(d, f))
-		exit (1);
+		load_monsters_texture(d, f) ||
+		load_weapons_texture(d, f, NB_TEX, NB_PROJECTILE))
+		exit(1);
 	close(f);
 	if (!contain_map_path(map))
 		free(map_path);

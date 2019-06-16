@@ -110,7 +110,7 @@ int			save_file(t_data *d, char *map_name)
 
 	angle = 0;
 	is_valid_file = add_extension_file_and_path(d, map_name);
-	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT, 0666)) == -1) ||
+	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1) ||
 		write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
 		write(f, &d->startsectnum, sizeof(int16_t)) < 0)
@@ -120,6 +120,9 @@ int			save_file(t_data *d, char *map_name)
 	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
 		write_texture_list(d, f) || write_texture_data(d, f) ||
 		write_monster_texture(d, f, d->texture_monster))
+		return (1);
+	/* */ft_printf("Writing weapons texture.\n");
+	if (write_weapons_texture(d, f))
 		return (1);
 	close(f);
 	if (!is_valid_file)

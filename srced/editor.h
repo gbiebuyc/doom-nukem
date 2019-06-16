@@ -182,6 +182,9 @@ typedef struct	s_data
 	SDL_Surface			**textures;
 	t_texture_data		*texture_list;
 	t_monsters_texture	*texture_monster;
+	SDL_Surface			*weap_tex[3][20];
+	SDL_Surface			*weap_proj[3][20];
+	char				*weap_list[3][2][20];
 	t_interface			interface;
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
@@ -215,9 +218,13 @@ typedef struct	s_data
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
 	unsigned char		font[96][CHAR_WIDTH];
+//	int	check;
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
+/* */int		write_weapons_texture(t_data *d, int f);
+/* */int		get_weapons_list(t_data *d, char **weap_name, int *nb_tex,
+													int *nb_pro);
 
 void			debug_print(t_data *d);
 

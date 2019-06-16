@@ -108,5 +108,45 @@ void		draw_screen(t_data *d)
 	else
 		draw_map_list(d);
 ///**/bmp_reader(d); // here for test only
+/********** */
+	// if (d->check == 1)
+	// {
+	// 	int i = -1;
+	// 	int j;
+	// 	int *nb_tex = (int[3]){13, 15, 3};
+	// 	int *nb_proj = (int[3]){20, 0, 5};
+	// 	int x,y;
+
+	// 	y = 20;
+	// 	while (++i < 3)
+	// 	{
+	// 		x = 20;
+	// 		j = -1;
+	// 		y +=20;
+	// 		if (i == 2)
+	// 			y += 40;
+	// 		while (++j < nb_tex[i])
+	// 		{
+	// 			copy_surface_to_surface(d->weap_tex[i][j], d->screen, (int[2]){x, y}, d);
+	// 			x += d->weap_tex[i][j]->w;
+	// 			if (j % 4 == 0 && j != 0 && i != 2)
+	// 			{
+	// 				x = 20;
+	// 				y += d->weap_tex[i][j]->h + 20;
+	// 			}
+	// 		}
+	// 		y += 50;
+	// 		if (i != 2)
+	// 			x = 20;
+	// 		j = -1;
+	// 		while (++j < nb_proj[i])
+	// 		{
+	// 			copy_surface_to_surface(d->weap_proj[i][j], d->screen, (int[2]){x, y}, d);
+	// 			x += d->weap_proj[i][j]->w;	
+	// 		}
+	// 		y += 50;
+	// 	}
+	// }
+	/**************** */
 	SDL_UpdateWindowSurface(d->win);
 }

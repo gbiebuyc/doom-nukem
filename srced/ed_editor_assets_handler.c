@@ -87,7 +87,7 @@ int		add_asset_to_map(t_data *d, int x, int y)
 	if (d->interface.selected_asset_cat == 3)
 	{
 		d->player_start = (t_vec3f){p.x, s->floorheight + 0.5, p.y};
-		d->startsectnum = d->selected_sector;
+		d->startsectnum = find_sect_under_cursor(d);
 	}
 	else if (d->interface.selected_asset_cat == 1)
 	{
