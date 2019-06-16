@@ -81,24 +81,32 @@ static int		read_wall_n_sector_data(t_data *d, int f)
 	return (0);
 }
 
+int			contain_map_path(char *path)
+{
+	char	*check;
+
+	check = PATH_MAP;
+	if (ft_strncmp(path, &check[2], 5) == 0)
+		return (1);
+	return (0);
+}
+
 void	load_map(t_data *d, char *map)
 {
 	int		f;
 	char	*map_path;
 
-	if (!(map_path = ft_strjoin(PATH_MAP, map)) ||
-		((f = open(map_path, O_RDONLY)) == -1) ||
+	map_path = (contain_map_path(map)) ? map : ft_strjoin(PATH_MAP, map);
+	if (((f = open(map_path, O_RDONLY)) == -1) ||
 		read(f, &d->cam.pos, sizeof(t_vec3f)) == -1 ||
 		read(f, &d->cam.rot, sizeof(double)) == -1 ||
 		read(f, &d->cursectnum, sizeof(int16_t)) == -1)
 		exit(ft_printf("map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
-		read_textures_name(d, f) || read_texture_data(d, f))
+		read_textures_name(d, f) || read_texture_data(d, f) ||
+		load_monsters_texture(d, f))
 		exit (1);
-	/********** */
-	if (load_monsters_texture(d, f))
-		exit(1);
-	/********** */
 	close(f);
-	free(map_path);
+	if (!contain_map_path(map))
+		free(map_path);
 }

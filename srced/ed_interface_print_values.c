@@ -23,7 +23,7 @@ void	print_interface_values(t_data *d)
 	{
 		string = ft_itoa_static((d->hl_wallnum != -1) ? d->hl_wallnum
 														: d->selected_wall);
-		draw_string(d, (t_font){string, W - 80, H - 179, 0x008800, 2});	
+		draw_string(d, (t_font){string, W - 80, H - 179, 0x008800, 2});
 	}
 	string = ft_itoa_static(d->sectors[d->selected_sector].floorheight * 10);
 	draw_string(d, (t_font){string, d->interface.btn_floor_height_pos.x - 75,

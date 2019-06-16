@@ -26,7 +26,7 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 	if (key == SDLK_r || key == SDLK_d)
 		(key == SDLK_r) ? run_game(d) : debug_print(d);
 	else if (key == SDLK_s)
-		(save_file(d)) ? ft_printf("Error during file saving.\n") : 1;
+		save_file(d, d->current_loaded_map);
 	else if (key == SDLK_DELETE && !d->sectordrawing &&
 			!delete_monster(d, d->interface.monster_list))
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));

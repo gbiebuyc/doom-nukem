@@ -436,7 +436,7 @@ int				load_map(t_data *d, char *path);
 **	ed_save_file.c
 */
 
-int				save_file(t_data *d);
+int				save_file(t_data *d, char *map_name);
 
 /*
 **	ed_fix_data_to_save.c

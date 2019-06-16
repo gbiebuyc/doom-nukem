@@ -86,7 +86,7 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 		else if (menu_open_button(d, e))
 			d->interface.prompt_map_open = (!get_map_list(d)) ? 1 : 0;
 		else if (menu_save_button(d, e))
-			save_file(d);
+			save_file(d, d->current_loaded_map);
 		else if (menu_exit_button(d, e))
 			return (-1);
 		if (!d->interface.prompt_map_open)

@@ -32,7 +32,7 @@ int		ed_usage(t_data *d)
 	ft_printf("# Current map list : \t\t\t\t\t\t\t\t\t\n");
 	i = -1;
 	while (++i < d->interface.nb_map)
-		ft_printf("# \t- %s\n",	d->interface.map_list_sort[i]->name);
+		ft_printf("# \t- %s\n", d->interface.map_list_sort[i]->name);
 	return (EXIT_FAILURE);
 }
 
@@ -52,6 +52,7 @@ int		map_exist(t_data *d, char *map)
 	d->current_loaded_map = map;
 	return (0);
 }
+
 /*
 **	t_wall		*wall;
 **	int			w;
@@ -93,6 +94,8 @@ void	debug_print(t_data *d)
 	i = -1;
 	while (++i < 4)
 		ft_printf("%s\n", d->assets_data[i].file);
+	ft_printf("player pos : %f %f %f\n", d->player_start.x,
+						d->player_start.y, d->player_start.z);
 }
 
 int		event_loop(t_data *d)
@@ -129,7 +132,7 @@ int		main(int ac, char **av)
 	t_data	d;
 	pid_t	pid;
 	char	**argv;
-	extern char	**environ;
+	char	**environ;
 
 	init_data(&d);
 	if (init_editor(&d))

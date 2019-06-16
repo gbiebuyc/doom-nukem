@@ -19,7 +19,6 @@ int		main(int ac, char **av)
 	if (ac == 1 || ac == 2)
 	{
 		init_font(&d);
-		ft_printf("doom\n-------\n%s\n", av[1]);
 		load_map(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 		init_sdl(&d);
 		init_player(&d, &d.player);

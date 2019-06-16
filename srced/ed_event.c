@@ -21,11 +21,11 @@ void		run_game(t_data *d)
 	pid_t	pid;
 	char	name[100];
 	char	**argv;
-	extern char	**environ;
+	char	**environ;
 
 	ft_strcpy(name, d->current_loaded_map);
 	argv = (char*[]){"doom-nukem", name, NULL};
-	if (!save_file(d))
+	if (!save_file(d, d->current_loaded_map))
 	{
 		pid = fork();
 		if (pid == 0)

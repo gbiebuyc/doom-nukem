@@ -84,13 +84,14 @@ void		add_extension_file(t_data *d)
 	free(tmp);
 }
 
-int			save_file(t_data *d)
+int			save_file(t_data *d, char *map_name)
 {
 	double	angle;
 	int		f;
 
 	angle = 0;
-	d->path_to_save = ft_strjoin(PATH_MAP, d->current_loaded_map);
+	d->path_to_save = contain_map_path(map_name)
+					? map_name : ft_strjoin(PATH_MAP, map_name);
 	add_extension_file(d);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT, 0666)) == -1) ||
 		write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
@@ -104,6 +105,8 @@ int			save_file(t_data *d)
 		write_monster_texture(d, f, d->texture_monster))
 		return (1);
 	close(f);
+	if (!contain_map_path(map_name))
+		free(d->path_to_save);
 	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);
 }
