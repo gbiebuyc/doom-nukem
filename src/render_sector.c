@@ -132,12 +132,13 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		p.u1 = u1 * len1;
 		p.u2 = u2 * len1;
 		p.y_scale = sect->ceilheight - sect->floorheight;
-		/*** Posters ***/
-		p.u1_poster = (len1 - POSTER_W) / 2.0;
-		p.u2_poster = len1 - p.u1_poster;
-		p.poster_h = POSTER_W * ((double)d->textures[sect->floorpicnum]->h /
-				d->textures[sect->floorpicnum]->w) / p.y_scale;
-		/***/
+		if (p.wall->posterpicnum >= 0)
+		{
+			p.u1_poster = (len1 - POSTER_W) / 2.0;
+			p.u2_poster = len1 - p.u1_poster;
+			p.poster_h = POSTER_W * ((double)d->textures[p.wall->posterpicnum]->h /
+					d->textures[p.wall->posterpicnum]->w) / p.y_scale;
+		}
 		draw_wall(d, &p, fr);
 		t = (t_thread_arg){d, &p, fr};
 		if (pthread_create(&thread, NULL, draw_ceil_thread, &t))
