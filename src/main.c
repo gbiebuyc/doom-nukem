@@ -16,22 +16,21 @@ int		main(int ac, char **av)
 {	
 	t_data d;
 
-	if (ac == 1 || ac == 2)
-	{
-		init_font(&d);
-		load_map(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
-		init_sdl(&d);
-		init_player(&d, &d.player);
-		init_monsters(&d);
-		init_projectiles(&d);
-		if (d.cursectnum < 0)
-			exit(ft_printf("bad startsectnum\n"));
-		loop(&d);
-	}
-	else
+	if (ac > 2)
 	{
 		ft_printf("Usage : ./doom-nukem \"Map_name\"\n");
 		ft_printf("The map must be in the \"maps\" folder.\n");
+		exit(EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	if (chdir(SDL_GetBasePath()) < 0)
+		ft_printf("error\n");
+	init_font(&d);
+	load_map(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
+	init_sdl(&d);
+	init_player(&d, &d.player);
+	init_monsters(&d);
+	init_projectiles(&d);
+	if (d.cursectnum < 0)
+		exit(ft_printf("bad startsectnum\n"));
+	loop(&d);
 }
