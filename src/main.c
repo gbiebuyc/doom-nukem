@@ -24,6 +24,8 @@ int		main(int ac, char **av)
 		init_player(&d, &d.player);
 		init_monsters(&d);
 		init_projectiles(&d);
+		if (d.cursectnum < 0)
+			exit(ft_printf("bad startsectnum\n"));
 		loop(&d);
 	}
 	else

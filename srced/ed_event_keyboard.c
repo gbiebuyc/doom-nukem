@@ -60,13 +60,13 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slope > -90)
 	{
 		d->sectors[d->selected_sector].slopeceil -= 2;
-		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slope);
+		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
 	else if (d->selected_sector >= 0 &&
 			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slope < 90)
 	{
 		d->sectors[d->selected_sector].slopeceil += 2;
-		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slope);
+		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
 }
 

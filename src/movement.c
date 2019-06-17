@@ -47,9 +47,9 @@ bool	collision(t_data *d, int16_t sectnum)
 		if (dist > COLLISION_DIST)
 			continue ;
 		int16_t neighbor = d->walls[i].neighborsect;
-		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > d->sectors[neighbor].floorheight + MINIMUM_HEIGHT_TO_WALK
-				&& (d->sectors[neighbor].outdoor || (d->cam.pos.y < d->sectors[neighbor].ceilheight && 
-				d->sectors[neighbor].ceilheight - d->sectors[neighbor].floorheight - MINIMUM_CEIL_DIST > d->player.minimum_height)))
+		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > get_floorheight(d, neighbor) + MINIMUM_HEIGHT_TO_WALK
+				&& (d->sectors[neighbor].outdoor || (d->cam.pos.y < get_ceilheight(d, neighbor) && 
+				get_ceilheight(d, neighbor) - get_floorheight(d, neighbor) - MINIMUM_CEIL_DIST > d->player.minimum_height)))
 				collided |= collision(d, neighbor);
 		else
 		{
@@ -111,6 +111,32 @@ void	collision_with_monster(t_data *d, short	cur_sect, t_vec3f old_pos)
 	}
 }
 
+double	get_floorheight(t_data *d, int16_t sectnum)
+{
+	t_sector *sect;
+
+	if (sectnum < 0)
+		exit(ft_printf("bad sectnum\n"));
+	sect = &d->sectors[sectnum];
+	if (sect->slope == 0)
+		return (sect->floorheight);
+	return (sect->floorheight + tan(sect->slope * M_PI / 180) *
+			(d->cam.pos.x - d->walls[sect->firstwallnum].point.x));
+}
+
+double	get_ceilheight(t_data *d, int16_t sectnum)
+{
+	t_sector *sect;
+
+	if (sectnum < 0)
+		exit(ft_printf("bad sectnum\n"));
+	sect = &d->sectors[sectnum];
+	if (sect->slopeceil == 0)
+		return (sect->ceilheight);
+	return (sect->ceilheight + tan(sect->slopeceil * M_PI / 180) *
+			(d->cam.pos.x - d->walls[sect->firstwallnum].point.x));
+}
+
 void	movement(t_data *d)
 {
 	t_vec3f	old_pos;
@@ -150,6 +176,8 @@ void	movement(t_data *d)
 	}
 	else
 		d->player.can_move--;
+	d->floorheight = get_floorheight(d, d->cursectnum);
+	d->ceilheight = get_ceilheight(d, d->cursectnum);
 	while (collision(d, d->cursectnum))
 		;
 	collision_with_monster(d, d->cursectnum, old_pos);

@@ -83,6 +83,8 @@ void	init_font(t_data *d);
 void	transformvertex(t_data *d, t_vec2f v, double *x, double *z);
 double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall);
 void	draw_slope(t_data *d, t_projdata *p);
+double	get_floorheight(t_data *d, int16_t sectnum);
+double	get_ceilheight(t_data *d, int16_t sectnum);
 
 /*
 ** player_damage.c

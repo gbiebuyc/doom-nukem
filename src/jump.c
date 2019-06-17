@@ -19,19 +19,19 @@
 
 void	check_crouch(t_data *d)
 {
-	if (d->cam.pos.y <= d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	if (d->cam.pos.y <= d->floorheight + d->player.minimum_height)
 	{
 		if (d->keys[SDL_SCANCODE_LCTRL] && d->player.minimum_height > MINIMUM_CROUCH_HEIGHT + CROUCH_SPEED)
 			d->player.minimum_height -= CROUCH_SPEED;
 		if (!d->keys[SDL_SCANCODE_LCTRL] && d->player.minimum_height < MINIMUM_HEIGHT)
-			if ((d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST) >
+			if ((d->ceilheight - d->floorheight - MINIMUM_CEIL_DIST) >
 					d->player.minimum_height + CROUCH_SPEED) // used for crouching in small sector
 			d->player.minimum_height += CROUCH_SPEED;
 	}
 	if (d->keys[SDL_SCANCODE_SPACE])
 	{
-		if (d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST <= MINIMUM_HEIGHT)
-			d->player.minimum_height = d->sectors[d->cursectnum].ceilheight - d->sectors[d->cursectnum].floorheight - MINIMUM_CEIL_DIST -
+		if (d->ceilheight - d->floorheight - MINIMUM_CEIL_DIST <= MINIMUM_HEIGHT)
+			d->player.minimum_height = d->ceilheight - d->floorheight - MINIMUM_CEIL_DIST -
 				CROUCH_SPEED;
 		else
 			d->player.minimum_height = MINIMUM_HEIGHT;
@@ -44,9 +44,9 @@ void	check_crouch(t_data *d)
 
 void	normal_gravity(t_data *d)
 {
-	if (d->cam.pos.y == d->sectors[d->cursectnum].floorheight + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
+	if (d->cam.pos.y == d->floorheight + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
 		d->player.gravity = JUMP_FORCE;
-	if (d->cam.pos.y > d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	if (d->cam.pos.y > d->floorheight + d->player.minimum_height)
 	{
 		d->player.gravity -= 0.004;
 		if (d->player.gravity > 0 && d->keys[SDL_SCANCODE_SPACE])
@@ -54,17 +54,17 @@ void	normal_gravity(t_data *d)
 	}
 	check_crouch(d);
 	d->cam.pos.y += d->player.gravity;
-	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
 	{
 		if (d->player.gravity < -0.16)
 			player_fell(d);
 		d->player.gravity = 0.0;
-		d->cam.pos.y = d->sectors[d->cursectnum].floorheight + d->player.minimum_height;
+		d->cam.pos.y = d->floorheight + d->player.minimum_height;
 	}
-	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST)
+	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->ceilheight - MINIMUM_CEIL_DIST)
 	{
 		d->player.gravity = 0.0;
-		d->cam.pos.y = d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST;
+		d->cam.pos.y = d->ceilheight - MINIMUM_CEIL_DIST;
 	}
 }
 
@@ -72,7 +72,7 @@ void	normal_gravity(t_data *d)
 
 void	fly_gravity(t_data *d)
 {
-	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y == d->sectors[d->cursectnum].floorheight +
+	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y == d->floorheight +
 			d->player.minimum_height)
 	{
 		normal_gravity(d);
@@ -89,23 +89,23 @@ void	fly_gravity(t_data *d)
 		d->player.gravity -= (FLYING_SPEED * 0.5);
 		d->cam.pos.y -= FLYING_SPEED;
 	}
-	if (d->cam.pos.y > d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	if (d->cam.pos.y > d->floorheight + d->player.minimum_height)
 		d->player.is_flying -= 1;
 	else
 		d->player.gravity = 0.0;
 	if (!d->player.is_flying)
 		d->player.gravity = 0.0;
 	d->cam.pos.y += d->player.gravity;
-	if (d->cam.pos.y < d->sectors[d->cursectnum].floorheight + d->player.minimum_height)
+	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
 	{
 		// do damage with d->player.gravity
 		d->player.gravity = 0.0;
-		d->cam.pos.y = d->sectors[d->cursectnum].floorheight + d->player.minimum_height;
+		d->cam.pos.y = d->floorheight + d->player.minimum_height;
 	}
-	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST)
+	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->ceilheight - MINIMUM_CEIL_DIST)
 	{
 		d->player.gravity = 0.0;
-		d->cam.pos.y = d->sectors[d->cursectnum].ceilheight - MINIMUM_CEIL_DIST;
+		d->cam.pos.y = d->ceilheight - MINIMUM_CEIL_DIST;
 	}
 }
 

@@ -46,6 +46,10 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	int		yb_poster;
 	double	shadefactor;
 
+	ya_poster = 0;
+	yb_poster = 0;
+	u_poster = 0;
+	poster = 0;
 	if (p->sector->posterpicnum >= 0 && p->u > p->u1_poster &&
 			p->u < p->u2_poster)
 	{

@@ -262,6 +262,8 @@ typedef struct	s_data
 	double			floor_sin;
 	double			floor_cos;
 	double			zbuffer[WIDTH];
+	double			floorheight;
+	double			ceilheight;
 }				t_data;
 
 typedef struct	s_thread_arg
