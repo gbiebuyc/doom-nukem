@@ -125,5 +125,6 @@ int			save_file(t_data *d, char *map_name)
 	close(f);
 	d->current_loaded_map = d->path_to_save;
 	ft_printf("Map %s saved\n", d->path_to_save);
+	(void)is_valid_file;
 	return (0);
 }

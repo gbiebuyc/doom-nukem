@@ -50,10 +50,10 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	yb_poster = 0;
 	u_poster = 0;
 	poster = 0;
-	if (p->sector->posterpicnum >= 0 && p->u > p->u1_poster &&
+	if (p->wall->posterpicnum >= 0 && p->u > p->u1_poster &&
 			p->u < p->u2_poster)
 	{
-		poster = d->textures[p->sector->floorpicnum];
+		poster = d->textures[p->wall->posterpicnum];
 		u_poster = (unsigned int)(norm(p->u, p->u1_poster, p->u2_poster) *
 				poster->w) % poster->w;
 		int	margin = (double)(p->yd - p->yc) * (1.0 - p->poster_h) / 2.0;
@@ -69,7 +69,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	else if (!p->neighbor)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 		{
-			if (p->sector->posterpicnum >= 0 && y > ya_poster && y < yb_poster)
+			if (p->wall->posterpicnum >= 0 && y > ya_poster && y < yb_poster)
 				putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)poster->pixels)[
 							u_poster + (unsigned int)(norm(y, ya_poster, yb_poster) *
 								poster->h) % poster->h * poster->w]));
