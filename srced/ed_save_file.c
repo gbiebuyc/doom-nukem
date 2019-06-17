@@ -119,14 +119,11 @@ int			save_file(t_data *d, char *map_name)
 	set_texture_name(d, d->sectors, d->walls);
 	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
 		write_texture_list(d, f) || write_texture_data(d, f) ||
-		write_monster_texture(d, f, d->texture_monster))
-		return (1);
-	/* */ft_printf("Writing weapons texture.\n");
-	if (write_weapons_texture(d, f))
+		write_monster_texture(d, f, d->texture_monster) ||
+		write_weapons_texture(d, f))
 		return (1);
 	close(f);
-	if (!is_valid_file)
-		{} //free(d->path_to_save);
+	d->current_loaded_map = d->path_to_save;
 	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);
 }

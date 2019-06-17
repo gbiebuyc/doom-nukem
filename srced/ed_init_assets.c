@@ -23,18 +23,6 @@ int		get_ground_sprites_files(t_data *d, char *path)
 	return (0);
 }
 
-int		get_weapons_files(t_data *d, char *path)
-{
-	DIR		*dr;
-
-	if ((dr = opendir(path)))
-	{
-		(void)d; //TODO
-		closedir(dr);
-	}
-	return (0);
-}
-
 int		is_bmp(struct dirent *de)
 {
 	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
@@ -45,14 +33,16 @@ void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 {
 	int		i;
 	int		j;
+	int		k;
 
 	d->assets_data[index].used = 0;
 	i = -1;
 	j = 0;
+	k = 0;
 	while (++i < 100)
 	{
-		if (path[i] && j == 0)
-			d->assets_data[index].file[i] = path[i];
+		if (path[k] && j == 0)
+			d->assets_data[index].file[i] = path[k++];
 		else
 			d->assets_data[index].file[i] =
 				(j < (int)ft_strlen(de->d_name)) ? de->d_name[j++] : 0;

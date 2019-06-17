@@ -36,7 +36,7 @@ static void	sort_map_list(t_data *d)
 	t_map_list	*tmp;
 
 	if (!(d->interface.map_list_sort =
-		(t_map_list**)malloc(sizeof(t_map_list*) * d->interface.nb_map)))
+		(t_map_list**)malloc(sizeof(t_map_list*) * (d->interface.nb_map + 1))))
 		return ;
 	tmp = d->interface.map_list;
 	i = 0;

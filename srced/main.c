@@ -51,13 +51,13 @@ int		map_exist(t_data *d, char *map)
 	get_map_list(d);
 	i = -1;
 	while (++i < d->interface.nb_map)
-	{
 		if (ft_strequ(check, d->interface.map_list_sort[i]->name))
 		{
-			d->current_loaded_map = check;
+			d->current_loaded_map = d->interface.map_list_sort[i]->name;
+			if (!have_extension)
+				free(check);
 			return (1);
 		}
-	}
 	d->current_loaded_map = map;
 	if (!have_extension)
 		free(check);
