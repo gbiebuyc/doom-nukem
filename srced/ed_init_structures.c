@@ -22,8 +22,10 @@ void		init_data(t_data *d)
 		.textures = NULL, .texture_list = NULL, .pos = {0, 0},
 		.startsectnum = 0, .monsters = NULL, .nbmonsters = 0, .scale = W >> 6,
 		.selectedwall = NULL, .selectedwall2 = NULL, .grid_locking = true,
-		.sectordrawing = false, .default_texture = 0, .selected_texture = -2,
-		.map_to_open = NULL, .current_loaded_map = "newmap.DNMAP"};
+		.sectordrawing = false, .default_wall_texture = 0,
+		.default_floor_texture = 0, .default_ceil_texture = 0,
+		.selected_texture = -2, .map_to_open = NULL,
+		.current_loaded_map = "newmap.DNMAP"};
 	d->player_start = (t_vec3f){0, 0.2, 0};
 	d->interface.show_menu = 0;
 	d->interface.select = 1;
@@ -45,7 +47,7 @@ void		init_sectors(t_data *d)
 {
 	int		dt;
 
-	dt = d->default_texture;
+	dt = d->default_floor_texture;
 	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt,
 		1.0, false, "", "", false, NULL, 0, 0};
 	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", false, -1};

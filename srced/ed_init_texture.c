@@ -90,5 +90,8 @@ int			init_texture(t_data *d)
 	}
 	else
 		return (ft_printf("Couldn't open the textures directory.\n"));
+	d->default_wall_texture = d->default_texture;
+	d->default_floor_texture = d->default_texture;
+	d->default_ceil_texture = d->default_texture;
 	return (0);
 }

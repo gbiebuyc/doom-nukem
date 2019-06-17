@@ -206,6 +206,9 @@ typedef struct	s_data
 	int					nb_orientation_tnp;
 	double				scale;
 	int					default_texture;
+	int					default_wall_texture;
+	int					default_floor_texture;
+	int					default_ceil_texture;
 	t_wall				*selectedwall;
 	t_wall				*selectedwall2;
 	int					selected_sector;
@@ -225,6 +228,8 @@ typedef struct	s_data
 /* */int		write_weapons_texture(t_data *d, int f);
 /* */int		get_weapons_list(t_data *d, char **weap_name, int *nb_tex,
 													int *nb_pro);
+
+void    fix_default_texture(t_data *d, int x, int y);
 
 void			debug_print(t_data *d);
 

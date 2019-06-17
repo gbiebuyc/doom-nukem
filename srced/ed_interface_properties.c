@@ -130,20 +130,22 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 	int	y;
 
 	y = H / 2;
-	x = W - (PROPERTIES_LIMIT * 0.5) - (properties[0]->w * 0.5);
+//x = W - (PROPERTIES_LIMIT * 0.5) - (properties[0]->w * 0.5);
+	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
 	copy_surface_to_surface(properties[0], d->screen, (int[2]){x, y}, d);
 	y += properties[0]->h + 5;
 	x = W - PROPERTIES_LIMIT + MARGIN;
-	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
+//	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[1], d->screen, (int[2]){x, y + 5}, d);
 	y += properties[0]->h + properties[1]->h + 16 + 80;
-	x = W - (PROPERTIES_LIMIT * 0.5) - (properties[2]->w * 0.5);
+//	x = W - (PROPERTIES_LIMIT * 0.5) - (properties[2]->w * 0.5);
+	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
-	copy_surface_to_surface(properties[2], d->screen, (int[2]){x, y}, d);
+	copy_surface_to_surface(properties[2], d->screen, (int[2]){x, y + 5}, d);
 	y += properties[2]->h + 5;
 	x = W - PROPERTIES_LIMIT + MARGIN;
-	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
+//	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[3], d->screen, (int[2]){x, y + 32}, d);
 	draw_selection_case(d, properties, x, y);
 	fill_texture_selection(d, &d->interface, ((d->selected_wall == -1 &&

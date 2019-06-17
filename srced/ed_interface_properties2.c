@@ -21,21 +21,37 @@ void		draw_separator(t_data *d, int x, int y, int color)
 	}
 }
 
-static void	empty_case(t_data *d, int n, t_interface *i)
+static void	empty_case(t_data *d, t_interface *i)
 {
 	int	x;
 	int	y;
 
-	while (--n >= 0)
+	// while (--n >= 0)
+	// {
+	// 	y = -1;
+	// 	while (++y < 64)
+	// 	{
+	// 		x = -1;
+	// 		while (++x < 64)
+	// 			putpixel(d, x + i->tex_select[n].x + 1,
+	// 					y + i->tex_select[n].y + 1, 0x000000);
+	// 	}
+	// }
+	x = i->tex_select[2].x + 1;
+	y = i->tex_select[2].y + 1;
+	if (d->selected_wall == -1 && !d->hl_wall)
+		copy_surface_to_surface(d->textures[d->default_wall_texture],
+								d->screen, (int[2]){x, y}, d);
+	if (d->selected_sector == -1)
 	{
-		y = -1;
-		while (++y < 64)
-		{
-			x = -1;
-			while (++x < 64)
-				putpixel(d, x + i->tex_select[n].x + 1,
-						y + i->tex_select[n].y + 1, 0x000000);
-		}
+		x = i->tex_select[1].x + 1;
+		y = i->tex_select[1].y + 1;
+		copy_surface_to_surface(d->textures[d->default_ceil_texture],
+								d->screen, (int[2]){x, y}, d);
+		x = i->tex_select[0].x + 1;
+		y = i->tex_select[0].y + 1;
+		copy_surface_to_surface(d->textures[d->default_floor_texture],
+								d->screen, (int[2]){x, y + 1}, d);
 	}
 }
 
@@ -53,7 +69,7 @@ void		fill_texture_selection(t_data *d, t_interface *i, int wallnum)
 				(int[2]){i->tex_select[2].x + 1, i->tex_select[2].y + 1}, d);
 	}
 	else
-		empty_case(d, 1, i);
+		empty_case(d, i);
 	if (d->selected_sector != -1)
 	{
 		tex_n = d->sectors[d->selected_sector].ceilpicnum;
@@ -64,7 +80,7 @@ void		fill_texture_selection(t_data *d, t_interface *i, int wallnum)
 				(int[2]){i->tex_select[0].x + 1, i->tex_select[0].y + 1}, d);
 	}
 	else
-		empty_case(d, 2, i);
+		empty_case(d, i);
 	d->texture_to_scale = -1;
 }
 
