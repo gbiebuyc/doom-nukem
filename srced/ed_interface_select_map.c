@@ -41,7 +41,8 @@ void		draw_map_list(t_data *d)
 	x = MAP_PROMPT_X + 5;
 	y = MAP_PROMPT_Y + 5;
 	cpt = d->interface.map_list_start_i - 1;
-	while (++cpt < d->interface.map_list_start_i + 10)
+	while (++cpt < d->interface.map_list_start_i + 10 &&
+			cpt < d->interface.nb_map)
 	{
 		draw_string(d, (t_font){d->interface.map_list_sort[cpt]->name,
 								x, y, 0x008800, 2});
@@ -72,6 +73,8 @@ void		detect_selected_map(t_data *d, int x, int y)
 
 char		*get_map_to_open(t_data *d, SDL_Event *e)
 {
+	if (d->interface.map_folder_empty)
+		return (NULL);
 	if (e->button.x >= MAP_PROMPT_X && e->button.x < MAP_PROMPT_ENDX &&
 		e->button.y >= MAP_PROMPT_Y && e->button.y <= MAP_PROMPT_ENDY)
 		return (d->interface.map_list_sort[d->interface.selected_map]->name);

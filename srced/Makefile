@@ -36,8 +36,7 @@ OBJ1 = $(SRC:.c=.o)
 OBJ2 = $(OBJ1:../src/%=%)
 OBJ = $(addprefix obj/, $(OBJ2))
 
-CC = gcc
-#-fsanitize=address
+CC = gcc -fsanitize=address
 
 FT_DIR = ../libft
 SDL_CFG = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../SDL/library/bin/sdl2-config

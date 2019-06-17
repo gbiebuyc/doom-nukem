@@ -99,11 +99,18 @@ int			get_map_list(t_data *d)
 	begin = NULL;
 	d->interface.nb_map = 0;
 	d->interface.map_list_start_i = 0;
+	d->interface.map_folder_empty = 0;
 	while ((de = readdir(dr)))
 		if (de->d_type == DT_REG && de->d_name[0] != '.' &&
 			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 6], ".DNMAP"))
 			if (!(begin = create_new_link(&d->interface, de, begin)))
 				return (ft_printf("Failed to create new link to map_list.\n"));
+	if (!begin)
+	{
+		begin = new_map_file(&d->interface.map_list, "# Folder is empty #", 0);
+		d->interface.nb_map = 1;
+		d->interface.map_folder_empty = 1;
+	}
 	d->interface.map_list = begin;
 	sort_map_list(d);
 	return (0);

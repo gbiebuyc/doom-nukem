@@ -110,8 +110,8 @@ int			save_file(t_data *d, char *map_name)
 
 	angle = 0;
 	is_valid_file = add_extension_file_and_path(d, map_name);
-	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1) ||
-		write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
+	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
+		|| write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
 		write(f, &d->startsectnum, sizeof(int16_t)) < 0)
 		return (ft_printf("Write starting data failed\n"));

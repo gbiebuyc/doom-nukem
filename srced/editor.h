@@ -161,6 +161,7 @@ typedef struct	s_interface
 	int				nb_map;
 	int				map_list_start_i;
 	int				prompt_map_open;
+	int				map_folder_empty;
 	int				selected_map;
 	t_vec2			selected_map_pos;
 }				t_interface;
@@ -218,7 +219,6 @@ typedef struct	s_data
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
 	unsigned char		font[96][CHAR_WIDTH];
-//	int	check;
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);

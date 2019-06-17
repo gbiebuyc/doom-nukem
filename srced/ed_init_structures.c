@@ -39,7 +39,6 @@ void		init_data(t_data *d)
 	d->interface.prompt_map_open = 0;
 	d->interface.selected_map = -1;
 	d->startsectnum = 0;
-	//d->check = 0;
 }
 
 void		init_sectors(t_data *d)

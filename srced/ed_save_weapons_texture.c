@@ -68,7 +68,6 @@ int				write_weapons_texture(t_data *d, int f)
 
 	if (!check)
 	{
-	//	d->check = 1;
 		check = 1;
 		if (get_weapons_list(d, WEAP_NAME, NB_TEX, NB_PROJECTILE) ||
 			load_weapon_texture(d, NB_TEX, NB_PROJECTILE))
