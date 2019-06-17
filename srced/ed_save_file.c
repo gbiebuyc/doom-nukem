@@ -106,10 +106,9 @@ int			save_file(t_data *d, char *map_name)
 {
 	double	angle;
 	int		f;
-	int		is_valid_file;
 
 	angle = 0;
-	is_valid_file = add_extension_file_and_path(d, map_name);
+	add_extension_file_and_path(d, map_name);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
 		|| write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
@@ -125,6 +124,5 @@ int			save_file(t_data *d, char *map_name)
 	close(f);
 	d->current_loaded_map = d->path_to_save;
 	ft_printf("Map %s saved\n", d->path_to_save);
-	(void)is_valid_file;
 	return (0);
 }

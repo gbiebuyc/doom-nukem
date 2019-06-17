@@ -64,8 +64,11 @@ void		detect_selected_map(t_data *d, int x, int y)
 	{
 		select_y = (y - (MAP_PROMPT_Y)) / 25;
 		d->interface.selected_map = select_y + d->interface.map_list_start_i;
-		d->interface.selected_map_pos.x = MAP_PROMPT_X + 3;
-		d->interface.selected_map_pos.y = MAP_PROMPT_Y + (select_y * 25) + 3;
+		if (d->interface.selected_map < d->interface.nb_map)
+		{
+			d->interface.selected_map_pos.x = MAP_PROMPT_X + 3;
+			d->interface.selected_map_pos.y = MAP_PROMPT_Y + (select_y * 25) + 3;
+		}
 		if (select_y >= d->interface.nb_map)
 			d->interface.selected_map = -1;
 	}
@@ -76,7 +79,8 @@ char		*get_map_to_open(t_data *d, SDL_Event *e)
 	if (d->interface.map_folder_empty)
 		return (NULL);
 	if (e->button.x >= MAP_PROMPT_X && e->button.x < MAP_PROMPT_ENDX &&
-		e->button.y >= MAP_PROMPT_Y && e->button.y <= MAP_PROMPT_ENDY)
+		e->button.y >= MAP_PROMPT_Y && e->button.y <= MAP_PROMPT_ENDY &&
+		d->interface.selected_map != -1)
 		return (d->interface.map_list_sort[d->interface.selected_map]->name);
 	return (NULL);
 }
