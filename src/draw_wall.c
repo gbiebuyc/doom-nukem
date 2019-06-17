@@ -83,14 +83,14 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
 			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
 						(unsigned int)((p->wall->is_door ? norm(y, p->nya -
-								p->doorheight, p->nya) : norm(y, p->ya, p->yb)
+								p->doorheight, p->nya) : norm(y, p->yc, p->yd)
 								* p->y_scale) * tex->h) % tex->h * tex->w]));
 		tex = d->textures[p->wall->lowerpicnum];
 		u = (unsigned int)(p->u * tex->w) % tex->w;
 		y = ft_max(fr->ytop[p->x], p->nyb) - 1;
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-						(unsigned int)(norm(y, p->ya, p->yb) * p->y_scale *
+						(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
 							tex->h) % tex->h * tex->w]));
 	}
 	if (p->sector->slope)
@@ -116,11 +116,11 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	p->yd = lerp(p->n, p->y1d, p->y2d);
 	if (p->neighbor)
 	{
-		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->ya);
-		p->nyb = ft_min(lerp(p->n, p->ny1b, p->ny2b), p->yb);
-		p->doorbottom = ft_min(p->yb, p->nyb);
-		p->doorheight = p->doorbottom - p->ya;
-		p->nya += (p->doorbottom - ft_max(p->ya, p->nya)) *
+		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->yc);
+		p->nyb = ft_min(lerp(p->n, p->ny1b, p->ny2b), p->yd);
+		p->doorbottom = ft_min(p->yd, p->nyb);
+		p->doorheight = p->doorbottom - p->yc;
+		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
 			(1 - d->doorstate[p->wall - d->walls]);
 		nfr->ytop[p->x] = clamp((p->sector->outdoor && p->neighbor->outdoor) ?
 				0 : p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
