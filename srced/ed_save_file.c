@@ -126,7 +126,7 @@ int			save_file(t_data *d, char *map_name)
 		return (1);
 	close(f);
 	if (!is_valid_file)
-		free(d->path_to_save);
+		{} //free(d->path_to_save);
 	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);
 }
