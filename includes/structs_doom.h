@@ -102,12 +102,12 @@ typedef struct	s_projdata
 	int			yd;
 	int			nya;
 	int			nyb;
+	double		zbufferlocal[WIDTH];
 	bool		visible[WIDTH];
 	double		doorheight;
 	double		doorbottom;
 	double		sin;
 	double		cos;
-	double		xnorm;
 	double		floor_u1[HEIGHT];
 	double		floor_u2[HEIGHT];
 	double		floor_v1[HEIGHT];

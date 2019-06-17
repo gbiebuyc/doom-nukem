@@ -104,8 +104,9 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	p->n = fclamp(norm(p->x, p->x1, p->x2), 0, 1);
 	p->z = 1 / lerp(p->n, p->z1, p->z2);
 	p->u = lerp(p->n, p->u1, p->u2) * p->z;
-	if (p->z >= d->zbuffer[p->x])
+	if (p->z >= p->zbufferlocal[p->x])
 		return ((void)(p->visible[p->x] = false));
+	p->zbufferlocal[p->x] = p->z;
 	if (!p->neighbor)
 		d->zbuffer[p->x] = p->z;
 	p->visible[p->x] = true;

@@ -68,6 +68,9 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	i = -1;
 	while (++i < HEIGHT)
 		p.floor_u1[i] = 0;
+	i = -1;
+	while (++i < WIDTH)
+		p.zbufferlocal[i] = INFINITY;
 	for (int i = 0; i < sect->numwalls; i++)
 	{
 		int wallnum = sect->firstwallnum + i;
