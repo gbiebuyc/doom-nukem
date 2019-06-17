@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 21:22:40 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/10 00:08:16 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/18 00:47:45 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define MINIMUM_CROUCH_HEIGHT 0.2 // defined in player_damage too
 # define CROUCH_SPEED 0.01
 # define MINIMUM_CEIL_DIST 0.1 // defined in movement aswell
+# define JUMP_FIX 0.01
 
 void	check_crouch(t_data *d)
 {
@@ -44,7 +45,14 @@ void	check_crouch(t_data *d)
 
 void	normal_gravity(t_data *d)
 {
-	if (d->cam.pos.y == d->floorheight + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
+	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
+	{
+		if (d->player.gravity < -0.16)
+			player_fell(d);
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->floorheight + d->player.minimum_height;
+	}
+	if (d->cam.pos.y <= d->floorheight + JUMP_FIX + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
 		d->player.gravity = JUMP_FORCE;
 	if (d->cam.pos.y > d->floorheight + d->player.minimum_height)
 	{
@@ -54,13 +62,6 @@ void	normal_gravity(t_data *d)
 	}
 	check_crouch(d);
 	d->cam.pos.y += d->player.gravity;
-	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
-	{
-		if (d->player.gravity < -0.16)
-			player_fell(d);
-		d->player.gravity = 0.0;
-		d->cam.pos.y = d->floorheight + d->player.minimum_height;
-	}
 	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->ceilheight - MINIMUM_CEIL_DIST)
 	{
 		d->player.gravity = 0.0;
@@ -72,7 +73,13 @@ void	normal_gravity(t_data *d)
 
 void	fly_gravity(t_data *d)
 {
-	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y == d->floorheight +
+	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
+	{
+		// do damage with d->player.gravity
+		d->player.gravity = 0.0;
+		d->cam.pos.y = d->floorheight + d->player.minimum_height;
+	}
+	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y <= d->floorheight + JUMP_FIX + 
 			d->player.minimum_height)
 	{
 		normal_gravity(d);
@@ -96,12 +103,6 @@ void	fly_gravity(t_data *d)
 	if (!d->player.is_flying)
 		d->player.gravity = 0.0;
 	d->cam.pos.y += d->player.gravity;
-	if (d->cam.pos.y < d->floorheight + d->player.minimum_height)
-	{
-		// do damage with d->player.gravity
-		d->player.gravity = 0.0;
-		d->cam.pos.y = d->floorheight + d->player.minimum_height;
-	}
 	if (!d->sectors[d->cursectnum].outdoor && d->cam.pos.y > d->ceilheight - MINIMUM_CEIL_DIST)
 	{
 		d->player.gravity = 0.0;
