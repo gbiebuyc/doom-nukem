@@ -48,26 +48,25 @@ int		menu_exit_button(t_data *d, SDL_Event *e)
 
 int		properties_texture_selection(t_data *d, SDL_Event *e)
 {
+	int	i;
 	int x;
 	int	y;
 
-	x = (int)d->interface.tex_select[0].x;
-	y = (int)d->interface.tex_select[0].y;
-	if (e->button.x > x && e->button.x < x + 66 &&
-		e->button.y > y && e->button.y < y + 66)
-		return (0);
-	x = (int)d->interface.tex_select[1].x;
-	y = (int)d->interface.tex_select[1].y;
-	if (e->button.x > x && e->button.x < x + 66 &&
-		e->button.y > y && e->button.y < y + 66)
-		return (1);
-	x = (int)d->interface.tex_select[2].x;
-	y = (int)d->interface.tex_select[2].y;
-	if (e->button.x > x && e->button.x < x + 66 &&
-		e->button.y > y && e->button.y < y + 66)
-		return (2);
+	i = -1;
+	while (++i < 4)
+	{
+		x = (int)d->interface.tex_select[i].x;
+		y = (int)d->interface.tex_select[i].y;
+		if (e->button.x > x && e->button.x < x + 66 &&
+			e->button.y > y && e->button.y < y + 66)
+			return (i);
+	}
 	return (-1);
 }
+
+/*
+**	limit = size of y axis of each category
+*/
 
 int		selecting_assets(t_data *d, SDL_Event *e)
 {
@@ -75,23 +74,23 @@ int		selecting_assets(t_data *d, SDL_Event *e)
 	int	i;
 	int	limit;
 
-	i = -1;
-	limit = 137;
 	d->interface.category = -1;
+	i = -1;
 	while (++i < 4)
 	{
+		limit = 32;
+		if (i == 1)
+			limit = 72;
 		y = d->interface.category_pos[i].y;
 		if (e->motion.x >= W - PROPERTIES_LIMIT && e->motion.y >= y &&
 			e->motion.y <= y + limit)
 		{
-			d->temp.x = e->motion.x - (W - PROPERTIES_LIMIT + 8);
-			d->temp.y = e->motion.y - (y + 2);
-			d->temp.x = (int)(d->temp.x / 38);
-			d->temp.y = (int)(d->temp.y / 36);
+			d->mouse.x = e->motion.x - (W - PROPERTIES_LIMIT + 8);
+			d->mouse.y = e->motion.y - (y + 2);
+			d->mouse.x = (int)(d->mouse.x / 38);
+			d->mouse.y = (int)(d->mouse.y / 36);
 			return (d->interface.category = i);
 		}
-		if (i == 1)
-			limit = 32;
 	}
 	return (-1);
 }

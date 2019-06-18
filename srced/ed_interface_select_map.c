@@ -67,7 +67,8 @@ void		detect_selected_map(t_data *d, int x, int y)
 		if (d->interface.selected_map < d->interface.nb_map)
 		{
 			d->interface.selected_map_pos.x = MAP_PROMPT_X + 3;
-			d->interface.selected_map_pos.y = MAP_PROMPT_Y + (select_y * 25) + 3;
+			d->interface.selected_map_pos.y = MAP_PROMPT_Y +
+														(select_y * 25) + 3;
 		}
 		if (select_y >= d->interface.nb_map)
 			d->interface.selected_map = -1;

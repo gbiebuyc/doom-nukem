@@ -40,8 +40,7 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 		d->hl_wallnum >= 0) && d->interface.texture_case_select != -1)
 		save_selected_texture(d, e->button.x, e->button.y,
 			((d->selected_wall != -1) ? d->selected_wall : d->hl_wallnum));
-	if (/*(d->selected_sector >= 0 || d->selected_wall >= 0 ||
-		(intptr_t)d->hl_wall >= 0) && */d->selected_texture != -1)
+	if (d->selected_texture != -1)
 		d->interface.texture_case_select = properties_texture_selection(d, e);
 	if (d->interface.category != -1)
 		get_selected_asset(d);

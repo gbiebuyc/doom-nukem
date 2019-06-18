@@ -53,7 +53,7 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	if (p->wall->posterpicnum >= 0 && p->u > p->u1_poster &&
 			p->u < p->u2_poster)
 	{
-		poster = d->textures[p->wall->posterpicnum];
+		poster = d->posters[p->wall->posterpicnum];
 		u_poster = (unsigned int)(norm(p->u, p->u1_poster, p->u2_poster) *
 				poster->w) % poster->w;
 		int	margin = (double)(p->yd - p->yc) * (1.0 - p->poster_h) / 2.0;

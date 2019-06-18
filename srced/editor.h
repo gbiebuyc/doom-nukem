@@ -27,7 +27,8 @@
 # define W 1600
 # define H 1200
 # define GRIDSIZE 64
-# define TEXTURE_PATH "./textures"
+# define TEXTURE_PATH "./textures/"
+# define POSTERS_PATH "./textures/posters/"
 
 /*
 **	Assets paths
@@ -37,9 +38,9 @@
 # define PATH_MONSTERS "./textures/assets/monsters/"
 # define PATH_WEAPONS "./textures/assets/weapons/"
 
-# define PATH_AMMO_ED "./textures/assets/editor/ammo/"
+# define PATH_AMMO_ED "./textures/assets/editor/ammo_healpack/"
 # define PATH_MONSTER_ED "./textures/assets/editor/monsters/"
-# define PATH_HEALPACK_ED "./textures/assets/editor/healpack/"
+# define PATH_HEALPACK_ED "./textures/assets/editor/ground_assets/"
 # define PATH_PLAYERSTART_ED "./textures/assets/editor/playerstart/"
 
 # define PATH_MAP "./maps/"
@@ -53,8 +54,14 @@
 */
 
 # define MARGIN 6
-# define PROPERTIES_LIMIT 275
-# define TEXTURE_TOOLBAR 550
+# define PROPERTIES_LIMIT 350
+# define TEXTURE_TOOLBAR 618
+
+/*
+**	Number of assets print per line on the interface toolbar
+*/
+
+# define NB_ASSET_LINE (int)((PROPERTIES_LIMIT - 62) / 32)
 
 /*
 **	########### ed_init_assets.c ###########
@@ -116,7 +123,7 @@ typedef struct	s_assets
 	SDL_Surface	*assets[100];
 }				t_assets;
 
-# define NB_PROPERTIES 15
+# define NB_PROPERTIES 16
 
 typedef struct	s_toolbar
 {
@@ -128,8 +135,8 @@ typedef struct	s_toolbar
 }				t_toolbar;
 
 /*
-**	int	nb_asset[4] : 	[0] = ammo, [1] = monster, [2] = healpack,
-**						[3] = playerstart
+**	int	nb_asset[4] : 	[0] = ammo/healpack, [1] = monster,
+**						[2] = ,	[3] = playerstart
 */
 
 typedef struct	s_interface
@@ -151,7 +158,7 @@ typedef struct	s_interface
 	t_vec2f			selected_asset_position;
 	t_monster_list	*monster_list;
 	t_vec2f			mouse_pos;
-	t_vec2f			tex_select[3];
+	t_vec2f			tex_select[4];
 	t_vec2f			btn_floor_height_pos;
 	t_vec2f			btn_ceil_height_pos;
 	t_vec2f			cbox_door_p;
@@ -181,7 +188,12 @@ typedef struct	s_data
 	SDL_Window			*win;
 	SDL_Surface			*screen;
 	SDL_Surface			**textures;
+	int					nb_texture;
+	SDL_Surface			**posters;
+	int32_t				nb_posters;
 	t_texture_data		*texture_list;
+	t_texture_data		*posters_list;
+	char				*path;
 	t_monsters_texture	*texture_monster;
 	SDL_Surface			*weap_tex[3][20];
 	SDL_Surface			*weap_proj[3][20];
@@ -200,7 +212,6 @@ typedef struct	s_data
 	int16_t				numsectors;
 	int16_t				numwalls;
 	uint16_t			nbmonsters;
-	int					nb_texture;
 	int32_t				nb_used_texture;
 	int					nb_anim_tmp;
 	int					nb_orientation_tnp;
@@ -217,7 +228,7 @@ typedef struct	s_data
 	bool				grid_locking;
 	bool				sectordrawing;
 	double				texture_to_scale;
-	t_vec2f				temp;
+	t_vec2f				mouse;
 	t_wall				*hl_wall;
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
@@ -225,11 +236,8 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-/* */int		write_weapons_texture(t_data *d, int f);
-/* */int		get_weapons_list(t_data *d, char **weap_name, int *nb_tex,
-													int *nb_pro);
+int			init_texture_test(t_data *d, int n);
 
-void    fix_default_texture(t_data *d, int x, int y);
 
 void			debug_print(t_data *d);
 
@@ -250,7 +258,7 @@ void			init_sectors(t_data *d);
 **	ed_init_texture.c
 */
 
-int				init_texture(t_data *d);
+int				init_texture(t_data *d, int n);
 
 /*
 **	ed_init_assets.c
@@ -270,6 +278,13 @@ int				get_monsters_files(t_data *d, char *path, int nb_monster);
 */
 
 char			**load_animation_list(t_data *d, char *path);
+
+/*
+**	ed_get_weapons_list.c
+*/
+
+int				get_weapons_list(t_data *d, char **weap_name, int *nb_tex,
+													int *nb_pro);
 
 /*
 **	ed_draw.c
@@ -401,7 +416,6 @@ char			*get_map_to_open(t_data *d, SDL_Event *e);
 
 void			copy_surface_to_surface(SDL_Surface *src,
 								SDL_Surface *dest, int p[2], t_data *d);
-void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 void			remove_backgorund_image(SDL_Surface *s);
 double			fclamp(double x, double min, double max);
 
@@ -421,7 +435,7 @@ void			event_key_up(t_data *d, SDL_Keycode key);
 void			event_key_down(t_data *d, SDL_Keycode key);
 
 /*
-**	ed_event_function.c
+**	ed_event_functions.c
 */
 
 int				menu_open_button(t_data *d, SDL_Event *e);
@@ -429,6 +443,13 @@ int				menu_save_button(t_data *d, SDL_Event *e);
 int				menu_exit_button(t_data *d, SDL_Event *e);
 int				properties_texture_selection(t_data *d, SDL_Event *e);
 int				selecting_assets(t_data *d, SDL_Event *e);
+
+/*
+**	ed_event_functions2.c
+*/
+
+void			fix_default_texture(t_data *d, int x, int y);
+void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 
 /*
 **	ed_event_mouse_button.c
@@ -463,6 +484,18 @@ void			set_assets_used(t_data *d);
 
 int				write_monster_data(t_data *d, int f);
 int				write_monster_texture(t_data *d, int f, t_monsters_texture *mt);
+
+/*
+**	ed_save_weapons_texture.c
+*/
+
+int				write_weapons_texture(t_data *d, int f);
+
+/*
+**	ed_save_posters.c
+*/
+
+int				write_posters_data(t_data *d, int f);
 
 /*
 ** ed_door_toggle.c

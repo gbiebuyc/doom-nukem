@@ -18,8 +18,9 @@ void		draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
 	int		y;
 	t_vec2f	v;
 
-	v = d->temp;
-	if (v.x + 1 + v.y * 7 > d->interface.nb_asset[d->interface.category])
+	v = d->mouse;
+	if (v.x + 1 + v.y * NB_ASSET_LINE >
+							d->interface.nb_asset[d->interface.category])
 		return ;
 	v.x = (v.x * 38) + category_pos[d->interface.category].x;
 	v.y = (v.y * 36) + category_pos[d->interface.category].y;
@@ -45,7 +46,7 @@ void		draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
 static void	draw_plus_minus_btn_n_checkbox(t_data *d, SDL_Surface **prop,
 														int x, int y)
 {
-	x = W - PROPERTIES_LIMIT * 0.25;
+	x = W - PROPERTIES_LIMIT * 0.35;
 	y = H * 0.5 + prop[0]->h * 2 + 15;
 	d->interface.btn_floor_height_pos = (t_vec2f){x, y};
 	copy_surface_to_surface(prop[8], d->screen, (int[2]){x, y}, d);
@@ -75,19 +76,32 @@ static void	draw_plus_minus_btn_n_checkbox(t_data *d, SDL_Surface **prop,
 **	hv = horizontal_vertical (0 = h, 1 = V)
 */
 
-static void	draw_texture_selection(t_data *d, int x, int y, int hv)
+static void	draw_texture_selection(t_data *d, int x, int y)
 {
 	int i;
+	int	x_tmp;
+	int	y_tmp;
 
+	x_tmp = x;
+	y_tmp = y;
 	i = -1;
 	while (++i < 66)
-	{
-		putpixel(d, x, y, 0x008800);
-		if (hv)
-			x++;
-		else
-			y++;
-	}
+		putpixel(d, x++, y, 0x008800);
+	i = -1;
+	x = x_tmp;
+	y = y_tmp;
+	while (++i < 66)
+		putpixel(d, x++, y + 66, 0x008800);
+	i = -1;
+	x = x_tmp;
+	y = y_tmp;
+	while (++i < 66)
+		putpixel(d, x, y++, 0x008800);
+	i = -1;
+	x = x_tmp;
+	y = y_tmp;
+	while (++i < 66)
+		putpixel(d, x + 66, y++, 0x008800);
 }
 
 /*
@@ -100,24 +114,20 @@ static void	draw_texture_selection(t_data *d, int x, int y, int hv)
 static void	draw_selection_case(t_data *d, SDL_Surface **prop, int x, int y)
 {
 	x += prop[3]->w + 9;
-	d->interface.tex_select[2] = (t_vec2f){x, y + (prop[3]->h * 0.5)};
-	draw_texture_selection(d, x, y + (prop[3]->h * 0.5), 1);
-	draw_texture_selection(d, x, y + (prop[3]->h * 0.5) + 66, 1);
-	draw_texture_selection(d, x, y + (prop[3]->h * 0.5), 0);
-	draw_texture_selection(d, x + 66, y + (prop[3]->h * 0.5), 0);
+	d->interface.tex_select[2] = (t_vec2f){x, y + (prop[3]->h >> 1)};
+	draw_texture_selection(d, x, y + (prop[3]->h >> 1));
 	x = W - PROPERTIES_LIMIT + MARGIN + prop[1]->w + 9;
-	y = y - prop[2]->h - prop[2]->h - prop[3]->h * 0.5 - 102;
+	y = y - prop[2]->h - prop[2]->h - (prop[3]->h >> 1) - 102;
 	d->interface.tex_select[1] = (t_vec2f){x, y - 33};
-	draw_texture_selection(d, x, y - 33, 1);
-	draw_texture_selection(d, x, y - 33, 0);
-	draw_texture_selection(d, x, y + 33, 1);
-	draw_texture_selection(d, x + 66, y - 33, 0);
-	y = d->interface.tex_select[1].y - prop[1]->h * 0.5 - 16;
+	draw_texture_selection(d, x, y - 33);
+	y = d->interface.tex_select[1].y - (prop[1]->h >> 1) - 16;
 	d->interface.tex_select[0] = (t_vec2f){x, y};
-	draw_texture_selection(d, x, y, 1);
-	draw_texture_selection(d, x, y, 0);
-	draw_texture_selection(d, x, y + 66, 1);
-	draw_texture_selection(d, x + 66, y, 0);
+	draw_texture_selection(d, x, y);
+	x = d->interface.tex_select[2].x + 160;
+	y = d->interface.tex_select[2].y - (prop[15]->h >> 1);
+	d->interface.tex_select[3] = (t_vec2f){x, d->interface.tex_select[2].y};
+	draw_texture_selection(d, x, d->interface.tex_select[2].y);
+	copy_surface_to_surface(prop[15], d->screen, (int[2]){x - 86, y + 32}, d);
 }
 
 /*
@@ -130,22 +140,18 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 	int	y;
 
 	y = H / 2;
-//x = W - (PROPERTIES_LIMIT * 0.5) - (properties[0]->w * 0.5);
 	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
 	copy_surface_to_surface(properties[0], d->screen, (int[2]){x, y}, d);
 	y += properties[0]->h + 5;
 	x = W - PROPERTIES_LIMIT + MARGIN;
-//	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[1], d->screen, (int[2]){x, y + 5}, d);
 	y += properties[0]->h + properties[1]->h + 16 + 80;
-//	x = W - (PROPERTIES_LIMIT * 0.5) - (properties[2]->w * 0.5);
 	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
 	copy_surface_to_surface(properties[2], d->screen, (int[2]){x, y + 5}, d);
 	y += properties[2]->h + 5;
 	x = W - PROPERTIES_LIMIT + MARGIN;
-//	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	copy_surface_to_surface(properties[3], d->screen, (int[2]){x, y + 32}, d);
 	draw_selection_case(d, properties, x, y);
 	fill_texture_selection(d, &d->interface, ((d->selected_wall == -1 &&

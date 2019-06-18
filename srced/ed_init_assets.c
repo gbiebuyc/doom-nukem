@@ -12,17 +12,6 @@
 
 #include "editor.h"
 
-int		get_ground_sprites_files(t_data *d, char *path)
-{
-	DIR		*dr;
-
-	if ((dr = opendir(path)))
-	{
-		(void)d; //TODO
-	}
-	return (0);
-}
-
 int		is_bmp(struct dirent *de)
 {
 	return (de->d_type == DT_REG && de->d_name[0] != '.' &&

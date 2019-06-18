@@ -65,35 +65,6 @@ void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dst,
 					(int)((double)y / d->texture_to_scale * src->h) * src->w];
 }
 
-void			save_selected_texture(t_data *d, int x, int y, int wallnum)
-{
-	t_sector	*s;
-
-	s = &d->sectors[d->selected_sector];
-	if (x >= (W - TEXTURE_TOOLBAR + 10) && x < W - PROPERTIES_LIMIT)
-	{
-		x = (x - (W - TEXTURE_TOOLBAR + 10)) / 64;
-		y = (y - 10) / 64;
-		d->selected_texture = x + y * 4;
-		if (d->selected_texture < d->nb_texture)
-		{
-			if (d->interface.texture_case_select == 2 && wallnum >= 0)
-				d->walls[wallnum].middlepicnum = d->selected_texture;
-			else if (d->selected_sector >= 0)
-			{
-				if (d->interface.texture_case_select == 1)
-					s->ceilpicnum = d->selected_texture;
-				else if (d->interface.texture_case_select == 0)
-					s->floorpicnum = d->selected_texture;
-			}
-		}
-		else
-			d->selected_texture = -1;
-	}
-	else
-		d->selected_texture = -2;
-}
-
 void			remove_backgorund_image(SDL_Surface *s)
 {
 	int			x;

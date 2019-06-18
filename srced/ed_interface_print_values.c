@@ -17,7 +17,7 @@ void	print_interface_values(t_data *d)
 	char	*string;
 	int		x;
 
-	x = d->interface.btn_floor_height_pos.x - 75;
+	x = d->interface.btn_floor_height_pos.x - 85;
 	string = ft_itoa_static(d->selected_sector);
 	if (d->selected_sector != -1)
 		draw_string(d, (t_font){string, x, H / 2 + 6, 0x008800, 2});

@@ -37,8 +37,8 @@ void	draw_selection_arround_selected_asset(t_data *d, t_vec2f *v, int c)
 	int		x;
 	int		y;
 
-	x = d->temp.x;
-	y = d->temp.y;
+	x = d->mouse.x;
+	y = d->mouse.y;
 	x = -1;
 	while (++x < 32)
 		putpixel(d, x + v->x, v->y, c);
@@ -58,11 +58,12 @@ void	get_selected_asset(t_data *d)
 	int		x;
 	int		y;
 
-	x = d->temp.x;
-	y = d->temp.y;
-	if (x + 1 + y * 7 > d->interface.nb_asset[d->interface.category])
+	x = d->mouse.x;
+	y = d->mouse.y;
+	if (x + 1 + y * NB_ASSET_LINE >
+								d->interface.nb_asset[d->interface.category])
 		return ;
-	d->interface.selected_asset = x + y * 7;
+	d->interface.selected_asset = x + y * NB_ASSET_LINE;
 	d->interface.select = 0;
 	x = x * 38 + d->interface.category_pos[d->interface.category].x;
 	y = y * 36 + d->interface.category_pos[d->interface.category].y;
@@ -87,7 +88,7 @@ int		add_asset_to_map(t_data *d, int x, int y)
 	if (d->interface.selected_asset_cat == 3)
 	{
 		d->player_start = (t_vec3f){p.x, s->floorheight + 0.5, p.y};
-		d->startsectnum = find_sect_under_cursor(d);
+		d->startsectnum = sectornum;
 	}
 	else if (d->interface.selected_asset_cat == 1)
 	{

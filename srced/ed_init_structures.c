@@ -24,23 +24,14 @@ void		init_data(t_data *d)
 		.selectedwall = NULL, .selectedwall2 = NULL, .grid_locking = true,
 		.sectordrawing = false, .default_wall_texture = 0,
 		.default_floor_texture = 0, .default_ceil_texture = 0,
-		.selected_texture = -2, .map_to_open = NULL,
+		.selected_texture = -2, .map_to_open = NULL, .texture_to_scale = -1,
 		.current_loaded_map = "newmap.DNMAP"};
 	d->player_start = (t_vec3f){0, 0.2, 0};
-	d->interface.show_menu = 0;
-	d->interface.select = 1;
-	d->interface.move = 0;
-	d->texture_to_scale = -1;
-	d->interface.texture_case_select = -1;
-	d->interface.category = -1;
-	d->interface.selected_asset = -1;
-	d->interface.separate_sector = 0;
-	d->interface.monster_list = NULL;
-	d->interface.map_list = NULL;
-	d->interface.map_list_sort = NULL;
-	d->interface.prompt_map_open = 0;
-	d->interface.selected_map = -1;
 	d->startsectnum = 0;
+	d->interface = (t_interface){.show_menu = 0, .select = 1, .move = 0,
+			.texture_case_select = -1, .category = -1, .selected_asset = -1,
+			.separate_sector = 0, .monster_list = NULL, .map_list = NULL,
+			.map_list_sort = NULL, .prompt_map_open = 0, .selected_map = -1};
 }
 
 void		init_sectors(t_data *d)

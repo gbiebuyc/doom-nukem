@@ -12,23 +12,23 @@
 
 #include "editor.h"
 
-static int	load_texture(t_data *d)
+static int	load_texture(t_data *d, SDL_Surface ***s, int nb_tex,
+													t_texture_data *tex_list)
 {
 	int			i;
 	SDL_Surface	*tmp;
 
-	if (!(d->textures =
-			(SDL_Surface**)malloc(sizeof(SDL_Surface*) * d->nb_texture)))
+	if (!((*s) = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * nb_tex)))
 		return (ft_printf("Failed to allocate tetures surface memory.\n"));
 	i = 0;
-	while (i < d->nb_texture)
+	while (i < nb_tex)
 	{
-		if (!(tmp = SDL_LoadBMP(d->texture_list->name)))
-			return (ft_printf("Failed to load %s.\n", d->texture_list->name));
-		if (!(d->textures[i] = SDL_ConvertSurface(tmp, d->screen->format, 0)))
+		if (!(tmp = SDL_LoadBMP(tex_list->name)))
+			return (ft_printf("Failed to load %s.\n", tex_list->name));
+		if (!((*s)[i] = SDL_ConvertSurface(tmp, d->screen->format, 0)))
 			return (ft_printf("Failed to re-format\n"));
-		if (d->texture_list->next)
-			d->texture_list = d->texture_list->next;
+		if (tex_list->next)
+			tex_list = tex_list->next;
 		SDL_FreeSurface(tmp);
 		i++;
 	}
@@ -36,60 +36,67 @@ static int	load_texture(t_data *d)
 }
 
 static int	new_texture(char *name, t_texture_data **tex_data,
-								t_texture_data *begin, t_texture_data *prev)
+								t_texture_data *begin, char *path)
 {
 	if (!(*tex_data = (t_texture_data*)malloc(sizeof(t_texture_data))))
 		return (1);
-	name = ft_strjoin("/", name);
-	name = ft_strjoin(TEXTURE_PATH, name);
+	name = ft_strjoin(path, name);
 	ft_strcpy((*tex_data)->name, name);
 	(*tex_data)->begin = begin;
-	(*tex_data)->prev = prev;
 	(*tex_data)->next = NULL;
 	return (0);
 }
 
-static int	get_texture_files(t_data *d, DIR *dr)
+static int	get_texture_files(t_data *d, DIR *dr, t_texture_data **tex_lst,
+																int *nb_tex)
 {
 	t_texture_data	*list;
-	t_texture_data	*save_prev;
 	struct dirent	*de;
 
 	list = NULL;
-	save_prev = NULL;
 	while ((de = readdir(dr)))
 	{
 		if (is_bmp(de))
 		{
 			if (ft_strequ(de->d_name, "no_texture.bmp"))
-				d->default_texture = d->nb_texture;
-			if (new_texture(de->d_name, (list) ? &list->next : &d->texture_list,
-									(!list) ? NULL : list->begin, save_prev))
+				d->default_texture = *nb_tex;
+			if (new_texture(de->d_name, (list) ? &list->next : tex_lst,
+									(!list) ? NULL : list->begin, d->path))
 				return (ft_printf("Failed to craete new texture.\n"));
 			if (!list)
-				d->texture_list->begin = d->texture_list;
-			list = (!list) ? d->texture_list : list->next;
-			save_prev = list;
-			d->nb_texture++;
+				(*tex_lst)->begin = *tex_lst;
+			list = (!list) ? *tex_lst : list->next;
+			(*nb_tex)++;
 		}
 	}
+	if (*nb_tex == 0)
+		return (ft_printf("Textures folder is empty, no texture to load.\n"));
 	return (0);
 }
 
-int			init_texture(t_data *d)
+int			init_texture(t_data *d, int n)
 {
 	DIR				*dr;
 
-	d->texture_list = NULL;
-	d->nb_texture = 0;
-	if ((dr = opendir(TEXTURE_PATH)))
+	d->texture_list = (n == 0) ? NULL : d->texture_list;
+	d->posters_list = (n == 1) ? NULL : d->posters_list;
+	d->nb_texture = (n == 0) ? 0 : d->nb_texture;
+	d->nb_posters = (n == 1) ? 0 : d->nb_posters;
+	d->path = (n == 0) ? TEXTURE_PATH : POSTERS_PATH;
+	if ((dr = opendir(d->path)))
 	{
-		if (get_texture_files(d, dr) || load_texture(d))
+		if (n == 0 &&
+			(get_texture_files(d, dr, &d->texture_list, &d->nb_texture) ||
+			load_texture(d, &d->textures, d->nb_texture, d->texture_list)))
+			return (1);
+		else if (n == 1 &&
+			(get_texture_files(d, dr, &d->posters_list, &d->nb_posters) ||
+			load_texture(d, &d->posters, d->nb_posters, d->posters_list)))
 			return (1);
 		closedir(dr);
 	}
 	else
-		return (ft_printf("Couldn't open the textures directory.\n"));
+		return (ft_printf("Couldn't open the %s.\n", d->path));
 	d->default_wall_texture = d->default_texture;
 	d->default_floor_texture = d->default_texture;
 	d->default_ceil_texture = d->default_texture;

@@ -233,6 +233,8 @@ typedef struct	s_data
 	SDL_Surface		*screen;
 	SDL_Surface		**textures;
 	int32_t			nb_textures;
+	SDL_Surface		**posters;
+	int32_t			nb_posters;
 	char			**tex_name_list;
 	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE_MONSTER][MAXNBOFANIMATION];
 	SDL_Surface		*projectile_tex[MAX_KIND_OF_PROJECTILE][MAX_PROJECTILE_TEX_PER_WEAP];

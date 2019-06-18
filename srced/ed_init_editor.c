@@ -62,15 +62,14 @@ static int		init_toolbar(t_toolbar *tb)
 	int		j;
 
 	file = (char*[]){
-		"./Menu/Select_disable.bmp", "./Menu/Select_enable.bmp",
-		"./Menu/Move_disable.bmp", "./Menu/Move_enable.bmp",
-		"./Menu/sector_title.bmp", "./Menu/lblsector_info.bmp",
-		"./Menu/wall_title.bmp", "./Menu/lblTexture.bmp",
-		"./Menu/lblAmmo.bmp", "./Menu/lblMonsters.bmp",
-		"./Menu/lblHealPack.bmp", "./Menu/lblPlayerStart.bmp",
-		"./Menu/minus.bmp", "./Menu/plus.bmp", "./Menu/lblLight.bmp",
-		"./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp",
-		"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp"};
+	"./Menu/Select_disable.bmp", "./Menu/Select_enable.bmp",
+	"./Menu/Move_disable.bmp", "./Menu/Move_enable.bmp",
+	"./Menu/lblSector.bmp", "./Menu/lblsector_info.bmp", "./Menu/lblWall.bmp",
+	"./Menu/lblTexture.bmp", "./Menu/lblAmmo_healpack.bmp",
+	"./Menu/lblMonsters.bmp", "./Menu/lblGround_assets.bmp",
+	"./Menu/lblPlayerStart.bmp", "./Menu/minus.bmp", "./Menu/plus.bmp",
+	"./Menu/lblLight.bmp", "./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp",
+	"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp", "./Menu/lblPoster.bmp"};
 	i = -1;
 	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
 		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||
@@ -103,7 +102,7 @@ int				init_editor(t_data *d)
 		return (ft_printf("Failed to create editor's window.\n"));
 	if (!(d->screen = SDL_GetWindowSurface(d->win)))
 		return (ft_printf("Failed to get window's surface.\n"));
-	if (init_interface(d) || init_texture(d))
+	if (init_interface(d) || init_texture(d, 0) || init_texture(d, 1))
 		return (1);
 	return (0);
 }
