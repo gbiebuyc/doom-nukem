@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   handle_finish \
 	   exit \
 	   init_sdl \
 	   init_monsters \

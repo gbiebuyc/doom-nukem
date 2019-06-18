@@ -115,6 +115,7 @@ void	update(t_data *d)
 {
 	int16_t	sect;
 
+	/*** Die ***/
 	if (d->player.health <= 0)
 	{
 		init_monsters(d);
@@ -146,8 +147,9 @@ void	update(t_data *d)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight(d, sect);
 		d->cursectnum = sect;
 	}
+	/*** finish ***/
 	if (d->sectors[d->cursectnum].is_finish)
-		init_everything(d, d->nextmap);
+		handle_finish(d);
 	jump(d);
 	player_actions(d);
 	update_projectiles(d);

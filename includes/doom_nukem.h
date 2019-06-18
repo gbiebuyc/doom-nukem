@@ -88,6 +88,7 @@ double	get_floorheight(t_data *d, int16_t sectnum);
 double	get_ceilheight(t_data *d, int16_t sectnum);
 void	init_everything(t_data *d, char *map);
 void	fix_picnum(t_data *d);
+void	handle_finish(t_data *d);
 
 /*
 ** player_damage.c
