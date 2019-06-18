@@ -192,7 +192,7 @@ typedef struct	s_monster_type
 
 typedef	struct	s_player
 {
-	uint8_t		life;
+	int8_t		health;
 //	uint8_t shield; gamedesign
 	uint8_t		current_weapon;
 	uint8_t		can_shoot;
@@ -264,6 +264,7 @@ typedef struct	s_data
 	double			zbuffer[WIDTH];
 	double			floorheight;
 	double			ceilheight;
+	char			nextmap[PATH_MAX];
 }				t_data;
 
 typedef struct	s_thread_arg

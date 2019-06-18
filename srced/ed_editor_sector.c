@@ -32,6 +32,7 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].slope = 0;
 	d->sectors[d->numsectors - 1].slopeceil = 0;
 	d->sectors[d->numsectors - 1].outdoor = 0;
+	d->sectors[d->numsectors - 1].is_finish = false;
 	add_wall(d);
 	add_wall(d);
 }

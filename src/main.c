@@ -12,6 +12,19 @@
 
 #include "doom_nukem.h"
 
+void	init_everything(t_data *d, char *map)
+{
+	/**/strcpy(d->nextmap, "newmap.DNMAP");
+	load_map(d, map);
+	fix_picnum(d);
+	init_player(d, &d->player);
+	init_monsters(d);
+	init_projectiles(d);
+	if (d->cursectnum < 0)
+		exit(ft_printf("bad startsectnum\n"));
+	loop(d);
+}
+
 int		main(int ac, char **av)
 {	
 	t_data d;
@@ -25,12 +38,6 @@ int		main(int ac, char **av)
 	if (chdir(SDL_GetBasePath()) < 0)
 		ft_printf("error\n");
 	init_font(&d);
-	load_map(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 	init_sdl(&d);
-	init_player(&d, &d.player);
-	init_monsters(&d);
-	init_projectiles(&d);
-	if (d.cursectnum < 0)
-		exit(ft_printf("bad startsectnum\n"));
-	loop(&d);
+	init_everything(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 }

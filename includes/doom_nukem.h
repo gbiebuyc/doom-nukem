@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <pthread.h>
+# include <limits.h>
 
 # define WIDTH 1000
 # define HEIGHT 750
@@ -85,6 +86,8 @@ double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall);
 void	draw_slope(t_data *d, t_projdata *p);
 double	get_floorheight(t_data *d, int16_t sectnum);
 double	get_ceilheight(t_data *d, int16_t sectnum);
+void	init_everything(t_data *d, char *map);
+void	fix_picnum(t_data *d);
 
 /*
 ** player_damage.c

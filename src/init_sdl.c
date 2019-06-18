@@ -98,7 +98,6 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		err_exit(d, 2, SDL_GetError());
-	fix_picnum(d);
 
 	// proj monster
 	load_projectile_texture(d, "./textures/sprites/projectiles/fireball_1/BAL1A0.bmp", FIREBALL_1, 0);

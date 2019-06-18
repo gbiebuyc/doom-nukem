@@ -68,6 +68,9 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 		d->sectors[d->selected_sector].slopeceil += 2;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
+	else if (d->selected_sector >= 0 && key == SDLK_f)
+		ft_printf("is_finish: %d\n", (d->sectors[d->selected_sector].is_finish =
+					!d->sectors[d->selected_sector].is_finish));
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)

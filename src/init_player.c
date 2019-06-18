@@ -61,4 +61,6 @@ void	init_player(t_data *d, t_player *player)
 	player->minimum_height = MINIMUM_HEIGHT;
 	player->gravity = 0.0;// dont touch
 	player->can_move = 0;// set to 0 unless you don't want to move, same than is_flying
+	player->health = 100;
+	ft_memset(&d->cam, 0, sizeof(d->cam));
 }

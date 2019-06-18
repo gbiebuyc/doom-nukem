@@ -33,7 +33,9 @@ void	render(t_data *d)
 	draw_aim_cross(d);
 	/***/
 
-	draw_string(d, (t_font){"Render.c : Ceci est un test 1234567890", 50, 50, 0x0, 2});
+	char buf[100] = "Health: ";
+	ft_strcpy(buf + 8, ft_itoa_static(d->player.health));
+	draw_string(d, (t_font){buf, 50, 50, 0x0, 2});
 
 	SDL_UpdateWindowSurface(d->win);
 }
