@@ -139,8 +139,8 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		{
 			p.u1_poster = (len1 - POSTER_W) / 2.0;
 			p.u2_poster = len1 - p.u1_poster;
-			p.poster_h = POSTER_W * ((double)d->textures[p.wall->posterpicnum]->h /
-					d->textures[p.wall->posterpicnum]->w) / p.y_scale;
+			p.poster_h = POSTER_W * ((double)d->posters[p.wall->posterpicnum]->h /
+					d->posters[p.wall->posterpicnum]->w) / p.y_scale;
 		}
 		draw_wall(d, &p, fr);
 		t = (t_thread_arg){d, &p, fr};
