@@ -20,5 +20,7 @@ void	handle_finish(t_data *d)
 	i = -1;
 	while (++i < d->nb_textures)
 		SDL_FreeSurface(d->textures[i]);
+	if (!ft_strlen(d->nextmap))
+		the_end(d);
 	init_everything(d, d->nextmap);
 }

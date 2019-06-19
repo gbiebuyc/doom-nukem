@@ -14,7 +14,7 @@
 
 void	init_everything(t_data *d, char *map)
 {
-	/**/strcpy(d->nextmap, "newmap.DNMAP");
+	//strcpy(d->nextmap, "newmap.DNMAP");
 	load_map(d, map);
 	fix_picnum(d);
 	init_player(d, &d->player);

@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   the_end \
 	   load_sound \
 	   sound \
 	   handle_finish \

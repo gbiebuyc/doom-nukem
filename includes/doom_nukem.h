@@ -91,6 +91,7 @@ void	fix_picnum(t_data *d);
 void	handle_finish(t_data *d);
 void	*sound_thread(void *void_arg);
 int		load_sound(t_data *d, int f);
+void	the_end(t_data *d);
 
 /*
 ** player_damage.c
