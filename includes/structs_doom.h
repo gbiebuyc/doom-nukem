@@ -242,6 +242,7 @@ typedef struct	s_data
 	const Uint8		*keys;
 	uint8_t			left_mouse_button;
 	uint8_t			right_mouse_button;
+	t_cam			startcam;
 	t_cam			cam;
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
@@ -253,6 +254,7 @@ typedef struct	s_data
 	uint16_t		nummonsters;
 	int16_t			numsectors;
 	int16_t			numwalls;
+	int16_t			startsectnum;
 	int16_t			cursectnum;
 	bool			debug_pause;
 	double			dooranimstep[MAXNUMWALLS];

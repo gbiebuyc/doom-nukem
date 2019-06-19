@@ -20,7 +20,7 @@ void	init_everything(t_data *d, char *map)
 	init_player(d, &d->player);
 	init_monsters(d);
 	init_projectiles(d);
-	if (d->cursectnum < 0)
+	if (d->startsectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
 	/*** music thread ***/
 	pthread_t thread;
