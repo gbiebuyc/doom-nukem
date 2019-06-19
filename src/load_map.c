@@ -110,7 +110,7 @@ void		load_map(t_data *d, char *map)
 		read_textures_name(d, f) || read_texture_data(d, f) ||
 		read_posters_data(d, f) ||
 		load_weapons_texture(d, f, NB_TEX, NB_PROJECTILE) ||
-		load_monsters_texture(d, f))
+		load_monsters_texture(d, f) || load_sound(d, f))
 		exit(1);
 	close(f);
 	if (!contain_map_path(map))

@@ -13,6 +13,8 @@
 NAME= doom-nukem
 
 FILES= main \
+	   load_sound \
+	   sound \
 	   handle_finish \
 	   exit \
 	   init_sdl \

@@ -119,7 +119,7 @@ int			save_file(t_data *d, char *map_name)
 	if (write_wall_n_sector_data(d, f) || write_monster_data(d, f) ||
 		write_texture_list(d, f) || write_texture_data(d, f) ||
 		write_posters_data(d, f) || write_weapons_texture(d, f) ||
-		write_monster_texture(d, f, d->texture_monster))
+		write_monster_texture(d, f, d->texture_monster) || write_sound(d, f))
 		return (1);
 	close(f);
 	d->current_loaded_map = d->path_to_save;

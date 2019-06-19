@@ -12,6 +12,16 @@
 
 #include "doom_nukem.h"
 
+void	shoot_sound(t_data *d)
+{
+	static t_sound_thread_arg	arg;
+	pthread_t					thread;
+
+	arg = (t_sound_thread_arg){d, false, 1};
+	if (pthread_create(&thread, NULL, sound_thread, &arg))
+		exit(ft_printf("pthread_create error\n"));
+}
+
 void	shoot_weapon(t_data *d)
 {
 //	static unsigned short	charged_time;
@@ -27,6 +37,7 @@ void	shoot_weapon(t_data *d)
 			d->player.click = LEFT_CLICK;
 			if (d->player.current_weapon == M16)
 				m16_shoot(d);
+			shoot_sound(d);
 		}
 		else if (d->right_mouse_button == MOUSE_PRESSED && d->weapon_type[d->player.current_weapon].has_alt_fire)
 		{

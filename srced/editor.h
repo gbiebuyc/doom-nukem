@@ -532,4 +532,10 @@ int				delete_monster(t_data *d, t_monster_list *lst);
 void			init_font(t_data *d);
 void			draw_string(t_data *d, t_font f);
 
+/*
+**	ed_write_sound.c
+*/
+
+int		write_sound(t_data *d, int f);
+
 #endif

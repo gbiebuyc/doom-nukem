@@ -32,6 +32,7 @@ SRC = main.c \
 	ed_save_file.c ed_fix_data_to_save.c ed_save_monster_texture.c ed_save_weapons_texture.c \
 	ed_save_posters.c \
 	ed_get_monster_files.c ed_get_animation_files.c ed_get_weapon_list.c \
+	ed_write_sound.c \
 	ed_font.c
 
 OBJ1 = $(SRC:.c=.o)

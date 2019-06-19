@@ -22,6 +22,12 @@ void	init_everything(t_data *d, char *map)
 	init_projectiles(d);
 	if (d->cursectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
+	/*** music thread ***/
+	pthread_t thread;
+	t_sound_thread_arg arg = {d, true, 0};
+	if (pthread_create(&thread, NULL, sound_thread, &arg))
+		ft_printf("pthread_create error\n");
+	/***/
 	loop(d);
 }
 

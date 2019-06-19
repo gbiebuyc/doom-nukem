@@ -89,6 +89,8 @@ double	get_ceilheight(t_data *d, int16_t sectnum);
 void	init_everything(t_data *d, char *map);
 void	fix_picnum(t_data *d);
 void	handle_finish(t_data *d);
+void	*sound_thread(void *void_arg);
+int		load_sound(t_data *d, int f);
 
 /*
 ** player_damage.c
