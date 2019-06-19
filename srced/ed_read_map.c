@@ -100,7 +100,6 @@ int			load_map(t_data *d, char *map)
 	struct stat	sb;
 
 	map = (contain_map_path(map)) ? map : ft_strjoin(PATH_MAP, map);
-	ft_printf("%s\n", map);
 	camrot = 0;
 	if (((f = open(map, O_RDONLY)) < 0) ||
 		(fstat(f, &sb) == -1) ||
