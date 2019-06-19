@@ -44,12 +44,9 @@ static void	empty_case(t_data *d, t_interface *i)
 	}
 }
 
-void		fill_texture_selection(t_data *d, t_interface *i, int wallnum)
+void		fill_texture_selection(t_data *d, t_interface *i, int wallnum,
+																int tex_n)
 {
-	int tex_n;
-
-	if (d->numwalls <= 0 && d->numsectors <= 0)
-		return ;
 	d->texture_to_scale = 64;
 	if (d->selected_wall != -1 || d->hl_wall)
 	{

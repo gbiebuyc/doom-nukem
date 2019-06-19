@@ -19,6 +19,7 @@ static void	handle_escape(t_data *d)
 	d->interface.texture_case_select = -1;
 	d->interface.selected_asset = -1;
 	d->interface.prompt_map_open = 0;
+	d->get_next_map = 0;
 }
 
 void		event_key_up(t_data *d, SDL_Keycode key)
@@ -45,32 +46,29 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 static void	event_key_down2(t_data *d, SDL_Keycode key)
 {
 	if (d->selected_sector >= 0 &&
-			key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -90)
+			key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -20)
 	{
 		d->sectors[d->selected_sector].slope -= 2;
 		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
 	}
 	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 90)
+			key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 20)
 	{
 		d->sectors[d->selected_sector].slope += 2;
 		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
 	}
 	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slope > -90)
+			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slope > -20)
 	{
 		d->sectors[d->selected_sector].slopeceil -= 2;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
 	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slope < 90)
+			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slope < 20)
 	{
 		d->sectors[d->selected_sector].slopeceil += 2;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
-	else if (d->selected_sector >= 0 && key == SDLK_f)
-		ft_printf("is_finish: %d\n", (d->sectors[d->selected_sector].is_finish =
-					!d->sectors[d->selected_sector].is_finish));
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)

@@ -35,9 +35,11 @@ void		draw_map_list(t_data *d)
 	int			x;
 	int			y;
 	int			cpt;
+	char		*string;
 
-	draw_string(d, (t_font){"Select a map to open", MAP_PROMPT_X + 105,
-											MAP_PROMPT_Y - 20, 0x008800, 2});
+	string = !d->get_next_map ? "Select a map to open" : "Select the next map";
+	draw_string(d, (t_font){string, MAP_PROMPT_X + 150, MAP_PROMPT_Y - 20,
+															0x008800, 2});
 	x = MAP_PROMPT_X + 5;
 	y = MAP_PROMPT_Y + 5;
 	cpt = d->interface.map_list_start_i - 1;
@@ -84,4 +86,26 @@ char		*get_map_to_open(t_data *d, SDL_Event *e)
 		d->interface.selected_map != -1)
 		return (d->interface.map_list_sort[d->interface.selected_map]->name);
 	return (NULL);
+}
+
+void		get_next_level(t_data *d, SDL_Event *e)
+{
+	char *nextmap;
+
+	if (d->interface.prompt_map_open == 1)
+	{
+		if ((nextmap = get_map_to_open(d, e)))
+		{
+			ft_strcpy(d->next_map, nextmap);
+			d->interface.prompt_map_open = 0;
+			d->get_next_map = 0;
+		}
+	}
+	else if (!get_map_list(d) && d->interface.map_folder_empty == 0)
+	{
+		d->interface.prompt_map_open = 1;
+		d->get_next_map = 1;
+	}
+	else
+		ft_printf("Error getting map_list for next_level\n");
 }

@@ -104,7 +104,8 @@ void		load_map(t_data *d, char *map)
 	if (((f = open(map_path, O_RDONLY)) == -1) ||
 		read(f, &d->startcam.pos, sizeof(t_vec3f)) == -1 ||
 		read(f, &d->startcam.rot, sizeof(double)) == -1 ||
-		read(f, &d->startsectnum, sizeof(int16_t)) == -1)
+		read(f, &d->startsectnum, sizeof(int16_t)) == -1 ||
+		read(f, d->nextmap, 100) < 0)
 		exit(ft_printf("Doom : Map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_textures_name(d, f) || read_texture_data(d, f) ||

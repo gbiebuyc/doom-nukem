@@ -107,7 +107,8 @@ int			load_map(t_data *d, char *map)
 		((sb.st_mode & S_IFMT) != S_IFREG) ||
 		read(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		read(f, &camrot, sizeof(double)) < 0 ||
-		read(f, &d->startsectnum, sizeof(int16_t)) < 0)
+		read(f, &d->startsectnum, sizeof(int16_t)) < 0 ||
+		read(f, d->next_map, 100) < 0)
 		return (ft_printf("# Map ERROR !\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
 		return (1);

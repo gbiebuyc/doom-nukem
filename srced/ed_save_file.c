@@ -112,7 +112,8 @@ int			save_file(t_data *d, char *map_name)
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
 		|| write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		write(f, &angle, sizeof(double)) < 0 ||
-		write(f, &d->startsectnum, sizeof(int16_t)) < 0)
+		write(f, &d->startsectnum, sizeof(int16_t)) < 0 ||
+		write(f, d->next_map, 100) < 0)
 		return (ft_printf("Write starting data failed\n"));
 	set_texture_used(d, d->sectors, d->walls);
 	set_texture_name(d, d->sectors, d->walls);
@@ -122,7 +123,7 @@ int			save_file(t_data *d, char *map_name)
 		write_monster_texture(d, f, d->texture_monster) || write_sound(d, f))
 		return (1);
 	close(f);
-	d->current_loaded_map = d->path_to_save;
+	ft_strcpy(d->current_loaded_map, d->path_to_save);
 	ft_printf("Map %s saved\n", d->path_to_save);
 	return (0);
 }

@@ -23,10 +23,10 @@ void	init_everything(t_data *d, char *map)
 	if (d->startsectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
 	/*** music thread ***/
-	pthread_t thread;
-	t_sound_thread_arg arg = {d, true, 0};
-	if (pthread_create(&thread, NULL, sound_thread, &arg))
-		ft_printf("pthread_create error\n");
+	// pthread_t thread;
+	// t_sound_thread_arg arg = {d, true, 0};
+	// if (pthread_create(&thread, NULL, sound_thread, &arg))
+	// 	ft_printf("pthread_create error\n");
 	/***/
 	loop(d);
 }
@@ -46,4 +46,5 @@ int		main(int ac, char **av)
 	init_font(&d);
 	init_sdl(&d);
 	init_everything(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
+	return (EXIT_SUCCESS);
 }

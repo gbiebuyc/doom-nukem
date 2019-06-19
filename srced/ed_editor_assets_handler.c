@@ -53,6 +53,33 @@ void	draw_selection_arround_selected_asset(t_data *d, t_vec2f *v, int c)
 		putpixel(d, v->x + 32, y + v->y, c);
 }
 
+void	draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
+{
+	int		x;
+	int		y;
+	t_vec2f	v;
+
+	v = d->mouse;
+	if (v.x + 1 + v.y * NB_ASSET_LINE >
+							d->interface.nb_asset[d->interface.category])
+		return ;
+	v.x = (v.x * 38) + category_pos[d->interface.category].x;
+	v.y = (v.y * 36) + category_pos[d->interface.category].y;
+	x = -1;
+	while (++x < 32)
+		putpixel(d, x + v.x, v.y, 0xffff00);
+	x = -1;
+	while (++x < 32)
+		putpixel(d, x + v.x, v.y + 32, 0xffff00);
+	y = -1;
+	while (++y < 32)
+		putpixel(d, v.x, y + v.y, 0xffff00);
+	y = -1;
+	while (++y < 32)
+		putpixel(d, v.x + 32, y + v.y, 0xffff00);
+	show_preview(d, d->interface.toolbar.assets);
+}
+
 void	get_selected_asset(t_data *d)
 {
 	int		x;

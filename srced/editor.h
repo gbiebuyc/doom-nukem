@@ -56,6 +56,9 @@
 # define MARGIN 6
 # define PROPERTIES_LIMIT 350
 # define TEXTURE_TOOLBAR 618
+# define NB_PROPERTIES 19
+# define PROPERTIES_POS (H >> 1) - 20
+# define MOVE_WALL_PROP 30
 
 /*
 **	Number of assets print per line on the interface toolbar
@@ -123,8 +126,6 @@ typedef struct	s_assets
 	SDL_Surface	*assets[100];
 }				t_assets;
 
-# define NB_PROPERTIES 16
-
 typedef struct	s_toolbar
 {
 	SDL_Surface	*select[2];
@@ -159,10 +160,12 @@ typedef struct	s_interface
 	t_monster_list	*monster_list;
 	t_vec2f			mouse_pos;
 	t_vec2f			tex_select[4];
-	t_vec2f			btn_floor_height_pos;
-	t_vec2f			btn_ceil_height_pos;
-	t_vec2f			cbox_door_p;
-	t_vec2f			cbox_skybox_p;
+	t_vec2			btn_floor_height_pos;
+	t_vec2			btn_ceil_height_pos;
+	t_vec2			cbox_door_p;
+	t_vec2			cbox_skybox_p;
+	t_vec2			cbox_end_p;
+	t_vec2			box_nex_map_p;
 	t_map_list		*map_list;
 	t_map_list		**map_list_sort;
 	int				nb_map;
@@ -202,9 +205,11 @@ typedef struct	s_data
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
 	int16_t				startsectnum;
+	char				next_map[100];
+	int					get_next_map;
 	t_vec2f				pos;
 	char				*map_to_open;
-	char				*current_loaded_map;
+	char				current_loaded_map[100];
 	char				*path_to_save;
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
@@ -355,6 +360,7 @@ void			update_wall_pos(t_data *d);
 int				select_assets_on_map(t_data *d);
 void			draw_selection_arround_selected_asset(t_data *d, t_vec2f *v,
 																	int c);
+void			draw_selection_arround_asset(t_data *d, t_vec2f *category);
 void			get_selected_asset(t_data *d);
 int				add_asset_to_map(t_data *d, int x, int y);
 
@@ -372,13 +378,12 @@ t_vec2f			grid_lock(t_data *d, t_vec2f p);
 int				is_on_select_move_icon(t_data *d, int x, int y);
 int				check_if_mouse_on_menu(t_data *d, int x, int y);
 void			btn_height(t_data *d, int x, int y, t_interface *i);
-int				is_on_checkbox(t_data *d, int x, int y);
+void			is_on_checkbox(t_data *d, int x, int y, SDL_Event *e);
 
 /*
 **	ed_interface_properties.c
 */
 
-void			draw_selection_arround_asset(t_data *d, t_vec2f *category);
 void			print_properties(t_data *d, SDL_Surface **properties);
 
 /*
@@ -386,7 +391,8 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 */
 
 void			draw_separator(t_data *d, int x, int y, int color);
-void			fill_texture_selection(t_data *d, t_interface *i, int wallnum);
+void			fill_texture_selection(t_data *d, t_interface *i, int wallnum,
+																	int tex_n);
 void			show_preview(t_data *d, t_assets *a);
 void			draw_ligth_bar(t_data *d);
 
@@ -394,7 +400,7 @@ void			draw_ligth_bar(t_data *d);
 **	ed_interface_print_values.c
 */
 
-void			print_interface_values(t_data *d);
+void			print_interface_values(t_data *d, int x, int y);
 
 /*
 **	ed_interface_map_list.c
@@ -409,6 +415,7 @@ int				get_map_list(t_data *d);
 void			draw_map_list(t_data *d);
 void			detect_selected_map(t_data *d, int x, int y);
 char			*get_map_to_open(t_data *d, SDL_Event *e);
+void			get_next_level(t_data *d, SDL_Event *e);
 
 /*
 **	ed_utils.c

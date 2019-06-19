@@ -53,12 +53,13 @@ int		map_exist(t_data *d, char *map)
 	while (++i < d->interface.nb_map)
 		if (ft_strequ(check, d->interface.map_list_sort[i]->name))
 		{
-			d->current_loaded_map = d->interface.map_list_sort[i]->name;
+			ft_strcpy(d->current_loaded_map,
+						d->interface.map_list_sort[i]->name);
 			if (!have_extension)
 				free(check);
 			return (1);
 		}
-	d->current_loaded_map = map;
+	ft_strcpy(d->current_loaded_map, map);
 	if (!have_extension)
 		free(check);
 	return (0);
@@ -107,6 +108,7 @@ void	debug_print(t_data *d)
 		ft_printf("%s\n", d->assets_data[i].file);
 	ft_printf("player pos : %f %f %f\n", d->player_start.x,
 						d->player_start.y, d->player_start.z);
+	ft_printf("start sect : %d\n", d->startsectnum);
 }
 
 int		event_loop(t_data *d)

@@ -80,25 +80,26 @@ void	btn_height(t_data *d, int x, int y, t_interface *i)
 	}
 }
 
-int		is_on_checkbox(t_data *d, int x, int y)
+void	is_on_checkbox(t_data *d, int x, int y, SDL_Event *e)
 {
-	int	endx;
-	int	endy;
+	t_vec2	*xy;
 
-	endx = d->interface.cbox_door_p.x;
-	endy = d->interface.cbox_door_p.y;
-	if (x > endx && x <= endx + 24 && y > endy && y <= endy + 24)
-	{
+	xy = (t_vec2[4]){d->interface.cbox_door_p, d->interface.cbox_skybox_p,
+					d->interface.cbox_end_p, d->interface.box_nex_map_p};
+	if (x > xy[0].x && x <= xy[0].x + 24 && y > xy[0].y && y <= xy[0].y + 24)
 		toggle_isdoor(d);
-		return (1);
-	}
-	endx = d->interface.cbox_skybox_p.x;
-	endy = d->interface.cbox_skybox_p.y;
-	if (x > endx && x <= endx + 24 && y >= endy && y < endy + 24)
-	{
+	if (x > xy[1].x && x <= xy[1].x + 24 && y > xy[1].y && y <= xy[1].y + 24)
 		d->sectors[d->selected_sector].outdoor =
 			!d->sectors[d->selected_sector].outdoor;
-		return (2);
+	if (x > xy[2].x && x <= xy[2].x + 24 && y > xy[2].y && y <= xy[2].y + 24 &&
+		d->selected_sector != -1)
+	{
+		if (d->selected_sector != d->startsectnum)
+			d->sectors[d->selected_sector].is_finish =
+				!d->sectors[d->selected_sector].is_finish;
+		else
+			ft_printf("Can't set the end and start on the same sector.\n");
 	}
-	return (0);
+	if (x > xy[3].x && x <= xy[3].x + 24 && y > xy[3].y && y <= xy[3].y + 24)
+		get_next_level(d, e);
 }

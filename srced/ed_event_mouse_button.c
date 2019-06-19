@@ -34,7 +34,7 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 	if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y) &&
 		x > W - PROPERTIES_LIMIT)
 		btn_height(d, x, y, &d->interface);
-	is_on_checkbox(d, x, y);
+	is_on_checkbox(d, x, y, e);
 	fix_default_texture(d, x, y);
 	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
 		d->hl_wallnum >= 0) && d->interface.texture_case_select != -1)
@@ -80,7 +80,9 @@ static int	mouse_button_down(t_data *d, SDL_Event *e)
 	{
 		if (d->interface.prompt_map_open)
 		{
-			if ((d->map_to_open = get_map_to_open(d, e)))
+			if (d->get_next_map)
+				get_next_level(d, e);
+			else if ((d->map_to_open = get_map_to_open(d, e)))
 				return (-2);
 		}
 		else if (menu_open_button(d, e))

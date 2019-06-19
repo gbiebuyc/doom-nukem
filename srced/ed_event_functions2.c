@@ -46,14 +46,15 @@ void		save_selected_texture(t_data *d, int x, int y, int wallnum)
 		x = (x - (W - TEXTURE_TOOLBAR + MARGIN)) >> 6;
 		y = (y - MARGIN) >> 6;
 		d->selected_texture = x + y * 4;
-		if ((d->selected_texture < d->nb_texture &&
-			d->interface.texture_case_select != 3) ||
-			d->selected_texture < d->nb_posters)
+		if (d->selected_texture < d->nb_texture ||
+			d->interface.texture_case_select == 3)
 		{
 			if (d->interface.texture_case_select == 2 && wallnum >= 0)
 				d->walls[wallnum].middlepicnum = d->selected_texture;
 			else if (d->interface.texture_case_select == 3)
-				d->walls[wallnum].posterpicnum = d->selected_texture;
+				d->walls[wallnum].posterpicnum =
+										(d->selected_texture < d->nb_posters)
+										? d->selected_texture : -1;
 			else if (d->selected_sector >= 0)
 				save_sector_texture(d, s);
 		}

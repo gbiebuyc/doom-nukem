@@ -25,13 +25,14 @@ void		init_data(t_data *d)
 		.sectordrawing = false, .default_wall_texture = 0,
 		.default_floor_texture = 0, .default_ceil_texture = 0,
 		.selected_texture = -2, .map_to_open = NULL, .texture_to_scale = -1,
-		.current_loaded_map = "newmap.DNMAP"};
+		.current_loaded_map = "newmap.DNMAP", .get_next_map = 0};
 	d->player_start = (t_vec3f){0, 0.2, 0};
 	d->startsectnum = 0;
 	d->interface = (t_interface){.show_menu = 0, .select = 1, .move = 0,
 			.texture_case_select = -1, .category = -1, .selected_asset = -1,
 			.separate_sector = 0, .monster_list = NULL, .map_list = NULL,
 			.map_list_sort = NULL, .prompt_map_open = 0, .selected_map = -1};
+	ft_memset(d->next_map, 0, 100);
 }
 
 void		init_sectors(t_data *d)

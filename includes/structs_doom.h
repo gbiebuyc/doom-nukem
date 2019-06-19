@@ -268,7 +268,7 @@ typedef struct	s_data
 	double			zbuffer[WIDTH];
 	double			floorheight;
 	double			ceilheight;
-	char			nextmap[PATH_MAX];
+	char			nextmap[100];
 	SDL_AudioSpec	wav_spec[3];
 	Uint32			wav_length[3];
 	Uint8			*wav_buffer[3];

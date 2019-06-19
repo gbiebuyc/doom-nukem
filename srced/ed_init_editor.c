@@ -61,15 +61,15 @@ static int		init_toolbar(t_toolbar *tb)
 	int		i;
 	int		j;
 
-	file = (char*[]){
-	"./Menu/Select_disable.bmp", "./Menu/Select_enable.bmp",
+	file = (char*[]){"./Menu/Select_disable.bmp", "./Menu/Select_enable.bmp",
 	"./Menu/Move_disable.bmp", "./Menu/Move_enable.bmp",
 	"./Menu/lblSector.bmp", "./Menu/lblsector_info.bmp", "./Menu/lblWall.bmp",
 	"./Menu/lblTexture.bmp", "./Menu/lblAmmo_healpack.bmp",
 	"./Menu/lblMonsters.bmp", "./Menu/lblGround_assets.bmp",
 	"./Menu/lblPlayerStart.bmp", "./Menu/minus.bmp", "./Menu/plus.bmp",
 	"./Menu/lblLight.bmp", "./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp",
-	"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp", "./Menu/lblPoster.bmp"};
+	"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp", "./Menu/lblPoster.bmp",
+	"./Menu/lblEnd.bmp", "./Menu/lblNextmap.bmp", "./Menu/browseBox.bmp"};
 	i = -1;
 	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
 		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||
