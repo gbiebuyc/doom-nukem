@@ -18,6 +18,7 @@ SDL/Makefile.rules
 SDL/build/
 SDL/config.log
 SDL/config.status
+SDL/include/SDL_config.h
 SDL/library/
 SDL/libtool
 SDL/sdl2-config
