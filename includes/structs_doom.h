@@ -272,6 +272,9 @@ typedef struct	s_data
 	SDL_AudioSpec	wav_spec[3];
 	Uint32			wav_length[3];
 	Uint8			*wav_buffer[3];
+	int				musicnum;
+	int				soundnum;
+	pthread_t		music_thread;
 }				t_data;
 
 typedef struct	s_thread_arg
@@ -291,8 +294,7 @@ typedef	struct	s_args_multi_colo_buf
 typedef struct	s_sound_thread_arg
 {
 	t_data		*d;
-	bool		loop;
-	int			soundnum;
+	bool		is_music;
 }				t_sound_thread_arg;
 
 /*

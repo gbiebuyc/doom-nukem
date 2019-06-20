@@ -17,7 +17,8 @@ void	shoot_sound(t_data *d)
 	static t_sound_thread_arg	arg;
 	pthread_t					thread;
 
-	arg = (t_sound_thread_arg){d, false, 1};
+	arg = (t_sound_thread_arg){d, false};
+	d->soundnum = 2;
 	if (pthread_create(&thread, NULL, sound_thread, &arg))
 		exit(ft_printf("pthread_create error\n"));
 }
