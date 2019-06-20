@@ -18,7 +18,9 @@ void		fix_default_texture(t_data *d, int x, int y)
 
 	if (x >= (W - TEXTURE_TOOLBAR + 6) && x < W - PROPERTIES_LIMIT - 6)
 	{
-		textur_i = ((x - W - TEXTURE_TOOLBAR + 10) >> 6) + ((y - 10) >> 6) * 4;
+		x = (x - (W - TEXTURE_TOOLBAR + 10)) >> 6;
+		y = (y - 10) >> 6;
+		textur_i = x + y * 4;
 		if (textur_i >= d->nb_texture)
 			textur_i = d->default_texture;
 		if (d->selected_wall == -1 && !d->hl_wall
