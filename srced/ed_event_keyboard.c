@@ -69,6 +69,9 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 		d->sectors[d->selected_sector].slopeceil += 1;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
+	else if (d->hl_wall && key == SDLK_t)
+		ft_printf("is_transparent: %d\n", (d->hl_wall->is_transparent =
+					!d->hl_wall->is_transparent));
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)

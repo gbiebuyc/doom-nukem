@@ -98,6 +98,7 @@ typedef struct	s_wall
 	char		texture_name[100];
 	bool		is_door;
 	int16_t		posterpicnum;
+	bool		is_transparent;
 }				t_wall;
 
 typedef struct	s_thing

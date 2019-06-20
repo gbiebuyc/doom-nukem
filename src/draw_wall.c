@@ -12,6 +12,47 @@
 
 #include "doom_nukem.h"
 
+void	draw_wall_transparent2(t_data *d, t_projdata *p, t_frustum *fr)
+{
+	int		u;
+	int		y;
+	SDL_Surface *tex;
+	double	shadefactor;
+
+	tex = d->textures[p->wall->middlepicnum];
+	u = (unsigned int)(p->u * tex->w) % tex->w;
+	y = fr->ytop[p->x];
+	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
+		while (++y <= fr->ybottom[p->x])
+			putpixel(d, p->x, y, 0);
+	else
+		while (++y <= fr->ybottom[p->x])
+			putpixelalpha(d, p->x, y, shade(shadefactor,
+				((uint32_t*)tex->pixels)[u + (unsigned int)(norm(y, p->yc,
+						p->yd) * p->y_scale * tex->h) % tex->h * tex->w]));
+}
+
+void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr)
+{
+	p->n = fclamp(norm(p->x, p->x1, p->x2), 0, 1);
+	p->z = 1 / lerp(p->n, p->z1, p->z2);
+	p->u = lerp(p->n, p->u1, p->u2) * p->z;
+	p->ya = lerp(p->n, p->y1a, p->y2a);
+	p->yb = lerp(p->n, p->y1b, p->y2b);
+	p->yc = lerp(p->n, p->y1c, p->y2c);
+	p->yd = lerp(p->n, p->y1d, p->y2d);
+	if (p->neighbor)
+	{
+		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->yc);
+		p->nyb = ft_min(lerp(p->n, p->ny1b, p->ny2b), p->yd);
+		p->doorbottom = ft_min(p->yd, p->nyb);
+		p->doorheight = p->doorbottom - p->yc;
+		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
+			(1 - d->doorstate[p->wall - d->walls]);
+	}
+	draw_wall_transparent2(d, p, fr);
+}
+
 void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible)
 {
 	int	end;
@@ -153,4 +194,10 @@ void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr)
 	while (++p->x <= p->cx2)
 		draw_wall2(d, p, fr, &nfr);
 	draw_wall3(d, p, &nfr, p->visible);
+	if (p->neighbor && p->wall->is_transparent)
+	{
+		p->x = ft_max(p->x1, nfr.x1);
+		while (++p->x <= ft_min(p->x2, nfr.x2))
+			draw_wall_transparent(d, p, &nfr);
+	}
 }

@@ -92,6 +92,7 @@ void	handle_finish(t_data *d);
 void	*sound_thread(void *void_arg);
 int		load_sound(t_data *d, int f);
 void	the_end(t_data *d);
+void	putpixelalpha(t_data *d, int x, int y, uint32_t color);
 
 /*
 ** player_damage.c

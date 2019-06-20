@@ -12,13 +12,32 @@
 
 #include "doom_nukem.h"
 
-/*
-** add this file as library with extern inline keyword
-*/
 void	putpixel(t_data *d, int x, int y, uint32_t color)
 {
 	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
 		((uint32_t*)d->screen->pixels)[x + y * WIDTH] = color;
+}
+
+void	putpixelalpha(t_data *d, int x, int y, uint32_t color)
+{
+	uint8_t	r[2];
+	uint8_t	g[2];
+	uint8_t	b[2];
+	int		i;
+	uint32_t cur;
+
+	i = x + y * WIDTH;
+	cur = ((uint32_t*)d->screen->pixels)[i];
+	r[0] = cur >> 16;
+	g[0] = cur >> 8;
+	b[0] = cur;
+	r[1] = color >> 16;
+	g[1] = color >> 8;
+	b[1] = color;
+	((uint32_t*)d->screen->pixels)[i] =
+		((int)(r[0] + (r[1] - r[0]) * 0.5) << 16) |
+		((int)(g[0] + (g[1] - g[0]) * 0.5) << 8) |
+		((int)(b[0] + (b[1] - b[0]) * 0.5) << 0);
 }
 
 uint32_t	getpixel(SDL_Surface *s, double x, double y)
