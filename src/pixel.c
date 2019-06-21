@@ -57,14 +57,20 @@ uint32_t	getpixel2(SDL_Surface *s, double x, double y)
 	unsigned int realx;
 	unsigned int realy;
 
-	realx = (unsigned int)(s->w * x) % s->w;
-	realy = (unsigned int)(s->h * y) % s->h;
+	realx = s->w * (x - floor(x));
+	realy = s->h * (y - floor(y));
 	return (((uint32_t*)s->pixels)[realx + realy * s->w]);
 }
 
 uint32_t		getpixel3(SDL_Surface *s, short x, short y)
 {
 	return (((uint32_t*)s->pixels)[x + y * s->w]);
+}
+
+uint32_t	getpixel4(SDL_Surface *s, int u, double y)
+{
+	return (((uint32_t*)s->pixels)[u +
+			(int)(s->h * (y - floor(y))) * s->w]);
 }
 
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo)

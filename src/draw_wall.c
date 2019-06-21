@@ -102,37 +102,31 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 		yb_poster = p->yd - margin;
 	}
 	tex = d->textures[p->wall->middlepicnum];
-	u = (unsigned int)(p->u * tex->w) % tex->w;
+	u = (p->u - floor(p->u)) * tex->w;
 	y = ft_max(fr->ytop[p->x], p->ya);
 	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
 			putpixel(d, p->x, y, 0);
 	else if (!p->neighbor)
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-		{
 			if (p->wall->posterpicnum >= 0 && y > ya_poster && y < yb_poster)
-				putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)poster->pixels)[
-							u_poster + (unsigned int)(norm(y, ya_poster, yb_poster) *
-								poster->h) % poster->h * poster->w]));
+				putpixel(d, p->x, y, shade(shadefactor, getpixel4(poster,
+								u_poster, norm(y, ya_poster, yb_poster))));
 			else
-				putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-							(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
-								tex->h) % tex->h * tex->w]));
-		}
+				putpixel(d, p->x, y, shade(shadefactor, getpixel4(tex, u,
+								norm(y, p->yc, p->yd) * p->y_scale)));
 	else if (p->neighbor)
 	{
 		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
-			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-						(unsigned int)((p->wall->is_door ? norm(y, p->nya -
-								p->doorheight, p->nya) : norm(y, p->yc, p->yd)
-								* p->y_scale) * tex->h) % tex->h * tex->w]));
+			putpixel(d, p->x, y, shade(shadefactor, getpixel4(tex, u,
+			p->wall->is_door ? norm(y, p->nya - p->doorheight, p->nya) :
+			norm(y, p->yc, p->yd) * p->y_scale)));
 		tex = d->textures[p->wall->lowerpicnum];
-		u = (unsigned int)(p->u * tex->w) % tex->w;
+		u = (p->u - floor(p->u)) * tex->w;
 		y = ft_max(fr->ytop[p->x], p->nyb) - 1;
 		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-			putpixel(d, p->x, y, shade(shadefactor, ((uint32_t*)tex->pixels)[u +
-						(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
-							tex->h) % tex->h * tex->w]));
+			putpixel(d, p->x, y, shade(shadefactor, getpixel4(tex, u,
+							norm(y, p->yc, p->yd) * p->y_scale)));
 	}
 }
 

@@ -39,6 +39,7 @@ void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
 uint32_t	getpixel2(SDL_Surface *s, double x, double y);
 uint32_t	getpixel3(SDL_Surface *s, short x, short y);
+uint32_t	getpixel4(SDL_Surface *s, int u, double y);
 bool	inside(t_data *d, int16_t sectnum, t_vec2f pos);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
 void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
