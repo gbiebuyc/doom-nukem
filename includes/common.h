@@ -83,7 +83,9 @@ typedef struct	s_sector
 	bool		outdoor;
 	t_sprite_list	*sprite_list;
 	int16_t		slope;
+	int16_t		slope_orientation;
 	int16_t		slopeceil;
+	int16_t		slopeceil_orientation;
 	bool		is_finish;
 }				t_sector;
 
