@@ -94,11 +94,11 @@ void	handle_finish(t_data *d);
 void	*sound_thread(void *void_arg);
 int		load_sound(t_data *d, int f);
 void	the_end(t_data *d);
-void	putpixelalpha(t_data *d, int x, int y, uint32_t color);
 t_vec3f	transform_back(t_data *d, t_vec3f v);
 void	proj_floor(t_data *d, t_projdata *p);
 void	proj_ceil(t_data *d, t_projdata *p);
 double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
+bool	collision(t_data *d, t_sector *sect);
 
 /*
 ** player_damage.c

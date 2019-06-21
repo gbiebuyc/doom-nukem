@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   collision \
 	   floorceilheight \
 	   the_end \
 	   load_sound \

@@ -14,54 +14,8 @@
 
 # define MINIMUM_HEIGHT_TO_WALK 0.32
 # define MOVE_SPEED 0.02//must change MAX_INERTIA in inertia.c to scale properly
-# define COLLISION_DIST 0.3
 # define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
 # define MINIMUM_CEIL_DIST 0.1 // defined in jump aswell
-
-bool	collision(t_data *d, int16_t sectnum)
-{
-	static int	recursion;
-/* */int test = 0;
-	if (recursion >= 3)
-		return (false);
-	recursion++;
-	t_sector *sect = d->sectors + sectnum;
-	int16_t last = sect->firstwallnum + sect->numwalls;
-	bool collided = false;
-	for (int i = last - 1, j = sect->firstwallnum; j < last; i = j++)
-	{
-		t_vec2f a = d->walls[i].point;
-		t_vec2f b = d->walls[j].point;
-		t_vec2f p = (t_vec2f){d->cam.pos.x, d->cam.pos.z};
-
-		t_vec2f a_to_p = {p.x - a.x, p.y - a.y};
-		t_vec2f	a_to_b = {b.x - a.x, b.y - a.y};
-		double	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
-		double	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
-		double	t = atp_dot_atb / atb2;
-		t = fclamp(t, 0, 1);
-		t_vec2f	closest = {a.x + t * a_to_b.x, a.y + t * a_to_b.y};
-		double	dx = p.x - closest.x;
-		double	dy = p.y - closest.y;
-		double	dist = vec2f_length((t_vec2f){dx, dy});
-		if (dist > COLLISION_DIST)
-			continue ;
-		int16_t neighbor = d->walls[i].neighborsect;
-		if (neighbor != -1 && d->doorstate[i] > 0.7 && d->cam.pos.y > get_floorheight(d, neighbor) + MINIMUM_HEIGHT_TO_WALK
-				&& (d->sectors[neighbor].outdoor || (d->cam.pos.y < get_ceilheight(d, neighbor) && 
-				get_ceilheight(d, neighbor) - get_floorheight(d, neighbor) - MINIMUM_CEIL_DIST > d->player.minimum_height)))
-				collided |= collision(d, neighbor);
-		else
-		{
-			d->cam.pos.x = closest.x + dx * COLLISION_DIST * 1.001 / dist;
-			d->cam.pos.z = closest.y + dy * COLLISION_DIST * 1.002 / dist;
-			collided = true;
-		}
-	}
-	recursion--;
-	return (collided);
-}
-
 # define MONSTER_MIN_DIST_HITBOX 0.15
 
 t_vec3f	update_pos_vec3f(t_vec3f old_pos, t_vec3f new_pos, t_vec2f point, double radius)
@@ -152,7 +106,7 @@ void	movement(t_data *d)
 		d->player.can_move--;
 	d->floorheight = get_floorheight(d, d->cursectnum);
 	d->ceilheight = get_ceilheight(d, d->cursectnum);
-	while (collision(d, d->cursectnum))
+	while (collision(d, &d->sectors[d->cursectnum]))
 		;
 	collision_with_monster(d, d->cursectnum, old_pos);
 }

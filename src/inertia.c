@@ -27,7 +27,7 @@ void	inertia(t_data *d, t_vec2f mvt)
 		d->inertia.y = MAX_INERTIA;
 		actualize_dir(angle, &d->inertia);
 	}
-	if (vec2f_length(d->inertia) > 0.01)
+	if (vec2f_length(d->inertia) > 0.001)
 		d->inertia = mul_vec2f(d->inertia, 0.9);
 	else
 	{

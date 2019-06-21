@@ -18,18 +18,21 @@ void	draw_wall_transparent2(t_data *d, t_projdata *p, t_frustum *fr)
 	int		y;
 	SDL_Surface *tex;
 	double	shadefactor;
+	uint32_t	px;
 
 	tex = d->textures[p->wall->middlepicnum];
-	u = (unsigned int)(p->u * tex->w) % tex->w;
+	u = (p->u - floor(p->u)) * tex->w;
 	y = fr->ytop[p->x];
 	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
 		while (++y <= fr->ybottom[p->x])
 			putpixel(d, p->x, y, 0);
 	else
 		while (++y <= fr->ybottom[p->x])
-			putpixelalpha(d, p->x, y, shade(shadefactor,
-				((uint32_t*)tex->pixels)[u + (unsigned int)(norm(y, p->yc,
-						p->yd) * p->y_scale * tex->h) % tex->h * tex->w]));
+		{
+			px = getpixel4(tex, u, norm(y, p->yc, p->yd) * p->y_scale);
+			if ((px >> 24) == 0xff)
+				putpixel(d, p->x, y, shade(shadefactor, px));
+		}
 }
 
 void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr)
