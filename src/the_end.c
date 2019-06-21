@@ -25,5 +25,5 @@ void	the_end(t_data *d)
 		SDL_Delay(10);
 		y += 4;
 	}
-	exit(0);
+	proper_exit(d);
 }

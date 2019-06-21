@@ -55,7 +55,6 @@ FILES= main \
 	   shade \
 	   swap_list \
 	   draw_aim_cross \
-	   draw_slope \
 	   font \
 	   vec2 \
 	   vec2_2 \

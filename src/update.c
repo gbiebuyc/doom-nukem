@@ -155,6 +155,4 @@ void	update(t_data *d)
 	update_projectiles(d);
 	update_monsters(&d->nummonsters, d->monsters, d);
 	d->lightblink = sin((double)SDL_GetTicks() / 200) * 0.3 + 0.6;
-	d->floor_sin = sin(-d->cam.rot + M_PI_2);
-	d->floor_cos = cos(-d->cam.rot + M_PI_2);
 }

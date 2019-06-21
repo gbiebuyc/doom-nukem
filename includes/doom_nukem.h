@@ -45,7 +45,6 @@ void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr);
 void	*draw_ceil_thread(void *arg);
-void	clamp_wall(bool visible[], int *x1, int *x2);
 void	player_actions(t_data *d);
 void	update(t_data *d);
 void	render(t_data *d);
@@ -82,10 +81,12 @@ uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
 void	draw_string(t_data *d, t_font f);
 void	init_font(t_data *d);
 void	transformvertex(t_data *d, t_vec2f v, double *x, double *z);
-double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall);
-void	draw_slope(t_data *d, t_projdata *p);
 double	get_floorheight(t_data *d, int16_t sectnum);
 double	get_ceilheight(t_data *d, int16_t sectnum);
+double	get_floorheight2(t_data *d, int16_t sectnum, t_vec2f p);
+double	get_ceilheight2(t_data *d, int16_t sectnum, t_vec2f p);
+double	get_floordh(t_data *d, t_sector *sect, t_vec3f v);
+double	get_ceildh(t_data *d, t_sector *sect, t_vec3f v);
 void	init_everything(t_data *d, char *map);
 void	fix_picnum(t_data *d);
 void	handle_finish(t_data *d);
@@ -93,6 +94,10 @@ void	*sound_thread(void *void_arg);
 int		load_sound(t_data *d, int f);
 void	the_end(t_data *d);
 void	putpixelalpha(t_data *d, int x, int y, uint32_t color);
+t_vec3f	transform_back(t_data *d, t_vec3f v);
+void	proj_floor(t_data *d, t_projdata *p);
+void	proj_ceil(t_data *d, t_projdata *p);
+double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
 
 /*
 ** player_damage.c

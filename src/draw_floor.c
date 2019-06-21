@@ -12,43 +12,58 @@
 
 #include "doom_nukem.h"
 
-void	draw_floor2(t_data *d, t_projdata *p, int y, double x[2])
+t_vec3f	transform_back(t_data *d, t_vec3f v)
 {
-	double	dist;
+	return ((t_vec3f){v.x * d->cam.cos + v.z * d->cam.sin + d->cam.pos.x, v.y,
+			v.x * -d->cam.sin + v.z * d->cam.cos + d->cam.pos.z,});
+}
 
-	if (p->floor_u1[y] == 0)
-	{
-		dist = p->floor_alt[0] /
-			((y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
-		p->floor_u1[y] = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
-		p->floor_u2[y] = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
-		p->floor_v1[y] = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
-		p->floor_v2[y] = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-		p->floor_shade[y] = getshadefactor(d, p, dist);
-	}
-	putpixel(d, x[0], y, shade(p->floor_shade[y], getpixel2(
-					d->textures[p->sector->floorpicnum],
-					lerp(x[1], p->floor_u1[y], p->floor_u2[y]),
-					lerp(x[1], p->floor_v1[y], p->floor_v2[y]))));
+double	edge_function(t_vec3f a, t_vec3f b, int x, int y)
+{
+	return (x - a.x) * (b.y - a.y) - (y - a.y) * (b.x - a.x);
+}
+
+void	proj_floor(t_data *d, t_projdata *p)
+{
+	double y_offset;
+
+	p->c[0] = transform_back(d, (t_vec3f){-1, 0, 1});
+	p->c[1] = transform_back(d, (t_vec3f){1, 0, 1});
+	p->c[2] = transform_back(d, (t_vec3f){0, 0, 2});
+	y_offset = HEIGHT / 2 - d->cam.y_offset;
+	p->v[0] = (t_vec3f){-WIDTH + WIDTH / 2, get_floordh(d,
+			p->sector, p->c[0]) * -WIDTH + y_offset, 1};
+	p->v[1] = (t_vec3f){WIDTH + WIDTH / 2, get_floordh(d,
+			p->sector, p->c[1]) * -WIDTH + y_offset, 1};
+	p->v[2] = (t_vec3f){WIDTH / 2, get_floordh(d, p->sector,
+			p->c[2]) * -WIDTH * 0.5 + y_offset, 0.5};
+	p->c[2].x /= 2;
+	p->c[2].z /= 2;
+	p->area = edge_function(p->v[0], p->v[1], p->v[2].x, p->v[2].y);
 }
 
 void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
 {
 	int		x;
 	int		y;
-	double	xnorm;
+	double	w[3];
+	double	z;
 
-	if (p->sector->slope)
-		return ;
-	if (p->floor_alt[0] <= 0)
-		return ;
 	x = p->cx1 - 1;
 	while (++x <= p->cx2)
 	{
-		xnorm = (double)x / WIDTH;
 		y = ft_max(fr->ytop[x], lerp(fclamp(norm(x,
 							p->x1, p->x2), 0, 1), p->y1b, p->y2b)) - 1;
 		while (++y <= fr->ybottom[x])
-			draw_floor2(d, p, y, (double[2]){x, xnorm});
+		{
+			w[0] = edge_function(p->v[1], p->v[2], x, y) / p->area;
+			w[1] = edge_function(p->v[2], p->v[0], x, y) / p->area;
+			w[2] = edge_function(p->v[0], p->v[1], x, y) / p->area;
+			z = 1 / (w[0] * p->v[0].z + w[1] * p->v[1].z + w[2] * p->v[2].z);
+			putpixel(d, x, y, shade(getshadefactor(d, p, z), getpixel2(
+				d->textures[p->sector->floorpicnum],
+				(w[0] * p->c[0].x + w[1] * p->c[1].x + w[2] * p->c[2].x) * z,
+				(w[0] * p->c[0].z + w[1] * p->c[1].z + w[2] * p->c[2].z) * z)));
+		}
 	}
 }

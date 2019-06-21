@@ -106,22 +106,15 @@ typedef struct	s_projdata
 	bool		visible[WIDTH];
 	double		doorheight;
 	double		doorbottom;
-	double		sin;
-	double		cos;
-	double		floor_u1[HEIGHT];
-	double		floor_u2[HEIGHT];
-	double		floor_v1[HEIGHT];
-	double		floor_v2[HEIGHT];
-	double		floor_shade[HEIGHT];
-	double		floor_alt[2];
-	uint32_t	slope_col;
-	int			slopetop[WIDTH];
-	int			slopebottom[WIDTH];
-	bool		floor_or_ceil;
-	t_frustum	*fr;
 	double		u1_poster;
 	double		u2_poster;
 	double		poster_h;
+	t_vec3f		v[3];
+	t_vec3f		c[3];
+	double		area;
+	t_vec3f		a[3];
+	t_vec3f		b[3];
+	double		areaa;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes
@@ -263,8 +256,6 @@ typedef struct	s_data
 	t_color_buf		color_buf;
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
-	double			floor_sin;
-	double			floor_cos;
 	double			zbuffer[WIDTH];
 	double			floorheight;
 	double			ceilheight;

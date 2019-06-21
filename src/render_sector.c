@@ -20,30 +20,6 @@ void	transformvertex(t_data *d, t_vec2f v, double *x, double *z)
 	*z = v.x * d->cam.sin + v.y * d->cam.cos;
 }
 
-double	get_slope_y(t_data *d, t_projdata *p, t_vec2f wall)
-{
-	double x[2];
-	double h;
-	double slope;
-
-	if (p->floor_or_ceil == 0)
-	{
-		h = p->sector->floorheight;
-		slope = p->sector->slope;
-	}
-	else
-	{
-		h = p->sector->ceilheight;
-		slope = p->sector->slopeceil;
-	}
-	h -= d->cam.pos.y;
-	if (slope == 0)
-		return (h);
-	x[0] = d->walls[p->sector->firstwallnum].point.x;
-	x[1] = wall.x * d->cam.cos + wall.y * d->cam.sin + d->cam.pos.x;
-	return (h + tan(slope * M_PI / 180) * (x[1] - x[0]));
-}
-
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
 	int		i;
@@ -59,15 +35,9 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	double	x1;
 	double	x2;
 
-	p.floor_alt[0] = (d->cam.pos.y - sect->floorheight) * 2.0 * WIDTH / HEIGHT;
-	p.floor_alt[1] = (sect->ceilheight - d->cam.pos.y) * 2.0 * WIDTH / HEIGHT;
-	p.sin = d->floor_sin;
-	p.cos = d->floor_cos;
 	p.sector = sect;
-	p.fr = fr;
-	i = -1;
-	while (++i < HEIGHT)
-		p.floor_u1[i] = 0;
+	proj_floor(d, &p);
+	proj_ceil(d, &p);
 	i = -1;
 	while (++i < WIDTH)
 		p.zbufferlocal[i] = INFINITY;
@@ -107,30 +77,23 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		yceil = sect->ceilheight - d->cam.pos.y;
 		yfloor = sect->floorheight - d->cam.pos.y;
 		double y_offset = HEIGHT / 2 - d->cam.y_offset;
-		p.floor_or_ceil = 1;
-		p.y1a = get_slope_y(d, &p, (t_vec2f){x1, p.z1}) * -scale1 + y_offset;
-		p.y2a = get_slope_y(d, &p, (t_vec2f){x2, p.z2}) * -scale2 + y_offset;
-		p.floor_or_ceil = 0;
-		p.y1b = get_slope_y(d, &p, (t_vec2f){x1, p.z1}) * -scale1 + y_offset;
-		p.y2b = get_slope_y(d, &p, (t_vec2f){x2, p.z2}) * -scale2 + y_offset;
+		t_vec3f v[2];
+		v[0] = transform_back(d, (t_vec3f){x1, 0, p.z1});
+		v[1] = transform_back(d, (t_vec3f){x2, 0, p.z2});
+		p.y1a = get_ceildh(d, sect, v[0]) * -scale1 + y_offset;
+		p.y2a = get_ceildh(d, sect, v[1]) * -scale2 + y_offset;
+		p.y1b = get_floordh(d, sect, v[0]) * -scale1 + y_offset;
+		p.y2b = get_floordh(d, sect, v[1]) * -scale2 + y_offset;
 		p.y1c = yceil * -scale1 + y_offset;
 		p.y2c = yceil * -scale2 + y_offset;
 		p.y1d = yfloor * -scale1 + y_offset;
 		p.y2d = yfloor * -scale2 + y_offset;
 		if (p.neighbor)
 		{
-			p.sector = p.neighbor;
-			p.floor_or_ceil = 1;
-			p.ny1a = get_slope_y(d, &p, (t_vec2f){x1, p.z1})
-				* -scale1 + y_offset;
-			p.ny2a = get_slope_y(d, &p, (t_vec2f){x2, p.z2})
-				* -scale2 + y_offset;
-			p.floor_or_ceil = 0;
-			p.ny1b = get_slope_y(d, &p, (t_vec2f){x1, p.z1})
-				* -scale1 + y_offset;
-			p.ny2b = get_slope_y(d, &p, (t_vec2f){x2, p.z2})
-				* -scale2 + y_offset;
-			p.sector = sect;
+			p.ny1a = get_ceildh(d, p.neighbor, v[0]) * -scale1 + y_offset;
+			p.ny2a = get_ceildh(d, p.neighbor, v[1]) * -scale2 + y_offset;
+			p.ny1b = get_floordh(d, p.neighbor, v[0]) * -scale1 + y_offset;
+			p.ny2b = get_floordh(d, p.neighbor, v[1]) * -scale2 + y_offset;
 		}
 		p.u1 = u1 * len1;
 		p.u2 = u2 * len1;
@@ -150,8 +113,6 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		if (pthread_join(thread, NULL))
 			exit(printf("pthread_join error\n"));
 	}
-	if (sect->slope || sect->slopeceil)
-		draw_slope(d, &p);
 	if (sect->sprite_list)
 		reorder_sprite(d, sect);
 	t_sprite_list *sprite_list_tmp;

@@ -40,44 +40,48 @@ void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 	}
 }
 
-void	draw_ceil2(t_data *d, t_projdata *p, int y, double x[2])
+void	proj_ceil(t_data *d, t_projdata *p)
 {
-	double dist;
+	double y_offset;
 
-	if (p->floor_u1[y] == 0)
-	{
-		dist = p->floor_alt[1] /
-			-((y - HEIGHT * 0.5 + d->cam.y_offset) / (HEIGHT * 0.5));
-		p->floor_u1[y] = d->cam.pos.x + p->cos * dist - p->sin * dist * 0.5;
-		p->floor_u2[y] = d->cam.pos.x + p->cos * dist + p->sin * dist * 0.5;
-		p->floor_v1[y] = d->cam.pos.z + p->sin * dist + p->cos * dist * 0.5;
-		p->floor_v2[y] = d->cam.pos.z + p->sin * dist - p->cos * dist * 0.5;
-		p->floor_shade[y] = getshadefactor(d, p, dist);
-	}
-	putpixel(d, x[0], y, shade(p->floor_shade[y], getpixel2(
-					d->textures[p->sector->ceilpicnum],
-					lerp(x[1], p->floor_u1[y], p->floor_u2[y]),
-					lerp(x[1], p->floor_v1[y], p->floor_v2[y]))));
+	p->b[0] = transform_back(d, (t_vec3f){-1, 0, 1});
+	p->b[1] = transform_back(d, (t_vec3f){1, 0, 1});
+	p->b[2] = transform_back(d, (t_vec3f){0, 0, 2});
+	y_offset = HEIGHT / 2 - d->cam.y_offset;
+	p->a[0] = (t_vec3f){-WIDTH + WIDTH / 2, get_ceildh(d,
+			p->sector, p->b[0]) * -WIDTH + y_offset, 1};
+	p->a[1] = (t_vec3f){WIDTH + WIDTH / 2, get_ceildh(d,
+			p->sector, p->b[1]) * -WIDTH + y_offset, 1};
+	p->a[2] = (t_vec3f){WIDTH / 2, get_ceildh(d, p->sector,
+			p->b[2]) * -WIDTH * 0.5 + y_offset, 0.5};
+	p->b[2].x /= 2;
+	p->b[2].z /= 2;
+	p->areaa = edge_function(p->a[0], p->a[1], p->a[2].x, p->a[2].y);
 }
 
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 {
 	int		x;
 	int		y;
-	double	xnorm;
+	double	w[3];
+	double	z;
 
-	if (p->sector->slopeceil)
-		return ;
-	if (p->floor_alt[1] <= 0)
-		return ;
 	x = p->cx1 - 1;
 	while (++x <= p->cx2)
 	{
-		xnorm = (double)x / WIDTH;
 		y = ft_min(fr->ybottom[x], lerp(fclamp(norm(x,
 							p->x1, p->x2), 0, 1), p->y1a, p->y2a)) + 1;
 		while (--y >= fr->ytop[x])
-			draw_ceil2(d, p, y, (double[2]){x, xnorm});
+		{
+			w[0] = edge_function(p->a[1], p->a[2], x, y) / p->areaa;
+			w[1] = edge_function(p->a[2], p->a[0], x, y) / p->areaa;
+			w[2] = edge_function(p->a[0], p->a[1], x, y) / p->areaa;
+			z = 1 / (w[0] * p->a[0].z + w[1] * p->a[1].z + w[2] * p->a[2].z);
+			putpixel(d, x, y, shade(getshadefactor(d, p, z), getpixel2(
+				d->textures[p->sector->floorpicnum],
+				(w[0] * p->b[0].x + w[1] * p->b[1].x + w[2] * p->b[2].x) * z,
+				(w[0] * p->b[0].z + w[1] * p->b[1].z + w[2] * p->b[2].z) * z)));
+		}
 	}
 }
 

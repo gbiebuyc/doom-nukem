@@ -134,10 +134,6 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 						(unsigned int)(norm(y, p->yc, p->yd) * p->y_scale *
 							tex->h) % tex->h * tex->w]));
 	}
-	if (p->sector->slope)
-		p->slopetop[p->x] = p->yb;
-	if (p->sector->slopeceil)
-		p->slopebottom[p->x] = p->ya;
 }
 
 void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
