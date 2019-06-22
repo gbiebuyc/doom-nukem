@@ -38,8 +38,7 @@ int		write_sound2(t_data *d, int f, char *path, SDL_AudioFormat format)
 
 int		write_sound(t_data *d, int f)
 {
-	if (write_sound2(d, f, "sounds/music1.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/music2.wav", AUDIO_S16LSB) ||
+	if (write_sound2(d, f, "sounds/music.wav", AUDIO_S16LSB) ||
 			write_sound2(d, f, "sounds/shoot.wav", AUDIO_S16LSB))
 		return (1);
 	return (0);
