@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 20:25:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/22 13:51:53 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist, boo
 			pos.x -= d->cam.pos.x;
 			pos.y -= d->cam.pos.z;
 			actualize_dir(d->cam.rot, &pos);
-			if (pos.y > d->cam.pos.z && pos.x > -BLASTER_HITBOX -
+			if (pos.y > 0 && pos.x > -BLASTER_HITBOX -
 					d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius &&
 					pos.x < BLASTER_HITBOX + d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius)
 			{
@@ -115,13 +115,12 @@ int16_t		recur_scan_point_line(t_data *d, uint8_t depth, uint16_t sect_to_scan,
 	if (depth)
 		while (i < d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls)
 		{
-			//printf("cur_sect :%d curwalls :%d, %d, going to sect:%d\n", sect_to_scan, j, i, d->walls[j].neighborsect);
 			if (d->walls[j].neighborsect != -1 && d->walls[j].neighborsect != old_sect && d->doorstate[j] > 0.7)
 			{
 				dist[1] = get_dist_to_intersect_wall(d, d->walls[j].point, d->walls[i].point);
 				if (dist[0] == -1 || dist[1] < dist[0])
 					if (is_inside_vec2f(d->walls[j].point, d->walls[i].point, intersect(vec3to2(d->cam.pos),
-					(t_vec2f){d->cam.pos.x + 1000 * d->cam.sin, d->cam.pos.z + 1000 * d->cam.cos}, d->walls[j].point, d->walls[i].point)))
+									(t_vec2f){d->cam.pos.x + 1000 * d->cam.sin, d->cam.pos.z + 1000 * d->cam.cos}, d->walls[j].point, d->walls[i].point)))
 						return(recur_scan_point_line(d, depth -1, d->walls[j].neighborsect, sect_to_scan, hit_all));
 			}
 			j = i;
@@ -136,16 +135,16 @@ void		blaster_shot(t_data *d)
 
 	if (d->player.click == RIGHT_CLICK)
 	{
-	recur_scan_point_line(d, 30, d->cursectnum, -1, true);
-	change_buf_colo(d, 10, GREEN_BLAST);
-	//remove ammo
+		recur_scan_point_line(d, 30, d->cursectnum, -1, true);
+		change_buf_colo(d, 10, GREEN_BLAST);
+		//remove ammo
 	}
 	if (d->player.click == LEFT_CLICK)
 	{
-	id_of_monst = recur_scan_point_line(d, 30, d->cursectnum, -1, false);
-	if (id_of_monst != -1)
-		monster_hit(d, LEFT_MOUSE_BLASTER_DAMAGE, id_of_monst);
-	change_buf_colo(d, 5, GREEN_BLAST);
+		id_of_monst = recur_scan_point_line(d, 30, d->cursectnum, -1, false);
+		if (id_of_monst != -1)
+			monster_hit(d, LEFT_MOUSE_BLASTER_DAMAGE, id_of_monst);
+		change_buf_colo(d, 5, GREEN_BLAST);
 		//remove ammo
 	}
 }

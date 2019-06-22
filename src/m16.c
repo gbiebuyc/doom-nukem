@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 23:29:40 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/22 13:51:35 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_m16_inf	m16_inside_sector(t_data *d, uint16_t sect_to_scan, double dist)
 			pos.x -= d->cam.pos.x;
 			pos.y -= d->cam.pos.z;
 			actualize_dir(d->cam.rot, &pos);
-			if (pos.y > d->cam.pos.z && pos.x > -M16_HITBOX -
+			if (pos.y > 0 && pos.x > -M16_HITBOX -
 					d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius &&
 					pos.x < M16_HITBOX + d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius)
 			{

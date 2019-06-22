@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/06 20:18:14 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/22 13:52:03 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_everything(t_data *d, char *map)
 	/*** music thread ***/
 	d->musicnum = (d->musicnum + 1) % 2;
 	t_sound_thread_arg arg = {d, true};
-	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg))
-		ft_printf("pthread_create error\n");
+	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg)) //a uncomnent
+		ft_printf("pthread_create error\n"); a uncomment //
 	/***/
 	loop(d);
 }
