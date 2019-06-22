@@ -183,6 +183,8 @@ void	load_map(t_data *d, char *map);
 
 int		read_posters_data(t_data *d, int f);
 int		read_monsters_data(t_data *d, int f);
+int		read_assets_texture(t_data *d, int f);
+int		read_assets_data(t_data *d, int f);
 
 int     load_monsters_texture(t_data *d, int f);
 

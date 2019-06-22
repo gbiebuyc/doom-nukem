@@ -74,20 +74,20 @@ void		fill_texture_selection(t_data *d, t_interface *i, int wallnum,
 	d->texture_to_scale = -1;
 }
 
-void		show_preview(t_data *d, t_assets *a)
+void		show_preview(t_data *d, SDL_Surface *a[3][100])
 {
 	int	n;
 	int	x;
 	int	y;
 
 	n = d->mouse.x + d->mouse.y * NB_ASSET_LINE;
-	if (d->interface.category < 3)
+	if (d->interface.category < NB_CATEGORY - 1)
 	{
 		x = d->interface.mouse_pos.x + 10;
 		y = d->interface.mouse_pos.y + 10;
-		if (x + a[d->interface.category].assets[n]->w >= W)
-			x = x - (a[d->interface.category].assets[n]->w - (W - x));
-		copy_surface_to_surface(a[d->interface.category].assets[n], d->screen,
+		if (x + a[d->interface.category][n]->w >= W)
+			x = x - (a[d->interface.category][n]->w - (W - x));
+		copy_surface_to_surface(a[d->interface.category][n], d->screen,
 															(int[2]){x, y}, d);
 	}
 }

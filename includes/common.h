@@ -112,6 +112,29 @@ typedef struct	s_thing
 	int16_t		flags;
 }				t_thing;
 
+typedef struct	s_stat_modifier
+{
+	int16_t		heal;
+	int16_t		damage;
+	int16_t		ballista_ammo;
+	int16_t		blaster_ammo;
+	int16_t		m16_ammo;
+}				t_stat_modifier;
+
+typedef struct	s_assets
+{
+	int					nb_assets;
+	int					picnum;
+	t_vec2f				world_pos;
+	bool				is_on_floor;
+	bool				is_on_ceil;
+	t_stat_modifier		stat_mod;
+	bool				is_interactive;
+	bool				is_atuopcik;
+	bool				collision;
+	bool				is_jetpack;
+}				t_assets;
+
 # define MOTHERDEMON 0
 
 typedef struct	s_monster

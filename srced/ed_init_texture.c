@@ -74,29 +74,26 @@ static int	get_texture_files(t_data *d, DIR *dr, t_texture_data **tex_lst,
 	return (0);
 }
 
-int			init_texture(t_data *d, int n)
+int			init_texture(t_data *d)
 {
 	DIR				*dr;
 
-	d->texture_list = (n == 0) ? NULL : d->texture_list;
-	d->posters_list = (n == 1) ? NULL : d->posters_list;
-	d->nb_texture = (n == 0) ? 0 : d->nb_texture;
-	d->nb_posters = (n == 1) ? 0 : d->nb_posters;
-	d->path = (n == 0) ? TEXTURE_PATH : POSTERS_PATH;
+	d->path = TEXTURE_PATH;
 	if ((dr = opendir(d->path)))
-	{
-		if (n == 0 &&
-			(get_texture_files(d, dr, &d->texture_list, &d->nb_texture) ||
-			load_texture(d, &d->textures, d->nb_texture, d->texture_list)))
+		if (get_texture_files(d, dr, &d->texture_list, &d->nb_texture) ||
+			load_texture(d, &d->textures, d->nb_texture, d->texture_list))
 			return (1);
-		else if (n == 1 &&
-			(get_texture_files(d, dr, &d->posters_list, &d->nb_posters) ||
-			load_texture(d, &d->posters, d->nb_posters, d->posters_list)))
-			return (1);
-		closedir(dr);
-	}
-	else
+	if (!dr)
 		return (ft_printf("Couldn't open the %s.\n", d->path));
+	closedir(dr);
+	d->path = POSTERS_PATH;
+	if ((dr = opendir(d->path)))
+		if (get_texture_files(d, dr, &d->posters_list, &d->nb_posters) ||
+			load_texture(d, &d->posters, d->nb_posters, d->posters_list))
+			return (1);
+	if (!dr)
+		return (ft_printf("Couldn't open the %s.\n", d->path));
+	closedir(dr);
 	d->default_wall_texture = d->default_texture;
 	d->default_floor_texture = d->default_texture;
 	d->default_ceil_texture = d->default_texture;

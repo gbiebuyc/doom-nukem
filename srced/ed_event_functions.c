@@ -12,28 +12,39 @@
 
 #include "editor.h"
 
-int		menu_open_button(t_data *d, SDL_Event *e)
+/*
+**	properties[6] = assets_options menu
+*/
+
+int		is_over_options_menu(t_data *d, int x, int y)
 {
-	return (d->interface.show_menu &&
-			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 6 && e->button.y < 34 &&
-			!(d->interface.show_menu = 0));
+	return (d->interface.prompt_asset_option &&
+			x < d->interface.toolbar.properties[6]->w &&
+			y > H - d->interface.toolbar.properties[6]->h);
 }
 
-int		menu_save_button(t_data *d, SDL_Event *e)
-{
-	return (d->interface.show_menu &&
-			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 34 && e->button.y < 62 &&
-			!(d->interface.show_menu = 0));
-}
+/*
+**	if (button open)
+**	else if (save button)
+**	else if (exit_button)
+*/
 
-int		menu_exit_button(t_data *d, SDL_Event *e)
+int		menu_button(t_data *d, SDL_Event *e)
 {
-	return (d->interface.show_menu &&
-			e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-			e->button.y >= 62 && e->button.y < d->interface.menu->h - 6 &&
-			!(d->interface.show_menu = 0));
+	if (d->interface.show_menu)
+	{
+		if (e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
+			e->button.y >= 6 && e->button.y < 34)
+			d->interface.prompt_map_open = (!get_map_list(d)) ? 1 : 0;
+		else if (e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
+				e->button.y >= 34 && e->button.y < 62)
+			save_file(d, d->current_loaded_map);
+		else if (e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
+				e->button.y >= 62 && e->button.y < d->interface.menu->h - 6)
+			return (-1);
+	}
+	d->interface.show_menu = 0;
+	return (1);
 }
 
 /*
@@ -68,7 +79,7 @@ int		properties_texture_selection(t_data *d, SDL_Event *e)
 **	limit = size of y axis of each category
 */
 
-int		selecting_assets(t_data *d, SDL_Event *e)
+int		selecting_assets_in_toolbar(t_data *d, SDL_Event *e)
 {
 	int	y;
 	int	i;
@@ -76,21 +87,23 @@ int		selecting_assets(t_data *d, SDL_Event *e)
 
 	d->interface.category = -1;
 	i = -1;
-	while (++i < 4)
+	limit = 352;
+	while (++i < NB_CATEGORY)
 	{
-		limit = 32;
 		if (i == 1)
 			limit = 72;
 		y = d->interface.category_pos[i].y;
-		if (e->motion.x >= W - PROPERTIES_LIMIT && e->motion.y >= y &&
-			e->motion.y <= y + limit)
+		if (e->motion.x >= d->interface.category_pos[i].x &&
+			e->motion.x <= W - 5 && e->motion.y >= y
+			&& e->motion.y <= y + limit)
 		{
-			d->mouse.x = e->motion.x - (W - PROPERTIES_LIMIT + 8);
+			d->mouse.x = e->motion.x - d->interface.category_pos[i].x;
 			d->mouse.y = e->motion.y - (y + 2);
 			d->mouse.x = (int)(d->mouse.x / 38);
 			d->mouse.y = (int)(d->mouse.y / 36);
 			return (d->interface.category = i);
 		}
+		limit = 32;
 	}
 	return (-1);
 }

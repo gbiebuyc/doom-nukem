@@ -84,31 +84,58 @@ int		map_exist(t_data *d, char *map)
 **		ft_printf("texture name = %s\n", wall->texture_name);
 **		w++;
 **	}
+**
+**	t_monster_list	*tmp;
+**	int				i;
+**
+**	ft_printf("%d\n", d->nbmonsters);
+**	if (d->interface.monster_list)
+**	{
+**		tmp = d->interface.monster_list->begin;
+**		while (tmp)
+**		{
+**			ft_printf("%s\n", tmp->name);
+**			printf("%5.2f %5.2f\n", tmp->pos.x, tmp->pos.y);
+**			ft_printf("sector : %d\n", tmp->sectnunm);
+**			tmp = tmp->next;
+**		}
+**	}
+**	i = -1;
+**	while (++i < NB_CATEGORY)
+**		ft_printf("%s\n", d->assets_data[i].file);
+**	ft_printf("player pos : %f %f %f\n", d->player_start.x,
+**						d->player_start.y, d->player_start.z);
+**	ft_printf("start sect : %d\n", d->startsectnum);
 */
 
 void	debug_print(t_data *d)
 {
-	t_monster_list	*tmp;
-	int				i;
+	t_assets_list	*tmp;
 
-	ft_printf("%d\n", d->nbmonsters);
-	if (d->interface.monster_list)
+	ft_printf("%d\n", d->nb_assets);
+	if (d->interface.assets_list)
 	{
-		tmp = d->interface.monster_list->begin;
+		tmp = d->interface.assets_list->begin;
 		while (tmp)
 		{
-			ft_printf("%s\n", tmp->name);
-			printf("%5.2f %5.2f\n", tmp->pos.x, tmp->pos.y);
+			ft_printf("asset num : %d\n", tmp->num_asset);
+			ft_printf("asset picnum : %d\n", tmp->picnum);
+			printf("%5.2f %5.2f\n", tmp->world_pos.x, tmp->world_pos.y);
 			ft_printf("sector : %d\n", tmp->sectnunm);
+			ft_printf("is on floor : %d\n", tmp->is_on_floor);
+			ft_printf("is on ceil : %d\n", tmp->is_on_ceil);
+			ft_printf("stat : \n");
+			ft_printf("Heal : %d\n", tmp->stat_mod.heal);
+			ft_printf("Damage : %d\n", tmp->stat_mod.damage);
+			ft_printf("ballista_ammo : %d\n", tmp->stat_mod.ballista_ammo);
+			ft_printf("blaster_ammo : %d\n", tmp->stat_mod.blaster_ammo);
+			ft_printf("m16_ammo : %d\n", tmp->stat_mod.m16_ammo);
+			ft_printf("is interactive : %d\n", tmp->is_interactive);
+			ft_printf("is autopick : %d\n", tmp->is_autopick);
+			ft_printf("collision : %d\n", tmp->collision);
 			tmp = tmp->next;
 		}
 	}
-	i = -1;
-	while (++i < 4)
-		ft_printf("%s\n", d->assets_data[i].file);
-	ft_printf("player pos : %f %f %f\n", d->player_start.x,
-						d->player_start.y, d->player_start.z);
-	ft_printf("start sect : %d\n", d->startsectnum);
 }
 
 int		event_loop(t_data *d)
@@ -131,7 +158,7 @@ int		event_loop(t_data *d)
 		else if ((open = event_mouse_button(d, &e)) < 0)
 			break ;
 		else if (e.type == SDL_MOUSEMOTION)
-			event_motion_mouse(d, &e);
+			event_motion_mouse(d, &e, 0, 0);
 		draw_screen(d);
 		SDL_FlushEvent(SDL_MOUSEMOTION);
 	}
@@ -155,6 +182,7 @@ int		main(int ac, char **av)
 	else if (ac == 2)
 		if (load_map(&d, d.current_loaded_map))
 			return (ed_usage(&d));
+	// TODO if next_map doesn't exist, reset d->next_map
 	if ((ac == 1 || ac == 2) && event_loop(&d))
 	{
 		argv = (char*[]){"editor", d.map_to_open, NULL};

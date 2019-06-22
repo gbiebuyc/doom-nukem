@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ed_save_assets.c                                   :+:      :+:    :+:   */
+/*   ed_save_monster.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -47,7 +47,7 @@ int			write_monster_data(t_data *d, int f)
 	int	i;
 
 	if (write(f, &d->nbmonsters, sizeof(uint16_t)) < 0)
-		return (ft_printf("Failed to write nummonsters\n"));
+		return (ft_printf("Failed to write nummonsters.\n"));
 	if (d->nbmonsters > 0)
 	{
 		if (fill_monster_structure(d))
@@ -56,7 +56,7 @@ int			write_monster_data(t_data *d, int f)
 		while (++i < d->nbmonsters)
 		{
 			if (write(f, &d->monsters[i], sizeof(t_monster)) < 0)
-				return (ft_printf("Failed to write monsters\n"));
+				return (ft_printf("Failed to write monsters.\n"));
 		}
 	}
 	return (0);

@@ -12,47 +12,30 @@
 
 #include "editor.h"
 
-static void	get_category_position(t_data *d)
-{
-	int	x;
-	int	y;
-
-	x = W - PROPERTIES_LIMIT + 8;
-	y = d->interface.toolbar.properties[4]->h + 15;
-	d->interface.category_pos[0] = (t_vec2f){x - 1, y - 1};
-	y = y + 40 + d->interface.toolbar.properties[5]->h + 13;
-	d->interface.category_pos[1] = (t_vec2f){x, y};
-	d->interface.category_pos[2] = (t_vec2f){x, y + 90 +
-								d->interface.toolbar.properties[6]->h};
-	y = H * 0.40 + d->interface.toolbar.properties[7]->h + 20;
-	d->interface.category_pos[3] = (t_vec2f){x, y};
-}
-
-static void	print_assets(t_data *d, t_assets *a)
+static void	print_assets(t_data *d, SDL_Surface *a[3][100])
 {
 	int	m;
 	int	j;
 	int	x;
 	int	y;
 
-	get_category_position(d);
 	m = -1;
-	while (++m < 3 && (j = -1) < 0)
+	while (++m < NB_CATEGORY - 1 && (j = -1) < 0)
 	{
 		y = d->interface.category_pos[m].y;
 		x = W - PROPERTIES_LIMIT - 30;
 		d->texture_to_scale = 32;
 		while (++j < d->interface.nb_asset[m])
 		{
-			copy_surface_to_surface(a[m].assets[j], d->screen,
+			copy_surface_to_surface(a[m][j], d->screen,
 										(int[2]){x += 38, y}, d);
-			if (j != 0 && (j % (NB_ASSET_LINE - 1)) == 0 && (y += 36))
+			if (j != 0 && ((j + 1) % (NB_ASSET_LINE)) == 0 && (y += 36))
 				x = W - PROPERTIES_LIMIT - 30;
 		}
 		d->texture_to_scale = -1;
 	}
-	x = W - PROPERTIES_LIMIT + 8;
-	y = d->interface.category_pos[3].y;
+	x = d->interface.category_pos[2].x;
+	y = d->interface.category_pos[2].y;
 	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
 													(int[2]){x, y}, d);
 }
@@ -66,22 +49,22 @@ static void	print_assets_toolbar(t_data *d, SDL_Surface **prop)
 	y = 5;
 	copy_surface_to_surface(prop[4], d->screen, (int[2]){x, y}, d);
 	y += prop[4]->h + 5;
+	d->interface.category_pos[0] = (t_vec2){W - PROPERTIES_LIMIT + 7, y + 4};
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	y += 40;
+	y += 364;
+	d->interface.category_pos[1] = (t_vec2){W - PROPERTIES_LIMIT + 7,
+											y + prop[5]->h + 13};
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	draw_separator(d, W - PROPERTIES_LIMIT, y + prop[5]->h + 10, 0x008800);
 	x = (W - PROPERTIES_LIMIT * 0.5) - prop[5]->w * 0.5;
 	copy_surface_to_surface(prop[5], d->screen, (int[2]){x, y + 5}, d);
 	y += prop[5]->h + 90;
-	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	draw_separator(d, W - PROPERTIES_LIMIT, y + prop[6]->h + 10, 0x008800);
 	x = (W - PROPERTIES_LIMIT * 0.5) - prop[6]->w * 0.5;
-	copy_surface_to_surface(prop[6], d->screen, (int[2]){x, y + 5}, d);
-	y = H * 0.40;
+	y = PROPERTIES_POS - prop[7]->h - 15;
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	draw_separator(d, W - PROPERTIES_LIMIT, y + prop[7]->h + 10, 0x008800);
-	x = (W - PROPERTIES_LIMIT * 0.5) - prop[7]->w * 0.5;
+	x = W - PROPERTIES_LIMIT + 8;
 	copy_surface_to_surface(prop[7], d->screen, (int[2]){x, y + 5}, d);
+	d->interface.category_pos[2] = (t_vec2){x + prop[7]->w + 10, y + 5};
 	print_assets(d, d->interface.toolbar.assets);
 }
 

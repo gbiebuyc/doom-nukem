@@ -12,27 +12,7 @@
 
 #include "editor.h"
 
-int		select_assets_on_map(t_data *d)
-{
-	t_monster_list	*lst;
-	int				found;
-
-	found = 0;
-	lst = d->interface.monster_list;
-	while (lst)
-	{
-		lst->is_select = 0;
-		if (lst->is_highlighted)
-		{
-			lst->is_select = 1;
-			found = 1;
-		}
-		lst = lst->prev;
-	}
-	return (found);
-}
-
-void	draw_selection_arround_selected_asset(t_data *d, t_vec2f *v, int c)
+void	draw_selection_arround_selected_asset(t_data *d, t_vec2 *v, int c)
 {
 	int		x;
 	int		y;
@@ -53,11 +33,11 @@ void	draw_selection_arround_selected_asset(t_data *d, t_vec2f *v, int c)
 		putpixel(d, v->x + 32, y + v->y, c);
 }
 
-void	draw_selection_arround_asset(t_data *d, t_vec2f *category_pos)
+void	draw_selection_arround_asset(t_data *d, t_vec2 *category_pos)
 {
 	int		x;
 	int		y;
-	t_vec2f	v;
+	t_vec2	v;
 
 	v = d->mouse;
 	if (v.x + 1 + v.y * NB_ASSET_LINE >
@@ -94,7 +74,7 @@ void	get_selected_asset(t_data *d)
 	d->interface.select = 0;
 	x = x * 38 + d->interface.category_pos[d->interface.category].x;
 	y = y * 36 + d->interface.category_pos[d->interface.category].y;
-	d->interface.selected_asset_position = (t_vec2f){x, y};
+	d->interface.selected_asset_position = (t_vec2){x, y};
 	d->interface.selected_asset_cat = d->interface.category;
 }
 
@@ -112,15 +92,15 @@ int		add_asset_to_map(t_data *d, int x, int y)
 		return (ft_printf("Assets must be place inside a sector\n"));
 	s = &d->sectors[sectornum];
 	p = screentoworld(d, (t_vec2f){x, y});
-	if (d->interface.selected_asset_cat == 3)
+	if (d->interface.selected_asset_cat == 2)
 	{
 		d->player_start = (t_vec3f){p.x, s->floorheight + 0.5, p.y};
 		d->startsectnum = sectornum;
 	}
 	else if (d->interface.selected_asset_cat == 1)
-	{
 		add_monster_to_list(d, &p, sectornum, &d->interface);
-	}
+	else if (d->interface.selected_asset_cat == 0)
+		add_assets_to_list(d, &p, sectornum, &d->interface);
 	d->interface.selected_asset_cat = -1;
 	d->interface.selected_asset = -1;
 	d->interface.select = 1;

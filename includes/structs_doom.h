@@ -228,6 +228,8 @@ typedef struct	s_data
 	int32_t			nb_textures;
 	SDL_Surface		**posters;
 	int32_t			nb_posters;
+	SDL_Surface		**assets_texture;
+	int16_t			nb_assets_texture;
 	char			**tex_name_list;
 	SDL_Surface		*monster_text[MAXTYPEMONSTERS][MAX_STATE_MONSTER][MAXNBOFANIMATION];
 	SDL_Surface		*projectile_tex[MAX_KIND_OF_PROJECTILE][MAX_PROJECTILE_TEX_PER_WEAP];
@@ -240,6 +242,8 @@ typedef struct	s_data
 	t_sector		sectors[MAXNUMSECTORS];
 	t_wall			walls[MAXNUMWALLS];
 	t_monster		*monsters;
+	t_assets		**assets;
+	int16_t			nb_assets;
 	t_monster_type	monster_type[MAXTYPEMONSTERS];
 	t_projectile	projectiles[MAX_PROJECTILES];
 	t_proj_type		projectile_type[MAX_KIND_OF_PROJECTILE];

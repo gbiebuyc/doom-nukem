@@ -34,13 +34,11 @@
 **	Assets paths
 */
 
-# define PATH_GROUNDSPRITES "./textures/assets/groundsprites/"
 # define PATH_MONSTERS "./textures/assets/monsters/"
 # define PATH_WEAPONS "./textures/assets/weapons/"
+# define PATH_ASSETS "./textures/assets/assets/"
 
-# define PATH_AMMO_ED "./textures/assets/editor/ammo_healpack/"
 # define PATH_MONSTER_ED "./textures/assets/editor/monsters/"
-# define PATH_HEALPACK_ED "./textures/assets/editor/ground_assets/"
 # define PATH_PLAYERSTART_ED "./textures/assets/editor/playerstart/"
 
 # define PATH_MAP "./maps/"
@@ -84,7 +82,7 @@ typedef struct	s_monsters_texture
 }				t_monsters_texture;
 
 /*
-**	Numbers of asserts for each category is contains in (nb_asset[4])
+**	Numbers of assets for each category is contains in (nb_asset[3])
 **	cf.struct s_interface
 */
 
@@ -96,7 +94,7 @@ typedef struct	s_assets_data
 }				t_assets_data;
 
 /*
-**	#######################################
+**	################ LIST ##################
 */
 
 typedef struct	s_map_list
@@ -121,24 +119,66 @@ typedef struct	s_monster_list
 	struct s_monster_list	*next;
 }				t_monster_list;
 
-typedef struct	s_assets
+typedef struct	s_assets_list
 {
-	SDL_Surface	*assets[100];
-}				t_assets;
+	int						num_asset;
+	int						picnum;
+	int						is_highlighted;
+	int						is_select;
+	int						sectnunm;
+	t_vec2f					world_pos;
+	bool					is_on_floor;
+	bool					is_on_ceil;
+	bool					is_interactive;
+	bool					is_autopick;
+	bool					collision;
+	bool					is_jetpack;
+	t_stat_modifier			stat_mod;
+	struct s_assets_list	*begin;
+	struct s_assets_list	*prev;
+	struct s_assets_list	*next;
+}				t_assets_list;
+
+/*
+**	#######################################
+*/
+
+typedef struct	s_btn_option_posistion
+{
+	t_vec2		cbox_onfloor;
+	t_vec2		cbox_onceil;
+	t_vec2		btn_restorehp_minus;
+	t_vec2		btn_restorehp_plus;
+	t_vec2		btn_damaehp_minus;
+	t_vec2		btn_damaehp_plus;
+	t_vec2		btn_ammo_ballista_minus;
+	t_vec2		btn_ammo_ballista_plus;
+	t_vec2		btn_ammo_blaster_minus;
+	t_vec2		btn_ammo_blaster_plus;
+	t_vec2		btn_ammo_m16_minus;
+	t_vec2		btn_ammo_m16_plus;
+	t_vec2		cbox_isinteractive;
+	t_vec2		cbox_autopickup;
+	t_vec2		cbox_collision;
+	t_vec2		cbox_jetpack;
+}				t_btn_option_p;
+
 
 typedef struct	s_toolbar
 {
 	SDL_Surface	*select[2];
 	SDL_Surface	*move[2];
 	SDL_Surface	*properties[NB_PROPERTIES];
-	t_assets	assets[3];
+	SDL_Surface	*assets[3][100];
 	SDL_Surface	*player_start;
 }				t_toolbar;
 
 /*
-**	int	nb_asset[4] : 	[0] = ammo/healpack, [1] = monster,
-**						[2] = ,	[3] = playerstart
+**	int	nb_asset[3] : 	[0] = Assets, [1] = monster,
+**						[2] = playerstart
 */
+
+# define NB_CATEGORY 3
 
 typedef struct	s_interface
 {
@@ -152,13 +192,15 @@ typedef struct	s_interface
 	int				btn_right_pressed;
 	int				texture_case_select;
 	int				category;
-	int16_t			nb_asset[4];
-	t_vec2f			category_pos[4];
+	int16_t			nb_asset[NB_CATEGORY];
+	t_vec2			category_pos[NB_CATEGORY];
 	int				selected_asset;
 	int				selected_asset_cat;
-	t_vec2f			selected_asset_position;
+	t_vec2			selected_asset_position;
 	t_monster_list	*monster_list;
-	t_vec2f			mouse_pos;
+	t_assets_list	*assets_list;
+	t_assets_list	*current_selected_asset;
+	t_vec2			mouse_pos;
 	t_vec2f			tex_select[4];
 	t_vec2			btn_floor_height_pos;
 	t_vec2			btn_ceil_height_pos;
@@ -166,6 +208,7 @@ typedef struct	s_interface
 	t_vec2			cbox_skybox_p;
 	t_vec2			cbox_end_p;
 	t_vec2			box_nex_map_p;
+	t_btn_option_p	btn_option_p;
 	t_map_list		*map_list;
 	t_map_list		**map_list_sort;
 	int				nb_map;
@@ -174,6 +217,8 @@ typedef struct	s_interface
 	int				map_folder_empty;
 	int				selected_map;
 	t_vec2			selected_map_pos;
+	int				prompt_asset_option;
+
 }				t_interface;
 
 /*
@@ -214,9 +259,11 @@ typedef struct	s_data
 	t_sector			sectors[MAXNUMSECTORS];
 	t_wall				walls[MAXNUMWALLS];
 	t_monster			*monsters;
+	t_assets			**assets;
 	int16_t				numsectors;
 	int16_t				numwalls;
 	uint16_t			nbmonsters;
+	int16_t				nb_assets;
 	int32_t				nb_used_texture;
 	int					nb_anim_tmp;
 	int					nb_orientation_tnp;
@@ -233,7 +280,7 @@ typedef struct	s_data
 	bool				grid_locking;
 	bool				sectordrawing;
 	double				texture_to_scale;
-	t_vec2f				mouse;
+	t_vec2				mouse;
 	t_wall				*hl_wall;
 	int					hl_wallnum;
 	int					hl_wallnum_draw;
@@ -241,8 +288,9 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-int			init_texture_test(t_data *d, int n);
 
+/**/int		write_assets_data(t_data *d, int f);
+/* */int		write_assets_texture(t_data *d, int f);
 
 void			debug_print(t_data *d);
 
@@ -258,12 +306,14 @@ int				init_editor(t_data *d);
 
 void			init_data(t_data *d);
 void			init_sectors(t_data *d);
+void			init_button_position(t_data *d, int x, int y,
+												t_btn_option_p *btn);
 
 /*
 **	ed_init_texture.c
 */
 
-int				init_texture(t_data *d, int n);
+int				init_texture(t_data *d);
 
 /*
 **	ed_init_assets.c
@@ -301,7 +351,7 @@ void			draw_screen(t_data *d);
 **	ed_draw_assets.c
 */
 
-void			draw_assets_to_map(t_data *d, t_assets *a);
+void			draw_assets_to_map(t_data *d, SDL_Surface *a[3][100]);
 
 /*
 **	ed_conversion.c
@@ -358,9 +408,9 @@ void			update_wall_pos(t_data *d);
 */
 
 int				select_assets_on_map(t_data *d);
-void			draw_selection_arround_selected_asset(t_data *d, t_vec2f *v,
+void			draw_selection_arround_selected_asset(t_data *d, t_vec2 *v,
 																	int c);
-void			draw_selection_arround_asset(t_data *d, t_vec2f *category);
+void			draw_selection_arround_asset(t_data *d, t_vec2 *category);
 void			get_selected_asset(t_data *d);
 int				add_asset_to_map(t_data *d, int x, int y);
 
@@ -393,7 +443,7 @@ void			print_properties(t_data *d, SDL_Surface **properties);
 void			draw_separator(t_data *d, int x, int y, int color);
 void			fill_texture_selection(t_data *d, t_interface *i, int wallnum,
 																	int tex_n);
-void			show_preview(t_data *d, t_assets *a);
+void			show_preview(t_data *d, SDL_Surface *a[3][100]);
 void			draw_ligth_bar(t_data *d);
 
 /*
@@ -432,7 +482,7 @@ double			fclamp(double x, double min, double max);
 
 void			run_game(t_data *d);
 void			mouse_wheel(t_data *d, SDL_Event *e);
-void			event_motion_mouse(t_data *d, SDL_Event *e);
+void			event_motion_mouse(t_data *d, SDL_Event *e, int x, int y);
 
 /*
 **	ed_event_keyboard.c
@@ -445,11 +495,10 @@ void			event_key_down(t_data *d, SDL_Keycode key);
 **	ed_event_functions.c
 */
 
-int				menu_open_button(t_data *d, SDL_Event *e);
-int				menu_save_button(t_data *d, SDL_Event *e);
-int				menu_exit_button(t_data *d, SDL_Event *e);
+int				is_over_options_menu(t_data *d, int x, int y);
+int				menu_button(t_data *d, SDL_Event *e);
 int				properties_texture_selection(t_data *d, SDL_Event *e);
-int				selecting_assets(t_data *d, SDL_Event *e);
+int				selecting_assets_in_toolbar(t_data *d, SDL_Event *e);
 
 /*
 **	ed_event_functions2.c
@@ -463,6 +512,13 @@ void			save_selected_texture(t_data *d, int x, int y, int wallnum);
 */
 
 int				event_mouse_button(t_data *d, SDL_Event *e);
+
+/*
+**	ed_event_assets_options.c
+*/
+
+void			event_asset_option_handler(t_data *d, int x, int y,
+															t_btn_option_p *p);
 
 /*
 **	ed_read_map.c
@@ -505,6 +561,12 @@ int				write_weapons_texture(t_data *d, int f);
 int				write_posters_data(t_data *d, int f);
 
 /*
+**	ed_save_sound.c
+*/
+
+int				write_sound(t_data *d, int f);
+
+/*
 ** ed_door_toggle.c
 */
 
@@ -525,24 +587,25 @@ void			detect_select_wall(t_data *d, int x, int y);
 double			fclamp(double x, double min, double max);
 
 /*
-**	ed_monster_list_manager.c
+**	ed_list_manager_monsters.c
 */
 
+int				delete_monster(t_data *d, t_monster_list *lst);
 int				add_monster_to_list(t_data *d, t_vec2f *xy, int sectn,
 															t_interface *i);
-int				delete_monster(t_data *d, t_monster_list *lst);
 
 /*
-**	ed_font.c
+**	ed_list_manager_assets.c
 */
 
-void			init_font(t_data *d);
+int				delete_asset(t_data *d, t_assets_list *lst);
+int				add_assets_to_list(t_data *d, t_vec2f *p, int sectn,
+															t_interface *i);
+
+/*
+**	ed_draw_string.c
+*/
+
 void			draw_string(t_data *d, t_font f);
-
-/*
-**	ed_write_sound.c
-*/
-
-int		write_sound(t_data *d, int f);
 
 #endif

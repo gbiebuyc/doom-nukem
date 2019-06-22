@@ -68,11 +68,8 @@ void		mouse_wheel(t_data *d, SDL_Event *e)
 **	to print the asset preview.
 */
 
-void		event_motion_mouse(t_data *d, SDL_Event *e)
+void		event_motion_mouse(t_data *d, SDL_Event *e, int x, int y)
 {
-	int	x;
-	int	y;
-
 	SDL_GetMouseState(&x, &y);
 	if (!d->interface.prompt_map_open)
 	{
@@ -81,15 +78,18 @@ void		event_motion_mouse(t_data *d, SDL_Event *e)
 		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
 			(d->interface.move) ? update_pos(d, e) : 1;
 		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)
-			&& x < W - PROPERTIES_LIMIT &&
+			&& x < W - PROPERTIES_LIMIT && !is_over_options_menu(d, x, y) &&
 			(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
 			update_pos(d, e);
-		if (selecting_assets(d, e) != -1)
-			d->interface.mouse_pos = (t_vec2f){x, y};
+		if (selecting_assets_in_toolbar(d, e) != -1)
+			d->interface.mouse_pos = (t_vec2){x, y};
 		if (d->interface.show_menu)
 			d->interface.is_on_menu = check_if_mouse_on_menu(d, x, y);
-		detect_wall(d, e->motion.x, e->motion.y);
-		detect_assets(d, e->motion.x, e->motion.y);
+		if (!is_over_options_menu(d, e->motion.x, e->motion.y))
+		{
+			detect_wall(d, e->motion.x, e->motion.y);
+			detect_assets(d, e->motion.x, e->motion.y);
+		}
 	}
 	else
 		detect_selected_map(d, x, y);

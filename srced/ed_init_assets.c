@@ -52,12 +52,12 @@ int		get_interface_assets_files(t_data *d, char **path)
 
 	n = -1;
 	j = 0;
-	while (++n < 4)
+	while (++n < NB_CATEGORY)
 	{
 		i = 0;
 		if ((dr = opendir(path[n])))
 		{
-			while ((de = readdir(dr)))
+			while ((de = readdir(dr)) && j < MAX_ASSETS)
 				if (is_bmp(de) && ++i)
 					new_asset_data(d, de, path[n], j++);
 			d->interface.nb_asset[n] = i;

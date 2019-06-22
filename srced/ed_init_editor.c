@@ -21,15 +21,15 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 
 	m = 0;
 	i = 0;
-	while (m < 3)
+	while (m < NB_CATEGORY - 1)
 	{
 		j = -1;
 		while (++j < d->interface.nb_asset[m])
 		{
 			file = d->assets_data[i].file;
-			if (!(tb->assets[m].assets[j] = SDL_LoadBMP(file)))
+			if (!(tb->assets[m][j] = SDL_LoadBMP(file)))
 				return (ft_printf("Loading failed : %s\n", file));
-			remove_backgorund_image(tb->assets[m].assets[j]);
+			remove_backgorund_image(tb->assets[m][j]);
 			i++;
 		}
 		m++;
@@ -42,8 +42,8 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 
 static int		init_assets(t_data *d, t_toolbar *tb)
 {
-	if (get_interface_assets_files(d, (char*[]){PATH_AMMO_ED, PATH_MONSTER_ED,
-								PATH_HEALPACK_ED, PATH_PLAYERSTART_ED}))
+	if (get_interface_assets_files(d, (char*[]){PATH_ASSETS, PATH_MONSTER_ED,
+								PATH_PLAYERSTART_ED}))
 		return (1);
 	if (load_interface_assets(d, tb))
 		return (1);
@@ -64,8 +64,8 @@ static int		init_toolbar(t_toolbar *tb)
 	file = (char*[]){"./Menu/Select_disable.bmp", "./Menu/Select_enable.bmp",
 	"./Menu/Move_disable.bmp", "./Menu/Move_enable.bmp",
 	"./Menu/lblSector.bmp", "./Menu/lblsector_info.bmp", "./Menu/lblWall.bmp",
-	"./Menu/lblTexture.bmp", "./Menu/lblAmmo_healpack.bmp",
-	"./Menu/lblMonsters.bmp", "./Menu/lblGround_assets.bmp",
+	"./Menu/lblTexture.bmp", "./Menu/lblAssets.bmp",
+	"./Menu/lblMonsters.bmp", "./Menu/assetsOptions.bmp",
 	"./Menu/lblPlayerStart.bmp", "./Menu/minus.bmp", "./Menu/plus.bmp",
 	"./Menu/lblLight.bmp", "./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp",
 	"./Menu/checkBoxEmpty.bmp", "./Menu/checkBox.bmp", "./Menu/lblPoster.bmp",
@@ -85,11 +85,12 @@ static int		init_toolbar(t_toolbar *tb)
 
 static int		init_interface(t_data *d)
 {
-	if (!(d->interface.menu = SDL_LoadBMP("./Menu/testmenu.bmp")))
+	if (!(d->interface.menu = SDL_LoadBMP("./Menu/menu.bmp")))
 		return (ft_printf("Error when creating escape menu.\n"));
 	if (init_toolbar(&d->interface.toolbar) ||
 		init_assets(d, &d->interface.toolbar))
 		return (1);
+	init_button_position(d, 0, 0, &d->interface.btn_option_p);
 	return (0);
 }
 
@@ -102,7 +103,7 @@ int				init_editor(t_data *d)
 		return (ft_printf("Failed to create editor's window.\n"));
 	if (!(d->screen = SDL_GetWindowSurface(d->win)))
 		return (ft_printf("Failed to get window's surface.\n"));
-	if (init_interface(d) || init_texture(d, 0) || init_texture(d, 1))
+	if (init_interface(d) || init_texture(d))
 		return (1);
 	return (0);
 }

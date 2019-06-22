@@ -19,6 +19,7 @@ static void	handle_escape(t_data *d)
 	d->interface.texture_case_select = -1;
 	d->interface.selected_asset = -1;
 	d->interface.prompt_map_open = 0;
+	d->interface.prompt_asset_option = 0;
 	d->get_next_map = 0;
 }
 
@@ -29,7 +30,8 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 	else if (key == SDLK_s)
 		save_file(d, d->current_loaded_map);
 	else if (key == SDLK_DELETE && !d->sectordrawing &&
-			!delete_monster(d, d->interface.monster_list))
+			!delete_monster(d, d->interface.monster_list) &&
+			!delete_asset(d, d->interface.assets_list))
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
 	else if (key == SDLK_l)
 		d->grid_locking = !d->grid_locking;
@@ -58,13 +60,13 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
 	}
 	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slope > -20)
+			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slopeceil > -20)
 	{
 		d->sectors[d->selected_sector].slopeceil -= 1;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
 	}
 	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slope < 20)
+			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slopeceil < 20)
 	{
 		d->sectors[d->selected_sector].slopeceil += 1;
 		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);

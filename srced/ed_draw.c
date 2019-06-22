@@ -99,7 +99,7 @@ void		draw_screen(t_data *d)
 	print_interface(d);
 	if (!d->interface.prompt_map_open)
 	{
-		if (d->interface.category != -1)
+		if (d->interface.category != -1 && !d->interface.btn_right_pressed)
 			draw_selection_arround_asset(d, d->interface.category_pos);
 		if (d->interface.selected_asset != -1)
 			draw_selection_arround_selected_asset(d,

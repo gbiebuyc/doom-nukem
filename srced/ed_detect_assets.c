@@ -17,7 +17,7 @@
 **	to draw the selection around the latest asset that was print on the screen
 */
 
-void	detect_assets(t_data *d, int x, int y)
+void	detect_monsters(t_data *d, int x, int y)
 {
 	t_monster_list	*lst;
 	t_vec2f			p;
@@ -30,6 +30,31 @@ void	detect_assets(t_data *d, int x, int y)
 	while (lst)
 	{
 		p = worldtoscreen(d, lst->pos);
+		lst->is_highlighted = 0;
+		if (!found &&
+			x > p.x - 16 && x < p.x + 16 && y > p.y - 16 && y < p.y + 16)
+		{
+			lst->is_highlighted = 1;
+			found = 1;
+		}
+		lst = lst->prev;
+	}
+}
+
+void	detect_assets(t_data *d, int x, int y)
+{
+	t_assets_list	*lst;
+	t_vec2f			p;
+	int				found;
+
+	detect_monsters(d, x, y);
+	if (!d->interface.assets_list)
+		return ;
+	lst = d->interface.assets_list;
+	found = 0;
+	while (lst)
+	{
+		p = worldtoscreen(d, lst->world_pos);
 		lst->is_highlighted = 0;
 		if (!found &&
 			x > p.x - 16 && x < p.x + 16 && y > p.y - 16 && y < p.y + 16)
