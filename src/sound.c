@@ -19,6 +19,8 @@ void	play_sound(t_data *d, bool is_music)
 	int					i;
 
 	i = is_music ? d->musicnum : d->soundnum;
+	if (i < 0)
+		return ;
 	if (!(dev = SDL_OpenAudioDevice(NULL, 0, &d->wav_spec[i], NULL, 0)))
 		return ((void)ft_printf("Failed to open audio: %s\n", SDL_GetError()));
 	playing = true;
