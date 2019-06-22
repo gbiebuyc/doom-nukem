@@ -12,6 +12,16 @@
 
 #include "doom_nukem.h"
 
+void	start_music(t_data *d)
+{
+	static t_sound_thread_arg arg;
+
+	d->musicnum = 0;
+	arg = (t_sound_thread_arg){d, .is_music = true};
+	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg))
+		ft_printf("pthread_create error\n");
+}
+
 void	init_everything(t_data *d, char *map)
 {
 	//strcpy(d->nextmap, "newmap.DNMAP");
@@ -22,12 +32,8 @@ void	init_everything(t_data *d, char *map)
 	init_projectiles(d);
 	if (d->startsectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
-	/*** music thread ***/
-	d->musicnum = (d->musicnum + 1) % 2;
-	t_sound_thread_arg arg = {d, true};
-	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg))
-		ft_printf("pthread_create error\n");
-	/***/
+	if (!d->music_thread)
+		start_music(d);
 	loop(d);
 }
 

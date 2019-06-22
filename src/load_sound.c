@@ -33,7 +33,6 @@ int		load_sound(t_data *d, int f)
 	if (d->wav_buffer[0])
 		return (0);
 	if (load_sound2(d, f) ||
-			load_sound2(d, f) ||
 			load_sound2(d, f))
 		return (1);
 	return (0);

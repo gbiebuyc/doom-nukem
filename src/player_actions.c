@@ -17,10 +17,10 @@ void	shoot_sound(t_data *d)
 	static t_sound_thread_arg	arg;
 	pthread_t					thread;
 
-	arg = (t_sound_thread_arg){d, false};
-	d->soundnum = 2;
+	arg = (t_sound_thread_arg){d, .is_music = false};
+	d->soundnum = 1;
 	if (pthread_create(&thread, NULL, sound_thread, &arg))
-		exit(ft_printf("pthread_create error\n"));
+		ft_printf("pthread_create error\n");
 }
 
 void	shoot_weapon(t_data *d)
