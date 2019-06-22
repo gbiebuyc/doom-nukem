@@ -72,6 +72,10 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 	else if (d->hl_wall && key == SDLK_t)
 		ft_printf("is_transparent: %d\n", (d->hl_wall->is_transparent =
 					!d->hl_wall->is_transparent));
+	else if (d->selected_sector >= 0 && key == SDLK_a)
+		ft_printf("is_animatedslope: %d\n",
+				(d->sectors[d->selected_sector].is_animatedslope =
+				 !d->sectors[d->selected_sector].is_animatedslope));
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)

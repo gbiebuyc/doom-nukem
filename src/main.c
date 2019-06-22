@@ -25,8 +25,8 @@ void	init_everything(t_data *d, char *map)
 	/*** music thread ***/
 	d->musicnum = (d->musicnum + 1) % 2;
 	t_sound_thread_arg arg = {d, true};
-	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg)) //a uncomnent
-		ft_printf("pthread_create error\n"); a uncomment //
+	if (pthread_create(&d->music_thread, NULL, sound_thread, &arg))
+		ft_printf("pthread_create error\n");
 	/***/
 	loop(d);
 }

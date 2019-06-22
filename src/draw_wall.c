@@ -46,8 +46,8 @@ void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr)
 	p->yd = lerp(p->n, p->y1d, p->y2d);
 	if (p->neighbor)
 	{
-		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->yc);
-		p->nyb = ft_min(lerp(p->n, p->ny1b, p->ny2b), p->yd);
+		p->nya = lerp(p->n, p->ny1a, p->ny2a);
+		p->nyb = lerp(p->n, p->ny1b, p->ny2b);
 		p->doorbottom = ft_min(p->yd, p->nyb);
 		p->doorheight = p->doorbottom - p->yc;
 		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
@@ -150,8 +150,8 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	p->yd = lerp(p->n, p->y1d, p->y2d);
 	if (p->neighbor)
 	{
-		p->nya = ft_max(lerp(p->n, p->ny1a, p->ny2a), p->yc);
-		p->nyb = ft_min(lerp(p->n, p->ny1b, p->ny2b), p->yd);
+		p->nya = lerp(p->n, p->ny1a, p->ny2a);
+		p->nyb = lerp(p->n, p->ny1b, p->ny2b);
 		p->doorbottom = ft_min(p->yd, p->nyb);
 		p->doorheight = p->doorbottom - p->yc;
 		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *

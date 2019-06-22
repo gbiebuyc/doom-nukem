@@ -16,38 +16,61 @@
 **	Height of the floor/ceil at point.
 */
 
+t_vec2f get_sector_center(t_data *d, t_sector *sect)
+{
+	int		i;
+	t_vec2f	center;
+
+	center = (t_vec2f){0, 0};
+	i = -1;
+	while (++i < sect->numwalls)
+		center = add_vec2f(center, d->walls[sect->firstwallnum + i].point);
+	center = mul_vec2f(center, 1.0 / sect->numwalls);
+	return (center);
+}
+
+t_vec2f	rotate_point(t_vec2f p, t_vec2f center, double angle)
+{
+	p = sub_vec2f(p, center);
+	p = (t_vec2f){p.x * cos(angle) - p.y * sin(angle),
+			p.x * sin(angle) + p.y * cos(angle)};
+	return (add_vec2f(p, center));
+}
+
 double	get_floorheight2(t_data *d, int16_t sectnum, t_vec2f p)
 {
 	t_sector	*sect;
-	double		angle;
+	t_vec2f		center;
 
 	if (sectnum < 0)
 		exit(ft_printf("bad sectnum\n"));
 	sect = &d->sectors[sectnum];
 	if (sect->slope == 0)
 		return (sect->floorheight);
-	angle = d->sectors[sectnum].slope_orientation * M_PI / 180;
-	p = (t_vec2f){p.x * cos(angle) - p.y * sin(angle),
-			p.x * sin(angle) + p.y * cos(angle)};
+	center = get_sector_center(d, sect);
+	p = rotate_point(p, center, (sect->is_animatedslope) ?
+			(SDL_GetTicks() / 1000.0) :
+			(sect->slope_orientation * M_PI / 180));
 	return (sect->floorheight + tan(sect->slope * M_PI / 180) *
-			(p.x - d->walls[sect->firstwallnum].point.x));
+			(p.x - center.x));
 }
 
 double	get_ceilheight2(t_data *d, int16_t sectnum, t_vec2f p)
 {
 	t_sector	*sect;
-	double		angle;
+	t_vec2f		center;
 
 	if (sectnum < 0)
 		exit(ft_printf("bad sectnum\n"));
 	sect = &d->sectors[sectnum];
 	if (sect->slopeceil == 0)
 		return (sect->ceilheight);
-	angle = d->sectors[sectnum].slopeceil_orientation * M_PI / 180;
-	p = (t_vec2f){p.x * cos(angle) - p.y * sin(angle),
-			p.x * sin(angle) + p.y * cos(angle)};
+	center = get_sector_center(d, sect);
+	p = rotate_point(p, center, (sect->is_animatedslope) ?
+			(SDL_GetTicks() / 1000.0) :
+			(sect->slopeceil_orientation * M_PI / 180));
 	return (sect->ceilheight + tan(sect->slopeceil * M_PI / 180) *
-			(p.x - d->walls[sect->firstwallnum].point.x));
+			(p.x - center.x));
 }
 
 /*
