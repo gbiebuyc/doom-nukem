@@ -104,8 +104,8 @@ void	movement(t_data *d)
 	}
 	else
 		d->player.can_move--;
-	d->floorheight = get_floorheight(d, d->cursectnum);
-	d->ceilheight = get_ceilheight(d, d->cursectnum);
+	d->floorheightplayer = get_floorheight_player(d, d->cursectnum);
+	d->ceilheightplayer = get_ceilheight_player(d, d->cursectnum);
 	while (collision(d, &d->sectors[d->cursectnum]))
 		;
 	collision_with_monster(d, d->cursectnum, old_pos);

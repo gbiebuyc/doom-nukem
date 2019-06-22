@@ -261,8 +261,8 @@ typedef struct	s_data
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
 	double			zbuffer[WIDTH];
-	double			floorheight;
-	double			ceilheight;
+	double			floorheightplayer;
+	double			ceilheightplayer;
 	char			nextmap[100];
 	SDL_AudioSpec	wav_spec[3];
 	Uint32			wav_length[3];

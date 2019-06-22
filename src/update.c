@@ -143,8 +143,8 @@ void	update(t_data *d)
 		printf("%d\n", sect);*/
 	if ((sect = update_cursect_player(d->cursectnum, d, 10, -1)) != -1)
 	{
-		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight(d, sect) + d->player.minimum_height)
-			d->player.minimum_height = d->cam.pos.y - get_floorheight(d, sect);
+		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d, sect) + d->player.minimum_height)
+			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);
 		d->cursectnum = sect;
 	}
 	/*** finish ***/

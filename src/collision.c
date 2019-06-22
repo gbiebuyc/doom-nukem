@@ -24,12 +24,12 @@ bool	can_traverse(t_data *d, int i, t_wall *wall)
 	return (wall->neighborsect != -1 &&
 			wall->is_transparent == false &&
 			d->doorstate[i] > 0.7 &&
-			d->cam.pos.y + d->player.minimum_height > get_floorheight(d,
+			d->cam.pos.y + d->player.minimum_height > get_floorheight_player(d,
 				neighbor) + MINIMUM_HEIGHT_TO_WALK &&
 			(d->sectors[neighbor].outdoor ||
-			 (d->cam.pos.y < get_ceilheight(d, neighbor) &&
-			  get_ceilheight(d, neighbor) - get_floorheight(d, neighbor) -
-			  MINIMUM_CEIL_DIST > d->player.minimum_height)));
+			 (d->cam.pos.y < get_ceilheight_player(d, neighbor) &&
+			  get_ceilheight_player(d, neighbor) - get_floorheight_player(d,
+				  neighbor) - MINIMUM_CEIL_DIST > d->player.minimum_height)));
 }
 
 bool	collision(t_data *d, t_sector *sect)

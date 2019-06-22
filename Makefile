@@ -14,7 +14,8 @@ NAME= doom-nukem
 
 FILES= main \
 	   collision \
-	   floorceilheight \
+	   floceiheight \
+	   floceiheight2 \
 	   the_end \
 	   load_sound \
 	   sound \
