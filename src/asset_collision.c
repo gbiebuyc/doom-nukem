@@ -20,7 +20,7 @@ void	use_asset(t_data *d, t_assets *asset)
 	d->player.health += asset->stat_mod.heal;
 	d->player.health -= asset->stat_mod.damage;
 	if (asset->is_jetpack)
-		d->player.is_flying = true;
+		d->player.is_flying = 10000;
 }
 
 void	asset_collision2(t_data *d, t_assets *asset)
@@ -39,7 +39,7 @@ void	asset_collision2(t_data *d, t_assets *asset)
 		d->cam.pos.x = asset->world_pos.x + dist.x * COLLISION_R / dist_len;
 		d->cam.pos.z = asset->world_pos.y + dist.y * COLLISION_R / dist_len;
 	}
-	if (asset->is_interactive || asset->is_autopick)
+	if (asset->is_autopick)
 		use_asset(d, asset);
 }
 

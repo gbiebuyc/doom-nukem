@@ -70,7 +70,6 @@ bool	collision_proj_player(t_data *d, t_projectile *projectile);
 void	monster_behaviour(t_data *d, t_monster *monster);
 double		getshadefactor(t_data *d, t_projdata *p, double dist);
 uint32_t	shade(double factor, uint32_t c);
-void	activate_door(t_data *d);
 void	reorder_sprite(t_data *d, t_sector *sect);
 t_vec3f		vec2to3(t_vec2f v);
 t_vec2f		vec3to2(t_vec3f v);
@@ -101,6 +100,8 @@ double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
 bool	collision(t_data *d, t_sector *sect);
 void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum);
 void	asset_collision(t_data *d);
+void	activate_or_pickup(t_data *d);
+void	use_asset(t_data *d, t_assets *asset);
 
 /*
 ** player_damage.c

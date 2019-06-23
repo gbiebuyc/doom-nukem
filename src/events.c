@@ -22,7 +22,7 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 	else if (event.keysym.sym == SDLK_PAUSE)
 		d->debug_pause = true;
 	else if (event.keysym.sym == SDLK_e)
-		activate_door(d);
+		activate_or_pickup(d);
 }
 
 void	event_key_up(t_data *d, SDL_KeyboardEvent event)
