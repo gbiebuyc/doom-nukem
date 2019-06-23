@@ -31,7 +31,7 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 		save_file(d, d->current_loaded_map);
 	else if (key == SDLK_DELETE && !d->sectordrawing &&
 			!delete_monster(d, d->interface.monster_list) &&
-			!delete_asset(d, d->interface.assets_list))
+			!delete_asset(d, d->interface.assets_list, NULL, NULL))
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
 	else if (key == SDLK_l)
 		d->grid_locking = !d->grid_locking;

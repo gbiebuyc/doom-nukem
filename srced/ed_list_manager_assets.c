@@ -41,11 +41,9 @@ static void		fix_list(t_data *d, t_assets_list *prev, t_assets_list *next)
 	d->interface.assets_list = lst;
 }
 
-int				delete_asset(t_data *d, t_assets_list *lst)
+int				delete_asset(t_data *d, t_assets_list *lst,
+							t_assets_list *prev, t_assets_list *next)
 {
-	t_assets_list	*prev;
-	t_assets_list	*next;
-
 	while (lst)
 	{
 		if (lst->is_select)

@@ -614,7 +614,8 @@ int				add_monster_to_list(t_data *d, t_vec2f *xy, int sectn,
 **	ed_list_manager_assets.c
 */
 
-int				delete_asset(t_data *d, t_assets_list *lst);
+int				delete_asset(t_data *d, t_assets_list *lst,
+									t_assets_list *prev, t_assets_list *next);
 int				add_assets_to_list(t_data *d, t_vec2f *p, int sectn,
 															t_interface *i);
 

@@ -18,7 +18,8 @@ static int	link_key_with_door(t_data *d, t_assets_list *a)
 	int	wall_num;
 
 	wall_num = (d->selected_wall == -1) ? d->hl_wallnum : d->selected_wall;
-	if ((d->nb_door <= 0 || wall_num == -1) && !a->is_key)
+	if ((d->nb_door <= 0 || wall_num == -1 || !d->walls[wall_num].is_door) &&
+		!a->is_key)
 		return (ft_printf("There is no door to link the key with.\n"));
 	if (a->is_key)
 	{
