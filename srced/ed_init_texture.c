@@ -25,13 +25,15 @@ static int	load_texture(t_data *d, SDL_Surface ***s, int nb_tex,
 	{
 		if (!(tmp = SDL_LoadBMP(tex_list->name)))
 			return (ft_printf("Failed to load %s.\n", tex_list->name));
-		if (!((*s)[i] = SDL_ConvertSurface(tmp, d->screen->format, 0)))
+		if (!((*s)[i] = SDL_ConvertSurfaceFormat(tmp,
+						SDL_PIXELFORMAT_ARGB8888, 0)))
 			return (ft_printf("Failed to re-format\n"));
 		if (tex_list->next)
 			tex_list = tex_list->next;
 		SDL_FreeSurface(tmp);
 		i++;
 	}
+	(void)d;
 	return (0);
 }
 

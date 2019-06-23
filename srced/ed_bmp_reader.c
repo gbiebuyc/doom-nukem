@@ -69,7 +69,7 @@ int		bmp_reader(t_data *d)
 
 			texture_test = SDL_CreateRGBSurfaceWithFormat(0, bmp.header.width,
                                             bmp.header.height, 32,
-                                            d->screen->format->format);
+											SDL_PIXELFORMAT_ARGB8888);
 			int o = bmp.header.filesize - bmp.header.imageSize;
 			int size = bmp.header.filesize - o - 1;
 		/*	while (size >= o)
