@@ -75,6 +75,8 @@ void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum)
 	while (d->nb_assets && ++i < d->assets[sectnum][0].nb_assets)
 	{
 		asset = &d->assets[sectnum][i];
+		if (asset->used)
+			continue ;
 		t_vec3f v = vec2to3(asset->world_pos);
 		v.y = (asset->is_on_floor) ? get_floordh(d, p->sector, v) :
 			get_ceildh(d, p->sector, v);

@@ -186,7 +186,7 @@ typedef struct	s_monster_type
 
 typedef	struct	s_player
 {
-	int8_t		health;
+	int16_t		health;
 //	uint8_t shield; gamedesign
 	uint8_t		current_weapon;
 	uint8_t		can_shoot;

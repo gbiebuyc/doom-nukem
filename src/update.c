@@ -135,6 +135,7 @@ void	update(t_data *d)
 //		d->monsters[0].rot = atan2(tmp.y, tmp.x);
 //	}
 	movement(d);
+	asset_collision(d);
 	// Update current sector
 	/*while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))
 		sect++;

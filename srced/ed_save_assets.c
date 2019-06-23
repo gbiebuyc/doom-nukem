@@ -40,6 +40,7 @@ void	copy_data(t_data *d, t_assets_list *a, int s, int *i)
 	d->assets[s][*i].is_atuopcik = a->is_autopick;
 	d->assets[s][*i].collision = a->collision;
 	d->assets[s][*i].is_jetpack = a->is_jetpack;
+	d->assets[s][*i].used = false;
 	(*i)++;
 }
 

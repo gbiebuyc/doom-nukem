@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   asset_collision \
 	   draw_assets \
 	   collision \
 	   floceiheight \

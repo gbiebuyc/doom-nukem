@@ -104,14 +104,6 @@ typedef struct	s_wall
 	bool		is_transparent;
 }				t_wall;
 
-typedef struct	s_thing
-{
-	t_vec2f		pos;
-	float		angle;
-	int16_t		picnum;
-	int16_t		flags;
-}				t_thing;
-
 typedef struct	s_stat_modifier
 {
 	int16_t		heal;
@@ -133,6 +125,7 @@ typedef struct	s_assets
 	bool				is_atuopcik;
 	bool				collision;
 	bool				is_jetpack;
+	bool				used;
 }				t_assets;
 
 # define MOTHERDEMON 0
