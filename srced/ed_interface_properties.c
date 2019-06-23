@@ -50,11 +50,11 @@ static void	draw_plus_minus_btn_n_checkbox(t_data *d, SDL_Surface **prop,
 {
 	x = W - PROPERTIES_LIMIT * 0.35;
 	y = PROPERTIES_POS + prop[0]->h * 2 + 15;
-	d->interface.btn_floor_height_pos = (t_vec2){x, y};
+	d->interface.btn_ceil_height_pos = (t_vec2){x, y};
 	copy_surface_to_surface(prop[8], d->screen, (int[2]){x, y}, d);
 	copy_surface_to_surface(prop[9], d->screen, (int[2]){x + 32, y}, d);
 	y += prop[1]->h * 0.5 + 15;
-	d->interface.btn_ceil_height_pos = (t_vec2){x, y};
+	d->interface.btn_floor_height_pos = (t_vec2){x, y};
 	copy_surface_to_surface(prop[8], d->screen, (int[2]){x, y}, d);
 	copy_surface_to_surface(prop[9], d->screen, (int[2]){x + 32, y}, d);
 	x = W - PROPERTIES_LIMIT + MARGIN;

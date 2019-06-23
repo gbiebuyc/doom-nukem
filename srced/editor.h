@@ -294,8 +294,7 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-t_wall	*get_adjacent_wall(t_data *d, t_wall *w);
-void			debug_print(t_data *d);
+/**/void		debug_print(t_data *d);
 
 /*
 **	ed_init.c

@@ -43,34 +43,6 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 			!d->sectors[d->selected_sector].blinking;
 		/**/printf("blinking: %d\n", d->sectors[d->selected_sector].blinking);
 	}
-}
-
-static void	event_key_down2(t_data *d, SDL_Keycode key)
-{
-	if (d->selected_sector >= 0 &&
-			key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -20)
-	{
-		d->sectors[d->selected_sector].slope -= 1;
-		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
-	}
-	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 20)
-	{
-		d->sectors[d->selected_sector].slope += 1;
-		ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
-	}
-	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slopeceil > -20)
-	{
-		d->sectors[d->selected_sector].slopeceil -= 1;
-		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
-	}
-	else if (d->selected_sector >= 0 &&
-			key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slopeceil < 20)
-	{
-		d->sectors[d->selected_sector].slopeceil += 1;
-		ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
-	}
 	else if (d->hl_wall && key == SDLK_t)
 		ft_printf("is_transparent: %d\n", (d->hl_wall->is_transparent =
 					!d->hl_wall->is_transparent));
@@ -78,6 +50,23 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 		ft_printf("is_animatedslope: %d\n",
 				(d->sectors[d->selected_sector].is_animatedslope =
 				 !d->sectors[d->selected_sector].is_animatedslope));
+}
+
+static void	event_key_down2(t_data *d, SDL_Keycode key)
+{
+	if (d->selected_sector >= 0)
+	{
+		if (key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -20)
+			d->sectors[d->selected_sector].slope -= 1;
+		if (key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 20)
+			d->sectors[d->selected_sector].slope += 1;
+	/**/ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
+		if (key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slopeceil > -20)
+			d->sectors[d->selected_sector].slopeceil -= 1;
+		if (key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slopeceil < 20)
+			d->sectors[d->selected_sector].slopeceil += 1;
+	/**/ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
+	}
 }
 
 void		event_key_down(t_data *d, SDL_Keycode key)

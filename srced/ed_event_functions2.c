@@ -35,9 +35,9 @@ void		fix_default_texture(t_data *d, int x, int y)
 
 static void	save_sector_texture(t_data *d, t_sector *s)
 {
-	if (d->interface.texture_case_select == 1)
+	if (d->interface.texture_case_select == 0)
 		s->ceilpicnum = d->selected_texture;
-	else if (d->interface.texture_case_select == 0)
+	else if (d->interface.texture_case_select == 1)
 		s->floorpicnum = d->selected_texture;
 }
 
