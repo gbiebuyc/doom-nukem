@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 00:15:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/22 21:40:32 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/23 20:06:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_vec2f	mul_vec2f(t_vec2f v, double scalar)
 	return ((t_vec2f){v.x * scalar, v.y * scalar});
 }
 
-bool	is_inside_vec2f(t_vec2f p1, t_vec2f p2, t_vec2f point) // unused and to be deleted
+bool	is_inside_vec2f(t_vec2f p1, t_vec2f p2, t_vec2f point)
 {
 	point.x *= 100000000;
 	point.x = roundf(point.x);

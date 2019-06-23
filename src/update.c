@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/10 00:04:57 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/23 18:23:44 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 	}
 }
 
+# define DEPTH_TO_SCAN 10
+
 void	update(t_data *d)
 {
 	int16_t	sect;
@@ -142,7 +144,7 @@ void	update(t_data *d)
 	if (sect < d->numsectors)
 		d->cursectnum = sect;
 		printf("%d\n", sect);*/
-	if ((sect = update_cursect_player(d->cursectnum, d, 10, -1)) != -1)
+	if ((sect = update_cursect_player(d, DEPTH_TO_SCAN)) != -1)
 	{
 		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d, sect) + d->player.minimum_height)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);

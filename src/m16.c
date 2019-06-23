@@ -6,14 +6,14 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/22 13:51:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/23 20:38:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 # define M16_DAMAGE 80
-# define M16_HITBOX 0.4
+# define M16_HITBOX 0.2
 # define Y_OFFSET_TO_ROT -0.001
 // MUST HAD MONSTER.SIZE * MONSTER.HITBOX
 
@@ -99,7 +99,7 @@ void	set_projectile_visual_collided_m16(t_data *d, short i, t_m16_inf inf)
 	d->projectiles[i].dir.x = 0.0;
 	d->projectiles[i].current_anim_playing = d->projectile_type[M16].anim_order[0];
 	d->projectiles[i].pos = (t_vec3f){tmp.x,
-	inf.dist * Y_OFFSET_TO_ROT * d->cam.y_offset,
+	inf.dist * Y_OFFSET_TO_ROT * d->cam.y_offset + d->cam.pos.y,
 	tmp.y
 	};
 	d->projectiles[i].has_collided = true;
@@ -145,12 +145,18 @@ void	m16_create_projectile(t_data *d, t_m16_inf inf)
 void	m16_shoot(t_data *d)
 {
 	t_m16_inf	inf;
+	double		y_dist;
 
 	inf = m16_recur(d, 30, d->cursectnum, -1);
 	if (inf.id_of_monst != -1)
 	{
-		monster_hit(d, M16_DAMAGE, inf.id_of_monst);
-		inf.dist -= 0.1;
-		m16_create_projectile(d, inf);
+		y_dist = inf.dist * Y_OFFSET_TO_ROT * d->cam.y_offset + d->cam.pos.y - get_floorheight_point(d,
+				d->monsters[inf.id_of_monst].cursectnum, d->monsters[inf.id_of_monst].pos);
+		if (y_dist > -0.1 && y_dist < 1.6)
+		{
+			monster_hit(d, M16_DAMAGE, inf.id_of_monst);
+			inf.dist -= 0.1;
+			m16_create_projectile(d, inf);
+		}
 	}
 }

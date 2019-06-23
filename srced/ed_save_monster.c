@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 17:55:45 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/14 19:00:29 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/23 20:14:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			fill_monster_structure(t_data *d)
 	i = 0;
 	while (lst)
 	{
-		d->monsters[i] = (t_monster){lst->pos, 1.0, 0.1, 0.0, lst->sectnunm, 0,
+		d->monsters[i] = (t_monster){lst->pos, 1.0, 10, 0.0, lst->sectnunm, 0,
 									0, 0, 0, 0, 0, 0, 0, 0, 1};
 		lst = lst->next;
 		i++;
