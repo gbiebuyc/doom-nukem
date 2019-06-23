@@ -17,6 +17,35 @@ static void	printdata(t_data *d, char *s, int x, int y)
 	draw_string(d, (t_font){s, x, y, 0x008800, 2});
 }
 
+static void	print_sector_options_values(t_data *d, int x, int y,
+															t_btn_option_p *p)
+{
+	t_sector	*s;
+	t_vec2		**v;
+	int			i;
+
+	if (d->selected_sector < 0 || d->interface.texture_case_select != -1)
+		return ;
+	v = (t_vec2*[]){&p->cbox_blinking, &p->cbox_harmful,
+					&p->cbox_ceil_animated, &p->cbox_floor_animated};
+	s = &d->sectors[d->selected_sector];
+	copy_surface_to_surface(d->interface.toolbar.properties[19], d->screen,
+					(int[2]){p->sector_options.x, p->sector_options.y}, d);
+	x = p->cbox_blinking.x - 50;
+	y = p->btn_slopeceil_minus.y + 5;
+	printdata(d, ft_itoa_static(s->slopeceil), x, y);
+	printdata(d, ft_itoa_static(s->slopeceil_orientation), x, y += 30);
+	printdata(d, ft_itoa_static(s->slope), x, y += 60);
+	printdata(d, ft_itoa_static(s->slope_orientation), x, y += 30);
+	i = -1;
+	while (++i < 4)
+		if ((i == 0 && s->blinking) || (i == 1 && s->is_harmful) ||
+			(i == 2 && s->is_animatedslopeceil) ||
+			(i == 3 && s->is_animatedslope))
+			copy_surface_to_surface(d->interface.toolbar.properties[14],
+						d->screen, (int[2]){v[i]->x, v[i]->y}, d);
+}
+
 static void	print_asset_values(t_data *d, t_assets_list *a, t_btn_option_p *p,
 																t_vec2 **v)
 {
@@ -41,7 +70,7 @@ static void	print_asset_values(t_data *d, t_assets_list *a, t_btn_option_p *p,
 						d->screen, (int[2]){v[i]->x, v[i]->y - 1}, d);
 }
 
-void		print_next_map(t_data *d, int x, int y)
+static void	print_next_map_and_asset(t_data *d, int x, int y)
 {
 	char			string[100];
 	t_btn_option_p	*p;
@@ -95,5 +124,6 @@ void		print_interface_values(t_data *d, int x, int y)
 	string = ft_itoa_static(d->sectors[d->selected_sector].ceilheight * 10);
 	draw_string(d, (t_font){string, x,
 					d->interface.btn_ceil_height_pos.y + 4, 0x008800, 2});
-	print_next_map(d, x, y);
+	print_next_map_and_asset(d, x, y);
+	print_sector_options_values(d, x, y, &d->interface.btn_option_p);
 }

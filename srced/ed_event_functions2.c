@@ -26,9 +26,9 @@ void		fix_default_texture(t_data *d, int x, int y)
 		if (d->selected_wall == -1 && !d->hl_wall
 									&& d->interface.texture_case_select == 2)
 			d->default_wall_texture = textur_i;
-		if (d->selected_sector == -1 && d->interface.texture_case_select == 1)
-			d->default_ceil_texture = textur_i;
 		if (d->selected_sector == -1 && d->interface.texture_case_select == 0)
+			d->default_ceil_texture = textur_i;
+		if (d->selected_sector == -1 && d->interface.texture_case_select == 1)
 			d->default_floor_texture = textur_i;
 	}
 }

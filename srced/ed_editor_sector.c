@@ -34,8 +34,10 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].slopeceil = 0;
 	d->sectors[d->numsectors - 1].slopeceil_orientation = 0;
 	d->sectors[d->numsectors - 1].is_animatedslope = false;
+	d->sectors[d->numsectors - 1].is_animatedslopeceil = false;
 	d->sectors[d->numsectors - 1].outdoor = 0;
 	d->sectors[d->numsectors - 1].is_finish = false;
+	d->sectors[d->numsectors - 1].is_harmful = false;
 	add_wall(d);
 	add_wall(d);
 }

@@ -70,25 +70,27 @@ typedef struct	s_sprite_list
 
 typedef struct	s_sector
 {
-	int16_t		firstwallnum;
-	int16_t		numwalls;
-	float		floorheight;
-	float		ceilheight;
-	int16_t		floorpicnum;
-	int16_t		ceilpicnum;
-	float		light;
-	bool		blinking;
-	char		floor_texture_name[100];
-	char		ceil_texture_name[100];
-	bool		outdoor;
+	int16_t			firstwallnum;
+	int16_t			numwalls;
+	float			floorheight;
+	float			ceilheight;
+	int16_t			floorpicnum;
+	int16_t			ceilpicnum;
+	float			light;
+	bool			blinking;
+	char			floor_texture_name[100];
+	char			ceil_texture_name[100];
+	bool			outdoor;
 	t_sprite_list	*sprite_list;
-	int16_t		slope;
-	int16_t		slope_orientation;
-	int16_t		slopeceil;
-	int16_t		slopeceil_orientation;
-	bool		is_animatedslope;
-	bool		is_finish;
-}				t_sector;
+	int16_t			slope;
+	int16_t			slope_orientation;
+	int16_t			slopeceil;
+	int16_t			slopeceil_orientation;
+	bool			is_animatedslope;
+	bool			is_animatedslopeceil;
+	bool			is_finish;
+	bool			is_harmful;
+}					t_sector;
 
 typedef struct	s_wall
 {
@@ -136,23 +138,21 @@ typedef struct	s_assets
 
 typedef struct	s_monster
 {
-	t_vec2f		pos; //position du monstre en x et z
-	double		size; // scale de la taille par rapport a la taille du monstre type (a exprimer em %)
-	double		health_mult; // scale de la vie par rapport a la vie du monstre type
-	double		rot; // set in editor, where is the monster looking at first 
-	int16_t		cursectnum; // set in editor, which sector is the monster from
-	uint8_t		id_type; // which type is the monster (use defines <- NO !)
-	//double	floating; // might be used to set different floating height for monsters
-	uint8_t		anim_state; // set during behaviour to chose which state of animation is the monster in
+	t_vec2f		pos;
+	double		size;
+	double		health_mult;
+	double		rot;
+	int16_t		cursectnum;
+	uint8_t		id_type;
+	uint8_t		anim_state;
 	uint8_t		anim_time;
-	uint8_t		behaviour; // set in editor (to be discussed ?), id of behavior to follow for the monster// not used yet
-	uint8_t		timer; // used to time actions
-	int16_t		life; //life calculated in binary
-	double		height; // calculee dans le binaire
-	double		width; // calculee dans le binaire
-	bool		can_collide; // collides or not with player(used when monster is dead)
-	bool		activated; // unused for now
-
+	uint8_t		behaviour;
+	uint8_t		timer;
+	int16_t		life;
+	double		height;
+	double		width;
+	bool		can_collide;
+	bool		activated;
 }				t_monster;
 
 typedef struct	s_texture_data

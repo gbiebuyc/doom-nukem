@@ -67,49 +67,7 @@ int		map_exist(t_data *d, char *map)
 
 void	debug_print(t_data *d)
 {
-	t_assets_list	*tmp;
-	int				i;
-	t_assets_list	*a;
-
-	ft_printf("%d\n", d->nb_assets);
-	if (d->interface.assets_list)
-	{
-		tmp = d->interface.assets_list->begin;
-		while (tmp)
-		{
-			ft_printf("asset num : %d\n", tmp->num_asset);
-			ft_printf("asset picnum : %d\n", tmp->picnum);
-			printf("%5.2f %5.2f\n", tmp->world_pos.x, tmp->world_pos.y);
-			ft_printf("sector : %d\n", tmp->sectnunm);
-			ft_printf("is on floor : %d\n", tmp->is_on_floor);
-			ft_printf("is on ceil : %d\n", tmp->is_on_ceil);
-			ft_printf("stat : \n");
-			ft_printf("Heal : %d\n", tmp->stat_mod.heal);
-			ft_printf("Damage : %d\n", tmp->stat_mod.damage);
-			ft_printf("ballista_ammo : %d\n", tmp->stat_mod.ballista_ammo);
-			ft_printf("blaster_ammo : %d\n", tmp->stat_mod.blaster_ammo);
-			ft_printf("m16_ammo : %d\n", tmp->stat_mod.m16_ammo);
-			ft_printf("is interactive : %d\n", tmp->is_interactive);
-			ft_printf("is autopick : %d\n", tmp->is_autopick);
-			ft_printf("collision : %d\n", tmp->collision);
-			tmp = tmp->next;
-		}
-		ft_printf("keylist\n");
-		a = d->interface.assets_list->begin;
-		while (a)
-		{
-			if (a->is_key)
-				ft_printf("%d\n", a->key_num);
-			a = a->next;
-		}
-		i = -1;
-		while (++i < d->numwalls)
-		{
-			if (d->walls[i].door_num != -1 && d->walls[i].key_num)
-				ft_printf("Door %d linked with key %d\n", d->walls[i].door_num,
-														d->walls[i].key_num);
-		}
-	}
+	(void)d;
 }
 
 int		event_loop(t_data *d)

@@ -54,7 +54,7 @@
 # define MARGIN 6
 # define PROPERTIES_LIMIT 350
 # define TEXTURE_TOOLBAR 618
-# define NB_PROPERTIES 19
+# define NB_PROPERTIES 20
 # define PROPERTIES_POS (H >> 1) - 20
 # define MOVE_WALL_PROP 30
 
@@ -165,6 +165,19 @@ typedef struct	s_btn_option_posistion
 	t_vec2		cbox_collision;
 	t_vec2		cbox_jetpack;
 	t_vec2		cbox_key;
+	t_vec2		sector_options;
+	t_vec2		cbox_blinking;
+	t_vec2		cbox_harmful;
+	t_vec2		btn_slopeceil_minus;
+	t_vec2		btn_slopeceil_plus;
+	t_vec2		btn_slopeceil_orientation_minus;
+	t_vec2		btn_slopeceil_orientation_plus;
+	t_vec2		cbox_ceil_animated;
+	t_vec2		btn_slopefloor_minus;
+	t_vec2		btn_slopefloor_plus;
+	t_vec2		btn_slopefloor_orientation_minus;
+	t_vec2		btn_slopefloor_orientation_plus;
+	t_vec2		cbox_floor_animated;
 }				t_btn_option_p;
 
 
@@ -429,7 +442,7 @@ void			print_interface(t_data *d);
 t_vec2f			grid_lock(t_data *d, t_vec2f p);
 int				is_on_select_move_icon(t_data *d, int x, int y);
 int				check_if_mouse_on_menu(t_data *d, int x, int y);
-void			btn_height(t_data *d, int x, int y, t_interface *i);
+void			btn_sector_height(t_data *d, int x, int y, t_interface *i);
 void			is_on_checkbox(t_data *d, int x, int y, SDL_Event *e);
 
 /*
@@ -519,8 +532,16 @@ int				event_mouse_button(t_data *d, SDL_Event *e);
 **	ed_event_assets_options.c
 */
 
+int				is_on_button(t_vec2 btn, int x, int y);
 void			event_asset_option_handler(t_data *d, int x, int y,
 															t_btn_option_p *p);
+
+/*
+**
+*/
+
+void			event_sector_option_handler(t_data *d, int x, int y,
+														t_btn_option_p *p);
 
 /*
 **	ed_read_map.c
@@ -585,7 +606,7 @@ int				write_sound(t_data *d, int f);
 **	ed_door_toggle.c
 */
 
-void			toggle_isdoor(t_data *d);
+void			toggle_isdoor(t_data *d, int16_t last);
 
 /*
 **	ed_detect_assets.c

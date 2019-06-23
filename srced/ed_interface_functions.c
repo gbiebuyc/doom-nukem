@@ -56,7 +56,7 @@ int		check_if_mouse_on_menu(t_data *d, int x, int y)
 	return (0);
 }
 
-void	btn_height(t_data *d, int x, int y, t_interface *i)
+void	btn_sector_height(t_data *d, int x, int y, t_interface *i)
 {
 	int endx;
 	int	endy;
@@ -87,7 +87,7 @@ void	is_on_checkbox(t_data *d, int x, int y, SDL_Event *e)
 	xy = (t_vec2[4]){d->interface.cbox_door_p, d->interface.cbox_skybox_p,
 					d->interface.cbox_end_p, d->interface.box_nex_map_p};
 	if (x > xy[0].x && x <= xy[0].x + 24 && y > xy[0].y && y <= xy[0].y + 24)
-		toggle_isdoor(d);
+		toggle_isdoor(d, 0);
 	if (x > xy[1].x && x <= xy[1].x + 24 && y > xy[1].y && y <= xy[1].y + 24)
 		d->sectors[d->selected_sector].outdoor =
 			!d->sectors[d->selected_sector].outdoor;

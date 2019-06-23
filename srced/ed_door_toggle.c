@@ -45,8 +45,8 @@ t_wall		*get_adjacent_wall(t_data *d, t_wall *w)
 **	get the portal from the neighbor sector and set it as a door too.
 */
 
-void		find_opposite_portal(t_data *d, t_sector *neighborsect, int16_t *last,
-							t_wall *nextwall)
+void		find_opposite_portal(t_data *d, t_sector *neighborsect,
+									int16_t *last, t_wall *nextwall)
 {
 	int		i;
 	int		j;
@@ -67,11 +67,10 @@ void		find_opposite_portal(t_data *d, t_sector *neighborsect, int16_t *last,
 	}
 }
 
-void		toggle_isdoor(t_data *d)
+void		toggle_isdoor(t_data *d, int16_t last)
 {
 	t_sector	*neighborsect;
 	t_wall		*nextwall;
-	int16_t		last;
 
 	if (d->selected_wall != -1 || d->hl_wallnum != -1)
 	{

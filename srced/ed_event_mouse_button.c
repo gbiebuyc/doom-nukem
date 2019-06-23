@@ -30,12 +30,13 @@ static int	selecting_wall_or_sector(t_data *d, SDL_Event *e, int x, int y)
 
 static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 {
-	SDL_GetMouseState(&x, &y);
+	if (is_over_options_menu(d, x, y))
+		return ;
 	d->interface.current_selected_asset = NULL;
 	d->interface.prompt_asset_option = 0;
 	if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y) &&
 		x > W - PROPERTIES_LIMIT)
-		btn_height(d, x, y, &d->interface);
+		btn_sector_height(d, x, y, &d->interface);
 	is_on_checkbox(d, x, y, e);
 	fix_default_texture(d, x, y);
 	if ((d->selected_sector >= 0 || d->selected_wall >= 0 ||
@@ -89,11 +90,12 @@ static int	mouse_button_down(t_data *d, SDL_Event *e, int x, int y)
 		}
 		if (menu_button(d, e) == -1)
 			return (-1);
-		if (!d->interface.prompt_map_open && !d->interface.btn_right_pressed &&
-			!is_over_options_menu(d, x, y))
-			mouse_button_left_handler(d, e, 0, 0);
-		if (is_over_options_menu(d, x, y))
+		if (!d->interface.prompt_map_open && !d->interface.btn_right_pressed)
+			mouse_button_left_handler(d, e, x, y);
+		if (is_over_options_menu(d, x, y) == 1)
 			event_asset_option_handler(d, x, y, &d->interface.btn_option_p);
+		if (is_over_options_menu(d, x, y) == 2)
+			event_sector_option_handler(d, x, y, &d->interface.btn_option_p);
 	}
 	if (e->button.button == SDL_BUTTON_RIGHT && !d->interface.prompt_map_open)
 	{

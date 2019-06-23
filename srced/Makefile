@@ -22,7 +22,7 @@ SRC = main.c \
 	ed_editor_assets_handler.c ed_editor_assets_handler2.c \
 	ed_list_manager_monster.c ed_list_manager_assets.c \
 	ed_event.c ed_event_keyboard.c ed_event_functions.c ed_event_mouse_button.c \
-	ed_event_functions2.c ed_event_assets_options.c \
+	ed_event_functions2.c ed_event_assets_options.c ed_event_sector_options.c \
 	ed_interface.c ed_interface_functions.c ed_interface_print_values.c \
 	ed_interface_map_list.c ed_interface_select_map.c \
 	ed_interface_properties.c ed_interface_properties2.c\

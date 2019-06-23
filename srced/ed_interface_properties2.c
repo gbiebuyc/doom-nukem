@@ -64,10 +64,10 @@ void		fill_texture_selection(t_data *d, t_interface *i, int wallnum,
 	{
 		tex_n = d->sectors[d->selected_sector].ceilpicnum;
 		copy_surface_to_surface(d->textures[tex_n], d->screen,
-				(int[2]){i->tex_select[1].x + 1, i->tex_select[1].y + 1}, d);
+				(int[2]){i->tex_select[0].x + 1, i->tex_select[0].y + 1}, d);
 		tex_n = d->sectors[d->selected_sector].floorpicnum;
 		copy_surface_to_surface(d->textures[tex_n], d->screen,
-				(int[2]){i->tex_select[0].x + 1, i->tex_select[0].y + 1}, d);
+				(int[2]){i->tex_select[1].x + 1, i->tex_select[1].y + 1}, d);
 	}
 	else
 		empty_case(d, i);

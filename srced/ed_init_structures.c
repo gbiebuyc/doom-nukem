@@ -41,16 +41,16 @@ void		init_sectors(t_data *d)
 	int		dt;
 
 	dt = d->default_floor_texture;
-	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt,
-		1.0, false, "", "", false, NULL, 0, 0, 0, 0, false, false};
+	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt, 1.0, false, "", "", false,
+								NULL, 0, 0, 0, 0, false, false, false, false};
 	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-		0, -1, false};
+									0, -1, false};
 	d->walls[1] = (t_wall){(t_vec2f){4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-		0, -1, false};
+									0, -1, false};
 	d->walls[2] = (t_wall){(t_vec2f){4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-		0, -1, false};
+									0, -1, false};
 	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-		0, -1, false};
+									0, -1, false};
 	d->numsectors = 1;
 	d->numwalls = 4;
 }
@@ -58,6 +58,30 @@ void		init_sectors(t_data *d)
 static void	assign_position(t_vec2 *btn, t_vec2 pos)
 {
 	*btn = pos;
+}
+
+void		init_sector_options_position(t_data *d, int x, int y,
+														t_btn_option_p *b)
+{
+	x = W - PROPERTIES_LIMIT - d->interface.toolbar.properties[19]->w;
+	y = H - d->interface.toolbar.properties[19]->h;
+	b->sector_options = (t_vec2){x, y};
+	x += 228;
+	y += 26;
+	assign_position(&b->cbox_blinking, (t_vec2){x, y});
+	assign_position(&b->cbox_harmful, (t_vec2){x, y += 30});
+	y += 30;
+	assign_position(&b->btn_slopeceil_minus, (t_vec2){x, y += 30});
+	assign_position(&b->btn_slopeceil_plus, (t_vec2){x + 30, y});
+	assign_position(&b->btn_slopeceil_orientation_minus, (t_vec2){x, y += 30});
+	assign_position(&b->btn_slopeceil_orientation_plus, (t_vec2){x + 30, y});
+	assign_position(&b->cbox_ceil_animated, (t_vec2){x, y += 30});
+	assign_position(&b->btn_slopefloor_minus, (t_vec2){x, y += 30});
+	assign_position(&b->btn_slopefloor_plus, (t_vec2){x + 30, y});
+	assign_position(&b->btn_slopefloor_orientation_minus,
+														(t_vec2){x, y += 30});
+	assign_position(&b->btn_slopefloor_orientation_plus, (t_vec2){x + 30, y});
+	assign_position(&b->cbox_floor_animated, (t_vec2){x, y += 30});
 }
 
 void		init_button_position(t_data *d, int x, int y, t_btn_option_p *b)
@@ -81,4 +105,5 @@ void		init_button_position(t_data *d, int x, int y, t_btn_option_p *b)
 	assign_position(&b->cbox_collision, (t_vec2){x, y += 30});
 	assign_position(&b->cbox_jetpack, (t_vec2){x, y += 30});
 	assign_position(&b->cbox_key, (t_vec2){x, y += 30});
+	init_sector_options_position(d, x, y, b);
 }

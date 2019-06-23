@@ -38,34 +38,27 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 	else if (key == SDLK_x)
 		d->interface.separate_sector = !d->interface.separate_sector;
 	else if (key == SDLK_b && d->selected_sector >= 0)
-	{
 		d->sectors[d->selected_sector].blinking =
 			!d->sectors[d->selected_sector].blinking;
-		/**/printf("blinking: %d\n", d->sectors[d->selected_sector].blinking);
-	}
 	else if (d->hl_wall && key == SDLK_t)
-		ft_printf("is_transparent: %d\n", (d->hl_wall->is_transparent =
-					!d->hl_wall->is_transparent));
-	else if (d->selected_sector >= 0 && key == SDLK_a)
-		ft_printf("is_animatedslope: %d\n",
-				(d->sectors[d->selected_sector].is_animatedslope =
-				 !d->sectors[d->selected_sector].is_animatedslope));
+		d->hl_wall->is_transparent = !d->hl_wall->is_transparent;
 }
 
 static void	event_key_down2(t_data *d, SDL_Keycode key)
 {
+	t_sector	*s;
+
+	s = &d->sectors[d->selected_sector];
 	if (d->selected_sector >= 0)
 	{
-		if (key == SDLK_KP_2 && d->sectors[d->selected_sector].slope > -20)
-			d->sectors[d->selected_sector].slope -= 1;
-		if (key == SDLK_KP_8 && d->sectors[d->selected_sector].slope < 20)
-			d->sectors[d->selected_sector].slope += 1;
-	/**/ft_printf("slope: %d degree\n", d->sectors[d->selected_sector].slope);
-		if (key == SDLK_KP_MINUS && d->sectors[d->selected_sector].slopeceil > -20)
-			d->sectors[d->selected_sector].slopeceil -= 1;
-		if (key == SDLK_KP_PLUS && d->sectors[d->selected_sector].slopeceil < 20)
-			d->sectors[d->selected_sector].slopeceil += 1;
-	/**/ft_printf("slopeceil: %d degree\n", d->sectors[d->selected_sector].slopeceil);
+		if (key == SDLK_KP_2 && s->slope > -20)
+			s->slope -= 1;
+		if (key == SDLK_KP_8 && s->slope < 20)
+			s->slope += 1;
+		if (key == SDLK_KP_MINUS && s->slopeceil > -20)
+			s->slopeceil -= 1;
+		if (key == SDLK_KP_PLUS && s->slopeceil < 20)
+			s->slopeceil += 1;
 	}
 }
 
@@ -82,7 +75,7 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 	else if (key == SDLK_KP_7 || key == SDLK_KP_9)
 		ceil_height(d, ((key == SDLK_KP_7) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_BACKSPACE || key == SDLK_g)
-		(key == SDLK_BACKSPACE) ? cancel_last_wall(d) : toggle_isdoor(d);
+		(key == SDLK_BACKSPACE) ? cancel_last_wall(d) : toggle_isdoor(d, 0);
 	else if (d->selected_sector >= 0 &&
 			((key == SDLK_KP_4 && d->sectors[d->selected_sector].light > 0) ||
 			(key == SDLK_KP_6 && d->sectors[d->selected_sector].light < 1)))

@@ -14,13 +14,29 @@
 
 /*
 **	properties[6] = assets_options menu
+**	properties[19] = sector_options menu
 */
 
 int		is_over_options_menu(t_data *d, int x, int y)
 {
-	return (d->interface.prompt_asset_option &&
-			x < d->interface.toolbar.properties[6]->w &&
-			y > H - d->interface.toolbar.properties[6]->h);
+	t_btn_option_p	*p;
+	t_toolbar		*tb;
+	int				endx;
+
+	p = &d->interface.btn_option_p;
+	tb = &d->interface.toolbar;
+	if (d->interface.prompt_asset_option &&
+		x < d->interface.toolbar.properties[6]->w &&
+		y > H - d->interface.toolbar.properties[6]->h)
+		return (1);
+	else if (d->selected_sector >= 0)
+	{
+		endx = p->sector_options.x;
+		if (x > endx && x < endx + tb->properties[19]->w &&
+			y > p->sector_options.y && y < H)
+			return (2);
+	}
+	return (0);
 }
 
 /*
