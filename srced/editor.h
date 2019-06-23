@@ -289,9 +289,6 @@ typedef struct	s_data
 
 /**/int			bmp_reader(t_data *d);
 
-/**/int		write_assets_data(t_data *d, int f);
-/* */int		write_assets_texture(t_data *d, int f);
-
 void			debug_print(t_data *d);
 
 /*
@@ -528,6 +525,12 @@ int				contain_map_path(char *path);
 int				load_map(t_data *d, char *path);
 
 /*
+**	ed_read_map_assets.c
+*/
+
+int				read_assets_data(t_data *d, int f);
+
+/*
 **	ed_save_file.c
 */
 
@@ -542,11 +545,18 @@ void			set_texture_used(t_data *d, t_sector *s, t_wall *w);
 void			set_assets_used(t_data *d);
 
 /*
-**	ed_save_assets.c
+**	ed_save_monster.c
 */
 
 int				write_monster_data(t_data *d, int f);
 int				write_monster_texture(t_data *d, int f, t_monsters_texture *mt);
+
+/*
+**	ed_save_assets.c
+*/
+
+int				write_assets_data(t_data *d, int f);
+int				write_assets_texture(t_data *d, int f);
 
 /*
 **	ed_save_weapons_texture.c
@@ -567,19 +577,19 @@ int				write_posters_data(t_data *d, int f);
 int				write_sound(t_data *d, int f);
 
 /*
-** ed_door_toggle.c
+**	ed_door_toggle.c
 */
 
 void			toggle_isdoor(t_data *d);
 
 /*
-** ed_detect_assets.c
+**	ed_detect_assets.c
 */
 
 void			detect_assets(t_data *d, int x, int y);
 
 /*
-** ed_detect_wall.c
+**	ed_detect_wall.c
 */
 
 void			detect_wall(t_data *d, int x, int y);

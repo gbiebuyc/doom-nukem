@@ -39,7 +39,7 @@ void	asset_collision2(t_data *d, t_assets *asset)
 		d->cam.pos.x = asset->world_pos.x + dist.x * COLLISION_R / dist_len;
 		d->cam.pos.z = asset->world_pos.y + dist.y * COLLISION_R / dist_len;
 	}
-	if (asset->is_interactive || asset->is_atuopcik)
+	if (asset->is_interactive || asset->is_autopick)
 		use_asset(d, asset);
 }
 

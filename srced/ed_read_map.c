@@ -101,15 +101,16 @@ int			load_map(t_data *d, char *map)
 
 	map = (contain_map_path(map)) ? map : ft_strjoin(PATH_MAP, map);
 	camrot = 0;
-	if (((f = open(map, O_RDONLY)) < 0) ||
-		(fstat(f, &sb) == -1) ||
+	if (((f = open(map, O_RDONLY)) < 0) || (fstat(f, &sb) == -1) ||
 		((sb.st_mode & S_IFMT) != S_IFREG) ||
 		read(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
 		read(f, &camrot, sizeof(double)) < 0 ||
 		read(f, &d->startsectnum, sizeof(int16_t)) < 0 ||
 		read(f, d->next_map, 100) < 0)
 		return (ft_printf("# Map ERROR !\n"));
-	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f))
+	//TODO if (nextmap doesn't exist reset it)
+	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
+		read_assets_data(d, f))
 		return (1);
 	close(f);
 	if (!(contain_map_path(map)))

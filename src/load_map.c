@@ -108,11 +108,11 @@ void		load_map(t_data *d, char *map)
 		read(f, d->nextmap, 100) < 0)
 		exit(ft_printf("Doom : Map error\n"));
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
-		read_assets_data(d, f) || read_assets_texture(d, f) ||
-		read_textures_name(d, f) || read_texture_data(d, f) ||
-		read_posters_data(d, f) ||
+		read_assets_data(d, f) || read_textures_name(d, f) ||
+		read_texture_data(d, f) || read_posters_data(d, f) ||
 		load_weapons_texture(d, f, NB_TEX, NB_PROJECTILE) ||
-		load_monsters_texture(d, f) || load_sound(d, f))
+		load_monsters_texture(d, f) || read_assets_texture(d, f) ||
+		load_sound(d, f))
 		exit(1);
 	close(f);
 	if (!contain_map_path(map))

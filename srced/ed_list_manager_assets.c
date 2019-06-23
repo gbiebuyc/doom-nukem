@@ -100,7 +100,7 @@ int				add_assets_to_list(t_data *d, t_vec2f *p, int sectn,
 	else
 	{
 		if (!(i->assets_list->next = new_asset(p, sectn, i->assets_list)))
-			return (ft_printf("Failed to add next nasset.\n"));
+			return (ft_printf("Failed to add next asset.\n"));
 		i->assets_list->next->begin = i->assets_list->begin;
 		i->assets_list->next->picnum = selected_asset;
 		i->assets_list->next->num_asset = d->nb_assets + 1;

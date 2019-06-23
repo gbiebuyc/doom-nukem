@@ -122,7 +122,7 @@ typedef struct	s_assets
 	bool				is_on_ceil;
 	t_stat_modifier		stat_mod;
 	bool				is_interactive;
-	bool				is_atuopcik;
+	bool				is_autopick;
 	bool				collision;
 	bool				is_jetpack;
 	bool				used;
