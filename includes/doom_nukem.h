@@ -99,6 +99,7 @@ void	proj_floor(t_data *d, t_projdata *p);
 void	proj_ceil(t_data *d, t_projdata *p);
 double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
 bool	collision(t_data *d, t_sector *sect);
+void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum);
 
 /*
 ** player_damage.c

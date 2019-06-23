@@ -25,6 +25,8 @@ void	render(t_data *d)
 	}
 	for (int i = 0; i < WIDTH; i++)
 		d->zbuffer[i] = INFINITY;
+	for (int i = 0; i < WIDTH * HEIGHT; i++)
+		d->zbuffer_sprites[i] = INFINITY;
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);
 	color_buffer(d);

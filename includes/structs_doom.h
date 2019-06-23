@@ -115,6 +115,7 @@ typedef struct	s_projdata
 	t_vec3f		a[3];
 	t_vec3f		b[3];
 	double		areaa;
+	bool		is_on_floor;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes
@@ -261,6 +262,7 @@ typedef struct	s_data
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
 	double			zbuffer[WIDTH];
+	double			*zbuffer_sprites;
 	double			floorheightplayer;
 	double			ceilheightplayer;
 	char			nextmap[100];

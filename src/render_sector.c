@@ -113,6 +113,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		if (pthread_join(thread, NULL))
 			exit(printf("pthread_join error\n"));
 	}
+	draw_assets(d, &p, fr, sect - d->sectors);
 	if (sect->sprite_list)
 		reorder_sprite(d, sect);
 	t_sprite_list *sprite_list_tmp;
