@@ -82,9 +82,13 @@ static int	read_wall_n_sector_data(t_data *d, int f)
 		return (ft_printf("Faield to read numwwalls.\n"));
 	i = -1;
 	while (++i < d->numwalls)
+	{
 		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
 			read(f, d->walls[i].texture_name, 100) < 0)
 			return (ft_printf("Failed to read wall structure.\n"));
+		if (d->walls[i].is_door)
+			d->nb_door++;
+	}
 	return (0);
 }
 

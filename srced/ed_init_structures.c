@@ -24,8 +24,8 @@ void		init_data(t_data *d)
 		.sectordrawing = false, .default_wall_texture = 0, .nb_assets = 0,
 		.default_floor_texture = 0, .default_ceil_texture = 0, .nb_posters = 0,
 		.selected_texture = -2, .map_to_open = NULL, .texture_to_scale = -1,
-		.current_loaded_map = "newmap.DNMAP", .get_next_map = 0,
-		.assets = NULL};
+		.current_loaded_map = "newmap.DNMAP", .get_next_map = 0, .nb_door = 0,
+		.nb_keys = 0, .assets = NULL};
 	d->player_start = (t_vec3f){0, 0.2, 0};
 	d->startsectnum = 0;
 	d->interface = (t_interface){.show_menu = 0, .select = 1, .move = 0,
@@ -44,13 +44,13 @@ void		init_sectors(t_data *d)
 	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt,
 		1.0, false, "", "", false, NULL, 0, 0, 0, 0, false, false};
 	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-		false};
+		0, -1, false};
 	d->walls[1] = (t_wall){(t_vec2f){4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-		false};
+		0, -1, false};
 	d->walls[2] = (t_wall){(t_vec2f){4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-		false};
+		0, -1, false};
 	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-		false};
+		0, -1, false};
 	d->numsectors = 1;
 	d->numwalls = 4;
 }
@@ -80,4 +80,5 @@ void		init_button_position(t_data *d, int x, int y, t_btn_option_p *b)
 	assign_position(&b->cbox_autopickup, (t_vec2){x, y += 30});
 	assign_position(&b->cbox_collision, (t_vec2){x, y += 30});
 	assign_position(&b->cbox_jetpack, (t_vec2){x, y += 30});
+	assign_position(&b->cbox_key, (t_vec2){x, y += 30});
 }

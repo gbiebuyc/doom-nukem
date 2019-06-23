@@ -133,6 +133,9 @@ typedef struct	s_assets_list
 	bool					is_autopick;
 	bool					collision;
 	bool					is_jetpack;
+	bool					is_key;
+	int						key_num;
+	int						wall_num;
 	t_stat_modifier			stat_mod;
 	struct s_assets_list	*begin;
 	struct s_assets_list	*prev;
@@ -161,6 +164,7 @@ typedef struct	s_btn_option_posistion
 	t_vec2		cbox_autopickup;
 	t_vec2		cbox_collision;
 	t_vec2		cbox_jetpack;
+	t_vec2		cbox_key;
 }				t_btn_option_p;
 
 
@@ -264,6 +268,8 @@ typedef struct	s_data
 	int16_t				numwalls;
 	uint16_t			nbmonsters;
 	int16_t				nb_assets;
+	int					nb_door;
+	int					nb_keys;
 	int32_t				nb_used_texture;
 	int					nb_anim_tmp;
 	int					nb_orientation_tnp;
@@ -288,7 +294,7 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-
+t_wall	*get_adjacent_wall(t_data *d, t_wall *w);
 void			debug_print(t_data *d);
 
 /*

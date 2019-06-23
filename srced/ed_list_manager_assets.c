@@ -12,6 +12,16 @@
 
 #include "editor.h"
 
+static void		remove_key_link(t_data *d, t_assets_list *a)
+{
+	int	w;
+
+	w = -1;
+	while (++w < d->numwalls)
+		if (d->walls[w].key_num == a->key_num)
+			d->walls[w].key_num = 0;
+}
+
 static void		fix_list(t_data *d, t_assets_list *prev, t_assets_list *next)
 {
 	t_assets_list	*lst;
@@ -40,6 +50,8 @@ int				delete_asset(t_data *d, t_assets_list *lst)
 	{
 		if (lst->is_select)
 		{
+			if (lst->is_key)
+				remove_key_link(d, lst);
 			prev = lst->prev;
 			next = lst->next;
 			if (prev)
@@ -77,6 +89,9 @@ t_assets_list	*new_asset(t_vec2f *p, int sectnum, t_assets_list *prev)
 	asset->is_autopick = false;
 	asset->collision = false;
 	asset->is_jetpack = false;
+	asset->is_key = false;
+	asset->key_num = 0;
+	asset->wall_num = -1;
 	asset->stat_mod = (t_stat_modifier){0, 0, 0, 0, 0};
 	asset->prev = prev;
 	asset->next = NULL;

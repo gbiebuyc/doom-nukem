@@ -73,6 +73,7 @@ static int	get_texture_files(t_data *d, DIR *dr, t_texture_data **tex_lst,
 	}
 	if (*nb_tex == 0)
 		return (ft_printf("Textures folder is empty, no texture to load.\n"));
+	// TODO sort texture list by name
 	return (0);
 }
 

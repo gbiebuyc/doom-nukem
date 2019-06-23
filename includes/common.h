@@ -100,6 +100,8 @@ typedef struct	s_wall
 	int16_t		neighborsect;
 	char		texture_name[100];
 	bool		is_door;
+	int			door_num;
+	int			key_num;
 	int16_t		posterpicnum;
 	bool		is_transparent;
 }				t_wall;
@@ -125,6 +127,8 @@ typedef struct	s_assets
 	bool				is_autopick;
 	bool				collision;
 	bool				is_jetpack;
+	bool				is_key;
+	int					key_num;
 	bool				used;
 }				t_assets;
 

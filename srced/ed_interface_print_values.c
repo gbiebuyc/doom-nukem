@@ -33,9 +33,10 @@ static void	print_asset_values(t_data *d, t_assets_list *a, t_btn_option_p *p,
 	printdata(d, ft_itoa_static(a->stat_mod.blaster_ammo), x, v[5]->y + 5);
 	printdata(d, ft_itoa_static(a->stat_mod.m16_ammo), x, v[6]->y + 5);
 	i = 6;
-	while (++i < 11)
+	while (++i < 12)
 		if ((i == 7 && a->is_interactive) || (i == 8 && a->is_autopick) ||
-			(i == 9 && a->collision) || (i == 10 && a->is_jetpack))
+			(i == 9 && a->collision) || (i == 10 && a->is_jetpack) ||
+			(i == 11 && a->is_key))
 			copy_surface_to_surface(d->interface.toolbar.properties[14],
 						d->screen, (int[2]){v[i]->x, v[i]->y - 1}, d);
 }
@@ -66,7 +67,7 @@ void		print_next_map(t_data *d, int x, int y)
 		&p->btn_damaehp_minus, &p->btn_ammo_ballista_minus,
 		&p->btn_ammo_blaster_minus, &p->btn_ammo_m16_minus,
 		&p->cbox_isinteractive, &p->cbox_autopickup, &p->cbox_collision,
-		&p->cbox_jetpack});
+		&p->cbox_jetpack, &p->cbox_key});
 }
 
 void		print_interface_values(t_data *d, int x, int y)

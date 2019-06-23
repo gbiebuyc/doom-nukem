@@ -12,6 +12,22 @@
 
 #include "editor.h"
 
+static void	remove_key(t_data *d, t_wall *w)
+{
+	t_assets_list *lst;
+
+	lst = d->interface.assets_list->begin;
+	while (lst)
+	{
+		if (lst->is_key && lst->key_num == w->key_num)
+		{
+			lst->is_key = !lst->is_key;
+			lst->key_num = 0;
+		}
+		lst = lst->next;
+	}
+}
+
 t_wall	*get_adjacent_wall(t_data *d, t_wall *w)
 {
 	t_sector	*sect;
@@ -44,6 +60,7 @@ void	find_opposite_portal(t_data *d, t_sector *neighborsect, int16_t *last,
 			same_pos(&d->walls[j], d->selectedwall))
 		{
 			d->walls[i].is_door = d->selectedwall->is_door;
+			d->walls[i].door_num = d->selectedwall->door_num;
 			break ;
 		}
 		i = j++;
@@ -66,6 +83,10 @@ void	toggle_isdoor(t_data *d)
 			d->selectedwall = NULL;
 			return ;
 		}
+		d->nb_door += (!d->selectedwall->is_door) ? 1 : -1;
+		d->selectedwall->door_num = (!d->selectedwall->is_door) ? d->nb_door : -1;
+		if (d->selectedwall->is_door)
+			remove_key(d, d->selectedwall);
 		d->selectedwall->is_door = !d->selectedwall->is_door;
 		neighborsect = d->sectors + d->selectedwall->neighborsect;
 		nextwall = get_adjacent_wall(d, d->selectedwall);

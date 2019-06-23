@@ -12,16 +12,41 @@
 
 #include "editor.h"
 
+static int	link_key_with_door(t_data *d, t_assets_list *a)
+{
+	int	w;
+	int	wall_num;
+
+	wall_num = (d->selected_wall == -1) ? d->hl_wallnum : d->selected_wall;
+	if ((d->nb_door <= 0 || wall_num == -1) && !a->is_key)
+		return (ft_printf("There is no door to link the key with.\n"));
+	if (a->is_key)
+	{
+		w = -1;
+		while (++w < d->numwalls)
+			if (d->walls[w].key_num == a->key_num)
+				d->walls[w].key_num = 0;
+	}
+	else
+	{
+		d->nb_keys++;
+		a->key_num = d->nb_keys;
+		w = -1;
+		while (++w < d->numwalls)
+			if (d->walls[w].door_num == d->walls[wall_num].door_num)
+				d->walls[w].key_num = a->key_num;
+	}
+	a->is_key = !a->is_key;
+	return (0);
+}
+
 int			is_on_button(t_vec2 btn, int x, int y)
 {
 	return (x >= btn.x && x < btn.x + 24 && y >= btn.y && y < btn.y + 24);
 }
 
-static void	handle_checkbox(t_data *d, int x, int y)
+static void	handle_checkbox(t_data *d, int x, int y, t_assets_list *a)
 {
-	t_assets_list	*a;
-
-	a = d->interface.current_selected_asset;
 	if (is_on_button(d->interface.btn_option_p.cbox_onfloor, x, y))
 	{
 		a->is_on_floor = true;
@@ -40,6 +65,8 @@ static void	handle_checkbox(t_data *d, int x, int y)
 		a->collision = !a->collision;
 	else if (is_on_button(d->interface.btn_option_p.cbox_jetpack, x, y))
 		a->is_jetpack = !a->is_jetpack;
+	else if (is_on_button(d->interface.btn_option_p.cbox_key, x, y))
+		link_key_with_door(d, a);
 }
 
 void		event_asset_option_handler(t_data *d, int x, int y,
@@ -48,7 +75,7 @@ void		event_asset_option_handler(t_data *d, int x, int y,
 	t_assets_list	*a;
 
 	a = d->interface.current_selected_asset;
-	handle_checkbox(d, x, y);
+	handle_checkbox(d, x, y, a);
 	if (is_on_button(p->btn_restorehp_minus, x, y) && a->stat_mod.heal > 0)
 		a->stat_mod.heal -= 5;
 	else if (is_on_button(p->btn_restorehp_plus, x, y))
