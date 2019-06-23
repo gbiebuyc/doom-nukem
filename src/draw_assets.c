@@ -49,7 +49,7 @@ void	blit_asset(t_data *d, t_projdata *p, t_frustum *fr, SDL_Surface *tex)
 	x = p->cx1 - 1;
 	while (++x <= p->cx2)
 	{
-		if (p->z >= p->zbufferlocal[x])
+		if (p->z >= p->zbuffer[x])
 			continue ;
 		u = norm(x, p->x1, p->x2) * tex->w;
 		y = ft_max(p->ya, fr->ytop[x]);

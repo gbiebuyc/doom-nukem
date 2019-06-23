@@ -40,7 +40,7 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	proj_ceil(d, &p);
 	i = -1;
 	while (++i < WIDTH)
-		p.zbufferlocal[i] = INFINITY;
+		p.zbuffer[i] = INFINITY;
 	for (int i = 0; i < sect->numwalls; i++)
 	{
 		int wallnum = sect->firstwallnum + i;

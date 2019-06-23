@@ -102,7 +102,7 @@ typedef struct	s_projdata
 	int			yd;
 	int			nya;
 	int			nyb;
-	double		zbufferlocal[WIDTH];
+	double		zbuffer[WIDTH];
 	bool		visible[WIDTH];
 	double		doorheight;
 	double		doorbottom;
@@ -261,7 +261,6 @@ typedef struct	s_data
 	t_color_buf		color_buf;
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
-	double			zbuffer[WIDTH];
 	double			*zbuffer_sprites;
 	double			floorheightplayer;
 	double			ceilheightplayer;
