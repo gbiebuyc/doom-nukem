@@ -112,7 +112,8 @@ int			load_map(t_data *d, char *map)
 		read(f, &d->startsectnum, sizeof(int16_t)) < 0 ||
 		read(f, d->next_map, 100) < 0)
 		return (ft_printf("# Map ERROR !\n"));
-	//TODO if (nextmap doesn't exist reset it)
+	if (!map_exist(d, d->next_map, d->next_map))
+		ft_memset(d->next_map, 0, 100);
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_assets_data(d, f))
 		return (1);

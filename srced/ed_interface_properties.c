@@ -136,6 +136,8 @@ static void	draw_selection_case(t_data *d, SDL_Surface **prop, int x, int y)
 
 /*
 **	draw properties from the midle of the screen to the bot
+**	properties[0] = lblsector, properties[1] = sector_info,
+**	properties[2] = lblWall, properties[3] = lblTexture
 */
 
 void		print_properties(t_data *d, SDL_Surface **properties, int x, int y)

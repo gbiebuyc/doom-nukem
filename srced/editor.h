@@ -309,6 +309,7 @@ typedef struct	s_data
 
 /**/int			bmp_reader(t_data *d);
 /**/void		debug_print(t_data *d);
+int		map_exist(t_data *d, char *map, char *save);
 
 /*
 **	ed_init.c
@@ -467,7 +468,7 @@ void			draw_ligth_bar(t_data *d);
 **	ed_interface_print_values.c
 */
 
-void			print_interface_values(t_data *d, int x, int y);
+void			print_interface_values(t_data *d, int x, int y, char *str);
 
 /*
 **	ed_interface_map_list.c

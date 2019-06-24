@@ -121,6 +121,7 @@ void		print_interface(t_data *d)
 		putpixel(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	print_properties(d, d->interface.toolbar.properties, 0, PROPERTIES_POS);
 	print_assets_toolbar(d, d->interface.toolbar.properties);
-	print_interface_values(d, 0, 0);
+	print_interface_values(d, d->interface.btn_floor_height_pos.x - 85,
+												PROPERTIES_POS, NULL);
 	draw_ligth_bar(d);
 }

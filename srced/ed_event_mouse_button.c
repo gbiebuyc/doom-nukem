@@ -88,9 +88,9 @@ static int	mouse_button_down(t_data *d, SDL_Event *e, int x, int y)
 			else if ((d->map_to_open = get_map_to_open(d, e)))
 				return (-2);
 		}
-		if (menu_button(d, e) == -1)
+		else if (menu_button(d, e) == -1)
 			return (-1);
-		if (!d->interface.prompt_map_open && !d->interface.btn_right_pressed)
+		else if (!d->interface.btn_right_pressed)
 			mouse_button_left_handler(d, e, x, y);
 		if (is_over_options_menu(d, x, y) == 1)
 			event_asset_option_handler(d, x, y, &d->interface.btn_option_p);

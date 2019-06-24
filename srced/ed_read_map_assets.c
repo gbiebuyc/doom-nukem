@@ -17,6 +17,7 @@ static void	fill_list(t_data *d, t_interface *itf)
 	int		i;
 	int		s;
 
+	d->nb_assets = 0;
 	s = -1;
 	while (++s < d->numsectors)
 	{
@@ -42,10 +43,11 @@ int			read_assets_data(t_data *d, int f)
 
 	if (read(f, &d->nb_assets, sizeof(int16_t)) < 0)
 		return (ft_printf("Failed to read map nb_assets.\n"));
-	if (!(d->assets = (t_assets**)malloc(sizeof(t_assets*) * d->numsectors)))
-		return (ft_printf("Failed to malloc assets structures.\n"));
 	if (d->nb_assets > 0)
 	{
+		if (!(d->assets =
+					(t_assets**)malloc(sizeof(t_assets*) * d->numsectors)))
+			return (ft_printf("Failed to malloc assets structures.\n"));
 		s = -1;
 		while (++s < d->numsectors)
 		{

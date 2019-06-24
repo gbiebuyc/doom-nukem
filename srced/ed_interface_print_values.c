@@ -99,15 +99,21 @@ static void	print_next_map_and_asset(t_data *d, int x, int y)
 		&p->cbox_jetpack, &p->cbox_key});
 }
 
-void		print_interface_values(t_data *d, int x, int y)
+void		print_interface_values(t_data *d, int x, int y, char *string)
 {
-	char	*string;
-
-	x = d->interface.btn_floor_height_pos.x - 85;
-	y = PROPERTIES_POS;
-	string = ft_itoa_static(d->selected_sector);
 	if (d->selected_sector != -1)
+	{
+		string = ft_itoa_static(d->selected_sector);
 		draw_string(d, (t_font){string, x, y + 6, 0x008800, 2});
+		string =
+			ft_itoa_static(d->sectors[d->selected_sector].floorheight * 10);
+		draw_string(d, (t_font){string, x,
+						d->interface.btn_floor_height_pos.y + 4, 0x008800, 2});
+		string =
+				ft_itoa_static(d->sectors[d->selected_sector].ceilheight * 10);
+		draw_string(d, (t_font){string, x,
+						d->interface.btn_ceil_height_pos.y + 4, 0x008800, 2});
+	}
 	else
 		draw_string(d, (t_font){"Default", x, y + 6, 0x008800, 2});
 	if (d->selected_wall != -1 || d->hl_wallnum != -1)
@@ -118,12 +124,6 @@ void		print_interface_values(t_data *d, int x, int y)
 	}
 	else
 		draw_string(d, (t_font){"Default", x, H - 167, 0x008800, 2});
-	string = ft_itoa_static(d->sectors[d->selected_sector].floorheight * 10);
-	draw_string(d, (t_font){string, x,
-					d->interface.btn_floor_height_pos.y + 4, 0x008800, 2});
-	string = ft_itoa_static(d->sectors[d->selected_sector].ceilheight * 10);
-	draw_string(d, (t_font){string, x,
-					d->interface.btn_ceil_height_pos.y + 4, 0x008800, 2});
 	print_next_map_and_asset(d, x, y);
 	print_sector_options_values(d, x, y, &d->interface.btn_option_p);
 }

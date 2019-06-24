@@ -36,7 +36,7 @@ int		ed_usage(t_data *d)
 	return (EXIT_FAILURE);
 }
 
-int		map_exist(t_data *d, char *map)
+int		map_exist(t_data *d, char *map, char *save)
 {
 	int		i;
 	char	*check;
@@ -53,13 +53,13 @@ int		map_exist(t_data *d, char *map)
 	while (++i < d->interface.nb_map)
 		if (ft_strequ(check, d->interface.map_list_sort[i]->name))
 		{
-			ft_strcpy(d->current_loaded_map,
+			ft_strcpy(save,
 						d->interface.map_list_sort[i]->name);
 			if (!have_extension)
 				free(check);
 			return (1);
 		}
-	ft_strcpy(d->current_loaded_map, map);
+	ft_strcpy(save, map);
 	if (!have_extension)
 		free(check);
 	return (0);
@@ -111,7 +111,7 @@ int		main(int ac, char **av)
 	init_data(&d);
 	if (init_editor(&d))
 		return (EXIT_FAILURE);
-	if (ac == 1 || (ac == 2 && !map_exist(&d, av[1])))
+	if (ac == 1 || (ac == 2 && !map_exist(&d, av[1], d.current_loaded_map)))
 		init_sectors(&d);
 	else if (ac == 2)
 		if (load_map(&d, d.current_loaded_map))

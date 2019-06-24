@@ -53,11 +53,11 @@ int		fill_assets_structure(t_data *d)
 	t_assets_list	*lst;
 
 	clear_assets_structure(d);
+	if (!d->interface.assets_list)
+		return (0);
 	if (!(d->assets = (t_assets**)malloc(sizeof(t_assets*) * d->numsectors)))
 		return (ft_printf("Failed to malloc assets structures.\n"));
 	s = -1;
-	if (!d->interface.assets_list)
-		return (0);
 	while (++s < d->numsectors && (i = 0) != -1)
 	{
 		if (!(d->assets[s] = (t_assets*)malloc(sizeof(t_assets) * 10)))
