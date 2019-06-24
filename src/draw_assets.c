@@ -41,10 +41,9 @@ void	blit_asset(t_data *d, t_projdata *p, t_frustum *fr, SDL_Surface *tex)
 	int			x;
 	int			y;
 	int			u;
-	double		shadefactor;
 	uint32_t	px;
 
-	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
+	if ((p->shadefactor = getshadefactor(d, p, p->z)) <= 0)
 		return ;
 	x = p->cx1 - 1;
 	while (++x <= p->cx2)
@@ -57,10 +56,11 @@ void	blit_asset(t_data *d, t_projdata *p, t_frustum *fr, SDL_Surface *tex)
 		{
 			if (p->z >= d->zbuffer_sprites[x + y * WIDTH])
 				continue ;
-			d->zbuffer_sprites[x + y * WIDTH] = p->z;
 			px = getpixel4(tex, u, norm(y, p->ya, p->yb));
-			if ((px >> 24) > 127)
-				putpixel(d, x, y, shade(shadefactor, px));
+			if ((px >> 24) < 127)
+				continue ;
+			d->zbuffer_sprites[x + y * WIDTH] = p->z;
+			putpixel(d, x, y, shade(p->shadefactor, px));
 		}
 	}
 }

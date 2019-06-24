@@ -13,6 +13,8 @@
 NAME= doom-nukem
 
 FILES= main \
+	   draw_hud \
+	   msg \
 	   asset_collision \
 	   draw_assets \
 	   collision \
@@ -29,7 +31,8 @@ FILES= main \
 	   init_player \
 	   loop \
 	   events \
-	   door_activation \
+	   activate_door \
+	   press_e \
 	   monster_behaviour \
 	   monster_anim_state \
 	   reorder_sprite \

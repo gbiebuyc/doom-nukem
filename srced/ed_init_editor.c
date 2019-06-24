@@ -29,7 +29,8 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 			file = d->assets_data[i].file;
 			if (!(tb->assets[m][j] = SDL_LoadBMP(file)))
 				return (ft_printf("Loading failed : %s\n", file));
-			remove_backgorund_image(tb->assets[m][j]);
+			// J'ai cherché pendant 2h pourquoi l'alpha ne marchait pas.
+			//remove_backgorund_image(tb->assets[m][j]);
 			i++;
 		}
 		m++;

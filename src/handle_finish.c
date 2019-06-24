@@ -44,5 +44,6 @@ void	handle_finish(t_data *d)
 		clear_sector_sprites(d, i);
 	if (!ft_strlen(d->nextmap))
 		the_end(d);
+	invoke_msg(d, "YOU FINISHED THE MAP");
 	init_everything(d, d->nextmap);
 }

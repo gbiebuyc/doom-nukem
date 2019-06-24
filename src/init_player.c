@@ -64,4 +64,7 @@ void	init_player(t_data *d, t_player *player)
 	player->health = 100;
 	d->cursectnum = d->startsectnum;
 	d->cam = d->startcam;
+	ft_memset(&d->slot1, 0, sizeof(d->slot1));
+	ft_memset(&d->slot2, 0, sizeof(d->slot2));
+	ft_memset(&d->slot3, 0, sizeof(d->slot3));
 }

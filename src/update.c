@@ -122,6 +122,7 @@ void	update(t_data *d)
 	{
 		init_monsters(d);
 		init_player(d, &d->player);
+		invoke_msg(d, "YOU DIED");
 	}
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;

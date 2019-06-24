@@ -100,8 +100,11 @@ double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
 bool	collision(t_data *d, t_sector *sect);
 void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum);
 void	asset_collision(t_data *d);
-void	activate_or_pickup(t_data *d);
 void	use_asset(t_data *d, t_assets *asset);
+void	draw_hud(t_data *d);
+void	invoke_msg(t_data *d, char *msg);
+bool	activate_door(t_data *d, t_sector *sect);
+void	press_e(t_data *d);
 
 /*
 ** player_damage.c

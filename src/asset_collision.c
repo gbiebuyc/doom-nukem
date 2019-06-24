@@ -16,11 +16,25 @@
 
 void	use_asset(t_data *d, t_assets *asset)
 {
-	asset->used = true;
+	t_inventoryslot	*slot;
+
 	d->player.health += asset->stat_mod.heal;
 	d->player.health -= asset->stat_mod.damage;
 	if (asset->is_jetpack)
 		d->player.is_flying = 10000;
+	if (!d->slot1.is_occupied)
+		slot = &d->slot1;
+	else if (!d->slot2.is_occupied)
+		slot = &d->slot2;
+	else if (!d->slot3.is_occupied)
+		slot = &d->slot3;
+	else
+		return (invoke_msg(d, "INVENTORY IS FULL"));
+	asset->used = true;
+	slot->is_occupied = true;
+	if (asset->is_key)
+		slot->key_num = asset->key_num;
+	slot->tex = d->assets_texture[asset->picnum];
 }
 
 void	asset_collision2(t_data *d, t_assets *asset)

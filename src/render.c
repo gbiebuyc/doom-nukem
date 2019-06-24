@@ -12,21 +12,6 @@
 
 #include "doom_nukem.h"
 
-void			copy_surface_to_surface(SDL_Surface *src, SDL_Surface *dst,
-												int p[2], t_data *d)
-{
-	int			x;
-	int			y;
-
-	y = -1;
-	while (++y < src->h && (x = -1))
-		while (++x < src->w)
-			if (p[0] + x >= 0 && p[0] + x < WIDTH && p[1] + y >= 0 && p[1] + y < HEIGHT)
-				((uint32_t*)dst->pixels)[p[0] + x + (p[1] + y) * dst->w] =
-				((uint32_t*)src->pixels)[x + y * src->w];
-	
-}
-
 void	render(t_data *d)
 {
 	t_frustum fr;
@@ -43,13 +28,7 @@ void	render(t_data *d)
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);
 	color_buffer(d);
-	//draw_hud(d);
-	/***/
 	draw_aim_cross(d);
-	/***/
-
-	char buf[100] = "Health: ";
-	ft_strcpy(buf + 8, ft_itoa_static(d->player.health));
-	draw_string(d, (t_font){buf, 50, 50, 0x0, 2});
+	draw_hud(d);
 	SDL_UpdateWindowSurface(d->win);
 }

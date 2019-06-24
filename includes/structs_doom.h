@@ -116,6 +116,7 @@ typedef struct	s_projdata
 	t_vec3f		b[3];
 	double		areaa;
 	bool		is_on_floor;
+	double		shadefactor;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes
@@ -220,6 +221,13 @@ typedef struct	s_color_buf
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
 
+typedef struct		s_inventoryslot
+{
+	bool			is_occupied;
+	SDL_Surface		*tex;
+	int				key_num;
+}					t_inventoryslot;
+
 typedef struct	s_data
 {
 	t_player		player;
@@ -271,6 +279,11 @@ typedef struct	s_data
 	int				musicnum;
 	int				soundnum;
 	pthread_t		music_thread;
+	t_inventoryslot	slot1;
+	t_inventoryslot	slot2;
+	t_inventoryslot	slot3;
+	char			msg[100];
+	uint32_t		msg_start;
 }				t_data;
 
 typedef struct	s_thread_arg
