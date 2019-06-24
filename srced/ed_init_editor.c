@@ -29,8 +29,6 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 			file = d->assets_data[i].file;
 			if (!(tb->assets[m][j] = SDL_LoadBMP(file)))
 				return (ft_printf("Loading failed : %s\n", file));
-			// J'ai cherché pendant 2h pourquoi l'alpha ne marchait pas.
-			//remove_backgorund_image(tb->assets[m][j]);
 			i++;
 		}
 		m++;
@@ -71,7 +69,7 @@ static int		init_toolbar(t_toolbar *tb)
 	"./Menu/lblSkybox.bmp", "./Menu/lblDoor.bmp", "./Menu/checkBoxEmpty.bmp",
 	"./Menu/checkBox.bmp", "./Menu/lblPoster.bmp", "./Menu/lblEnd.bmp",
 	"./Menu/lblNextmap.bmp", "./Menu/browseBox.bmp",
-	"./Menu/sectorOptions.bmp"};
+	"./Menu/sectorOptions.bmp", "./Menu/lblTransparent.bmp"};
 	i = -1;
 	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
 		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||

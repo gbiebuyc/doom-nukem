@@ -35,11 +35,11 @@ static void	empty_case(t_data *d, t_interface *i)
 	{
 		x = i->tex_select[1].x + 1;
 		y = i->tex_select[1].y + 1;
-		copy_surface_to_surface(d->textures[d->default_ceil_texture],
+		copy_surface_to_surface(d->textures[d->default_floor_texture],
 								d->screen, (int[2]){x, y}, d);
 		x = i->tex_select[0].x + 1;
 		y = i->tex_select[0].y + 1;
-		copy_surface_to_surface(d->textures[d->default_floor_texture],
+		copy_surface_to_surface(d->textures[d->default_ceil_texture],
 								d->screen, (int[2]){x, y + 1}, d);
 	}
 }

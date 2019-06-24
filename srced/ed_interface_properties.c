@@ -138,12 +138,8 @@ static void	draw_selection_case(t_data *d, SDL_Surface **prop, int x, int y)
 **	draw properties from the midle of the screen to the bot
 */
 
-void		print_properties(t_data *d, SDL_Surface **properties)
+void		print_properties(t_data *d, SDL_Surface **properties, int x, int y)
 {
-	int	x;
-	int	y;
-
-	y = PROPERTIES_POS;
 	x = W - PROPERTIES_LIMIT + MARGIN;
 	draw_separator(d, W - PROPERTIES_LIMIT, y - 5, 0x008800);
 	copy_surface_to_surface(properties[0], d->screen, (int[2]){x, y}, d);
@@ -162,4 +158,11 @@ void		print_properties(t_data *d, SDL_Surface **properties)
 		fill_texture_selection(d, &d->interface, ((d->selected_wall == -1 &&
 				d->hl_wall) ? d->hl_wallnum : d->selected_wall), 0);
 	draw_plus_minus_btn_n_checkbox(d, d->interface.toolbar.properties, 0, 0);
+	x = d->interface.cbox_door_p.x + 30;
+	y = d->interface.cbox_door_p.y + 1;
+	d->interface.cbox_transparent_p = (t_vec2){x + properties[20]->w - 27, y};
+	copy_surface_to_surface(properties[20], d->screen, (int[2]){x, y - 2}, d);
+	if (d->hl_wallnum != -1 && d->walls[d->hl_wallnum].is_transparent)
+		copy_surface_to_surface(properties[14], d->screen,
+						(int[2]){d->interface.cbox_transparent_p.x, y + 1}, d);
 }

@@ -98,6 +98,8 @@ int		event_loop(t_data *d)
 	SDL_Quit();
 	return ((open == -2) ? 1 : 0);
 }
+// TODO sort texture
+// TODO reset nextmap
 
 int		main(int ac, char **av)
 {

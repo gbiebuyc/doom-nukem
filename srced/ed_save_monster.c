@@ -34,7 +34,7 @@ int			fill_monster_structure(t_data *d)
 	i = 0;
 	while (lst)
 	{
-		d->monsters[i] = (t_monster){lst->pos, 1.0, 10, 0.0, lst->sectnunm, 0,
+		d->monsters[i] = (t_monster){lst->pos, 1.0, 1, 0.0, lst->sectnunm, 0,
 									0, 0, 0, 0, 0, 0, 0, 0, 1};
 		lst = lst->next;
 		i++;

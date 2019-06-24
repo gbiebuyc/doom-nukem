@@ -83,9 +83,11 @@ void	btn_sector_height(t_data *d, int x, int y, t_interface *i)
 void	is_on_checkbox(t_data *d, int x, int y, SDL_Event *e)
 {
 	t_vec2	*xy;
+	int		wallnum;
 
-	xy = (t_vec2[4]){d->interface.cbox_door_p, d->interface.cbox_skybox_p,
-					d->interface.cbox_end_p, d->interface.box_nex_map_p};
+	xy = (t_vec2[]){d->interface.cbox_door_p, d->interface.cbox_skybox_p,
+					d->interface.cbox_end_p, d->interface.box_nex_map_p,
+					d->interface.cbox_transparent_p};
 	if (x > xy[0].x && x <= xy[0].x + 24 && y > xy[0].y && y <= xy[0].y + 24)
 		toggle_isdoor(d, 0);
 	if (x > xy[1].x && x <= xy[1].x + 24 && y > xy[1].y && y <= xy[1].y + 24)
@@ -102,4 +104,7 @@ void	is_on_checkbox(t_data *d, int x, int y, SDL_Event *e)
 	}
 	if (x > xy[3].x && x <= xy[3].x + 24 && y > xy[3].y && y <= xy[3].y + 24)
 		get_next_level(d, e);
+	if (x > xy[4].x && x <= xy[4].x + 24 && ((wallnum = d->selected_wall) != -1
+		|| (wallnum = d->hl_wallnum) != -1) && y > xy[4].y && y <= xy[4].y + 24)
+		d->walls[wallnum].is_transparent = !d->walls[wallnum].is_transparent;
 }

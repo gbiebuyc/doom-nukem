@@ -119,7 +119,7 @@ void		print_interface(t_data *d)
 	y = 0;
 	while (y++ < H)
 		putpixel(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	print_properties(d, d->interface.toolbar.properties);
+	print_properties(d, d->interface.toolbar.properties, 0, PROPERTIES_POS);
 	print_assets_toolbar(d, d->interface.toolbar.properties);
 	print_interface_values(d, 0, 0);
 	draw_ligth_bar(d);

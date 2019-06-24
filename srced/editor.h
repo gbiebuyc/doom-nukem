@@ -54,7 +54,7 @@
 # define MARGIN 6
 # define PROPERTIES_LIMIT 350
 # define TEXTURE_TOOLBAR 618
-# define NB_PROPERTIES 20
+# define NB_PROPERTIES 21
 # define PROPERTIES_POS (H >> 1) - 20
 # define MOVE_WALL_PROP 30
 
@@ -222,6 +222,7 @@ typedef struct	s_interface
 	t_vec2			btn_floor_height_pos;
 	t_vec2			btn_ceil_height_pos;
 	t_vec2			cbox_door_p;
+	t_vec2			cbox_transparent_p;
 	t_vec2			cbox_skybox_p;
 	t_vec2			cbox_end_p;
 	t_vec2			box_nex_map_p;
@@ -449,7 +450,8 @@ void			is_on_checkbox(t_data *d, int x, int y, SDL_Event *e);
 **	ed_interface_properties.c
 */
 
-void			print_properties(t_data *d, SDL_Surface **properties);
+void			print_properties(t_data *d, SDL_Surface **properties, int x,
+																	int y);
 
 /*
 **	ed_interface_properties2.c
