@@ -150,7 +150,12 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	{
 		p->nya = lerp(p->n, p->ny1a, p->ny2a);
 		p->nyb = lerp(p->n, p->ny1b, p->ny2b);
-		p->doorbottom = ft_min(p->yd, p->nyb);
+		if (p->wall->is_door)
+		{
+			p->nya = ft_max(p->nya, p->ya);
+			p->nyb = ft_min(p->nyb, p->yb);
+		}
+		p->doorbottom = ft_min(p->yb, p->nyb);
 		p->doorheight = p->doorbottom - p->yc;
 		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
 			(1 - d->doorstate[p->wall - d->walls]);

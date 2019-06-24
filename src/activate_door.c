@@ -12,7 +12,7 @@
 
 #include "doom_nukem.h"
 
-#define ACTIVATION_DIST 1.5
+#define ACTIVATION_DIST 3.0
 
 void	activate_neighbor_door(t_data *d, t_wall *door,
 		t_wall *nextwall, t_sector *nei)
