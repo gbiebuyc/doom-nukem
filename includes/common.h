@@ -88,6 +88,7 @@ typedef struct	s_sector
 	int16_t			slopeceil_orientation;
 	bool			is_animatedslope;
 	bool			is_animatedslopeceil;
+	bool			is_elevator;
 	bool			is_finish;
 	bool			is_harmful;
 }					t_sector;
