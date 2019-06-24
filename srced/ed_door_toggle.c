@@ -16,6 +16,8 @@ static void	remove_key(t_data *d, t_wall *w)
 {
 	t_assets_list *lst;
 
+	if (!d->interface.assets_list)
+		return ;
 	lst = d->interface.assets_list->begin;
 	while (lst)
 	{
