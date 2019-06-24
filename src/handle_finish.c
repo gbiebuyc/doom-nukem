@@ -31,7 +31,6 @@ void	handle_finish(t_data *d)
 {
 	int i;
 
-	//TODO: Free monster textures
 	i = -1;
 	while (++i < d->nb_textures)
 		SDL_FreeSurface(d->textures[i]);
@@ -41,7 +40,7 @@ void	handle_finish(t_data *d)
 		d->projectiles[i].is_active = false;
 	}
 	i = -1;
-	while (i < d->numsectors)
+	while (++i < d->numsectors)
 		clear_sector_sprites(d, i);
 	if (!ft_strlen(d->nextmap))
 		the_end(d);
