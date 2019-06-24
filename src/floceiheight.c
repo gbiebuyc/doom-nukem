@@ -39,20 +39,20 @@ double	get_floceiheight(t_data *d, int16_t sectnum, t_vec2f p, bool is_floor)
 	t_vec2f		center;
 	double		h;
 	double		slope;
-	double		orientation;
 
 	if (sectnum < 0)
 		exit(ft_printf("bad sectnum\n"));
 	sect = &d->sectors[sectnum];
-	h = is_floor ? sect->floorheight : sect->ceilheight;
+	h = (is_floor ? sect->floorheight : sect->ceilheight) + ((is_floor &&
+				sect->is_elevator) ? sin(SDL_GetTicks() / 1000.0) * 0.5 : 0);
 	slope = is_floor ? sect->slope : sect->slopeceil;
 	if (slope == 0)
 		return (h);
-	orientation = is_floor ? sect->slope_orientation :
-		sect->slopeceil_orientation;
 	center = get_sector_center(d, sect);
-	p = rotate_point(p, center, (sect->is_animatedslope) ?
-			(SDL_GetTicks() / 1000.0) : (orientation * M_PI / 180));
+	p = rotate_point(p, center, ((is_floor ? sect->slope_orientation :
+			sect->slopeceil_orientation) * M_PI / 180) + (((is_floor &&
+			sect->is_animatedslope) || (!is_floor &&
+			sect->is_animatedslopeceil)) ? (SDL_GetTicks() / 1000.0) : 0));
 	return (h + tan(slope * M_PI / 180) * (p.x - center.x));
 }
 

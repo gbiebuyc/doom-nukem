@@ -38,6 +38,7 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].outdoor = 0;
 	d->sectors[d->numsectors - 1].is_finish = false;
 	d->sectors[d->numsectors - 1].is_harmful = false;
+	d->sectors[d->numsectors - 1].is_elevator = false;
 	add_wall(d);
 	add_wall(d);
 }
