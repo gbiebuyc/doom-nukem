@@ -6,14 +6,14 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 08:46:52 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/07 01:26:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:10:48 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define SIZE_OF_WEAP 1.5;
-# define MAX_INERTIA 0.19//must change MOVE_SPEED in movement.c to scale properly // change along define in inertia.c
+#define SIZE_OF_WEAP 1.5;
+#define MAX_INERTIA 0.19
 
 void	display_weapon(t_data *d, SDL_Surface *s, t_vec2f start, t_vec2f end)
 {
@@ -30,8 +30,10 @@ void	display_weapon(t_data *d, SDL_Surface *s, t_vec2f start, t_vec2f end)
 		y = start.y;
 		while (y < ft_min(HEIGHT, end.y))
 		{
-			colo = getpixel(s, scale.x * (x - start.x), scale.y * (y - start.y));
-			colo = alpha(((uint32_t *)d->screen->pixels)[x + y * d->screen->w], colo);
+			colo = getpixel(s, scale.x *
+					(x - start.x), scale.y * (y - start.y));
+			colo = alpha(((uint32_t *)d->screen->pixels)
+					[x + y * d->screen->w], colo);
 			putpixel(d, x, y, colo);
 			y++;
 		}
@@ -50,18 +52,20 @@ void	draw_weapon(t_data *d)
 	{
 		d->player.current_anim_playing = d->player.weapon_anim
 		[d->player.current_weapon][d->player.current_anim_playing];
-		d->player.timer_anim_weap = d->player.speed_anim[d->player.current_weapon];
+		d->player.timer_anim_weap =
+			d->player.speed_anim[d->player.current_weapon];
 	}
-	cur_img = d->weapon_tex[d->player.current_weapon][d->player.current_anim_playing];
+	cur_img = d->weapon_tex[d->player.current_weapon]
+		[d->player.current_anim_playing];
 	d->player.timer_anim_weap--;
-	start.x = WIDTH * 0.5 + d->player.timer_change_weap * WIDTH * 0.003  -
+	start.x = WIDTH * 0.5 + d->player.timer_change_weap * WIDTH * 0.003 -
 	cur_img->w * 0.5 * SIZE_OF_WEAP;
 	tmp = d->inertia;
 	actualize_dir(d->cam.rot, &tmp);
-	start.x -= tmp.x * 150;	
+	start.x -= tmp.x * 150;
 	end.x = start.x + cur_img->w * SIZE_OF_WEAP;
-	end.y = HEIGHT + d->player.timer_change_weap * HEIGHT * 0.010 + MAX_INERTIA * 50;
-	end.y += tmp.y * 50;
+	end.y = (HEIGHT + d->player.timer_change_weap *
+		HEIGHT * 0.010 + MAX_INERTIA * 50) + tmp.y * 50;
 	start.y = end.y - cur_img->h * SIZE_OF_WEAP;
 	display_weapon(d, cur_img, start, end);
 }

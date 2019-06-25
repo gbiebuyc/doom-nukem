@@ -6,13 +6,13 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 23:49:28 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/22 23:49:28 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/25 23:14:36 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-t_vec2f get_sector_center(t_data *d, t_sector *sect)
+t_vec2f	get_sector_center(t_data *d, t_sector *sect)
 {
 	int		i;
 	t_vec2f	center;

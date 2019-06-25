@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:15:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/05/19 01:28:53 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 22:19:18 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	super_unoptimized_reorder_sprite(t_data *d, t_sector *sec,
 			if (i == 0)
 			{
 				tmp_prev->next = mainlist->next;
-				mainlist->next = sec->sprite_list;;
+				mainlist->next = sec->sprite_list;
 				sec->sprite_list = mainlist;
 				super_unoptimized_reorder_sprite(d, sec, vla);
 				return ;
@@ -59,10 +59,10 @@ void	set_vla(t_sprite_list *tmp, double *vla, t_data *d)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->type == IS_MONSTER) //might need to rework all that to put it in 2d instead of 2d and 3d
+		if (tmp->type == IS_MONSTER)
 			vla[i] = vec3f_length(sub_vec3f(d->cam.pos,
 						(t_vec3f){d->monsters[tmp->id].pos.x,
-						0.0,// might be changed if needed to have flying monsters
+						0.0,
 						d->monsters[tmp->id].pos.y
 						}));
 		if (tmp->type == IS_PROJECTILE)

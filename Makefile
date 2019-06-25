@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/23 17:57:35 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/26 00:27:23 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ FILES= main \
 	   draw_wall \
 	   clip_wall \
 	   pixel \
+	   getpixel \
 	   player_damage \
 	   load_map load_assets \
 	   inside \
@@ -64,8 +65,9 @@ FILES= main \
 	   swap_list \
 	   draw_aim_cross \
 	   font \
-	   vec2 \
-	   vec2_2 \
+	   vector \
+	   vector2 \
+	   vector3 \
 	   load_monsters_texture \
 	   load_weapons_texture
 

@@ -6,18 +6,18 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/23 20:10:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:00:29 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define BLASTER_HITBOX 0.4
-# define LEFT_MOUSE_BLASTER_DAMAGE 1000
-# define RIGHT_MOUSE_BLASTER_DAMAGE 750
-// MUST ADD SIZE * HITBOX
+#define BLASTER_HITBOX 0.4
+#define LEFT_MOUSE_BLASTER_DAMAGE 1000
+#define RIGHT_MOUSE_BLASTER_DAMAGE 750
 
-int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist, bool hit_all)
+int16_t	scan_sect_point_line(t_data *d,
+		uint16_t sect_to_scan, double dist, bool hit_all)
 {
 	t_sprite_list	*tmp;
 	t_vec2f			pos;
@@ -34,10 +34,13 @@ int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist, boo
 			pos.y -= d->cam.pos.z;
 			actualize_dir(d->cam.rot, &pos);
 			if (pos.y > 0 && pos.x > -BLASTER_HITBOX -
-					d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius &&
-					pos.x < BLASTER_HITBOX + d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius)
+				d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius &&
+				pos.x < BLASTER_HITBOX +
+				d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius)
 			{
-				if (d->monsters[tmp->id].can_collide && (dist == -1 || get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos), d->monsters[tmp->id].pos)) < dist))
+				if (d->monsters[tmp->id].can_collide && (dist == -1 ||
+					get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos),
+							d->monsters[tmp->id].pos)) < dist))
 				{
 					if (hit_all)
 						monster_hit(d, RIGHT_MOUSE_BLASTER_DAMAGE, tmp->id);
@@ -61,7 +64,8 @@ double	get_dist_to_intersect_wall(t_data *d, t_vec2f wall1, t_vec2f wall2)
 		d->cam.pos.z + 100000 * d->cam.cos};
 	dist = -1;
 	intersec = intersect(vec3to2(d->cam.pos), pos2, wall1, wall2);
-	if (is_inside_vec2f(wall1, wall2, intersec) && is_inside_vec2f(vec3to2(d->cam.pos), pos2, intersec))
+	if (is_inside_vec2f(wall1, wall2, intersec) &&
+			is_inside_vec2f(vec3to2(d->cam.pos), pos2, intersec))
 		dist = get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos), intersec));
 	return (dist);
 }
@@ -78,18 +82,24 @@ double	find_closest_wall_dist(t_data *d, uint16_t sect_to_scan)
 	pos2 = (t_vec2f){d->cam.pos.x + 100000 * d->cam.sin,
 		d->cam.pos.z + 100000 * d->cam.cos};
 	i = d->sectors[sect_to_scan].firstwallnum;
-	j = d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls - 1;
-	while (i < d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls)
+	j = d->sectors[sect_to_scan].firstwallnum +
+		d->sectors[sect_to_scan].numwalls - 1;
+	while (i < d->sectors[sect_to_scan].firstwallnum +
+			d->sectors[sect_to_scan].numwalls)
 	{
 		if (d->walls[j].neighborsect == -1 || d->doorstate[j] < 0.7)
 		{
-			intersec = intersect(vec3to2(d->cam.pos), pos2, d->walls[j].point, d->walls[i].point);
+			intersec = intersect(vec3to2(d->cam.pos), pos2, d->walls[j].point,
+					d->walls[i].point);
 			if (intersec.x == -1 && intersec.y == -1)
 				return (dist);
-			if (is_inside_vec2f(d->walls[j].point, d->walls[i].point, intersec) && is_inside_vec2f(vec3to2(d->cam.pos), pos2, intersec))
+			if (is_inside_vec2f(d->walls[j].point, d->walls[i].point, intersec)
+					&& is_inside_vec2f(vec3to2(d->cam.pos), pos2, intersec))
 			{
-				if (dist == -1 || get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos), intersec)) < dist)
-					dist = get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos), intersec));
+				if (dist == -1 || get_vec2f_length(sub_vec2f(vec3to2(
+					d->cam.pos), intersec)) < dist)
+					dist = get_vec2f_length(sub_vec2f(
+						vec3to2(d->cam.pos), intersec));
 			}
 		}
 		j = i;
@@ -98,8 +108,8 @@ double	find_closest_wall_dist(t_data *d, uint16_t sect_to_scan)
 	return (dist);
 }
 
-int16_t		recur_scan_point_line(t_data *d, uint8_t depth, uint16_t sect_to_scan,
-		uint16_t old_sect, bool hit_all)
+int16_t	recur_scan_point_line(t_data *d, uint8_t depth,
+		uint16_t sect_to_scan, uint16_t old_sect, bool hit_all)
 {
 	short		i;
 	short		j;
@@ -108,20 +118,27 @@ int16_t		recur_scan_point_line(t_data *d, uint8_t depth, uint16_t sect_to_scan,
 
 	dist[0] = find_closest_wall_dist(d, sect_to_scan);
 	i = d->sectors[sect_to_scan].firstwallnum;
-	j = d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls - 1;
+	j = d->sectors[sect_to_scan].firstwallnum +
+		d->sectors[sect_to_scan].numwalls - 1;
 	id = scan_sect_point_line(d, sect_to_scan, dist[0], hit_all);
 	if (!hit_all && id != -1)
 		return (id);
 	if (depth)
-		while (i < d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls)
+		while (i < d->sectors[sect_to_scan].firstwallnum +
+				d->sectors[sect_to_scan].numwalls)
 		{
-			if (d->walls[j].neighborsect != -1 && d->walls[j].neighborsect != old_sect && d->doorstate[j] > 0.7)
+			if (d->walls[j].neighborsect != -1 && d->walls[j].neighborsect !=
+					old_sect && d->doorstate[j] > 0.7)
 			{
-				dist[1] = get_dist_to_intersect_wall(d, d->walls[j].point, d->walls[i].point);
+				dist[1] = get_dist_to_intersect_wall(d,
+						d->walls[j].point, d->walls[i].point);
 				if (dist[0] == -1 || dist[1] < dist[0])
-					if (is_inside_vec2f(d->walls[j].point, d->walls[i].point, intersect(vec3to2(d->cam.pos),
-									(t_vec2f){d->cam.pos.x + 1000 * d->cam.sin, d->cam.pos.z + 1000 * d->cam.cos}, d->walls[j].point, d->walls[i].point)))
-						return(recur_scan_point_line(d, depth -1, d->walls[j].neighborsect, sect_to_scan, hit_all));
+					if (is_inside_vec2f(d->walls[j].point, d->walls[i].point,
+						intersect(vec3to2(d->cam.pos), (t_vec2f){d->cam.pos.x +
+						1000 * d->cam.sin, d->cam.pos.z + 1000 * d->cam.cos},
+						d->walls[j].point, d->walls[i].point)))
+						return (recur_scan_point_line(d, depth - 1,
+							d->walls[j].neighborsect, sect_to_scan, hit_all));
 			}
 			j = i;
 			i++;
@@ -129,7 +146,7 @@ int16_t		recur_scan_point_line(t_data *d, uint8_t depth, uint16_t sect_to_scan,
 	return (id);
 }
 
-void		blaster_shot(t_data *d)
+void	blaster_shot(t_data *d)
 {
 	int16_t		id_of_monst;
 
@@ -137,7 +154,6 @@ void		blaster_shot(t_data *d)
 	{
 		recur_scan_point_line(d, 30, d->cursectnum, -1, true);
 		change_buf_colo(d, 10, GREEN_BLAST);
-		//remove ammo
 	}
 	if (d->player.click == LEFT_CLICK)
 	{
@@ -145,6 +161,5 @@ void		blaster_shot(t_data *d)
 		if (id_of_monst != -1)
 			monster_hit(d, LEFT_MOUSE_BLASTER_DAMAGE, id_of_monst);
 		change_buf_colo(d, 5, GREEN_BLAST);
-		//remove ammo
 	}
 }

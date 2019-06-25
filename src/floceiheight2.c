@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 23:48:01 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/22 23:48:01 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/25 23:38:25 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ double	get_floordh(t_data *d, t_sector *sect, t_vec3f v)
 	return (get_floorheight_point(d, sect - d->sectors, vec3to2(v)) -
 			d->cam.pos.y);
 }
+
 double	get_ceildh(t_data *d, t_sector *sect, t_vec3f v)
 {
 	return (get_ceilheight_point(d, sect - d->sectors, vec3to2(v)) -

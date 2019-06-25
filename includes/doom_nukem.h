@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/23 18:16:39 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:28:18 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	draw_weapon(t_data *d);
 void	blaster_shot(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
 void	draw_monster(t_data *d, t_sector *sect, t_frustum *fr, t_monster monster);
+void	draw_monster_test(t_data *d, t_frustum *fr, t_monster monster);
 void	draw_sprite(t_data *d, t_sector *sector, t_frustum *fr, t_sprite_list *sprite);
 void	init_player(t_data *d, t_player *player);
 void	init_monsters(t_data *d);
 void	init_projectiles(t_data *d);
-void	swap_list(uint8_t type, uint16_t id, t_data *d, uint16_t cursectnum, uint16_t new_sect_num);
+void	swap_list(uint8_t type, uint16_t id, t_data *d, int sectnum[2]);
 int16_t	update_cursect_player(t_data *d, short depth);
 int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth, int16_t old_sect, t_vec3f pos);
 void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy);
@@ -68,6 +69,9 @@ void	monster_hit(t_data *d, uint16_t damage, uint16_t id_monster); // projectile
 bool	collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projectile);
 bool	collision_proj_player(t_data *d, t_projectile *projectile);
 void	monster_behaviour(t_data *d, t_monster *monster);
+void	display_sprite_one_point(t_data *d, SDL_Surface *s,
+		t_display_data display_data);
+t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v);
 double		getshadefactor(t_data *d, t_projdata *p, double dist);
 uint32_t	shade(double factor, uint32_t c);
 void	reorder_sprite(t_data *d, t_sector *sect);

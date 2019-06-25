@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/23 18:23:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 22:17:07 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,12 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 	i = 0;
 	(void)d;
 	(void)monsters;
-	//	t_vec3f dist = sub_vec3f(vec2to3(monsters[i].pos), d->cam.pos);
 	while (i < *nummonsters)
 	{
 		if (monsters[i].can_collide)
 			monster_behaviour(d, &monsters[i]);
 		monster_anim_state(&monsters[i], d->monster_type, d);
-	//			monsters[i].pos.x -= 0.001 * dist.x;
-	//			monsters[i].pos.y -= 0.001 * dist.z;
-		;/*appply behavior of monster (return -1 if death)
-		   if (behaviour(monsters[i]) == -1) // if monster moved apply inside to change sector
-		   {
-		  *nummonsters--;
-		  *monsters[i] = *monsters[nummonsters];
-		  continue;
-		  }
-		  */	i++;
+		i++;
 	}
 }
 
@@ -60,9 +50,10 @@ void	update_doors(t_data *d)
 		}
 	}
 }
-# define NB_OF_SECTOR_DEPTH 2
 
-void	update_projectiles(t_data *d) // NEED TO BE REWORKED
+#define NB_OF_SECTOR_DEPTH 2
+
+void	update_projectiles(t_data *d)
 {
 	short	i;
 	bool	coll;
@@ -77,25 +68,24 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 		{
 			if (d->projectiles[i].has_collided)
 			{
-				update_anim_projectile(&d->projectiles[i], d, i, false); // in monster_anim_state.c
-				i++ ;
+				update_anim_projectile(&d->projectiles[i], d, i, false);
+				i++;
 				continue ;
 			}
 			if (d->projectile_type[d->projectiles[i].id_type].threat_to_monster)
-				coll = collision_proj_monster(d, &d->sectors[d->projectiles[i].cursectnum], &d->projectiles[i]); //projectile_collision.c
+				coll = collision_proj_monster(d, &d->sectors[d->projectiles[i].cursectnum], &d->projectiles[i]);
 			if (d->projectile_type[d->projectiles[i].id_type].threat_to_player)
-				coll = collision_proj_player(d, &d->projectiles[i]); 
-			if (!coll && (update_sect =  update_cursect_proj(d->projectiles[i].cursectnum, d,
+				coll = collision_proj_player(d, &d->projectiles[i]);
+			if (!coll && (update_sect = update_cursect_proj(d->projectiles[i].cursectnum, d,
 							NB_OF_SECTOR_DEPTH, -1, d->projectiles[i].pos)) >= 0)
 			{
 				if (update_sect != d->projectiles[i].cursectnum)
 				{
-					swap_list(IS_PROJECTILE, i, d, d->projectiles[i].cursectnum,
-						update_sect);
-					;//update liste chainee
+					swap_list(IS_PROJECTILE, i, d, (int[2]){d->projectiles[i].cursectnum,
+						update_sect});
 				}
 				d->projectiles[i].cursectnum = update_sect;
-				update_anim_projectile(&d->projectiles[i], d, i, coll); // in monster_anim_state.c
+				update_anim_projectile(&d->projectiles[i], d, i, coll);
 			}
 			else if (update_sect == -2)
 			{
@@ -111,13 +101,12 @@ void	update_projectiles(t_data *d) // NEED TO BE REWORKED
 	}
 }
 
-# define DEPTH_TO_SCAN 10
+#define DEPTH_TO_SCAN 10
 
 void	update(t_data *d)
 {
 	int16_t	sect;
 
-	/*** Die ***/
 	if (d->player.health <= 0)
 	{
 		init_monsters(d);
@@ -129,29 +118,14 @@ void	update(t_data *d)
 	d->cam.rot += d->keys[SDL_SCANCODE_RIGHT] * TURN_SPEED;
 	d->cam.sin = sin(d->cam.rot);
 	d->cam.cos = cos(d->cam.rot);
-//	if (d->keys[SDL_SCANCODE_K])
-//	{
-//		t_vec2f tmp;
-//		tmp = sub_vec2f(vec3to2(d->cam.pos), d->monsters[0].pos);
-//		d->monsters[0].anim_state = 4;
-//		d->monsters[0].anim_time = 10;
-//		d->monsters[0].rot = atan2(tmp.y, tmp.x);
-//	}
 	movement(d);
 	asset_collision(d);
-	// Update current sector
-	/*while (sect < d->numsectors && !inside(d, sect, vec3to2(d->cam.pos)))
-		sect++;
-	if (sect < d->numsectors)
-		d->cursectnum = sect;
-		printf("%d\n", sect);*/
 	if ((sect = update_cursect_player(d, DEPTH_TO_SCAN)) != -1)
 	{
 		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d, sect) + d->player.minimum_height)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);
 		d->cursectnum = sect;
 	}
-	/*** finish ***/
 	if (d->sectors[d->cursectnum].is_finish)
 		handle_finish(d);
 	jump(d);

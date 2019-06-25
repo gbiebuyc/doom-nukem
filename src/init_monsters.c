@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:46:43 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:40:29 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,20 @@ void	add_monster(t_sector *sector, int16_t id_of_monster)
 	if (!(tmp = sector->sprite_list))
 	{
 		sector->sprite_list = new_monster_list;
-		return;
+		return ;
 	}
 	while (tmp->next)
 	{
 		tmp = tmp->next;
 	}
 	tmp->next = new_monster_list;
-}	
+}
 
-void	initialize_all_monster(t_data *d, t_monster *monster, int16_t id_of_monster)
+void	initialize_all_monster(t_data *d,
+		t_monster *monster, int16_t id_of_monster)
 {
-	monster->life = monster->health_mult * d->monster_type[monster->id_type].health;
+	monster->life = monster->health_mult *
+		d->monster_type[monster->id_type].health;
 	monster->width = monster->size * d->monster_type[monster->id_type].width;
 	monster->height = monster->size * d->monster_type[monster->id_type].height;
 	monster->anim_state = 0;
@@ -48,7 +50,7 @@ void	initialize_all_monster(t_data *d, t_monster *monster, int16_t id_of_monster
 	monster->anim_time = 25;
 	monster->can_collide = true;
 	monster->timer = 0;
-	add_monster(&d->sectors[monster->cursectnum], id_of_monster); 
+	add_monster(&d->sectors[monster->cursectnum], id_of_monster);
 }
 
 void	init_monster_type(t_data *d)
@@ -77,7 +79,6 @@ void	init_monster_type(t_data *d)
 	d->monster_type[MOTHERDEMON].anim_order[17] = 18;
 	d->monster_type[MOTHERDEMON].anim_order[18] = 18;
 	d->monster_type[MOTHERDEMON].id_of_proj = FIREBALL_1;
-//	d->monster_type[MOTHERDEMON].anim_order = (uint9_t[MAX_STATE]){1, 2, 3, 1}
 }
 
 void	init_monsters(t_data *d)

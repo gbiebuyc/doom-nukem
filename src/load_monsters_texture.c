@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 16:46:24 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/12 16:46:25 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/25 23:47:55 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			load_monsters_texture(t_data *d, int f)
 	int nb_orientation;
 
 	i = -1;
-	while (++i < 1) // 1 is temporary depend the final number of monsters
+	while (++i < 1)
 	{
 		a = -1;
 		if (read(f, &nb_orientation, sizeof(int)) < 0)

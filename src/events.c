@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 22:44:20 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:13:37 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 {
 	if (event.keysym.sym == SDLK_ESCAPE)
 		proper_exit(d);
-	// Pause button
 	else if (event.keysym.sym == SDLK_p)
 		SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
 	else if (event.keysym.sym == SDLK_PAUSE)
@@ -33,7 +32,7 @@ void	event_key_up(t_data *d, SDL_KeyboardEvent event)
 
 #define MOUSE_SENSITIVTY 1
 
-void		event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
+void	event_mouse_motion(t_data *d, SDL_MouseMotionEvent event)
 {
 	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
 		return ;
@@ -46,15 +45,17 @@ void	event_mouse_button(t_data *d, SDL_MouseButtonEvent event)
 {
 	(void)d;
 	if (event.button == SDL_BUTTON_LEFT)
-		d->left_mouse_button = event.state == SDL_PRESSED ? MOUSE_PRESSED : MOUSE_RELEASED;
+		d->left_mouse_button = event.state == SDL_PRESSED ?
+			MOUSE_PRESSED : MOUSE_RELEASED;
 	if (event.button == SDL_BUTTON_RIGHT)
-		d->right_mouse_button = event.state == SDL_PRESSED ? MOUSE_PRESSED : MOUSE_RELEASED;
+		d->right_mouse_button = event.state == SDL_PRESSED ?
+			MOUSE_PRESSED : MOUSE_RELEASED;
 	if (event.state == SDL_RELEASED)
 	{
 	}
 }
 
-void debug_pause(t_data *d)
+void	debug_pause(t_data *d)
 {
 	SDL_Event	e;
 

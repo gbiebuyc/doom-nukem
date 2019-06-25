@@ -6,23 +6,24 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/08 20:47:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 00:11:49 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define ACTIVATION_RADIUS 10
+#define ACTIVATION_RADIUS 10
 
 void	monster_behaviour(t_data *d, t_monster *monster)
 {
 	t_vec2f	tmp;
 
-	if (!monster->can_collide) // all monster collide so far, used for monster is dead
+	if (!monster->can_collide)
 		return ;
 	if (!monster->activated)
 	{
-		if (get_vec2f_length(sub_vec2f(monster->pos, vec3to2(d->cam.pos))) < ACTIVATION_RADIUS)
+		if (get_vec2f_length(sub_vec2f(monster->pos,
+				vec3to2(d->cam.pos))) < ACTIVATION_RADIUS)
 			monster->activated = true;
 		else
 			return ;

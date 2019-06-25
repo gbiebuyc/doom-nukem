@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/22 13:52:03 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 00:10:48 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	start_music(t_data *d)
 
 void	init_everything(t_data *d, char *map)
 {
-	//strcpy(d->nextmap, "newmap.DNMAP");
 	load_map(d, map);
 	fix_picnum(d);
 	init_player(d, &d->player);
@@ -38,7 +37,7 @@ void	init_everything(t_data *d, char *map)
 }
 
 int		main(int ac, char **av)
-{	
+{
 	t_data d;
 
 	if (ac > 2)
@@ -47,8 +46,6 @@ int		main(int ac, char **av)
 		ft_printf("The map must be in the \"maps\" folder.\n");
 		exit(EXIT_FAILURE);
 	}
-	if (chdir(SDL_GetBasePath()) < 0)
-		ft_printf("error\n");
 	init_font(&d);
 	init_sdl(&d);
 	if (!(d.zbuffer = malloc(sizeof(double) * WIDTH * HEIGHT)))

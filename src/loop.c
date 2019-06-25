@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 21:11:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 00:13:13 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	loop(t_data *d)
 		}
 		update(d);
 		render(d);
-		//print_fps();
 		if (1000 / FPS > SDL_GetTicks() - start)
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 	}

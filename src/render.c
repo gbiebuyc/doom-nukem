@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:06:49 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/09 20:13:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 00:44:09 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 void	render(t_data *d)
 {
-	t_frustum fr;
+	t_frustum	fr;
+	int			i;
+
 	fr.x1 = 0;
 	fr.x2 = WIDTH - 1;
 	ft_memset(fr.visitedportals, 0, sizeof(fr.visitedportals));
-	for(int x = 0; x < WIDTH; ++x)
+	i = -1;
+	while (++i < WIDTH)
 	{
-		fr.ytop[x] = 0;
-		fr.ybottom[x] = HEIGHT-1;
+		fr.ytop[i] = 0;
+		fr.ybottom[i] = HEIGHT - 1;
 	}
-	for (int i = 0; i < WIDTH * HEIGHT; i++)
+	i = -1;
+	while (++i < WIDTH * HEIGHT)
 		d->zbuffer[i] = INFINITY;
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);

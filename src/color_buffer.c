@@ -6,14 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:13:32 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 20:21:49 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 22:45:08 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-
-void		set_find_alpha(double *scale_x, double *scale_y)
+void	set_find_alpha(double *scale_x, double *scale_y)
 {
 	short	x;
 	short	y;
@@ -26,7 +25,7 @@ void		set_find_alpha(double *scale_x, double *scale_y)
 		scale_y[y] = fabs(y - HEIGHT * 0.5) / (HEIGHT * 0.5);
 }
 
-double		find_alpha(short x, short y, uint32_t which_ret)// a mettre en statique plutot que de calculer
+double	find_alpha(short x, short y, uint32_t which_ret)
 {
 	static bool		set;
 	static double	scale_x[WIDTH];
@@ -37,10 +36,6 @@ double		find_alpha(short x, short y, uint32_t which_ret)// a mettre en statique 
 		set_find_alpha(&scale_x[0], &scale_y[0]);
 		set = true;
 	}
-//	scale_x = fabs(x - WIDTH * 0.5);
-//	scale_x = scale_x / (WIDTH * 0.5);
-//	scale_y = fabs(y - HEIGHT * 0.5);
-//	scale_y = scale_y / (HEIGHT * 0.5);
 	if (which_ret == GREEN_BLAST)
 		return ((scale_x[x] + scale_y[y]) * 0.5);
 	if (scale_x[x] > scale_y[y])
@@ -50,8 +45,8 @@ double		find_alpha(short x, short y, uint32_t which_ret)// a mettre en statique 
 
 void	color_screen(t_args_multi_colo_buf *data)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 	uint32_t	colo;
 	uint8_t		tmp;
 
@@ -62,16 +57,19 @@ void	color_screen(t_args_multi_colo_buf *data)
 		while (++y < HEIGHT)
 		{
 			if (data->d->color_buf.colo == GREEN_BLAST)
-				tmp = (uint8_t)((1 - find_alpha(x, y, data->d->color_buf.colo)) * data->d->color_buf.value);
+				tmp = (uint8_t)((1 - find_alpha(x, y,
+					data->d->color_buf.colo)) * data->d->color_buf.value);
 			else
-				tmp = (uint8_t)((find_alpha(x,y, data->d->color_buf.colo)) * data->d->color_buf.value);
+				tmp = (uint8_t)((find_alpha(x, y, data->d->color_buf.colo)) *
+						data->d->color_buf.value);
 			colo = data->d->color_buf.colo + (tmp << 24);
-			putpixel(data->d, x, y, alpha(getpixel3(data->d->screen, x, y), colo));
+			putpixel(data->d, x, y,
+					alpha(getpixel3(data->d->screen, x, y), colo));
 		}
 	}
 }
 
-# define MAX_THREADS 8
+#define MAX_THREADS 8
 
 void	color_buffer(t_data *d)
 {
@@ -99,8 +97,7 @@ void	color_buffer(t_data *d)
 		data->d->color_buf.value -= 6;
 	else
 		data->d->color_buf.value -= 1;
-	if (data->d->color_buf.value < 0)
-		data->d->color_buf.value = 0;
+	data->d->color_buf.value = ft_max(0, data->d->color_buf.value);
 }
 
 void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo)
@@ -110,7 +107,7 @@ void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo)
 		d->color_buf.value = 0;
 		d->color_buf.colo = colo;
 	}
-	d->color_buf.value += (amount * 25); // a revoir en fonction de vie max
+	d->color_buf.value += (amount * 25);
 	if (d->color_buf.value > MAX_BUF_VALUE)
 		d->color_buf.value = MAX_BUF_VALUE;
 }

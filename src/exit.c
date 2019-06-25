@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:00:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/04/29 01:42:32 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/25 23:12:28 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	proper_exit(t_data *d)
 	SDL_Quit();
 	exit(EXIT_SUCCESS);
 }
-//SDL_DestroyWindow(SDL_Window *window);
-//SDL_FreeSurface(SDL_Surface *surface); // DO_NOT_USE_WITH_SURFACE_FROM_GetWindowSurface();
 
 void	err_exit(t_data *d, char count, const char *msg)
 {

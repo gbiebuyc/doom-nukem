@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:18:06 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 19:58:48 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 22:37:06 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	draw_blaster_aim(t_data *d)
 {
-	short 	i;
+	short i;
 
 	i = (WIDTH * 0.5) - 10;
 	while (--i > (WIDTH >> 1) - 22)
 		putpixel(d, i, HEIGHT >> 1, GREEN_BLAST);
-	i = (WIDTH *  0.5) + 10;
+	i = (WIDTH * 0.5) + 10;
 	while (++i < (WIDTH >> 1) + 22)
 		putpixel(d, i, HEIGHT >> 1, GREEN_BLAST);
 	putpixel(d, (WIDTH >> 1) + 1, HEIGHT >> 1, GREEN_BLAST);

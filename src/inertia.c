@@ -6,13 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:01:28 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/21 22:02:39 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 23:39:08 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-# define MAX_INERTIA 0.19//must change MOVE_SPEED in movement.c to scale properly// change alon define in draw_weapon.c
+#define MAX_INERTIA 0.19
 
 void	inertia(t_data *d, t_vec2f mvt)
 {

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 23:44:04 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/25 22:18:03 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ void	shoot_sound(t_data *d)
 
 void	shoot_weapon(t_data *d)
 {
-//	static unsigned short	charged_time;
-
 	if (d->weapon_type[d->player.current_weapon].type == NORMAL || 1)
 	{
-//	printf("can shoot weapon\n");
 		if (d->left_mouse_button == MOUSE_PRESSED)
 		{
 			d->player.timer_anim_weap = d->player.speed_anim[d->player.current_weapon];
@@ -50,11 +47,10 @@ void	shoot_weapon(t_data *d)
 	}
 	if (d->weapon_type[d->player.current_weapon].type == CHARGED)
 	{
-//		if (d->left_mouse_button == 
 	}
 }
 
-# define TRANSLATE_WEAP_TIME 30
+#define TRANSLATE_WEAP_TIME 30
 
 void	change_weap(t_data *d)
 {

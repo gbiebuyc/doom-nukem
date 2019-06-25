@@ -6,31 +6,36 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/23 18:55:58 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 00:07:27 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 /*
- ** Used to detect the current sector at each frame.
- */
+**	Used to detect the current sector at each frame.
+*/
 
 bool	inside(t_data *d, int16_t sectnum, t_vec2f pos)
 {
-	int i, j;
-	bool c = 0;
+	int		n[5];
+	t_vec2f	p0;
+	t_vec2f	p1;
 
-	int npoints = d->sectors[sectnum].numwalls;
-	for (i = 0, j = npoints-1; i < npoints; j = i++)
+	n[0] = 0;
+	n[1] = d->sectors[sectnum].numwalls;
+	n[2] = 0;
+	n[3] = n[1] - 1;
+	while (n[2] < n[1])
 	{
-		t_vec2f p0 = d->walls[d->sectors[sectnum].firstwallnum + i].point;
-		t_vec2f p1 = d->walls[d->sectors[sectnum].firstwallnum + j].point;
-		if ( ((p0.y > pos.y) != (p1.y > pos.y)) &&
-				(pos.x < (p1.x-p0.x) * (pos.y-p0.y) / (p1.y-p0.y) + p0.x) )
-			c = !c;
+		p0 = d->walls[d->sectors[sectnum].firstwallnum + n[2]].point;
+		p1 = d->walls[d->sectors[sectnum].firstwallnum + n[3]].point;
+		if (((p0.y > pos.y) != (p1.y > pos.y)) &&
+				(pos.x < (p1.x - p0.x) * (pos.y - p0.y) / (p1.y - p0.y) + p0.x))
+			n[0] = !n[0];
+		n[3] = n[2]++;
 	}
-	return (c);
+	return (n[0]);
 }
 
 #define DIST_COLL_PROJ_CEIL_FLOOR 0.1
@@ -42,28 +47,25 @@ int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth,
 	short	j;
 	short	ret_value;
 
-	if (inside(d, sect_to_scan, (t_vec2f){pos.x, pos.z}) && 
-			(pos.y < get_ceilheight_point(d, sect_to_scan, vec3to2(pos)) + DIST_COLL_PROJ_CEIL_FLOOR || 
-			 d->sectors[sect_to_scan].outdoor) && pos.y > get_floorheight_point(d, sect_to_scan, vec3to2(pos)) + DIST_COLL_PROJ_CEIL_FLOOR)
-	{
+	if (inside(d, sect_to_scan, (t_vec2f){pos.x, pos.z}) &&
+			(pos.y < get_ceilheight_point(d, sect_to_scan, vec3to2(pos)) +
+			DIST_COLL_PROJ_CEIL_FLOOR || d->sectors[sect_to_scan].outdoor) &&
+			pos.y > get_floorheight_point(d, sect_to_scan,
+			vec3to2(pos)) + DIST_COLL_PROJ_CEIL_FLOOR)
 		return (sect_to_scan);
-	}
 	if (!depth)
 		return (-1);
-	i = d->sectors[sect_to_scan].firstwallnum;
-	j = d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls;
-	//	printf("cur sec: %d, numwalls :%d\n", sect_to_scan, d->sectors[sect_to_scan].numwalls);
-	while (i < j)
-	{
-		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect != old_sect && d->doorstate[i] > 0.7)
-			if ((ret_value = update_cursect_proj(d->walls[i].neighborsect, d, depth - 1, sect_to_scan, pos)) != -1)
-			{
-				//				printf("%d\n", ret_value);
+	i = d->sectors[sect_to_scan].firstwallnum - 1;
+	j = d->sectors[sect_to_scan].firstwallnum +
+		d->sectors[sect_to_scan].numwalls;
+	while (++i < j)
+		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect !=
+				old_sect && d->doorstate[i] > 0.7)
+			if ((ret_value = update_cursect_proj(d->walls[i].neighborsect, d,
+				depth - 1, sect_to_scan, pos)) != -1)
 				return (ret_value);
-			}
-		i++;
-	}
-	if (old_sect == -1 && d->sectors[sect_to_scan].outdoor && pos.y > d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR)
+	if (old_sect == -1 && d->sectors[sect_to_scan].outdoor &&
+		pos.y > d->sectors[sect_to_scan].ceilheight + DIST_COLL_PROJ_CEIL_FLOOR)
 		return (-2);
 	return (-1);
 }
@@ -79,18 +81,20 @@ void	set_tab(t_data *d, short sect_to_scan, short *tab, short old_sect)
 	while (tab[k] != -1)
 		k++;
 	i = d->sectors[sect_to_scan].firstwallnum;
-	j = d->sectors[sect_to_scan].firstwallnum + d->sectors[sect_to_scan].numwalls;
+	j = d->sectors[sect_to_scan].firstwallnum +
+		d->sectors[sect_to_scan].numwalls;
 	while (i < j)
 	{
-		if (d->walls[i].neighborsect != -1 && d->walls[i].neighborsect != old_sect)
+		if (d->walls[i].neighborsect != -1 &&
+				d->walls[i].neighborsect != old_sect)
 		{
 			l = 0;
-			while(tab[l] != -1)
+			while (tab[l] != -1)
 			{
 				if (tab[l] == d->walls[i].neighborsect)
 				{
 					printf("tab[l]: %d, l:%d\n", tab[l], l);
-					break;
+					break ;
 				}
 				l++;
 			}
@@ -134,7 +138,7 @@ int16_t	update_cursect_player(t_data *d, short depth)
 	while (depth)
 	{
 		i = 0;
-		while(tab[i] != -1)
+		while (tab[i] != -1)
 		{
 			if (inside(d, tab[i], (t_vec2f){d->cam.pos.x, d->cam.pos.z}))
 				return (tab[i]);
