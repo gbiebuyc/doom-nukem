@@ -39,15 +39,15 @@ void		event_sector_option_handler(t_data *d, int x, int y,
 	else if (is_on_button(p->btn_slopeceil_plus, x, y) && s->slopeceil < 20)
 		s->slopeceil += 1;
 	else if (is_on_button(p->btn_slopeceil_orientation_minus, x, y))
-		s->slopeceil_orientation -= 1;
+		s->slopeceil_orientation -= 15;
 	else if (is_on_button(p->btn_slopeceil_orientation_plus, x, y))
-		s->slopeceil_orientation += 1;
+		s->slopeceil_orientation += 15;
 	else if (is_on_button(p->btn_slopefloor_minus, x, y) && s->slope > -20)
 		s->slope -= 1;
 	else if (is_on_button(p->btn_slopefloor_plus, x, y) && s->slope < 20)
 		s->slope += 1;
 	else if (is_on_button(p->btn_slopefloor_orientation_minus, x, y))
-		s->slope_orientation -= 1;
+		s->slope_orientation -= 15;
 	else if (is_on_button(p->btn_slopefloor_orientation_plus, x, y))
-		s->slope_orientation += 1;
+		s->slope_orientation += 15;
 }
