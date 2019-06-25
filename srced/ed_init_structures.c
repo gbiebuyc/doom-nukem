@@ -23,7 +23,7 @@ void		init_data(t_data *d)
 		.selectedwall = NULL, .selectedwall2 = NULL, .grid_locking = true,
 		.sectordrawing = false, .default_wall_texture = 0, .nb_assets = 0,
 		.default_floor_texture = 0, .default_ceil_texture = 0, .nb_posters = 0,
-		.selected_texture = -2, .map_to_open = NULL, .texture_to_scale = -1,
+		.selected_texture = -2, .map_to_open = NULL,
 		.current_loaded_map = "newmap.DNMAP", .get_next_map = 0, .nb_door = 0,
 		.nb_keys = 0, .assets = NULL};
 	d->player_start = (t_vec3f){0, 0.2, 0};

@@ -65,11 +65,6 @@ int		map_exist(t_data *d, char *map, char *save)
 	return (0);
 }
 
-void	debug_print(t_data *d)
-{
-	(void)d;
-}
-
 int		event_loop(t_data *d)
 {
 	SDL_Event	e;
@@ -98,8 +93,6 @@ int		event_loop(t_data *d)
 	SDL_Quit();
 	return ((open == -2) ? 1 : 0);
 }
-// TODO sort texture
-// TODO reset nextmap
 
 int		main(int ac, char **av)
 {

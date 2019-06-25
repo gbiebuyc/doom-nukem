@@ -24,20 +24,16 @@ static void	print_assets(t_data *d, SDL_Surface *a[3][100])
 	{
 		y = d->interface.category_pos[m].y;
 		x = W - PROPERTIES_LIMIT - 30;
-		d->texture_to_scale = 32;
 		while (++j < d->interface.nb_asset[m])
 		{
-			copy_surface_to_surface(a[m][j], d->screen,
-										(int[2]){x += 38, y}, d);
+			cpy_scale_surf(a[m][j], (int[2]){x += 38, y}, 32, d);
 			if (j != 0 && ((j + 1) % (NB_ASSET_LINE)) == 0 && (y += 36))
 				x = W - PROPERTIES_LIMIT - 30;
 		}
-		d->texture_to_scale = -1;
 	}
 	x = d->interface.category_pos[2].x;
 	y = d->interface.category_pos[2].y;
-	copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
-													(int[2]){x, y}, d);
+	cpy_scale_surf(d->interface.toolbar.player_start, (int[2]){x, y}, 32, d);
 }
 
 static void	print_assets_toolbar(t_data *d, SDL_Surface **prop)
@@ -85,13 +81,10 @@ static void	print_texture_toolbar(t_data *d, int tex_case)
 	y = MARGIN;
 	while (++i < ((tex_case == 3) ? d->nb_posters : d->nb_texture))
 	{
-		if (tex[i]->w != 64 || tex[i]->h != 64)
-			d->texture_to_scale = 64;
-		copy_surface_to_surface(tex[i], d->screen, (int[2]){x, y}, d);
+		cpy_scale_surf(tex[i], (int[2]){x, y}, 64, d);
 		x += 64;
 		if ((i + 1) % 4 == 0 && (y += 64))
 			x = W - TEXTURE_TOOLBAR + MARGIN;
-		d->texture_to_scale = -1;
 	}
 }
 

@@ -299,7 +299,6 @@ typedef struct	s_data
 	int					selected_texture;
 	bool				grid_locking;
 	bool				sectordrawing;
-	double				texture_to_scale;
 	t_vec2				mouse;
 	t_wall				*hl_wall;
 	int					hl_wallnum;
@@ -308,8 +307,8 @@ typedef struct	s_data
 }				t_data;
 
 /**/int			bmp_reader(t_data *d);
-/**/void		debug_print(t_data *d);
-int		map_exist(t_data *d, char *map, char *save);
+
+int				map_exist(t_data *d, char *map, char *save);
 
 /*
 **	ed_init.c
@@ -491,6 +490,8 @@ void			get_next_level(t_data *d, SDL_Event *e);
 
 void			copy_surface_to_surface(SDL_Surface *src,
 								SDL_Surface *dest, int p[2], t_data *d);
+void			cpy_scale_surf(SDL_Surface *src, int p[2],
+														int size, t_data *d);
 void			remove_backgorund_image(SDL_Surface *s);
 double			fclamp(double x, double min, double max);
 

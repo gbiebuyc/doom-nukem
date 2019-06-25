@@ -35,7 +35,7 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 	}
 	if (!(tb->player_start = SDL_LoadBMP(d->assets_data[i].file)))
 		return (ft_printf("Loading failed : %s\n", d->assets_data[i].file));
-	remove_backgorund_image(tb->player_start);
+	//remove_backgorund_image(tb->player_start);
 	return (0);
 }
 

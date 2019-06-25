@@ -42,10 +42,8 @@ static void	draw_assets(t_data *d, SDL_Surface *a[3][100])
 		if (p.x + 16 < W - (d->interface.texture_case_select != -1 ?
 							TEXTURE_TOOLBAR : PROPERTIES_LIMIT))
 		{
-			d->texture_to_scale = 32;
-			copy_surface_to_surface(a[0][lst->picnum], d->screen,
-									(int[2]){p.x - 16, p.y - 16}, d);
-			d->texture_to_scale = -1;
+			cpy_scale_surf(a[0][lst->picnum], (int[2]){p.x - 16, p.y - 16},
+																	32, d);
 			if (lst->is_highlighted || lst->is_select)
 			{
 				draw_selection_arround_selected_asset(d, &(t_vec2){p.x - 16,
@@ -65,23 +63,20 @@ static void	draw_monster(t_data *d, SDL_Surface *a[3][100])
 	if (!d->interface.monster_list)
 		return ;
 	lst = d->interface.monster_list->begin;
-	d->texture_to_scale = 32;
 	while (lst)
 	{
 		p = worldtoscreen(d, lst->pos);
 		if (p.x + 16 < W - (d->interface.texture_case_select != -1 ?
 							TEXTURE_TOOLBAR : PROPERTIES_LIMIT))
 		{
-			copy_surface_to_surface(
-				a[lst->category][lst->selected_asset], d->screen,
-				(int[2]){p.x - 16, p.y - 16}, d);
+			cpy_scale_surf(a[lst->category][lst->selected_asset],
+							(int[2]){p.x - 16, p.y - 16}, 32, d);
 			if (lst->is_highlighted || lst->is_select)
 				draw_selection_arround_selected_asset(d, &(t_vec2){p.x - 16,
 					p.y - 16}, (lst->is_select) ? 0x00ff00 : 0xffff00);
 		}
 		lst = lst->next;
 	}
-	d->texture_to_scale = -1;
 }
 
 void		draw_assets_to_map(t_data *d, SDL_Surface *a[3][100])
@@ -89,11 +84,9 @@ void		draw_assets_to_map(t_data *d, SDL_Surface *a[3][100])
 	t_vec2f	p;
 
 	p = worldtoscreen(d, (t_vec2f){d->player_start.x, d->player_start.z});
-	d->texture_to_scale = 32;
 	if (p.x + 16 < W - PROPERTIES_LIMIT)
-		copy_surface_to_surface(d->interface.toolbar.player_start, d->screen,
-										(int[2]){p.x - 16, p.y - 16}, d);
-	d->texture_to_scale = -1;
+		cpy_scale_surf(d->interface.toolbar.player_start,
+						(int[2]){p.x - 16, p.y - 16}, 32, d);
 	draw_monster(d, a);
 	draw_assets(d, a);
 }

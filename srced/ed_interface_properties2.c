@@ -25,53 +25,52 @@ static void	empty_case(t_data *d, t_interface *i)
 {
 	int	x;
 	int	y;
+	int	tex_num;
 
 	x = i->tex_select[2].x + 1;
 	y = i->tex_select[2].y + 1;
+	tex_num = d->default_wall_texture;
 	if (d->selected_wall == -1 && d->hl_wallnum == -1)
-		copy_surface_to_surface(d->textures[d->default_wall_texture],
-								d->screen, (int[2]){x, y}, d);
+		cpy_scale_surf(d->textures[tex_num], (int[2]){x, y}, 64, d);
 	if (d->selected_sector == -1)
 	{
 		x = i->tex_select[1].x + 1;
 		y = i->tex_select[1].y + 1;
-		copy_surface_to_surface(d->textures[d->default_floor_texture],
-								d->screen, (int[2]){x, y}, d);
+		tex_num = d->default_floor_texture;
+		cpy_scale_surf(d->textures[tex_num], (int[2]){x, y}, 64, d);
 		x = i->tex_select[0].x + 1;
 		y = i->tex_select[0].y + 1;
-		copy_surface_to_surface(d->textures[d->default_ceil_texture],
-								d->screen, (int[2]){x, y + 1}, d);
+		tex_num = d->default_ceil_texture;
+		cpy_scale_surf(d->textures[tex_num], (int[2]){x, y + 1}, 64, d);
 	}
 }
 
 void		fill_texture_selection(t_data *d, t_interface *i, int wallnum,
 																int tex_n)
 {
-	d->texture_to_scale = 64;
 	if (d->selected_wall != -1 || d->hl_wall)
 	{
 		tex_n = d->walls[wallnum].middlepicnum;
-		copy_surface_to_surface(d->textures[tex_n], d->screen,
-				(int[2]){i->tex_select[2].x + 1, i->tex_select[2].y + 1}, d);
+		cpy_scale_surf(d->textures[tex_n], (int[2]){i->tex_select[2].x + 1,
+											i->tex_select[2].y + 1}, 64, d);
 		tex_n = d->walls[wallnum].posterpicnum;
 		if (tex_n != -1)
-			copy_surface_to_surface(d->posters[tex_n], d->screen,
-				(int[2]){i->tex_select[3].x + 1, i->tex_select[3].y + 1}, d);
+			cpy_scale_surf(d->posters[tex_n], (int[2]){i->tex_select[3].x + 1,
+												i->tex_select[3].y + 1}, 64, d);
 	}
 	else
 		empty_case(d, i);
 	if (d->selected_sector != -1)
 	{
 		tex_n = d->sectors[d->selected_sector].ceilpicnum;
-		copy_surface_to_surface(d->textures[tex_n], d->screen,
-				(int[2]){i->tex_select[0].x + 1, i->tex_select[0].y + 1}, d);
+		cpy_scale_surf(d->textures[tex_n], (int[2]){i->tex_select[0].x + 1,
+											i->tex_select[0].y + 1}, 64, d);
 		tex_n = d->sectors[d->selected_sector].floorpicnum;
-		copy_surface_to_surface(d->textures[tex_n], d->screen,
-				(int[2]){i->tex_select[1].x + 1, i->tex_select[1].y + 1}, d);
+		cpy_scale_surf(d->textures[tex_n], (int[2]){i->tex_select[1].x + 1,
+											i->tex_select[1].y + 1}, 64, d);
 	}
 	else
 		empty_case(d, i);
-	d->texture_to_scale = -1;
 }
 
 void		show_preview(t_data *d, SDL_Surface *a[3][100])

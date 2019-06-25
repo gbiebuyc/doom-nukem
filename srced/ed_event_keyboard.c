@@ -25,11 +25,11 @@ static void	handle_escape(t_data *d)
 
 void		event_key_up(t_data *d, SDL_Keycode key)
 {
-	if (key == SDLK_r || key == SDLK_d)
-		(key == SDLK_r) ? run_game(d) : debug_print(d);
+	if (key == SDLK_r)
+		run_game(d);
 	else if (key == SDLK_s)
 		save_file(d, d->current_loaded_map);
-	else if (key == SDLK_DELETE && !d->sectordrawing &&
+	else if ((key == SDLK_d || key == SDLK_DELETE) && !d->sectordrawing &&
 			!delete_monster(d, d->interface.monster_list) &&
 			!delete_asset(d, d->interface.assets_list, NULL, NULL))
 		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
