@@ -15,7 +15,7 @@
 t_vec3f	transform_back(t_data *d, t_vec3f v)
 {
 	return ((t_vec3f){v.x * d->cam.cos + v.z * d->cam.sin + d->cam.pos.x, v.y,
-			v.x * -d->cam.sin + v.z * d->cam.cos + d->cam.pos.z,});
+			v.x * -d->cam.sin + v.z * d->cam.cos + d->cam.pos.z});
 }
 
 double	edge_function(t_vec3f a, t_vec3f b, int x, int y)
@@ -60,8 +60,10 @@ void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
 			w[1] = edge_function(p->v[2], p->v[0], x, y) / p->area;
 			w[2] = edge_function(p->v[0], p->v[1], x, y) / p->area;
 			z = 1 / (w[0] * p->v[0].z + w[1] * p->v[1].z + w[2] * p->v[2].z);
-			putpixel(d, x, y, shade(getshadefactor(d, p, z), getpixel2(
-				d->textures[p->sector->floorpicnum],
+			if (z >= d->zbuffer[x + y * WIDTH])
+				continue ;
+			putpixel2(d, z, (t_vec2){x, y}, shade(getshadefactor(d, p, z),
+				getpixel2(d->textures[p->sector->floorpicnum],
 				(w[0] * p->c[0].x + w[1] * p->c[1].x + w[2] * p->c[2].x) * z,
 				(w[0] * p->c[0].z + w[1] * p->c[1].z + w[2] * p->c[2].z) * z)));
 		}

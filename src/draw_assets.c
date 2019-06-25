@@ -36,7 +36,7 @@ void	proj_asset(t_data *d, t_projdata *p, t_vec3f v, SDL_Surface *tex)
 	p->z = v.z;
 }
 
-void	blit_asset(t_data *d, t_projdata *p, t_frustum *fr, SDL_Surface *tex)
+void	blit_asset(t_data *d, t_projdata *p, SDL_Surface *tex)
 {
 	int			x;
 	int			y;
@@ -45,22 +45,18 @@ void	blit_asset(t_data *d, t_projdata *p, t_frustum *fr, SDL_Surface *tex)
 
 	if ((p->shadefactor = getshadefactor(d, p, p->z)) <= 0)
 		return ;
-	x = p->cx1 - 1;
-	while (++x <= p->cx2)
+	x = ft_max(p->x1, 0) - 1;
+	while (++x <= p->x2 && x < WIDTH)
 	{
-		if (p->z >= p->zbuffer[x])
-			continue ;
 		u = norm(x, p->x1, p->x2) * tex->w;
-		y = ft_max(p->ya, fr->ytop[x]);
-		while (++y <= ft_min(p->yb, fr->ybottom[x]))
+		y = ft_max(p->ya, 0) - 1;
+		while (++y <= p->yb && y < HEIGHT)
 		{
-			if (p->z >= d->zbuffer_sprites[x + y * WIDTH])
+			if (p->z >= d->zbuffer[x + y * WIDTH])
 				continue ;
 			px = getpixel4(tex, u, norm(y, p->ya, p->yb));
-			if ((px >> 24) < 127)
-				continue ;
-			d->zbuffer_sprites[x + y * WIDTH] = p->z;
-			putpixel(d, x, y, shade(p->shadefactor, px));
+			if ((px >> 24) > 127)
+				putpixel2(d, p->z, (t_vec2){x, y}, shade(p->shadefactor, px));
 		}
 	}
 }
@@ -69,6 +65,7 @@ void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum)
 {
 	int			i;
 	t_assets	*asset;
+	t_vec3f		v;
 
 	sectnum = p->sector - d->sectors;
 	i = -1;
@@ -77,13 +74,11 @@ void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum)
 		asset = &d->assets[sectnum][i];
 		if (asset->used)
 			continue ;
-		t_vec3f v = vec2to3(asset->world_pos);
+		v = vec2to3(asset->world_pos);
 		v.y = (asset->is_on_floor) ? get_floordh(d, p->sector, v) :
 			get_ceildh(d, p->sector, v);
 		p->is_on_floor = asset->is_on_floor;
 		proj_asset(d, p, v, d->assets_texture[asset->picnum]);
-		p->cx1 = ft_max(p->x1, fr->x1);
-		p->cx2 = ft_min(p->x2, fr->x2);
-		blit_asset(d, p, fr, d->assets_texture[asset->picnum]);
+		blit_asset(d, p, d->assets_texture[asset->picnum]);
 	}
 }

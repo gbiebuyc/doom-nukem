@@ -18,6 +18,15 @@ void	putpixel(t_data *d, int x, int y, uint32_t color)
 		((uint32_t*)d->screen->pixels)[x + y * WIDTH] = color;
 }
 
+void	putpixel2(t_data *d, double z, t_vec2 p, uint32_t color)
+{
+	p.x = p.x + p.y * WIDTH;
+	if (!(p.x >= 0 && p.x < WIDTH * HEIGHT))
+		return ;
+	((uint32_t*)d->screen->pixels)[p.x] = color;
+	d->zbuffer[p.x] = z;
+}
+
 uint32_t	getpixel(SDL_Surface *s, double x, double y)
 {
 	int realx;

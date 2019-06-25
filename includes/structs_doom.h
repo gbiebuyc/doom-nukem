@@ -262,7 +262,7 @@ typedef struct	s_data
 	t_color_buf		color_buf;
 	t_vec2f			inertia;
 	unsigned char	font[96][5];
-	double			*zbuffer_sprites;
+	double			*zbuffer;
 	double			floorheightplayer;
 	double			ceilheightplayer;
 	char			nextmap[100];

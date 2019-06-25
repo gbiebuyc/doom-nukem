@@ -105,6 +105,7 @@ void	draw_hud(t_data *d);
 void	invoke_msg(t_data *d, char *msg);
 bool	activate_door(t_data *d, t_sector *sect);
 void	press_e(t_data *d);
+void	putpixel2(t_data *d, double z, t_vec2 p, uint32_t color);
 
 /*
 ** player_damage.c

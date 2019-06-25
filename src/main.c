@@ -51,7 +51,7 @@ int		main(int ac, char **av)
 		ft_printf("error\n");
 	init_font(&d);
 	init_sdl(&d);
-	if (!(d.zbuffer_sprites = malloc(sizeof(double) * WIDTH * HEIGHT)))
+	if (!(d.zbuffer = malloc(sizeof(double) * WIDTH * HEIGHT)))
 		exit(ft_printf("malloc zbuffer_sprites failed.\n"));
 	init_everything(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 	return (EXIT_SUCCESS);

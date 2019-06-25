@@ -24,7 +24,7 @@ void	render(t_data *d)
 		fr.ybottom[x] = HEIGHT-1;
 	}
 	for (int i = 0; i < WIDTH * HEIGHT; i++)
-		d->zbuffer_sprites[i] = INFINITY;
+		d->zbuffer[i] = INFINITY;
 	render_sector(d, &d->sectors[d->cursectnum], &fr);
 	draw_weapon(d);
 	color_buffer(d);
