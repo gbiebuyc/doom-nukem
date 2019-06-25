@@ -21,8 +21,8 @@
 # include <pthread.h>
 # include <limits.h>
 
-# define WIDTH 1000
-# define HEIGHT 750
+# define WIDTH 800
+# define HEIGHT 600
 # define MUST_BE_DESTROYED 255// used by projectiles animation
 # define FPS 60
 # define MAX_Y_OFFSET (HEIGHT/2)
