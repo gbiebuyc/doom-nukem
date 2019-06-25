@@ -106,6 +106,7 @@ void	invoke_msg(t_data *d, char *msg);
 bool	activate_door(t_data *d, t_sector *sect);
 void	press_e(t_data *d);
 void	putpixel2(t_data *d, double z, t_vec2 p, uint32_t color);
+t_vec2f	get_closest(t_vec2f a, t_vec2f b, t_vec2f p);
 
 /*
 ** player_damage.c

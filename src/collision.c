@@ -12,9 +12,9 @@
 
 #include "doom_nukem.h"
 
-# define COLLISION_DIST 0.3
-# define MINIMUM_HEIGHT_TO_WALK 0.32
-# define MINIMUM_CEIL_DIST 0.1
+#define COLLISION_DIST 0.3
+#define MINIMUM_HEIGHT_TO_WALK 0.32
+#define MINIMUM_CEIL_DIST 0.1
 
 bool	can_traverse(t_data *d, int i, t_wall *wall)
 {
@@ -25,47 +25,54 @@ bool	can_traverse(t_data *d, int i, t_wall *wall)
 			wall->is_transparent == false &&
 			d->doorstate[i] > 0.7 &&
 			d->cam.pos.y + d->player.minimum_height > get_floorheight_player(d,
-				neighbor) + MINIMUM_HEIGHT_TO_WALK &&
+			neighbor) + MINIMUM_HEIGHT_TO_WALK &&
 			(d->sectors[neighbor].outdoor ||
-			 (d->cam.pos.y < get_ceilheight_player(d, neighbor) &&
-			  get_ceilheight_player(d, neighbor) - get_floorheight_player(d,
-				  neighbor) - MINIMUM_CEIL_DIST > d->player.minimum_height)));
+			(d->cam.pos.y < get_ceilheight_player(d, neighbor) &&
+			get_ceilheight_player(d, neighbor) - get_floorheight_player(d,
+			neighbor) - MINIMUM_CEIL_DIST > d->player.minimum_height)));
+}
+
+t_vec2f	get_closest(t_vec2f a, t_vec2f b, t_vec2f p)
+{
+	t_vec2f a_to_p;
+	t_vec2f	a_to_b;
+	double	atb2;
+	double	atp_dot_atb;
+	double	t;
+
+	a_to_p = (t_vec2f){p.x - a.x, p.y - a.y};
+	a_to_b = (t_vec2f){b.x - a.x, b.y - a.y};
+	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
+	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
+	t = atp_dot_atb / atb2;
+	t = fclamp(t, 0, 1);
+	return ((t_vec2f){a.x + t * a_to_b.x, a.y + t * a_to_b.y});
 }
 
 bool	collision(t_data *d, t_sector *sect)
 {
 	static int	recursion;
-	if (recursion >= 3)
-		return (false);
-	recursion++;
-	int16_t last = sect->firstwallnum + sect->numwalls;
-	bool collided = false;
-	for (int i = last - 1, j = sect->firstwallnum; j < last; i = j++)
+	t_vec2f		v[2];
+	double		dist;
+	bool		collided;
+	int			i[2];
+
+	if (!(collided = false) && ++recursion > 3)
+		return (false + (--recursion ? 0 : 0));
+	i[0] = sect->firstwallnum + sect->numwalls - 1;
+	i[1] = sect->firstwallnum;
+	while (i[1] < sect->firstwallnum + sect->numwalls)
 	{
-		t_vec2f a = d->walls[i].point;
-		t_vec2f b = d->walls[j].point;
-		t_vec2f p = (t_vec2f){d->cam.pos.x, d->cam.pos.z};
-		t_vec2f a_to_p = {p.x - a.x, p.y - a.y};
-		t_vec2f	a_to_b = {b.x - a.x, b.y - a.y};
-		double	atb2 = a_to_b.x * a_to_b.x + a_to_b.y * a_to_b.y;
-		double	atp_dot_atb = a_to_p.x * a_to_b.x + a_to_p.y * a_to_b.y;
-		double	t = atp_dot_atb / atb2;
-		t = fclamp(t, 0, 1);
-		t_vec2f	closest = {a.x + t * a_to_b.x, a.y + t * a_to_b.y};
-		double	dx = p.x - closest.x;
-		double	dy = p.y - closest.y;
-		double	dist = vec2f_length((t_vec2f){dx, dy});
-		if (dist > COLLISION_DIST)
-			continue ;
-		if (can_traverse(d, i, &d->walls[i]))
-			collided |= collision(d, &d->sectors[d->walls[i].neighborsect]);
-		else
-		{
-			d->cam.pos.x = closest.x + dx * COLLISION_DIST * 1.001 / dist;
-			d->cam.pos.z = closest.y + dy * COLLISION_DIST * 1.002 / dist;
-			collided = true;
-		}
+		v[0] = get_closest(d->walls[i[0]].point, d->walls[i[1]].point,
+				vec3to2(d->cam.pos));
+		v[1] = sub_vec2f(vec3to2(d->cam.pos), v[0]);
+		if ((dist = vec2f_length(v[1])) < COLLISION_DIST)
+			(can_traverse(d, i[0], &d->walls[i[0]])) ? (collided |=
+			collision(d, &d->sectors[d->walls[i[0]].neighborsect])) :
+			((d->cam.pos.x = v[0].x + v[1].x * COLLISION_DIST * 1.001 /
+			dist) && (d->cam.pos.z = v[0].y + v[1].y * COLLISION_DIST *
+			1.002 / dist) && (collided = true));
+		i[0] = i[1]++;
 	}
-	recursion--;
-	return (collided);
+	return (collided + (--recursion ? 0 : 0));
 }

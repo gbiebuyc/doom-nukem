@@ -46,19 +46,7 @@ void	activate_neighbor_door(t_data *d, t_wall *door,
 
 double	get_dist(t_vec2f a, t_vec2f b, t_vec2f p)
 {
-	t_vec2f v[3];
-	double	n[5];
-
-	v[0] = (t_vec2f){p.x - a.x, p.y - a.y};
-	v[1] = (t_vec2f){b.x - a.x, b.y - a.y};
-	n[0] = v[1].x * v[1].x + v[1].y * v[1].y;
-	n[1] = v[0].x * v[1].x + v[0].y * v[1].y;
-	n[2] = n[1] / n[0];
-	n[2] = fclamp(n[2], 0, 1);
-	v[2] = (t_vec2f){a.x + n[2] * v[1].x, a.y + n[2] * v[1].y};
-	n[3] = p.x - v[2].x;
-	n[4] = p.y - v[2].y;
-	return (vec2f_length((t_vec2f){n[3], n[4]}));
+	return (vec2f_length(sub_vec2f(p, get_closest(a, b, p))));
 }
 
 bool	activate_door2(t_data *d, t_wall *w, int n[4])
