@@ -221,13 +221,6 @@ typedef struct	s_color_buf
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
 
-typedef struct		s_inventoryslot
-{
-	bool			is_occupied;
-	SDL_Surface		*tex;
-	int				key_num;
-}					t_inventoryslot;
-
 typedef struct	s_data
 {
 	t_player		player;
@@ -279,9 +272,9 @@ typedef struct	s_data
 	int				musicnum;
 	int				soundnum;
 	pthread_t		music_thread;
-	t_inventoryslot	slot1;
-	t_inventoryslot	slot2;
-	t_inventoryslot	slot3;
+	t_assets		*slot1;
+	t_assets		*slot2;
+	t_assets		*slot3;
 	char			msg[100];
 	uint32_t		msg_start;
 }				t_data;

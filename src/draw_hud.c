@@ -36,7 +36,7 @@ void	draw_inventory_slot(t_data *d, SDL_Surface *tex, int x1, int y1)
 
 void	draw_timed_msg(t_data *d)
 {
-	if (!ft_strlen(d->msg))
+	if (!d->msg[0])
 		return ;
 	draw_string(d, (t_font){d->msg, 50, 100, 0x0, 4});
 	if (SDL_GetTicks() - d->msg_start > 3000)
@@ -53,12 +53,12 @@ void	draw_health(t_data *d)
 
 void	draw_hud(t_data *d)
 {
-	if (d->slot1.is_occupied)
-		draw_inventory_slot(d, d->slot1.tex, 40, 650);
-	if (d->slot2.is_occupied)
-		draw_inventory_slot(d, d->slot2.tex, 140, 650);
-	if (d->slot3.is_occupied)
-		draw_inventory_slot(d, d->slot3.tex, 240, 650);
+	if (d->slot1)
+		draw_inventory_slot(d, d->assets_texture[d->slot1->picnum], 40, 650);
+	if (d->slot2)
+		draw_inventory_slot(d, d->assets_texture[d->slot2->picnum], 140, 650);
+	if (d->slot3)
+		draw_inventory_slot(d, d->assets_texture[d->slot3->picnum], 240, 650);
 	draw_timed_msg(d);
 	draw_health(d);
 }

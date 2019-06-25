@@ -63,15 +63,12 @@ double	get_dist(t_vec2f a, t_vec2f b, t_vec2f p)
 
 bool	activate_door2(t_data *d, t_wall *w, int n[4])
 {
-	if (d->slot1.is_occupied &&
-			d->slot1.key_num == w->key_num && !(w->key_num = 0))
-		d->slot1.is_occupied = false;
-	else if (d->slot2.is_occupied &&
-			d->slot2.key_num == w->key_num && !(w->key_num = 0))
-		d->slot2.is_occupied = false;
-	else if (d->slot3.is_occupied &&
-			d->slot3.key_num == w->key_num && !(w->key_num = 0))
-		d->slot3.is_occupied = false;
+	if (d->slot1 && d->slot1->key_num == w->key_num && !(w->key_num = 0))
+		d->slot1 = NULL;
+	else if (d->slot2 && d->slot2->key_num == w->key_num && !(w->key_num = 0))
+		d->slot2 = NULL;
+	else if (d->slot3 && d->slot3->key_num == w->key_num && !(w->key_num = 0))
+		d->slot3 = NULL;
 	if (w->key_num)
 	{
 		invoke_msg(d, "YOU NEED A KEY");
