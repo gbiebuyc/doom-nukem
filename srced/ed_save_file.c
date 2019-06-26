@@ -68,7 +68,8 @@ static int	write_wall_n_sector_data(t_data *d, int f)
 	i = -1;
 	while (++i < d->numwalls)
 		if (write(f, &d->walls[i], sizeof(t_wall)) < 0 ||
-			write(f, d->walls[i].texture_name, 100) < 0)
+			write(f, d->walls[i].texture_name, 100) < 0 ||
+			write(f, d->walls[i].poster_name, 100) < 0)
 			return (ft_printf("Failed to write wall structure.\n"));
 	return (0);
 }

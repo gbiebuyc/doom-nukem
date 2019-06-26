@@ -58,7 +58,7 @@ char	**load_animation_list(t_data *d, char *path)
 	struct dirent	*de;
 	int				nb;
 	char			**list;
-	int				i;
+	size_t			i;
 
 	if (!(dr = opendir(path)) ||
 		!(list = (char**)malloc(sizeof(char*) * 50)))
@@ -68,14 +68,14 @@ char	**load_animation_list(t_data *d, char *path)
 	{
 		if (is_bmp(de) && (i = -1) && nb < 50)
 		{
-			if (!(list[nb] = (char*)malloc(sizeof(char) * 11)))
+			if (!(list[nb] = (char*)malloc(sizeof(char) * 10)))
 				return (NULL);
 			while (++i < 10)
-				list[nb][i] = (i < (int)ft_strlen(de->d_name)) ?
-					de->d_name[i] : 0;
+				list[nb][i] = (i < ft_strlen(de->d_name)) ? de->d_name[i] : 0;
 			list[nb++][i] = '\0';
 		}
 	}
+	closedir(dr);
 	d->nb_anim_tmp = nb;
 	d->nb_orientation_tnp = get_nb_orientation(sort(list, nb), nb);
 	return (list);

@@ -12,13 +12,35 @@
 
 #include "editor.h"
 
-int		is_bmp(struct dirent *de)
+static void	sort_assets(t_data *d)
+{
+	int				i;
+	int				j;
+	t_assets_data	tmp;
+
+	i = -1;
+	while (++i < d->interface.nb_asset[0] - 1)
+	{
+		j = i;
+		while (++j < d->interface.nb_asset[0])
+		{
+			if (ft_strcmp(d->assets_data[j].name, d->assets_data[i].name) < 0)
+			{
+				tmp = d->assets_data[i];
+				d->assets_data[i] = d->assets_data[j];
+				d->assets_data[j] = tmp;
+			}
+		}
+	}
+}
+
+int			is_bmp(struct dirent *de)
 {
 	return (de->d_type == DT_REG && de->d_name[0] != '.' &&
 			!ft_strcmp(&de->d_name[ft_strlen(de->d_name) - 4], ".bmp"));
 }
 
-void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
+void		new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 {
 	int		i;
 	int		j;
@@ -42,7 +64,7 @@ void	new_asset_data(t_data *d, struct dirent	*de, char *path, int index)
 			(i < (int)ft_strlen(de->d_name) - 4) ? de->d_name[i] : 0;
 }
 
-int		get_interface_assets_files(t_data *d, char **path)
+int			get_interface_assets_files(t_data *d, char **path)
 {
 	DIR				*dr;
 	struct dirent	*de;
@@ -66,5 +88,6 @@ int		get_interface_assets_files(t_data *d, char **path)
 		else
 			return (ft_printf("Failed to open \"%s\" directory\n", path[n]));
 	}
+	sort_assets(d);
 	return (0);
 }

@@ -12,7 +12,34 @@
 
 #include "editor.h"
 
-static int	load_texture(SDL_Surface ***s, int nb_tex,
+static int	sort_texture(t_texture_data **lst)
+{
+	t_texture_data	*list;
+	t_texture_data	*list2;
+	char			tmp[100];
+
+	if (!(*lst))
+		return (ft_printf("No list to sort.\n"));
+	list = *lst;
+	while (list)
+	{
+		list2 = list->next;
+		while (list2)
+		{
+			if (ft_strcmp(list2->name, list->name) < 0)
+			{
+				ft_strcpy(tmp, list->name);
+				ft_strcpy(list->name, list2->name);
+				ft_strcpy(list2->name, tmp);
+			}
+			list2 = list2->next;
+		}
+		list = list->next;
+	}
+	return (0);
+}
+
+static int	load_texture(t_data *d, SDL_Surface ***s, int nb_tex,
 													t_texture_data *tex_list)
 {
 	int			i;
@@ -22,6 +49,8 @@ static int	load_texture(SDL_Surface ***s, int nb_tex,
 	i = 0;
 	while (i < nb_tex)
 	{
+		if (ft_strequ(tex_list->name, "./textures/no_texture.bmp"))
+			d->default_texture = i;
 		if (!((*s)[i] = load_bmp(tex_list->name)))
 			return (ft_printf("Failed to load %s.\n", tex_list->name));
 		if (tex_list->next)
@@ -55,8 +84,6 @@ static int	get_texture_files(t_data *d, DIR *dr, t_texture_data **tex_lst,
 	{
 		if (is_bmp(de))
 		{
-			if (ft_strequ(de->d_name, "no_texture.bmp"))
-				d->default_texture = *nb_tex;
 			if (new_texture(de->d_name, (list) ? &list->next : tex_lst,
 									(!list) ? NULL : list->begin, d->path))
 				return (ft_printf("Failed to craete new texture.\n"));
@@ -68,7 +95,6 @@ static int	get_texture_files(t_data *d, DIR *dr, t_texture_data **tex_lst,
 	}
 	if (*nb_tex == 0)
 		return (ft_printf("Textures folder is empty, no texture to load.\n"));
-	// TODO sort texture list by name
 	return (0);
 }
 
@@ -79,7 +105,8 @@ int			init_texture(t_data *d)
 	d->path = TEXTURE_PATH;
 	if ((dr = opendir(d->path)))
 		if (get_texture_files(d, dr, &d->texture_list, &d->nb_texture) ||
-			load_texture(&d->textures, d->nb_texture, d->texture_list))
+			sort_texture(&d->texture_list) ||
+			load_texture(d, &d->textures, d->nb_texture, d->texture_list))
 			return (1);
 	if (!dr)
 		return (ft_printf("Couldn't open the %s.\n", d->path));
@@ -87,7 +114,8 @@ int			init_texture(t_data *d)
 	d->path = POSTERS_PATH;
 	if ((dr = opendir(d->path)))
 		if (get_texture_files(d, dr, &d->posters_list, &d->nb_posters) ||
-			load_texture(&d->posters, d->nb_posters, d->posters_list))
+			sort_texture(&d->posters_list) ||
+			load_texture(d, &d->posters, d->nb_posters, d->posters_list))
 			return (1);
 	if (!dr)
 		return (ft_printf("Couldn't open the %s.\n", d->path));

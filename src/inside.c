@@ -92,10 +92,7 @@ void	set_tab(t_data *d, short sect_to_scan, short *tab, short old_sect)
 			while (tab[l] != -1)
 			{
 				if (tab[l] == d->walls[i].neighborsect)
-				{
-					printf("tab[l]: %d, l:%d\n", tab[l], l);
 					break ;
-				}
 				l++;
 			}
 			if (tab[l] == -1)

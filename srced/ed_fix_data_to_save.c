@@ -29,6 +29,25 @@ static void	reset_used(t_data *d)
 	}
 }
 
+void		set_poster_name(t_data *d)
+{
+	t_texture_data	*tmp;
+	int				j;
+	int				tex_num;
+
+	tmp = d->posters_list->begin;
+	tex_num = 0;
+	while (tmp)
+	{
+		j = -1;
+		while (++j < d->numwalls)
+			if (d->walls[j].posterpicnum == tex_num)
+				ft_strcpy(d->walls[j].poster_name, tmp->name);
+		tex_num++;
+		tmp = tmp->next;
+	}
+}
+
 /*
 **	set the corresponding texture name to each sector and walls structure.
 */
@@ -58,6 +77,7 @@ void		set_texture_name(t_data *d, t_sector *s, t_wall *w)
 		tex_num++;
 		tmp = tmp->next;
 	}
+	set_poster_name(d);
 }
 
 /*

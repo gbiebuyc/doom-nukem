@@ -84,7 +84,8 @@ static int	read_wall_n_sector_data(t_data *d, int f)
 	while (++i < d->numwalls)
 	{
 		if (read(f, &d->walls[i], sizeof(t_wall)) < 0 ||
-			read(f, d->walls[i].texture_name, 100) < 0)
+			read(f, d->walls[i].texture_name, 100) < 0 ||
+			read(f, d->walls[i].poster_name, 100) < 0)
 			return (ft_printf("Failed to read wall structure.\n"));
 		if (d->walls[i].is_door)
 			d->nb_door++;
@@ -117,6 +118,7 @@ int			load_map(t_data *d, char *map)
 	if (read_wall_n_sector_data(d, f) || read_monsters_data(d, f) ||
 		read_assets_data(d, f))
 		return (1);
+	fix_picnum(d, NULL);
 	close(f);
 	if (!(contain_map_path(map)))
 		free(map);

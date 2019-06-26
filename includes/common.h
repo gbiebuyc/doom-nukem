@@ -102,6 +102,7 @@ typedef struct	s_wall
 	int16_t		flags;
 	int16_t		neighborsect;
 	char		texture_name[100];
+	char		poster_name[100];
 	bool		is_door;
 	int			door_num;
 	int			key_num;

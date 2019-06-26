@@ -78,8 +78,8 @@ static int	write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 }
 
 /*
- **	i = monster_type_id
- */
+**	i = monster_type_id
+*/
 
 int			write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 {

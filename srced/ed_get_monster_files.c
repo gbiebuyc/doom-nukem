@@ -36,6 +36,7 @@ int					get_monsterdemon_projectile(t_data *d)
 			free(f);
 		}
 	}
+	closedir(dr);
 	return (0);
 }
 
@@ -54,6 +55,7 @@ static SDL_Surface	**load_anim_tex(t_data *d, char *path, char **list)
 			!(anim[i] = load_bmp(f)))
 			return (NULL);
 		free(f);
+		free(list[i]);
 	}
 	free(list);
 	free(path);

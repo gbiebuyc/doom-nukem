@@ -43,14 +43,14 @@ void		init_sectors(t_data *d)
 	dt = d->default_floor_texture;
 	d->sectors[0] = (t_sector){0, 4, 0, 1, dt, dt, 1.0, false, "", "", false,
 		NULL, 0, 0, 0, 0, false, false, false, false, false};
-	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-									0, -1, false};
-	d->walls[1] = (t_wall){(t_vec2f){4, 4}, dt, dt, dt, 0, -1, "", false, -1,
-									0, -1, false};
-	d->walls[2] = (t_wall){(t_vec2f){4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-									0, -1, false};
-	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", false, -1,
-									0, -1, false};
+	d->walls[0] = (t_wall){(t_vec2f){-4, 4}, dt, dt, dt, 0, -1, "", "",
+											false, -1, 0, -1, false};
+	d->walls[1] = (t_wall){(t_vec2f){4, 4}, dt, dt, dt, 0, -1, "", "",
+											false, -1, 0, -1, false};
+	d->walls[2] = (t_wall){(t_vec2f){4, -4}, dt, dt, dt, 0, -1, "", "",
+											false, -1, 0, -1, false};
+	d->walls[3] = (t_wall){(t_vec2f){-4, -4}, dt, dt, dt, 0, -1, "", "",
+											false, -1, 0, -1, false};
 	d->numsectors = 1;
 	d->numwalls = 4;
 }

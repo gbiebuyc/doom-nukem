@@ -548,9 +548,10 @@ void			event_sector_option_handler(t_data *d, int x, int y,
 														t_btn_option_p *p);
 
 /*
-**	ed_read_map.c
+**	ed_read_map.c ed_read_map_fix.c
 */
 
+void			fix_picnum(t_data *d, t_texture_data *lst);
 int				contain_map_path(char *path);
 int				load_map(t_data *d, char *path);
 

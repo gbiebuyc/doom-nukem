@@ -53,11 +53,10 @@ SDL_Surface		*load_bmp(char *path)
 	if (!get_bmp_header(&bmp, path) && (fd = open(path, O_RDONLY)) != -1)
 	{
 		if (!(data = malloc(bmp.header.filesize)) ||
-			(read(fd, data, bmp.header.filesize) < 0) ||
+			((j = 0) != -1 && (read(fd, data, bmp.header.filesize) < 0)) ||
 			!(surface = SDL_CreateRGBSurfaceWithFormat(0, bmp.header.width,
 							bmp.header.height, 32, SDL_PIXELFORMAT_ARGB8888)))
 			return (NULL);
-		j = 0;
 		while (bmp.header.filesize > bmp.header.data_offset)
 		{
 			bmp.header.filesize -= bmp.header.width * 4;
@@ -65,6 +64,7 @@ SDL_Surface		*load_bmp(char *path)
 				&((uint8_t*)data)[bmp.header.filesize], bmp.header.width * 4);
 			j += bmp.header.width * 4;
 		}
+		free(data);
 		close(fd);
 	}
 	return (surface);

@@ -60,7 +60,7 @@ void		add_wall(t_data *d)
 	SDL_GetMouseState(&x, &y);
 	p = grid_lock(d, screentoworld(d, (t_vec2f){x, y}));
 	d->walls[d->numwalls - 1] = (t_wall){p, d->default_wall_texture,
-		d->default_wall_texture, d->default_wall_texture, 0, -1, "", 0, -1,
+		d->default_wall_texture, d->default_wall_texture, 0, -1, "", "", 0, -1,
 		0, -1, false};
 	d->selectedwall = &d->walls[d->numwalls - 1];
 }
