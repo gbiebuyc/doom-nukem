@@ -38,6 +38,7 @@ static int	new_texture(char *name, t_texture_data **tex_data,
 		return (1);
 	name = ft_strjoin(path, name);
 	ft_strcpy((*tex_data)->name, name);
+	free(name);
 	(*tex_data)->begin = begin;
 	(*tex_data)->next = NULL;
 	return (0);

@@ -12,6 +12,33 @@
 
 #include "editor.h"
 
+int					get_monsterdemon_projectile(t_data *d)
+{
+	DIR				*dr;
+	struct dirent	*de;
+	char			*path;
+	int				i;
+	char			*f;
+
+	path = "./textures/assets/monsters/motherdemon/projectiles/";
+	if (!(dr = opendir(path)))
+		return (ft_printf("Failed to open %s\n", path));
+	i = 0;
+	while ((de = readdir(dr)))
+	{
+		if (is_bmp(de))
+		{
+			if (!(f = ft_strjoin(path, de->d_name)))
+				return (ft_printf("strjoin failed\n"));
+			if (!(d->projectile_monster[i] = load_bmp(f)))
+				return (ft_printf("Failed to load motherdemon projectile\n"));
+			i++;
+			free(f);
+		}
+	}
+	return (0);
+}
+
 static SDL_Surface	**load_anim_tex(t_data *d, char *path, char **list)
 {
 	SDL_Surface	**anim;
@@ -84,5 +111,7 @@ int					get_monsters_files(t_data *d, char *path, int nb_monster)
 		free(folder);
 		closedir(dr);
 	}
+	if (get_monsterdemon_projectile(d))
+		return (1);
 	return (0);
 }

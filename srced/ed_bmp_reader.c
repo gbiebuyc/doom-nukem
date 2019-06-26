@@ -61,8 +61,8 @@ SDL_Surface		*load_bmp(char *path)
 		while (bmp.header.filesize > bmp.header.data_offset)
 		{
 			bmp.header.filesize -= bmp.header.width * 4;
-			ft_memcpy(&surface->pixels[j], &data[bmp.header.filesize],
-												bmp.header.width * 4);
+			ft_memcpy(&((uint8_t*)surface->pixels)[j],
+				&((uint8_t*)data)[bmp.header.filesize], bmp.header.width * 4);
 			j += bmp.header.width * 4;
 		}
 		close(fd);

@@ -84,15 +84,27 @@ static int	write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 int			write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 {
 	int		i;
+	int		w;
+	int		h;
 
 	i = -1;
 	while (++i < d->interface.nb_asset[1])
 	{
 		if (write(f, &mt[i].nb_walk_orientation, sizeof(int)) < 0 ||
-				write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim) ||
-				write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim) ||
-				write_anim_texture(mt[i].death, f, mt[i].nb_death_anim))
+			write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim) ||
+			write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim) ||
+			write_anim_texture(mt[i].death, f, mt[i].nb_death_anim))
 			return (1);
+	}
+	i = -1;
+	while (++i < 5)
+	{
+		w = d->projectile_monster[i]->w;
+		h = d->projectile_monster[i]->h;
+		if (write(f, &w, sizeof(int)) < 0 ||
+			write(f, &h, sizeof(int)) < 0 ||
+			write(f, d->projectile_monster[i]->pixels, w * h * 4) < 0)
+			return (ft_printf("Failed to write animation size or texture.\n"));
 	}
 	return (0);
 }

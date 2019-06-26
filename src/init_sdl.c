@@ -12,19 +12,6 @@
 
 #include "doom_nukem.h"
 
-void	load_texture(t_data *d, char *path)
-{
-	static int	i;
-	SDL_Surface *tmp;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-		exit(EXIT_FAILURE);
-	if (!(d->textures[i++] = SDL_ConvertSurfaceFormat(tmp,
-					d->screen->format->format, 0)))
-		exit(EXIT_FAILURE);
-	SDL_FreeSurface(tmp);
-}
-
 void	fix_picnum(t_data *d)
 {
 	int		i;
@@ -54,37 +41,6 @@ void	fix_picnum(t_data *d)
 	}
 }
 
-void	load_projectile_texture(t_data *d, const char *path,
-		unsigned short i, unsigned short j)
-{
-	SDL_Surface *tmp;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-	{
-		ft_putstr_fd("couldn't find ", 2);
-		ft_putendl_fd(path, 2);
-		exit(EXIT_FAILURE);
-	}
-	d->projectile_tex[i][j] = tmp;
-}
-
-void	load_weapon_texture(t_data *d, const char *path,
-		unsigned short i, unsigned short j)
-{
-	SDL_Surface *tmp;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-	{
-		ft_putstr_fd("couldn't find ", 2);
-		ft_putendl_fd(path, 2);
-		exit(EXIT_FAILURE);
-	}
-	if (!(d->weapon_tex[i][j] = SDL_ConvertSurfaceFormat(tmp,
-					d->screen->format->format, 0)))
-		exit(EXIT_FAILURE);
-	SDL_FreeSurface(tmp);
-}
-
 void	init_sdl(t_data *d)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
@@ -96,15 +52,5 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		err_exit(d, 2, SDL_GetError());
-	load_projectile_texture(d,
-		"./textures/sprites/projectiles/fireball_1/BAL1A0.bmp", FIREBALL_1, 0);
-	load_projectile_texture(d,
-		"./textures/sprites/projectiles/fireball_1/BAL1B0.bmp", FIREBALL_1, 1);
-	load_projectile_texture(d,
-		"./textures/sprites/projectiles/fireball_1/BAL1C0.bmp", FIREBALL_1, 2);
-	load_projectile_texture(d,
-		"./textures/sprites/projectiles/fireball_1/BAL1D0.bmp", FIREBALL_1, 3);
-	load_projectile_texture(d,
-		"./textures/sprites/projectiles/fireball_1/BAL1E0.bmp", FIREBALL_1, 4);
 	d->keys = SDL_GetKeyboardState(NULL);
 }

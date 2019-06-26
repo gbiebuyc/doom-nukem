@@ -12,6 +12,24 @@
 
 #include "doom_nukem.h"
 
+static int	read_motherdemon_projectile(t_data *d, int f)
+{
+	int		i;
+	int		w;
+	int		h;
+
+	i = -1;
+	while (++i < 5)
+	{
+		if (read(f, &w, sizeof(int)) < 0 || read(f, &h, sizeof(int)) < 0 ||
+			!(d->projectile_tex[1][i] = SDL_CreateRGBSurfaceWithFormat(
+									0, w, h, 32, SDL_PIXELFORMAT_ARGB8888)) ||
+			read(f, d->projectile_tex[1][i]->pixels, w * h * 4) < 0)
+			return (ft_printf("Failed to read motherdemon projectile\n"));
+	}
+	return (0);
+}
+
 static int	read_anim_death_texture(t_data *d, int f, int *i, int nb_o)
 {
 	int	o;
@@ -71,5 +89,7 @@ int			load_monsters_texture(t_data *d, int f)
 			if (read_anim_death_texture(d, f, (int[2]){i, a}, nb_orientation))
 				return (1);
 	}
+	if (read_motherdemon_projectile(d, f))
+		return (1);
 	return (0);
 }

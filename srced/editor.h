@@ -261,6 +261,7 @@ typedef struct	s_data
 	t_texture_data		*posters_list;
 	char				*path;
 	t_monsters_texture	*texture_monster;
+	SDL_Surface			*projectile_monster[5];
 	SDL_Surface			*weap_tex[3][20];
 	SDL_Surface			*weap_proj[3][20];
 	char				*weap_list[3][2][20];
