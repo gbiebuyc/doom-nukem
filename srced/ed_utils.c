@@ -70,23 +70,6 @@ void			cpy_scale_surf(SDL_Surface *src, int p[2], int size, t_data *d)
 				}
 }
 
-void			remove_backgorund_image(SDL_Surface *s)
-{
-	int			x;
-	int			y;
-	uint32_t	c;
-
-	c = ((uint32_t*)s->pixels)[0];
-	y = -1;
-	while (++y < s->h)
-	{
-		x = -1;
-		while (++x < s->w)
-			if (((uint32_t*)s->pixels)[x + y * s->w] == c)
-				((uint32_t*)s->pixels)[x + y * s->w] = 0xFF000000;
-	}
-}
-
 double			fclamp(double x, double min, double max)
 {
 	if (x < min)

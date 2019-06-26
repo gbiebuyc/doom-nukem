@@ -52,11 +52,11 @@ static int		load_weapon_texture(t_data *d, int *nb_tex, int *nb_projectile)
 	{
 		j = -1;
 		while (++j < nb_tex[i])
-			if (!(d->weap_tex[i][j] = SDL_LoadBMP(d->weap_list[i][0][j])))
+			if (!(d->weap_tex[i][j] = load_bmp(d->weap_list[i][0][j])))
 				return (ft_printf("Failed load %s.\n", d->weap_list[i][0][j]));
 		j = -1;
 		while (++j < nb_projectile[i])
-			if (!(d->weap_proj[i][j] = SDL_LoadBMP(d->weap_list[i][1][j])))
+			if (!(d->weap_proj[i][j] = load_bmp(d->weap_list[i][1][j])))
 				return (ft_printf("Failed load %s.\n", d->weap_list[i][1][j]));
 	}
 	return (0);

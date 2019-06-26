@@ -35,10 +35,6 @@ typedef struct s_header
 	int32_t		important_colors;
 	
 	int32_t		rgba;
-/*	int8_t		r;
-	int8_t		g;
-	int8_t		b;
-	int8_t		a;*/
 }               t_header;
 
 typedef struct	s_bmp

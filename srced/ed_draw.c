@@ -107,6 +107,5 @@ void		draw_screen(t_data *d)
 	}
 	else
 		draw_map_list(d);
-///**/bmp_reader(d); // here for test only
 	SDL_UpdateWindowSurface(d->win);
 }

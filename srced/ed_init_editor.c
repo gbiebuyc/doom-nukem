@@ -27,15 +27,14 @@ static int		load_interface_assets(t_data *d, t_toolbar *tb)
 		while (++j < d->interface.nb_asset[m])
 		{
 			file = d->assets_data[i].file;
-			if (!(tb->assets[m][j] = SDL_LoadBMP(file)))
+			if (!(tb->assets[m][j] = load_bmp(file)))
 				return (ft_printf("Loading failed : %s\n", file));
 			i++;
 		}
 		m++;
 	}
-	if (!(tb->player_start = SDL_LoadBMP(d->assets_data[i].file)))
+	if (!(tb->player_start = load_bmp(d->assets_data[i].file)))
 		return (ft_printf("Loading failed : %s\n", d->assets_data[i].file));
-	//remove_backgorund_image(tb->player_start);
 	return (0);
 }
 
@@ -71,21 +70,21 @@ static int		init_toolbar(t_toolbar *tb)
 	"./Menu/lblNextmap.bmp", "./Menu/browseBox.bmp",
 	"./Menu/sectorOptions.bmp", "./Menu/lblTransparent.bmp"};
 	i = -1;
-	if (!(tb->select[0] = SDL_LoadBMP(file[++i])) ||
-		!(tb->select[1] = SDL_LoadBMP(file[++i])) ||
-		!(tb->move[0] = SDL_LoadBMP(file[++i])) ||
-		!(tb->move[1] = SDL_LoadBMP(file[++i])))
+	if (!(tb->select[0] = load_bmp(file[++i])) ||
+		!(tb->select[1] = load_bmp(file[++i])) ||
+		!(tb->move[0] = load_bmp(file[++i])) ||
+		!(tb->move[1] = load_bmp(file[++i])))
 		return (ft_printf("Failed to load %s\n", file[i]));
 	j = -1;
 	while (++j < NB_PROPERTIES)
-		if (!(tb->properties[j] = SDL_LoadBMP(file[++i])))
+		if (!(tb->properties[j] = load_bmp(file[++i])))
 			return (ft_printf("Failed to load %s\n", file[i]));
 	return (0);
 }
 
 static int		init_interface(t_data *d)
 {
-	if (!(d->interface.menu = SDL_LoadBMP("./Menu/menu.bmp")))
+	if (!(d->interface.menu = load_bmp("./Menu/menu.bmp")))
 		return (ft_printf("Error when creating escape menu.\n"));
 	if (init_toolbar(&d->interface.toolbar) ||
 		init_assets(d, &d->interface.toolbar))

@@ -24,7 +24,7 @@ static SDL_Surface	**load_anim_tex(t_data *d, char *path, char **list)
 	while (++i < d->nb_anim_tmp)
 	{
 		if (!(f = ft_strjoin(path, list[i])) ||
-			!(anim[i] = SDL_LoadBMP(f)))
+			!(anim[i] = load_bmp(f)))
 			return (NULL);
 		free(f);
 	}

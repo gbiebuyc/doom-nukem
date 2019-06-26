@@ -12,28 +12,22 @@
 
 #include "editor.h"
 
-static int	load_texture(t_data *d, SDL_Surface ***s, int nb_tex,
+static int	load_texture(SDL_Surface ***s, int nb_tex,
 													t_texture_data *tex_list)
 {
 	int			i;
-	SDL_Surface	*tmp;
 
 	if (!((*s) = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * nb_tex)))
 		return (ft_printf("Failed to allocate tetures surface memory.\n"));
 	i = 0;
 	while (i < nb_tex)
 	{
-		if (!(tmp = SDL_LoadBMP(tex_list->name)))
+		if (!((*s)[i] = load_bmp(tex_list->name)))
 			return (ft_printf("Failed to load %s.\n", tex_list->name));
-		if (!((*s)[i] = SDL_ConvertSurfaceFormat(tmp,
-											SDL_PIXELFORMAT_ARGB8888, 0)))
-			return (ft_printf("Failed to re-format\n"));
 		if (tex_list->next)
 			tex_list = tex_list->next;
-		SDL_FreeSurface(tmp);
 		i++;
 	}
-	(void)d;
 	return (0);
 }
 
@@ -84,7 +78,7 @@ int			init_texture(t_data *d)
 	d->path = TEXTURE_PATH;
 	if ((dr = opendir(d->path)))
 		if (get_texture_files(d, dr, &d->texture_list, &d->nb_texture) ||
-			load_texture(d, &d->textures, d->nb_texture, d->texture_list))
+			load_texture(&d->textures, d->nb_texture, d->texture_list))
 			return (1);
 	if (!dr)
 		return (ft_printf("Couldn't open the %s.\n", d->path));
@@ -92,7 +86,7 @@ int			init_texture(t_data *d)
 	d->path = POSTERS_PATH;
 	if ((dr = opendir(d->path)))
 		if (get_texture_files(d, dr, &d->posters_list, &d->nb_posters) ||
-			load_texture(d, &d->posters, d->nb_posters, d->posters_list))
+			load_texture(&d->posters, d->nb_posters, d->posters_list))
 			return (1);
 	if (!dr)
 		return (ft_printf("Couldn't open the %s.\n", d->path));
