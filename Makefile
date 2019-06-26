@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   move_monster \
 	   draw_hud \
 	   msg \
 	   asset_collision \

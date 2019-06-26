@@ -90,6 +90,7 @@ void	init_monsters(t_data *d)
 	while (i < d->nummonsters)
 	{
 		initialize_all_monster(d, &(d->monsters[i]), i);
+		d->monster_target[i] = d->monsters[i].pos;
 		i++;
 	}
 }

@@ -26,6 +26,7 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 		if (monsters[i].can_collide)
 			monster_behaviour(d, &monsters[i]);
 		monster_anim_state(&monsters[i], d->monster_type, d);
+		move_monster(d, i);
 		i++;
 	}
 }
