@@ -30,14 +30,14 @@ double	get_ceilheight_player(t_data *d, int16_t sectnum)
 **	Delta height between player and floor/ceil at point.
 */
 
-double	get_floordh(t_data *d, t_sector *sect, t_vec3f v)
+double	get_floordh(t_data *d, t_sector *sect, t_vec2f v)
 {
-	return (get_floorheight_point(d, sect - d->sectors, vec3to2(v)) -
+	return (get_floorheight_point(d, sect - d->sectors, v) -
 			d->cam.pos.y);
 }
 
-double	get_ceildh(t_data *d, t_sector *sect, t_vec3f v)
+double	get_ceildh(t_data *d, t_sector *sect, t_vec2f v)
 {
-	return (get_ceilheight_point(d, sect - d->sectors, vec3to2(v)) -
+	return (get_ceilheight_point(d, sect - d->sectors, v) -
 			d->cam.pos.y);
 }

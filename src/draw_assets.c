@@ -75,8 +75,8 @@ void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum)
 		if (asset->used)
 			continue ;
 		v = vec2to3(asset->world_pos);
-		v.y = (asset->is_on_floor) ? get_floordh(d, p->sector, v) :
-			get_ceildh(d, p->sector, v);
+		v.y = (asset->is_on_floor) ? get_floordh(d, p->sector, vec3to2(v)) :
+			get_ceildh(d, p->sector, vec3to2(v));
 		p->is_on_floor = asset->is_on_floor;
 		proj_asset(d, p, v, d->assets_texture[asset->picnum]);
 		blit_asset(d, p, d->assets_texture[asset->picnum]);

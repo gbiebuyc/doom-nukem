@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:15:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 22:19:18 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/26 22:02:33 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	set_vla(t_sprite_list *tmp, double *vla, t_data *d)
 		if (tmp->type == IS_PROJECTILE)
 			vla[i] = vec3f_length(sub_vec3f(d->cam.pos,
 						d->projectiles[tmp->id].pos));
-
 		i++;
 		tmp = tmp->next;
 	}

@@ -51,6 +51,7 @@ FILES= main \
 	   draw_ceil \
 	   draw_wall \
 	   clip_wall \
+	   proj_wall \
 	   pixel \
 	   getpixel \
 	   player_damage \

@@ -32,11 +32,11 @@ void	proj_floor(t_data *d, t_projdata *p)
 	p->c[2] = transform_back(d, (t_vec3f){0, 0, 2});
 	y_offset = HEIGHT / 2 - d->cam.y_offset;
 	p->v[0] = (t_vec3f){-WIDTH + WIDTH / 2, get_floordh(d,
-			p->sector, p->c[0]) * -WIDTH + y_offset, 1};
+			p->sector, vec3to2(p->c[0])) * -WIDTH + y_offset, 1};
 	p->v[1] = (t_vec3f){WIDTH + WIDTH / 2, get_floordh(d,
-			p->sector, p->c[1]) * -WIDTH + y_offset, 1};
+			p->sector, vec3to2(p->c[1])) * -WIDTH + y_offset, 1};
 	p->v[2] = (t_vec3f){WIDTH / 2, get_floordh(d, p->sector,
-			p->c[2]) * -WIDTH * 0.5 + y_offset, 0.5};
+			vec3to2(p->c[2])) * -WIDTH * 0.5 + y_offset, 0.5};
 	p->c[2].x /= 2;
 	p->c[2].z /= 2;
 	p->area = edge_function(p->v[0], p->v[1], p->v[2].x, p->v[2].y);

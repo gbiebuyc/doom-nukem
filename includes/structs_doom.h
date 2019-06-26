@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/09 23:52:13 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/26 23:49:37 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ typedef struct	s_projdata
 	double		areaa;
 	bool		is_on_floor;
 	double		shadefactor;
+	double		len;
+	double		scale1;
+	double		scale2;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes
