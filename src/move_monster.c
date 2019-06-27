@@ -32,6 +32,8 @@ void	move_monster(t_data *d, int i)
 	t_vec2f	new_target;
 	double	len;
 
+	if (d->monsters[i].life <= 0)
+		return ;
 	step = sub_vec2f(d->monster_target[i], d->monsters[i].pos);
 	if ((len = vec2f_length(step)) < MONSTER_SPEED)
 	{
