@@ -44,7 +44,7 @@ CC = gcc
 FT_DIR = ../libft
 SDL_CFG = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../SDL/library/bin/sdl2-config
 CFLAGS = -Wall -Wextra -Werror -I$(FT_DIR) -I../includes `$(SDL_CFG) --cflags`
-LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --libs`
+LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --static-libs`
 
 all: $(NAME)
 
