@@ -15,6 +15,7 @@ NAME= doom-nukem
 FILES= main \
 	   move_monster \
 	   draw_hud \
+	   draw_hud2 \
 	   msg \
 	   asset_collision \
 	   draw_assets \

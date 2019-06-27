@@ -85,6 +85,9 @@ void	init_weapons(t_data *d)
 	d->weapon_type[M16].rate_of_fire[0] = d->player.speed_anim[M16] * 2 - 1;
 	d->weapon_type[M16].has_alt_fire = false;
 	d->weapon_type[M16].type = NORMAL;
+	d->weapon_type[BLASTER].max_ammo = 10;
+	d->weapon_type[CRYO_BALLISTA].max_ammo = 10;
+	d->weapon_type[M16].max_ammo = 50;
 }
 
 void	init_projectiles(t_data *d)

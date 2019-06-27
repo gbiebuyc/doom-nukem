@@ -31,6 +31,12 @@ void	init_player3(t_data *d, t_player *player)
 	d->slot1 = NULL;
 	d->slot2 = NULL;
 	d->slot3 = NULL;
+	d->weapon_type[BLASTER].current_ammo =
+		d->weapon_type[BLASTER].max_ammo;
+	d->weapon_type[CRYO_BALLISTA].current_ammo =
+		d->weapon_type[CRYO_BALLISTA].max_ammo;
+	d->weapon_type[M16].current_ammo =
+		d->weapon_type[M16].max_ammo;
 }
 
 void	init_player2(t_data *d, t_player *player)

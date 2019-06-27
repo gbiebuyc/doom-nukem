@@ -113,6 +113,9 @@ void	press_e(t_data *d);
 void	putpixel2(t_data *d, double z, t_vec2 p, uint32_t color);
 t_vec2f	get_closest(t_vec2f a, t_vec2f b, t_vec2f p);
 void	move_monster(t_data *d, int i);
+void	draw_health(t_data *d);
+void	draw_fuel(t_data *d);
+void	draw_ammo(t_data *d, int ammo);
 
 /*
 ** player_damage.c

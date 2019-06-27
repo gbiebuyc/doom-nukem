@@ -36,6 +36,8 @@ void	shoot_weapon(t_data *d, uint8_t *w)
 			if (*w == M16)
 				m16_shoot(d);
 			shoot_sound(d);
+			if (d->weapon_type[d->player.current_weapon].current_ammo)
+				d->weapon_type[d->player.current_weapon].current_ammo--;
 		}
 		else if (d->right_mouse_button == MOUSE_PRESSED &&
 				d->weapon_type[*w].has_alt_fire)
@@ -88,7 +90,7 @@ void	player_actions(t_data *d)
 	w = &d->player.current_weapon;
 	if (d->player.can_shoot)
 		d->player.can_shoot--;
-	else
+	else if (d->weapon_type[d->player.current_weapon].current_ammo)
 		shoot_weapon(d, w);
 	if (*w == CRYO_BALLISTA && d->player.current_anim_playing == 5
 			&& !d->player.timer_anim_weap)

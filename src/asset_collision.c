@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:45:42 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/23 14:45:42 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/27 02:10:46 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@ void	use_asset(t_data *d, t_assets *asset)
 {
 	d->player.health += asset->stat_mod.heal;
 	d->player.health -= asset->stat_mod.damage;
-	d->player.is_flying += asset->is_jetpack ? 10000 : 0;
-	if (!d->slot1)
-		d->slot1 = asset;
-	else if (!d->slot2)
-		d->slot2 = asset;
-	else if (!d->slot3)
-		d->slot3 = asset;
-	else
-		return (invoke_msg(d, "INVENTORY IS FULL"));
+	d->player.is_flying += asset->is_jetpack ? 300 : 0;
+	d->weapon_type[BLASTER].current_ammo += asset->stat_mod.blaster_ammo;
+	d->weapon_type[CRYO_BALLISTA].current_ammo += asset->stat_mod.ballista_ammo;
+	d->weapon_type[M16].current_ammo += asset->stat_mod.m16_ammo;
+	if (asset->is_jetpack || asset->is_key)
+	{
+		if (!d->slot1)
+			d->slot1 = asset;
+		else if (!d->slot2)
+			d->slot2 = asset;
+		else if (!d->slot3)
+			d->slot3 = asset;
+		else
+			return (invoke_msg(d, "INVENTORY IS FULL"));
+	}
 	asset->used = true;
 }
 
