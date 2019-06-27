@@ -59,6 +59,9 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 			s->slopeceil -= 1;
 		if (key == SDLK_KP_PLUS && s->slopeceil < 20)
 			s->slopeceil += 1;
+		if (key == SDLK_e)
+			d->sectors[d->selected_sector].is_elevator =
+				!d->sectors[d->selected_sector].is_elevator;
 	}
 }
 

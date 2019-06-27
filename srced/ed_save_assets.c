@@ -46,11 +46,10 @@ void	copy_data(t_data *d, t_assets_list *a, int s, int *i)
 	(*i)++;
 }
 
-int		fill_assets_structure(t_data *d)
+int		fill_assets_structure(t_data *d, t_assets_list *lst)
 {
 	int				s;
 	int				i;
-	t_assets_list	*lst;
 
 	clear_assets_structure(d);
 	if (!d->interface.assets_list)
@@ -60,6 +59,7 @@ int		fill_assets_structure(t_data *d)
 	s = -1;
 	while (++s < d->numsectors && (i = 0) != -1)
 	{
+		d->assets[s] = NULL;
 		if (!(d->assets[s] = (t_assets*)malloc(sizeof(t_assets) * 10)))
 			return (ft_printf("Failed to malloc assets structures.\n"));
 		ft_memset(d->assets[s], 0, 10);
@@ -106,7 +106,7 @@ int		write_assets_data(t_data *d, int f)
 		return (ft_printf("Failed to write nb_assets.\n"));
 	if (d->nb_assets > 0)
 	{
-		if (fill_assets_structure(d))
+		if (fill_assets_structure(d, NULL))
 			return (1);
 		s = -1;
 		while (++s < d->numsectors)
