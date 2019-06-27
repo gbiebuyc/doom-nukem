@@ -96,7 +96,7 @@ void	fly_gravity(t_data *d)
 		d->cam.pos.y -= FLYING_SPEED;
 	}
 	if (d->cam.pos.y > d->floorheightplayer + d->player.minimum_height)
-		d->player.is_flying -= 1;
+		decrease_fuel(d);
 	else
 		d->player.gravity = 0.0;
 	if (!d->player.is_flying)

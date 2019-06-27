@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   jetpack \
 	   move_monster \
 	   draw_hud \
 	   draw_hud2 \
@@ -26,6 +27,7 @@ FILES= main \
 	   load_sound \
 	   sound \
 	   handle_finish \
+	   handle_respawn \
 	   exit \
 	   init_sdl \
 	   init_monsters \

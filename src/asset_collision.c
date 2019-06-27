@@ -18,7 +18,8 @@ void	use_asset(t_data *d, t_assets *asset)
 {
 	d->player.health += asset->stat_mod.heal;
 	d->player.health -= asset->stat_mod.damage;
-	d->player.is_flying += asset->is_jetpack ? 300 : 0;
+	if (asset->is_jetpack)
+		d->player.is_flying = 300;
 	d->weapon_type[BLASTER].current_ammo += asset->stat_mod.blaster_ammo;
 	d->weapon_type[CRYO_BALLISTA].current_ammo += asset->stat_mod.ballista_ammo;
 	d->weapon_type[M16].current_ammo += asset->stat_mod.m16_ammo;

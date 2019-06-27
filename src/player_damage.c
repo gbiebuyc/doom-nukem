@@ -31,7 +31,7 @@ void	player_hit_projectile(t_data *d, t_projectile *projectile)
 	if (projectile)
 		change_inertia(d, atan2(projectile->dir.z,
 			projectile->dir.x), BOUNCING_DIST_PROJ);
-	d->player.health -= 10;
+	d->player.health -= 20;
 }
 
 void	check_dangerous_area(t_data *d)

@@ -109,11 +109,9 @@ void	update(t_data *d)
 	int16_t	sect;
 
 	if (d->player.health <= 0)
-	{
-		init_monsters(d);
-		init_player(d, &d->player);
-		invoke_msg(d, "YOU DIED");
-	}
+		handle_respawn(d);
+	if (d->sectors[d->cursectnum].is_finish)
+		handle_finish(d);
 	update_doors(d);
 	d->cam.rot -= d->keys[SDL_SCANCODE_LEFT] * TURN_SPEED;
 	d->cam.rot += d->keys[SDL_SCANCODE_RIGHT] * TURN_SPEED;
@@ -127,8 +125,6 @@ void	update(t_data *d)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);
 		d->cursectnum = sect;
 	}
-	if (d->sectors[d->cursectnum].is_finish)
-		handle_finish(d);
 	jump(d);
 	player_actions(d);
 	update_projectiles(d);
