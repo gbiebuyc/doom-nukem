@@ -134,4 +134,5 @@ void	update(t_data *d)
 	update_projectiles(d);
 	update_monsters(&d->nummonsters, d->monsters, d);
 	d->lightblink = sin((double)SDL_GetTicks() / 200) * 0.3 + 0.6;
+	check_dangerous_area(d);
 }

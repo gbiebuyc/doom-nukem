@@ -33,3 +33,16 @@ void	player_hit_projectile(t_data *d, t_projectile *projectile)
 			projectile->dir.x), BOUNCING_DIST_PROJ);
 	d->player.health -= 10;
 }
+
+void	check_dangerous_area(t_data *d)
+{
+	if (!d->sectors[d->cursectnum].is_harmful)
+		return ;
+	if (fabs(d->cam.pos.y - MINIMUM_HEIGHT - d->floorheightplayer) > 0.1)
+		return ;
+	if (SDL_GetTicks() - d->last_dangerous_area_damage < 1000)
+		return ;
+	change_buf_colo(d, 7, RED);
+	d->player.health -= 20;
+	d->last_dangerous_area_damage = SDL_GetTicks();
+}

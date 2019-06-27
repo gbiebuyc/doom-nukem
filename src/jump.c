@@ -12,7 +12,6 @@
 
 #include "doom_nukem.h"
 
-# define MINIMUM_HEIGHT 0.5// used in init_player
 # define MINIMUM_CROUCH_HEIGHT 0.2 // defined in player_damage too
 # define CROUCH_SPEED 0.01
 # define MINIMUM_CEIL_DIST 0.1 // defined in movement aswell

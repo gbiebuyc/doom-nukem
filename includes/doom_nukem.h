@@ -30,6 +30,7 @@
 # include <structs_doom.h>
 # define PATH_MAP "./maps/"
 # define POSTER_W 1.3
+# define MINIMUM_HEIGHT 0.5
 
 void	draw_aim_cross(t_data *d);
 void	m16_shoot(t_data *d);
@@ -116,6 +117,7 @@ void	move_monster(t_data *d, int i);
 void	draw_health(t_data *d);
 void	draw_fuel(t_data *d);
 void	draw_ammo(t_data *d, int ammo);
+void	check_dangerous_area(t_data *d);
 
 /*
 ** player_damage.c
