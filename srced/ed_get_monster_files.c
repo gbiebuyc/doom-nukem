@@ -104,7 +104,7 @@ int					get_monsters_files(t_data *d, char *path, int nb_monster)
 	char			**name;
 	char			*folder;
 
-	name = (char*[]){MOTHERDEMON, CHARGINGDEMON};
+	name = (char*[]){"motherdemon", "chargingdemon"};
 	i = -1;
 	while (++i < nb_monster)
 	{
