@@ -120,6 +120,7 @@ void	draw_ammo(t_data *d, int ammo);
 void	check_dangerous_area(t_data *d);
 void	decrease_fuel(t_data *d);
 void	handle_respawn(t_data *d);
+void	precompute_texanim(t_data *d);
 
 /*
 ** player_damage.c
