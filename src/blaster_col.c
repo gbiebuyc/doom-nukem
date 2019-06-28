@@ -6,14 +6,14 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:38:00 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 16:44:28 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 #define BLASTER_HITBOX 0.4
-#define BLASTER_DAMAGE 500
+#define LEFT_MOUSE_BLASTER_DAMAGE 500
 #define RIGHT_MOUSE_BLASTER_DAMAGE 500
 
 bool		should_touch_blaster_hitbox(t_data *d, t_vec2f updated_pos, double
