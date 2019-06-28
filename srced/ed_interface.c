@@ -47,18 +47,16 @@ static void	print_assets_toolbar(t_data *d, SDL_Surface **prop)
 	y += prop[4]->h + 5;
 	d->interface.category_pos[0] = (t_vec2){W - PROPERTIES_LIMIT + 7, y + 4};
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	y += 364;
+	y += 364 - (1200 - H);
 	d->interface.category_pos[1] = (t_vec2){W - PROPERTIES_LIMIT + 7,
 											y + prop[5]->h + 13};
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	draw_separator(d, W - PROPERTIES_LIMIT, y + prop[5]->h + 10, 0x008800);
 	x = (W - PROPERTIES_LIMIT * 0.5) - prop[5]->w * 0.5;
 	copy_surface_to_surface(prop[5], d->screen, (int[2]){x, y + 5}, d);
-	y += prop[5]->h + 90;
-	x = (W - PROPERTIES_LIMIT * 0.5) - prop[6]->w * 0.5;
 	y = PROPERTIES_POS - prop[7]->h - 15;
 	draw_separator(d, W - PROPERTIES_LIMIT, y, 0x008800);
-	x = W - PROPERTIES_LIMIT + 8;
+	x = W - PROPERTIES_LIMIT + MARGIN;
 	copy_surface_to_surface(prop[7], d->screen, (int[2]){x, y + 5}, d);
 	d->interface.category_pos[2] = (t_vec2){x + prop[7]->w + 10, y + 5};
 	print_assets(d, d->interface.toolbar.assets);
@@ -114,7 +112,7 @@ void		print_interface(t_data *d)
 		putpixel(d, W - PROPERTIES_LIMIT, y, 0x008800);
 	print_properties(d, d->interface.toolbar.properties, 0, PROPERTIES_POS);
 	print_assets_toolbar(d, d->interface.toolbar.properties);
-	print_interface_values(d, d->interface.btn_floor_height_pos.x - 85,
+	print_interface_values(d, d->interface.btn_ceil_height_pos.x - 70,
 												PROPERTIES_POS, NULL);
 	draw_ligth_bar(d);
 }

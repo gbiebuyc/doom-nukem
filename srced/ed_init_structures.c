@@ -66,10 +66,11 @@ void		init_sector_options_position(t_data *d, int x, int y,
 	x = W - PROPERTIES_LIMIT - d->interface.toolbar.properties[19]->w;
 	y = H - d->interface.toolbar.properties[19]->h;
 	b->sector_options = (t_vec2){x, y};
-	x += 228;
-	y += 26;
+	x += 144;
+	y += 39;
 	assign_position(&b->cbox_blinking, (t_vec2){x, y});
 	assign_position(&b->cbox_harmful, (t_vec2){x, y += 30});
+	x += 166;
 	y += 30;
 	assign_position(&b->btn_slopeceil_minus, (t_vec2){x, y += 30});
 	assign_position(&b->btn_slopeceil_plus, (t_vec2){x + 30, y});
@@ -86,15 +87,15 @@ void		init_sector_options_position(t_data *d, int x, int y,
 
 void		init_button_position(t_data *d, int x, int y, t_btn_option_p *b)
 {
-	y = H - d->interface.toolbar.properties[6]->h + 38;
-	assign_position(&b->cbox_onfloor, (t_vec2){93, y});
-	x = 215;
+	y = H - d->interface.toolbar.properties[6]->h + 45;
+	assign_position(&b->cbox_onfloor, (t_vec2){136, y});
+	x = 295;
 	assign_position(&b->cbox_onceil, (t_vec2){x, y});
 	assign_position(&b->btn_restorehp_minus, (t_vec2){x, y += 33});
 	assign_position(&b->btn_restorehp_plus, (t_vec2){x + 30, y});
 	assign_position(&b->btn_damaehp_minus, (t_vec2){x, y += 30});
 	assign_position(&b->btn_damaehp_plus, (t_vec2){x + 30, y});
-	assign_position(&b->btn_ammo_ballista_minus, (t_vec2){x, y += 30});
+	assign_position(&b->btn_ammo_ballista_minus, (t_vec2){x, y += 60});
 	assign_position(&b->btn_ammo_ballista_plus, (t_vec2){x + 30, y});
 	assign_position(&b->btn_ammo_blaster_minus, (t_vec2){x, y += 30});
 	assign_position(&b->btn_ammo_blaster_plus, (t_vec2){x + 30, y});

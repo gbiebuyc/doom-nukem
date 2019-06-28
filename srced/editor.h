@@ -55,7 +55,7 @@
 # define PROPERTIES_LIMIT 350
 # define TEXTURE_TOOLBAR 618
 # define NB_PROPERTIES 21
-# define PROPERTIES_POS (H >> 1) - 20
+# define PROPERTIES_POS (H >> 1) - 20 - (1200 - H)
 # define MOVE_WALL_PROP 30
 
 /*

@@ -99,7 +99,7 @@ void		draw_ligth_bar(t_data *d)
 	int	px;
 	int	py;
 
-	px = d->interface.cbox_skybox_p.x;
+	px = d->interface.cbox_skybox_p.x - 30;
 	py = d->interface.tex_select[1].y + 80;
 	y = -1;
 	while (++y <= 17 && (x = -1))

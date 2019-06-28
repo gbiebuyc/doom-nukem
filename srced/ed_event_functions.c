@@ -55,8 +55,8 @@ int		menu_button(t_data *d, SDL_Event *e)
 		else if (e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
 				e->button.y >= 34 && e->button.y < 62)
 			save_file(d, d->current_loaded_map);
-		else if (e->button.x >= 6 && e->button.x < d->interface.menu->w - 6 &&
-				e->button.y >= 62 && e->button.y < d->interface.menu->h - 6)
+		else if (e->button.x >= 5 && e->button.x < d->interface.menu->w - 5 &&
+				e->button.y >= 62 && e->button.y < d->interface.menu->h - 5)
 			return (-1);
 	}
 	d->interface.show_menu = 0;
@@ -103,11 +103,9 @@ int		selecting_assets_in_toolbar(t_data *d, SDL_Event *e)
 
 	d->interface.category = -1;
 	i = -1;
-	limit = 352;
+	limit = 352 - (1200 - H);
 	while (++i < NB_CATEGORY)
 	{
-		if (i == 1)
-			limit = 72;
 		y = d->interface.category_pos[i].y;
 		if (e->motion.x >= d->interface.category_pos[i].x &&
 			e->motion.x <= W - 5 && e->motion.y >= y

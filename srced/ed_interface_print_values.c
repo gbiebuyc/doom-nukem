@@ -17,6 +17,11 @@ static void	printdata(t_data *d, char *s, int x, int y)
 	draw_string(d, (t_font){s, x, y, 0x008800, 2});
 }
 
+/*
+**	properties[14] = checkbox (checked)
+**	properties[19] = sector_options menu
+*/
+
 static void	print_sector_options_values(t_data *d, int x, int y,
 															t_btn_option_p *p)
 {
@@ -31,7 +36,7 @@ static void	print_sector_options_values(t_data *d, int x, int y,
 	s = &d->sectors[d->selected_sector];
 	copy_surface_to_surface(d->interface.toolbar.properties[19], d->screen,
 					(int[2]){p->sector_options.x, p->sector_options.y}, d);
-	x = p->cbox_blinking.x - 50;
+	x = p->btn_slopeceil_minus.x - 53;
 	y = p->btn_slopeceil_minus.y + 5;
 	printdata(d, ft_itoa_static(s->slopeceil), x, y);
 	printdata(d, ft_itoa_static(s->slopeceil_orientation), x, y += 30);
@@ -55,7 +60,7 @@ static void	print_asset_values(t_data *d, t_assets_list *a, t_btn_option_p *p,
 	copy_surface_to_surface(d->interface.toolbar.properties[14], d->screen,
 		(a->is_on_floor) ? (int[2]){v[0]->x, v[0]->y - 1} :
 							(int[2]){v[1]->x, v[1]->y - 1}, d);
-	x = p->btn_restorehp_minus.x - 50;
+	x = p->btn_restorehp_minus.x - 75;
 	printdata(d, ft_itoa_static(a->stat_mod.heal), x, v[2]->y + 5);
 	printdata(d, ft_itoa_static(a->stat_mod.damage), x, v[3]->y + 5);
 	printdata(d, ft_itoa_static(a->stat_mod.ballista_ammo), x, v[4]->y + 5);
@@ -116,14 +121,14 @@ void		print_interface_values(t_data *d, int x, int y, char *string)
 	}
 	else
 		draw_string(d, (t_font){"Default", x, y + 6, 0x008800, 2});
-	if (d->selected_wall != -1 || d->hl_wallnum != -1)
-	{
-		string = ft_itoa_static((d->hl_wallnum != -1) ? d->hl_wallnum
+	string = ft_itoa_static((d->hl_wallnum != -1) ? d->hl_wallnum
 														: d->selected_wall);
-		draw_string(d, (t_font){string, x, H - 167, 0x008800, 2});
-	}
+	if (d->selected_wall != -1 || d->hl_wallnum != -1)
+		draw_string(d, (t_font){string, d->interface.tex_select[2].x - 30,
+							d->interface.tex_select[2].y - 30, 0x008800, 2});
 	else
-		draw_string(d, (t_font){"Default", x, H - 167, 0x008800, 2});
+		draw_string(d, (t_font){"Default", d->interface.tex_select[2].x - 30,
+							d->interface.tex_select[2].y - 30, 0x008800, 2});
 	print_next_map_and_asset(d, x, y);
 	print_sector_options_values(d, x, y, &d->interface.btn_option_p);
 }

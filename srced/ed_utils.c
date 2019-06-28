@@ -19,9 +19,9 @@ static uint32_t	get_color(int x, int y, uint32_t color, t_data *d)
 	int	menu;
 
 	menu = d->interface.is_on_menu;
-	if (menu && x >= 6 && x < 90 && color == 0xff787878 &&
-		((menu == 1 && y >= 6 && y < 34) || (menu == 2 && y >= 34 && y < 62)
-		|| (menu == 3 && y >= 62 && y < 90)))
+	if (menu && x >= 5 && x <= 90 && color == 0xff787878 &&
+		((menu == 1 && y >= 5 && y < 34) || (menu == 2 && y >= 34 && y < 62)
+		|| (menu == 3 && y >= 62 && y <= 90)))
 		color = COLOR_SELECT;
 	return (color);
 }

@@ -43,7 +43,7 @@ static int	link_key_with_door(t_data *d, t_assets_list *a)
 
 int			is_on_button(t_vec2 btn, int x, int y)
 {
-	return (x >= btn.x && x < btn.x + 24 && y >= btn.y && y < btn.y + 24);
+	return (x > btn.x && x <= btn.x + 24 && y > btn.y + 1 && y <= btn.y + 25);
 }
 
 static void	handle_checkbox(t_data *d, int x, int y, t_assets_list *a)
