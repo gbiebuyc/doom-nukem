@@ -118,35 +118,4 @@ void		load_map(t_data *d, char *map)
 	close(f);
 	if (!contain_map_path(map))
 		free(map_path);
-	/*
-	int s;
-	int i;
-	s = -1;
-	while (++s < d->numsectors)
-	{
-		i = -1;
-		while (++i < d->assets[s][0].nb_assets)
-		{
-			ft_printf("------------\nSector : %d\n-----------\n", s);
-			ft_printf("Is on ceil : %d\n", d->assets[s][i].is_on_ceil);
-			ft_printf("Is on floor : %d\n", d->assets[s][i].is_on_floor);
-			ft_printf("Picnum : %d\n", d->assets[s][i].picnum);
-			ft_printf("Position : %5.2f %5.2f\n", d->assets[s]
-				[i].world_pos.x, d->assets[s][i].world_pos.y);
-			ft_printf("Is interactive : %d\n", d->assets[s][i].is_interactive);
-			ft_printf("Is autopick : %d\n", d->assets[s][i].is_atuopcik);
-			ft_printf("Is jetpack : %d\n", d->assets[s][i].is_jetpack);
-			ft_printf("Have collision : %d\n", d->assets[s][i].collision);
-			ft_printf("### Have the following effect : ###\n");
-			ft_printf("Heal : %d\n", d->assets[s][i].stat_mod.heal);
-			ft_printf("Damage : %d\n", d->assets[s][i].stat_mod.damage);
-			ft_printf("Restore ballista_ammo : %d\n", d->assets[s]
-				[i].stat_mod.ballista_ammo);
-			ft_printf("Restore blaster_ammo : %d\n", d->assets[s]
-				[i].stat_mod.blaster_ammo);
-			ft_printf("Restore m16_ammo : %d\n", d->assets[s]
-				[i].stat_mod.m16_ammo);
-		}
-	}
-	*/
 }

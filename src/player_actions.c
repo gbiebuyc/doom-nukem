@@ -21,6 +21,7 @@ void	shoot_sound(t_data *d)
 	d->soundnum = 1;
 	if (pthread_create(&thread, NULL, sound_thread, &arg))
 		ft_printf("pthread_create error\n");
+	pthread_detach(thread);
 }
 
 void	shoot_weapon(t_data *d, uint8_t *w)

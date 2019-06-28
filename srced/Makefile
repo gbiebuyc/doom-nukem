@@ -49,7 +49,7 @@ LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --static-libs`
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJ)

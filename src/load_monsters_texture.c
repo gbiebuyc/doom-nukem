@@ -74,9 +74,10 @@ int			load_monsters_texture(t_data *d, int f)
 	int i;
 	int a;
 	int nb_orientation;
+	int	nb_death;
 
 	i = -1;
-	while (++i < 1/*MAXTYPEMONSTERS*/)
+	while (++i < 2)
 	{
 		a = -1;
 		if (read(f, &nb_orientation, sizeof(int)) < 0)
@@ -84,7 +85,9 @@ int			load_monsters_texture(t_data *d, int f)
 		while (++a < 7)
 			if (read_anim_texture(d, f, (int[2]){i, a}, nb_orientation))
 				return (1);
-		a = 9;
+		if (read(f, &nb_death, sizeof(int)) < 0)
+			return (ft_printf("Failed to read nb_death.\n"));
+		a = 18 - nb_death;
 		while (++a < 19)
 			if (read_anim_death_texture(d, f, (int[2]){i, a}, nb_orientation))
 				return (1);

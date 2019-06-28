@@ -41,7 +41,7 @@ void		event_sector_option_handler(t_data *d, int x, int y,
 	else if (is_on_button(p->btn_slopeceil_orientation_minus, x, y))
 		s->slopeceil_orientation -= 15;
 	else if (is_on_button(p->btn_slopeceil_orientation_plus, x, y))
-		s->slopeceil_orientation += 15;
+		s->slopeceil_orientation = (s->slopeceil_orientation + 15) % 360;
 	else if (is_on_button(p->btn_slopefloor_minus, x, y) && s->slope > -20)
 		s->slope -= 1;
 	else if (is_on_button(p->btn_slopefloor_plus, x, y) && s->slope < 20)
@@ -49,5 +49,9 @@ void		event_sector_option_handler(t_data *d, int x, int y,
 	else if (is_on_button(p->btn_slopefloor_orientation_minus, x, y))
 		s->slope_orientation -= 15;
 	else if (is_on_button(p->btn_slopefloor_orientation_plus, x, y))
-		s->slope_orientation += 15;
+		s->slope_orientation = (s->slope_orientation + 15) % 360;
+	if (s->slopeceil_orientation < 0)
+		s->slopeceil_orientation += 360;
+	if (s->slope_orientation < 0)
+		s->slope_orientation += 360;
 }

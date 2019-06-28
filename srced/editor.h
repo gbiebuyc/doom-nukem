@@ -180,7 +180,6 @@ typedef struct	s_btn_option_posistion
 	t_vec2		cbox_floor_animated;
 }				t_btn_option_p;
 
-
 typedef struct	s_toolbar
 {
 	SDL_Surface	*select[2];
@@ -307,8 +306,7 @@ typedef struct	s_data
 	unsigned char		font[96][CHAR_WIDTH];
 }				t_data;
 
-/**/int			bmp_reader(t_data *d);
-/**/SDL_Surface		*load_bmp(char *path);
+SDL_Surface		*load_bmp(char *path);
 int				map_exist(t_data *d, char *map, char *save);
 
 /*
@@ -541,7 +539,7 @@ void			event_asset_option_handler(t_data *d, int x, int y,
 															t_btn_option_p *p);
 
 /*
-**
+**	ed_event_sector_option.c
 */
 
 void			event_sector_option_handler(t_data *d, int x, int y,

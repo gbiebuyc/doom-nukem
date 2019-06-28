@@ -29,7 +29,7 @@ int				get_bmp_header(t_bmp *bmp, char *path)
 			read(fd, &bmp->header.planes, 2) < 0 ||
 			read(fd, &bmp->header.bpp, 2) < 0 ||
 			read(fd, &bmp->header.compression, 4) < 0 ||
-			read(fd, &bmp->header.imageSize, 4) < 0 ||
+			read(fd, &bmp->header.imagesize, 4) < 0 ||
 			read(fd, &bmp->header.x_pixels_per_m, 4) < 0 ||
 			read(fd, &bmp->header.y_pixels_per_m, 4) < 0 ||
 			read(fd, &bmp->header.colors_used, 4) < 0 ||

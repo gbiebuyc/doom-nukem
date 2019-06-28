@@ -24,6 +24,15 @@ void	start_music(t_data *d)
 
 void	init_everything(t_data *d, char *map)
 {
+	int i;
+	int	j;
+	int	k;
+
+	i = -1;
+	while (++i < MAXTYPEMONSTERS && (j = -1))
+		while (++j < MAX_STATE_MONSTER && (k = -1))
+			while (++k < MAXNBOFANIMATION)
+				d->monster_text[i][j][k] = NULL;
 	load_map(d, map);
 	fix_picnum(d);
 	init_player(d, &d->player);
@@ -32,8 +41,8 @@ void	init_everything(t_data *d, char *map)
 	init_player(d, &d->player);
 	if (d->startsectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
-//	if (!d->music_thread)
-//		start_music(d);
+	if (!d->music_thread)
+		start_music(d);
 	loop(d);
 }
 
