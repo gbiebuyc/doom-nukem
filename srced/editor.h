@@ -235,12 +235,9 @@ typedef struct	s_interface
 	int				selected_map;
 	t_vec2			selected_map_pos;
 	int				prompt_asset_option;
-
 }				t_interface;
 
 /*
-**	texture_to_scale = size to resize the image,
-**	texture_to_scale = 32 -> will resize the image to 32x32 pixels
 **	hl_wall = highlighted_wall
 **
 **	t_assets_data	assets_data[100]; index given by nb_asset (cf. s_interface)

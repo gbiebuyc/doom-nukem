@@ -12,6 +12,20 @@
 
 #include "editor.h"
 
+static void	tmp_fix(t_data *d)
+{
+	int		i;
+	char 	**name;
+
+	name = (char*[]){"motherdemon", "chargingdemon"};
+	i = -1;
+	while (++i < 11)
+		d->assets_data[d->interface.nb_asset[0]].name[i] = name[0][i];
+	i = -1;
+	while (++i < 13)
+		d->assets_data[d->interface.nb_asset[0] + 1].name[i] = name[1][i];
+}
+
 static void	sort_assets(t_data *d)
 {
 	int				i;
@@ -88,6 +102,7 @@ int			get_interface_assets_files(t_data *d, char **path)
 		else
 			return (ft_printf("Failed to open \"%s\" directory\n", path[n]));
 	}
+	tmp_fix(d);
 	sort_assets(d);
 	return (0);
 }
