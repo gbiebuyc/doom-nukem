@@ -74,7 +74,7 @@ void	free_everything(t_data *d)
 	if (d->nb_textures > 0 && (i = -1) != 0)
 		while (++i < d->nb_textures)
 			free(d->tex_name_list[i]);
-	if (d->posters > 0 && (i = -1) != 0)
+	if ((intptr_t)d->posters > 0 && (i = -1) != 0)
 	{
 		while (++i < d->nb_posters)
 			SDL_FreeSurface(d->posters[i]);

@@ -38,7 +38,7 @@ void	draw_char(t_data *d, t_font *f)
 void	draw_string(t_data *d, t_font f)
 {
 	if (f.scale <= 0)
-		return ((void)printf("bad fond scale\n"));
+		return ((void)ft_printf("bad fond scale\n"));
 	while (*f.str)
 	{
 		draw_char(d, &f);

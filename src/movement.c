@@ -46,11 +46,9 @@ void	mvtnallanicaca(t_data *d, short *count, t_vec2f *mvt)
 
 void	movement(t_data *d)
 {
-	t_vec3f	old_pos;
 	t_vec2f	mvt;
 	short	count;
 
-	old_pos = d->cam.pos;
 	if (d->player.can_be_stomped)
 		d->player.can_be_stomped--;
 	if (!d->player.can_move)

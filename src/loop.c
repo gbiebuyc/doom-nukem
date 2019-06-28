@@ -19,7 +19,7 @@ void	print_fps(void)
 
 	if (SDL_GetTicks() - last > 1000)
 	{
-		printf("%d fps\n", i);
+		ft_printf("%d fps\n", i);
 		last = SDL_GetTicks();
 		i = 0;
 	}

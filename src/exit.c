@@ -18,7 +18,7 @@ void	proper_exit(t_data *d)
 	render(d);
 	d->musicnum = -1;
 	if (pthread_join(d->music_thread, NULL))
-		printf("pthread_join error\n");
+		ft_printf("pthread_join error\n");
 	SDL_DestroyWindow(d->win);
 	SDL_Quit();
 	exit(EXIT_SUCCESS);
