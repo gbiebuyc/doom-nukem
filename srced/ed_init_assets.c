@@ -14,18 +14,16 @@
 
 static void	tmp_fix(t_data *d)
 {
-	int		i;
-	char 	**name;
+	t_assets_data	tmp;
 
-	name = (char*[]){"motherdemon", "chargingdemon"};
-	i = -1;
-	while (++i < 11)
-		d->assets_data[d->interface.nb_asset[0]].name[i] = name[0][i];
-	d->assets_data[d->interface.nb_asset[0]].name[i] = '\0';
-	i = -1;
-	while (++i < 13)
-		d->assets_data[d->interface.nb_asset[0] + 1].name[i] = name[1][i];
-	d->assets_data[d->interface.nb_asset[0] + 1].name[i] = '\0';
+	if (!ft_strequ(d->assets_data[d->interface.nb_asset[0]].name,
+															"motherdemon"))
+	{
+		tmp = d->assets_data[d->interface.nb_asset[0]];
+		d->assets_data[d->interface.nb_asset[0]] =
+						d->assets_data[d->interface.nb_asset[0] + 1];
+		d->assets_data[d->interface.nb_asset[0] + 1] = tmp;
+	}
 }
 
 static void	sort_assets(t_data *d)
