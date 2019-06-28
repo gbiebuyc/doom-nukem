@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 15:23:16 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 18:14:18 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	inside(t_data *d, int16_t sectnum, t_vec2f pos)
 	return (n[0]);
 }
 
-#define DIST_COLL_PROJ_CEIL_FLOOR 0.25
+#define DIST_COLL_PROJ_CEIL_FLOOR 0.1
 
 int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth,
 		int16_t old_sect, t_vec3f pos)

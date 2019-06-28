@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 17:50:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 18:26:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	draw_monster(t_data *d, t_frustum *fr, t_monster monster)
 	short			nb_of_anim[2];
 
 	monsterpos = (t_vec3f){monster.pos.x,
-		d->sectors[monster.cursectnum].floorheight,
+		get_floorheight_point(d, monster.cursectnum, monster.pos),
 		monster.pos.y};
 	point_in_screen = transform_vec3f_to_screen(d, monsterpos);
 	if (point_in_screen.z <= 0)

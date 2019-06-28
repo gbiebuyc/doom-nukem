@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:36:18 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 18:15:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	player_hit_projectile(t_data *d, t_projectile *projectile)
 	if (projectile)
 		change_inertia(d, atan2(projectile->dir.z,
 			projectile->dir.x), BOUNCING_DIST_PROJ);
-	d->player.health -= 20;
+	d->player.health -= d->projectile_type[projectile->id_type].damage;
 }
 
 void	check_dangerous_area(t_data *d)

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 18:08:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 18:09:38 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void	monster_behaviour(t_data *d, t_monster *monster, uint16_t id)
 	if (!monster->activated)
 		return ;
 	monster->timer--;
-	printf("%d\n", monster->timer);
 	if (monster->id_type == MOTHERDEMON)
 		motherdemon_behaviour(d, monster, id);
 	if (monster->id_type == CHARGINGDEMON)
