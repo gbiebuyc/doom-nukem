@@ -6,133 +6,73 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 19:38:27 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/06 19:41:56 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:03:50 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	draw_wall_transparent2(t_data *d, t_projdata *p, t_frustum *fr)
+void	draw_wall_nei(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	int		u;
-	int		y;
-	SDL_Surface *tex;
-	double	shadefactor;
-	uint32_t	px;
-
-	tex = d->textures[p->wall->middlepicnum];
-	u = (p->u - floor(p->u)) * tex->w;
-	y = fr->ytop[p->x];
-	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
-		while (++y <= fr->ybottom[p->x])
-			putpixel2(d, p->z, (t_vec2){p->x, y}, 0);
-	else
-		while (++y <= fr->ybottom[p->x])
-		{
-			px = getpixel4(tex, u, norm(y, p->yc, p->yd) * p->y_scale);
-			if ((px >> 24) == 0xff)
-				putpixel2(d, p->z, (t_vec2){p->x, y}, shade(shadefactor, px));
-		}
-}
-
-void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr)
-{
-	p->n = fclamp(norm(p->x, p->x1, p->x2), 0, 1);
-	p->z = 1 / lerp(p->n, p->z1, p->z2);
-	p->u = lerp(p->n, p->u1, p->u2) * p->z;
-	p->ya = lerp(p->n, p->y1a, p->y2a);
-	p->yb = lerp(p->n, p->y1b, p->y2b);
-	p->yc = lerp(p->n, p->y1c, p->y2c);
-	p->yd = lerp(p->n, p->y1d, p->y2d);
-	if (p->neighbor)
-	{
-		p->nya = lerp(p->n, p->ny1a, p->ny2a);
-		p->nyb = lerp(p->n, p->ny1b, p->ny2b);
-		p->doorbottom = ft_min(p->yd, p->nyb);
-		p->doorheight = p->doorbottom - p->yc;
-		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
-			(1 - d->doorstate[p->wall - d->walls]);
-	}
-	draw_wall_transparent2(d, p, fr);
-}
-
-void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible)
-{
-	int	end;
-
-	if (p->cx2 - p->cx1 <= 2)
-		return ;
-	end = p->cx2;
-	while (!visible[p->cx1] && p->cx1 < end)
-		(p->cx1)++;
-	p->cx2--;
-	if (p->cx1 >= end)
-		return ;
-	p->cx2 = p->cx1;
-	while (visible[p->cx2] && p->cx2 < end)
-		p->cx2++;
-	if (p->neighbor && p->cx1 < p->cx2)
-	{
-		nfr->x1 = p->cx1;
-		nfr->x2 = p->cx2;
-		render_sector(d, p->neighbor, nfr);
-	}
+	while (++p->y <= ft_min(fr->ybottom[p->x], p->nya))
+		putpixel2(d, p->z, (t_vec2){p->x, p->y},
+			shade(p->shadefactor, getpixel4(p->tex, p->u_tex, p->wall->is_door ?
+				norm(p->y, p->nya - p->doorheight, p->nya) :
+				norm(p->y, p->yc, p->yd) * p->y_scale)));
+	p->tex = d->textures[p->wall->lowerpicnum];
+	p->u_tex = (p->u - floor(p->u)) * p->tex->w;
+	p->y = ft_max(fr->ytop[p->x], p->nyb) - 1;
+	while (++p->y <= ft_min(fr->ybottom[p->x], p->yb))
+		putpixel2(d, p->z, (t_vec2){p->x, p->y}, shade(p->shadefactor,
+			getpixel4(p->tex, p->u_tex,
+				norm(p->y, p->yc, p->yd) * p->y_scale)));
 }
 
 void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 {
-	int		u;
-	int		y;
-	SDL_Surface *tex;
-	SDL_Surface *poster;
-	int		u_poster;
-	int		ya_poster;
-	int		yb_poster;
-	double	shadefactor;
-
-	ya_poster = 0;
-	yb_poster = 0;
-	u_poster = 0;
-	poster = 0;
+	p->ya_poster = 0;
+	p->yb_poster = 0;
 	if (p->wall->posterpicnum >= 0 && p->u > p->u1_poster &&
 			p->u < p->u2_poster)
 	{
-		poster = d->posters[p->wall->posterpicnum];
-		u_poster = (unsigned int)(norm(p->u, p->u1_poster, p->u2_poster) *
-				poster->w) % poster->w;
-		int	margin = (double)(p->yd - p->yc) * (1.0 - p->poster_h) / 2.0;
-		ya_poster = p->yc + margin;
-		yb_poster = p->yd - margin;
+		p->poster = d->posters[p->wall->posterpicnum];
+		p->u_poster = (unsigned int)(norm(p->u, p->u1_poster, p->u2_poster) *
+				p->poster->w) % p->poster->w;
+		p->margin = (double)(p->yd - p->yc) * (1.0 - p->poster_h) / 2.0;
+		p->ya_poster = p->yc + p->margin;
+		p->yb_poster = p->yd - p->margin;
 	}
-	tex = d->textures[p->wall->middlepicnum];
-	u = (p->u - floor(p->u)) * tex->w;
-	y = ft_max(fr->ytop[p->x], p->ya);
-	if ((shadefactor = getshadefactor(d, p, p->z)) <= 0)
-		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-			putpixel2(d, p->z, (t_vec2){p->x, y}, 0);
+	p->tex = d->textures[p->wall->middlepicnum];
+	p->u_tex = (p->u - floor(p->u)) * p->tex->w;
+	p->y = ft_max(fr->ytop[p->x], p->ya);
+	if ((p->shadefactor = getshadefactor(d, p, p->z)) <= 0)
+		while (++p->y <= ft_min(fr->ybottom[p->x], p->yb))
+			putpixel2(d, p->z, (t_vec2){p->x, p->y}, 0);
 	else if (!p->neighbor)
-		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-			if (p->wall->posterpicnum >= 0 && y > ya_poster && y < yb_poster)
-				putpixel2(d, p->z, (t_vec2){p->x, y}, shade(shadefactor,
-					getpixel4(poster, u_poster,
-						norm(y, ya_poster, yb_poster))));
-			else
-				putpixel2(d, p->z, (t_vec2){p->x, y}, shade(shadefactor,
-					getpixel4(tex, u, norm(y, p->yc, p->yd) * p->y_scale)));
+		draw_wall_no_nei(d, p, fr);
 	else if (p->neighbor)
+		draw_wall_nei(d, p, fr);
+}
+
+void	draw_wall4(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
+{
+	p->nya = lerp(p->n, p->ny1a, p->ny2a);
+	p->nyb = lerp(p->n, p->ny1b, p->ny2b);
+	if (p->wall->is_door)
 	{
-		while (++y <= ft_min(fr->ybottom[p->x], p->nya))
-			putpixel2(d, p->z, (t_vec2){p->x, y},
-			shade(shadefactor, getpixel4(tex, u, p->wall->is_door ?
-			norm(y, p->nya - p->doorheight, p->nya) :
-			norm(y, p->yc, p->yd) * p->y_scale)));
-		tex = d->textures[p->wall->lowerpicnum];
-		u = (p->u - floor(p->u)) * tex->w;
-		y = ft_max(fr->ytop[p->x], p->nyb) - 1;
-		while (++y <= ft_min(fr->ybottom[p->x], p->yb))
-			putpixel2(d, p->z, (t_vec2){p->x, y}, shade(shadefactor,
-				getpixel4(tex, u, norm(y, p->yc, p->yd) * p->y_scale)));
+		p->nya = ft_max(p->nya, p->ya);
+		p->nyb = ft_min(p->nyb, p->yb);
 	}
+	p->doorbottom = ft_min(p->yb, p->nyb);
+	p->doorheight = p->doorbottom - p->yc;
+	p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
+		(1 - d->doorstate[p->wall - d->walls]);
+	nfr->ytop[p->x] = clamp((p->sector->outdoor && p->neighbor->outdoor) ?
+			0 : p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
+	nfr->ybottom[p->x] = clamp(p->nyb, fr->ytop[p->x],
+			fr->ybottom[p->x]);
+	if (p->sector->outdoor && p->neighbor->outdoor)
+		p->ya = p->nya;
 }
 
 void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
@@ -149,25 +89,7 @@ void	draw_wall2(t_data *d, t_projdata *p, t_frustum *fr, t_frustum *nfr)
 	p->yc = lerp(p->n, p->y1c, p->y2c);
 	p->yd = lerp(p->n, p->y1d, p->y2d);
 	if (p->neighbor)
-	{
-		p->nya = lerp(p->n, p->ny1a, p->ny2a);
-		p->nyb = lerp(p->n, p->ny1b, p->ny2b);
-		if (p->wall->is_door)
-		{
-			p->nya = ft_max(p->nya, p->ya);
-			p->nyb = ft_min(p->nyb, p->yb);
-		}
-		p->doorbottom = ft_min(p->yb, p->nyb);
-		p->doorheight = p->doorbottom - p->yc;
-		p->nya += (p->doorbottom - ft_max(p->yc, p->nya)) *
-			(1 - d->doorstate[p->wall - d->walls]);
-		nfr->ytop[p->x] = clamp((p->sector->outdoor && p->neighbor->outdoor) ?
-				0 : p->nya + 1, fr->ytop[p->x], fr->ybottom[p->x]);
-		nfr->ybottom[p->x] = clamp(p->nyb, fr->ytop[p->x],
-				fr->ybottom[p->x]);
-		if (p->sector->outdoor && p->neighbor->outdoor)
-			p->ya = p->nya;
-	}
+		draw_wall4(d, p, fr, nfr);
 	draw_wall2bis(d, p, fr);
 }
 

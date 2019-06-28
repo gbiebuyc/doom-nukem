@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 15:39:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 16:59:30 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,13 @@ typedef struct	s_projdata
 	double		len;
 	double		scale1;
 	double		scale2;
+	int			u_tex;
+	int			u_poster;
+	SDL_Surface *tex;
+	SDL_Surface *poster;
+	int			ya_poster;
+	int			yb_poster;
+	int			margin;
 }				t_projdata;
 
 # define MAX_STATE_OF_PROJ_ANIM 21 //add one for collision changes

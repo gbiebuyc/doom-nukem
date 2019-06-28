@@ -6,12 +6,11 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 02:47:04 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/27 02:47:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 17:13:02 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
 
 void	draw_health(t_data *d)
 {

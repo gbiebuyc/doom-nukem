@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 00:21:32 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 16:52:33 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:21:56 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ uint32_t	getpixel4(SDL_Surface *s, int u, double y)
 {
 	y -= floor(y);
 	if (s->userdata)
+	{
 		return (((uint32_t*)s->pixels)[u + (int)(s->w *
 			(y + ((intptr_t)s->userdata - 1))) * s->w]);
+	}
 	return (((uint32_t*)s->pixels)[u + (int)(s->h * y) * s->w]);
 }

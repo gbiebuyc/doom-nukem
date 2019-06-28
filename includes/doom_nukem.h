@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 17:13:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:22:14 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ bool	inside(t_data *d, int16_t sectnum, t_vec2f pos);
 bool	clip_wall(double *x1, double *z1, double x2, double z2);
 void	proj_wall(t_data *d, t_projdata *p, t_frustum *fr, t_vec2f v[2]);
 void	draw_wall(t_data *d, t_projdata *p, t_frustum *fr);
+void	draw_wall_no_nei(t_data *d, t_projdata *p, t_frustum *fr);
+void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible);
+void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr);
 void	*draw_ceil_thread(void *arg);

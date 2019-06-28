@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/28 16:55:55 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/28 17:21:02 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ FILES= main \
 	   draw_floor \
 	   draw_ceil \
 	   draw_wall \
+	   draw_wall2 \
 	   clip_wall \
 	   proj_wall \
 	   pixel \

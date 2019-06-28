@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 21:50:12 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 16:03:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:19:08 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ bool	collision(t_data *d, t_sector *sect)
 	return (collided + (--recursion ? 0 : 0));
 }
 
-bool    collision_monster_wall(t_data *d, t_sector *sect, t_vec2f *pos, double
-dist_coll)
+bool	collision_monster_wall(t_data *d,
+		t_sector *sect, t_vec2f *pos, double dist_coll)
 {
-	static int    recursion;
-	t_vec2f        v[2];
-	double        dist;
-	bool        collided;
-	int            i[2];
+	static int	recursion;
+	t_vec2f		v[2];
+	double		dist;
+	bool		collided;
+	int			i[2];
 
 	if (!(collided = false) && ++recursion > 3)
 		return (false + (--recursion ? 0 : 0));
@@ -97,11 +97,11 @@ dist_coll)
 		v[1] = sub_vec2f(*pos, v[0]);
 		if ((dist = vec2f_length(v[1])) < dist_coll)
 			(can_traverse(d, i[0], &d->walls[i[0]])) ? (collided |=
-					collision_monster_wall(d,
-					&d->sectors[d->walls[i[0]].neighborsect], pos, dist_coll)) :
+				collision_monster_wall(d,
+				&d->sectors[d->walls[i[0]].neighborsect], pos, dist_coll)) :
 				((pos->x = v[0].x + v[1].x * dist_coll * 1.001 /
-				  dist) && (pos->y = v[0].y + v[1].y * dist_coll *
-					  1.002 / dist) && (collided = true));
+				dist) && (pos->y = v[0].y + v[1].y * dist_coll *
+				1.002 / dist) && (collided = true));
 		i[0] = i[1]++;
 	}
 	return (collided + (--recursion ? 0 : 0));
