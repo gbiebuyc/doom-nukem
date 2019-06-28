@@ -91,19 +91,24 @@ static int			browse_directory(t_data *d, struct dirent *de,
 	return (0);
 }
 
+/*
+**	name = d->assets_data[d->interface.nb_asset[0] + i].name; // old line
+**	for automatic loading
+*/
+
 int					get_monsters_files(t_data *d, char *path, int nb_monster)
 {
 	DIR				*dr;
 	struct dirent	*de;
 	int				i;
-	char			*name;
+	char			**name;
 	char			*folder;
 
+	name = (char*[]){MOTHERDEMON, CHARGINGDEMON};
 	i = -1;
 	while (++i < nb_monster)
 	{
-		name = d->assets_data[d->interface.nb_asset[0] + i].name;
-		if (!(folder = ft_strjoin(path, name)))
+		if (!(folder = ft_strjoin(path, name[i])))
 			return (ft_printf("Path direcotry malloc failed.\n"));
 		if (!(dr = opendir(folder)))
 			return (ft_printf("Can't find %s direcotry.\n", folder));
