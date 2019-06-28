@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:15:27 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:12:31 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	motherdemon_behaviour(t_data *d, t_monster *monster, uint16_t id)
 		if (monster->anim_state < 4)
 		{
 			monster->pos = add_vec2f(monster->pos, monster->dir);
+			collision_monster_monster(d, monster->cursectnum, monster);
 			while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
 						&monster->pos, COLLISION_DIST_MOTHERDEMON))
 			{

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:28:18 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 17:13:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		bool has_collided); // in monster_anim_state.c
 void	monster_anim_state(t_monster *monster, t_monster_type *monster_type, t_data *d);
 void	monster_hit(t_data *d, uint16_t damage, uint16_t id_monster); // projectile_collision.c
+void	collision_monster_monster(t_data *d, short cur_sect, t_monster *monster);
+void	collision_with_monster(t_data *d, short cur_sect);
 bool	collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projectile);
 bool	collision_proj_player(t_data *d, t_projectile *projectile);
-void	display_sprite_one_point(t_data *d, SDL_Surface *s, t_display_data display_data, double dist);
 t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v);
 void	monster_behaviour(t_data *d, t_monster *monster, uint16_t id);
 void	monster_behaviour_chargingdemon(t_data *d, t_monster *monster, uint16_t id);
@@ -83,6 +84,7 @@ t_vec2f		vec3to2(t_vec3f v);
 double vec3f_length(t_vec3f v);
 bool	is_inside_vec2f(t_vec2f p1, t_vec2f p2, t_vec2f point);
 bool	is_near(double v1, double v2, double range);
+
 t_vec2f	intersect(t_vec2f p0, t_vec2f p1, t_vec2f p2, t_vec2f p3);
 uint32_t	alpha(uint32_t	old_colo, uint32_t	new_colo);
 void	draw_string(t_data *d, t_font f);

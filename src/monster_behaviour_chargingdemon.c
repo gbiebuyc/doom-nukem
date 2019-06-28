@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 18:58:56 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/28 15:43:31 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:17:41 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	monster_behaviour_chargingdemon(t_data *d, t_monster *monster,
 	}
 	if (monster->timer && monster->dir.x != 0)
 		behaviour_update_charge(d, monster);	
+	collision_monster_monster(d, monster->cursectnum, monster);
 	while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
 				&monster->pos, COLLISION_RANGE_CHARGINGDEMON))
 		if (monster->timer < 240)

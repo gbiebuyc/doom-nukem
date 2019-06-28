@@ -6,18 +6,18 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:05:53 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 16:52:04 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	display_sprite_one_point(t_data *d, SDL_Surface *s,
+void	display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 		t_display_data display_data, double dist)
 {
-	int		x;
-	int		y;
-	int		colo;
+	int			x;
+	int			y;
+	uint32_t	colo;
 
 	x = display_data.cut_start;
 	while (x <= display_data.cut_end)
@@ -25,13 +25,13 @@ void	display_sprite_one_point(t_data *d, SDL_Surface *s,
 		y = ft_max(display_data.ytop[x], display_data.start.y);
 		while (y <= ft_min(display_data.ybot[x], display_data.end.y))
 		{
-			if (dist < d->zbuffer[x + y * d->screen->w])
+			colo = getpixel(s, display_data.scale.x *
+					(x - display_data.start.x),
+					display_data.scale.y * (y - display_data.start.y));
+			colo = alpha(((uint32_t *)d->screen->pixels)
+					[x + y * d->screen->w], colo);
+			if (colo != getpixel3(d->screen, x, y))
 			{
-				colo = getpixel(s, display_data.scale.x *
-						(x - display_data.start.x),
-						display_data.scale.y * (y - display_data.start.y));
-				colo = alpha(((uint32_t *)d->screen->pixels)
-						[x + y * d->screen->w], colo);
 				putpixel(d, x, y, colo);
 				d->zbuffer[x + y * d->screen->w] = dist;	
 			}
@@ -92,7 +92,7 @@ void	draw_projectile(t_data *d, t_frustum *fr,
 			[proj.current_anim_playing]->h *
 			d->projectile_type[proj.id_type].size) / dist;
 	set_display_data_proj(fr, &a);
-	display_sprite_one_point(d, d->projectile_tex[proj.id_type]
+	display_sprite_one_point_proj(d, d->projectile_tex[proj.id_type]
 			[proj.current_anim_playing], a, point_in_screen.z);
 }
 

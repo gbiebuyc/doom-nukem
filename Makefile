@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/28 16:21:09 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/28 16:55:55 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ FILES= main \
 	   utils \
 	   jump \
 	   inertia \
+	   monster_collision \
 	   movement \
 	   draw_sprite \
 	   draw_monster \

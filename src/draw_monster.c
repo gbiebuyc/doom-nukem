@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:36:31 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 16:46:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,35 @@ uint8_t	get_nb_anim_from_rot(double monster_rot,
 			return (6);
 	}
 	return (get_nb_anim_from_rot_2(rot));
+}
+
+void	display_sprite_one_point_monst(t_data *d, SDL_Surface *s,
+		t_display_data display_data, double dist)
+{
+	int		x;
+	int		y;
+	int		colo;
+
+	x = display_data.cut_start;
+	while (x <= display_data.cut_end)
+	{
+		y = ft_max(display_data.ytop[x], display_data.start.y);
+		while (y <= ft_min(display_data.ybot[x], display_data.end.y))
+		{
+			if (dist < d->zbuffer[x + y * d->screen->w])
+			{
+				colo = getpixel(s, display_data.scale.x *
+						(x - display_data.start.x),
+						display_data.scale.y * (y - display_data.start.y));
+				colo = alpha(((uint32_t *)d->screen->pixels)
+						[x + y * d->screen->w], colo);
+				putpixel(d, x, y, colo);
+				d->zbuffer[x + y * d->screen->w] = dist;	
+			}
+			y++;
+		}
+		x++;
+	}
 }
 
 void	display_sprite_one_point_rev(t_data *d, SDL_Surface *s,
@@ -103,10 +132,10 @@ void	draw_monster(t_data *d, t_frustum *fr, t_monster monster)
 	nb_of_anim[0] = nb_of_anim[1];
 	if (nb_of_anim[1] > 4)
 		nb_of_anim[0] = 8 - nb_of_anim[0];
-//	dist = vec3f_length(sub_vec3f((t_vec3f){monsterpos.x,
-//				monsterpos.y + monster.height / 2,
-//				monsterpos.z}
-//				, d->cam.pos));
+	//	dist = vec3f_length(sub_vec3f((t_vec3f){monsterpos.x,
+	//				monsterpos.y + monster.height / 2,
+	//				monsterpos.z}
+	//				, d->cam.pos));
 	a.start.x = point_in_screen.x - (d->monster_text[monster.id_type]
 			[monster.anim_state][nb_of_anim[0]]->w) / point_in_screen.z *
 		d->monster_type[monster.id_type].size;
@@ -127,6 +156,6 @@ void	draw_monster(t_data *d, t_frustum *fr, t_monster monster)
 		display_sprite_one_point_rev(d, d->monster_text[monster.id_type]
 				[monster.anim_state][nb_of_anim[0]], a, point_in_screen.z);
 	else
-		display_sprite_one_point(d, d->monster_text[monster.id_type]
+		display_sprite_one_point_monst(d, d->monster_text[monster.id_type]
 				[monster.anim_state][nb_of_anim[0]], a, point_in_screen.z);
 }
