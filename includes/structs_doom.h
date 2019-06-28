@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 23:49:37 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:39:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct	s_projectile
 	uint8_t		weapon_id;
 	uint8_t		time_remaining_anim;
 	uint8_t		current_anim_playing;
+	t_monster	*target;
 }				t_projectile;
 
 typedef struct	s_proj_type
@@ -173,12 +174,10 @@ typedef struct s_weapon_type
 typedef struct	s_monster_type
 {
 	double		height;
-	double		width;
 	double		size;
 	uint16_t	health;
 	double		floating;
 	double		hitbox_radius;
-	uint8_t		id_sprite;
 	uint8_t		id_of_proj;
 	uint8_t		anim_order[MAX_STATE_MONSTER];	
 }				t_monster_type;
@@ -191,7 +190,7 @@ typedef struct	s_monster_type
 typedef	struct	s_player
 {
 	int16_t		health;
-//	uint8_t shield; gamedesign
+	uint8_t		can_be_stomped;
 	uint8_t		current_weapon;
 	uint8_t		can_shoot;
 	uint8_t		timer_change_weap;
@@ -280,7 +279,6 @@ typedef struct	s_data
 	t_assets		*slot3;
 	char			msg[100];
 	uint32_t		msg_start;
-	t_vec2f			monster_target[MAXNUMMONSTERS];
 	uint32_t		last_dangerous_area_damage;
 }				t_data;
 
@@ -303,9 +301,5 @@ typedef struct	s_sound_thread_arg
 	t_data		*d;
 	bool		is_music;
 }				t_sound_thread_arg;
-
-/*
-** Animation defines
-*/
 
 #endif

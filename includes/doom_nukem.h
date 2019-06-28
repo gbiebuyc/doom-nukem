@@ -54,14 +54,14 @@ void	render(t_data *d);
 void	draw_weapon(t_data *d);
 void	blaster_shot(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
-void	draw_monster(t_data *d, t_sector *sect, t_frustum *fr, t_monster monster);
-void	draw_monster_test(t_data *d, t_frustum *fr, t_monster monster);
+void	draw_monster(t_data *d, t_frustum *fr, t_monster monster);
 void	draw_sprite(t_data *d, t_sector *sector, t_frustum *fr, t_sprite_list *sprite);
 void	init_player(t_data *d, t_player *player);
 void	init_monsters(t_data *d);
 void	init_projectiles(t_data *d);
 void	swap_list(uint8_t type, uint16_t id, t_data *d, int sectnum[2]);
-int16_t	update_cursect_player(t_data *d, short depth);
+int16_t	update_cursect_smart(t_data *d, short depth, t_vec2f pos,
+uint16_t cursectnum);
 int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth, int16_t old_sect, t_vec3f pos);
 void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy);
 void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
@@ -70,10 +70,11 @@ void	monster_anim_state(t_monster *monster, t_monster_type *monster_type, t_data
 void	monster_hit(t_data *d, uint16_t damage, uint16_t id_monster); // projectile_collision.c
 bool	collision_proj_monster(t_data *d, t_sector *sector, t_projectile *projectile);
 bool	collision_proj_player(t_data *d, t_projectile *projectile);
-void	monster_behaviour(t_data *d, t_monster *monster);
-void	display_sprite_one_point(t_data *d, SDL_Surface *s,
-		t_display_data display_data);
+void	display_sprite_one_point(t_data *d, SDL_Surface *s, t_display_data display_data, double dist);
 t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v);
+void	monster_behaviour(t_data *d, t_monster *monster, uint16_t id);
+void	monster_behaviour_chargingdemon(t_data *d, t_monster *monster, uint16_t id);
+void	charging_demon_wait(t_data *d, t_monster *monster);
 double		getshadefactor(t_data *d, t_projdata *p, double dist);
 uint32_t	shade(double factor, uint32_t c);
 void	reorder_sprite(t_data *d, t_sector *sect);
@@ -104,6 +105,7 @@ void	proj_floor(t_data *d, t_projdata *p);
 void	proj_ceil(t_data *d, t_projdata *p);
 double	edge_function(t_vec3f a, t_vec3f b, int x, int y);
 bool	collision(t_data *d, t_sector *sect);
+bool    collision_monster_wall(t_data *d, t_sector *sect, t_vec2f *pos, double dist_coll);
 void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum);
 void	asset_collision(t_data *d);
 void	use_asset(t_data *d, t_assets *asset);
@@ -127,6 +129,7 @@ void	precompute_texanim(t_data *d);
 */
 void		player_hit_projectile(t_data *d, t_projectile *projectile);
 void		player_fell(t_data *d);
+void		player_contact_monster(t_data *d, t_monster *monster);
 /*
 ** color_buffer.c
 */

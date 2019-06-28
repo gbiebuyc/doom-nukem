@@ -48,20 +48,17 @@ void	collision_with_monster(t_data *d, short cur_sect, t_vec3f old_pos)
 	{
 		if (tmp->type == IS_MONSTER && d->monsters[tmp->id].can_collide)
 		{
-			if (vec2f_length(sub_vec2f(d->monsters[tmp->id].pos, (t_vec2f)
-				{d->cam.pos.x, d->cam.pos.z})) < d->monster_type[d->monsters[
-					tmp->id].id_type].hitbox_radius + MONSTER_MIN_DIST_HITBOX)
-				d->cam.pos = update_pos_vec3f(old_pos, d->cam.pos,
-				d->monsters[tmp->id].pos, d->monster_type[d->monsters[tmp->
-				id].id_type].hitbox_radius + MONSTER_MIN_DIST_HITBOX);
-		}
-		if (tmp->type == IS_PROJECTILE && d->projectile_type[d->
-				projectiles[tmp->id].id_type].threat_to_player)
-			if (vec3f_length(sub_vec3f(d->cam.pos, d->projectiles[tmp->
-				id].pos)) < PLAYER_HITBOX + d->projectile_type[d->
-				projectiles[tmp->id].id_type].hitbox_radius)
+			if (vec2f_length(sub_vec2f(d->monsters[tmp->id].pos,
+			(t_vec2f){d->cam.pos.x, d->cam.pos.z})) <
+					d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius
+					+ MONSTER_MIN_DIST_HITBOX)
 			{
+				d->cam.pos = update_pos_vec3f(old_pos, d->cam.pos, d->monsters
+				[tmp->id].pos, d->monster_type[d->monsters[tmp->id].id_type].
+				hitbox_radius + MONSTER_MIN_DIST_HITBOX);
+				player_contact_monster(d, &(d->monsters[tmp->id]));
 			}
+		}
 		tmp = tmp->next;
 	}
 }
@@ -100,6 +97,8 @@ void	movement(t_data *d)
 	short	count;
 
 	old_pos = d->cam.pos;
+	if (d->player.can_be_stomped)
+		d->player.can_be_stomped--;
 	if (!d->player.can_move)
 	{
 		count = 0;

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/25 22:17:07 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:38:46 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	update_monsters(uint16_t *nummonsters, t_monster monsters[MAXNUMMONSTERS], 
 	while (i < *nummonsters)
 	{
 		if (monsters[i].can_collide)
-			monster_behaviour(d, &monsters[i]);
+			monster_behaviour(d, &monsters[i], i);
 		monster_anim_state(&monsters[i], d->monster_type, d);
-		move_monster(d, i);
 		i++;
 	}
 }
@@ -119,7 +118,8 @@ void	update(t_data *d)
 	d->cam.cos = cos(d->cam.rot);
 	movement(d);
 	asset_collision(d);
-	if ((sect = update_cursect_player(d, DEPTH_TO_SCAN)) != -1)
+	if ((sect = update_cursect_smart(d, DEPTH_TO_SCAN, vec3to2(d->cam.pos),
+	d->cursectnum)) != -1)
 	{
 		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d, sect) + d->player.minimum_height)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);
@@ -127,8 +127,8 @@ void	update(t_data *d)
 	}
 	jump(d);
 	player_actions(d);
-	update_projectiles(d);
 	update_monsters(&d->nummonsters, d->monsters, d);
+	update_projectiles(d);
 	d->lightblink = sin((double)SDL_GetTicks() / 200) * 0.3 + 0.6;
 	check_dangerous_area(d);
 }

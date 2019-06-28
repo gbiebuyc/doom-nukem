@@ -20,7 +20,6 @@
 ** This header is used both by the editor and the game
 */
 
-# define MAXMONSTERSEC 20
 # define MAXNUMSECTORS 1024
 # define MAXNUMMONSTERS 256
 # define MAXNUMWALLS 4096
@@ -137,22 +136,19 @@ typedef struct	s_assets
 }				t_assets;
 
 # define MOTHERDEMON 0
+# define CHARGINGDEMON 1
 
 typedef struct	s_monster
 {
 	t_vec2f		pos;
-	double		size;
-	double		health_mult;
+	t_vec2f		dir;
 	double		rot;
 	int16_t		cursectnum;
 	uint8_t		id_type;
 	uint8_t		anim_state;
 	uint8_t		anim_time;
-	uint8_t		behaviour;
 	uint8_t		timer;
 	int16_t		life;
-	double		height;
-	double		width;
 	bool		can_collide;
 	bool		activated;
 }				t_monster;

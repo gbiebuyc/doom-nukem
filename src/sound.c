@@ -18,6 +18,7 @@ void	play_sound(t_data *d, bool is_music)
 	bool				playing;
 	int					i;
 
+	return ;
 	i = is_music ? d->musicnum : d->soundnum;
 	if (i < 0)
 		return ;
@@ -26,6 +27,7 @@ void	play_sound(t_data *d, bool is_music)
 	playing = true;
 	while (playing)
 	{
+		SDL_Delay(100);
 		SDL_QueueAudio(dev, d->wav_buffer[i], d->wav_length[i]);
 		SDL_PauseAudioDevice(dev, 0);
 		while (SDL_GetQueuedAudioSize(dev) > 0)

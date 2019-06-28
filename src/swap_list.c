@@ -12,6 +12,34 @@
 
 #include "doom_nukem.h"
 
+void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy)
+{
+	t_sprite_list	*tmp;
+	t_sprite_list	*tmp_prev;
+
+	tmp = sector->sprite_list;
+	if (!(tmp))
+		return ;
+	if (tmp->id == id && tmp->type == type_to_destroy)
+	{
+		sector->sprite_list = tmp->next;
+		free(tmp);
+		return ;
+	}
+	tmp_prev = tmp;
+	while (tmp)
+	{
+		if (tmp->id == id && tmp->type == type_to_destroy)
+		{
+			tmp_prev->next = tmp->next;
+			free(tmp);
+			return ;
+		}
+		tmp_prev = tmp;
+		tmp = tmp->next;
+	}
+}
+
 void	swap_list(uint8_t type, uint16_t id, t_data *d, int sectnum[2])
 {
 	t_sprite_list *tmp[3];

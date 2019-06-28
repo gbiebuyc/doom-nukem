@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:40:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:39:28 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,44 @@ void	add_monster(t_sector *sector, int16_t id_of_monster)
 void	initialize_all_monster(t_data *d,
 		t_monster *monster, int16_t id_of_monster)
 {
-	monster->life = monster->health_mult *
-		d->monster_type[monster->id_type].health;
-	monster->width = monster->size * d->monster_type[monster->id_type].width;
-	monster->height = monster->size * d->monster_type[monster->id_type].height;
+	monster->life = d->monster_type[monster->id_type].health;
 	monster->anim_state = 0;
 	monster->rot = 1.5 * M_PI;
-	monster->behaviour = 0;
 	monster->anim_time = 25;
 	monster->can_collide = true;
 	monster->timer = 0;
 	add_monster(&d->sectors[monster->cursectnum], id_of_monster);
 }
 
+void	init_monster_type_2(t_data *d)
+{	
+	d->monster_type[CHARGINGDEMON].height = 1.5;
+	d->monster_type[CHARGINGDEMON].floating = 0.1;
+	d->monster_type[CHARGINGDEMON].size = 6.0;
+	d->monster_type[CHARGINGDEMON].health = 1500;
+	d->monster_type[CHARGINGDEMON].hitbox_radius = 0.6;
+	d->monster_type[CHARGINGDEMON].anim_order[0] = 1;
+	d->monster_type[CHARGINGDEMON].anim_order[1] = 2;
+	d->monster_type[CHARGINGDEMON].anim_order[2] = 3;
+	d->monster_type[CHARGINGDEMON].anim_order[3] = 0;
+	d->monster_type[CHARGINGDEMON].anim_order[4] = 5;
+	d->monster_type[CHARGINGDEMON].anim_order[5] = 6;
+	d->monster_type[CHARGINGDEMON].anim_order[6] = 4;
+	d->monster_type[CHARGINGDEMON].anim_order[13] = 14;
+	d->monster_type[CHARGINGDEMON].anim_order[14] = 15;
+	d->monster_type[CHARGINGDEMON].anim_order[15] = 16;
+	d->monster_type[CHARGINGDEMON].anim_order[16] = 17;
+	d->monster_type[CHARGINGDEMON].anim_order[17] = 18;
+	d->monster_type[CHARGINGDEMON].anim_order[18] = 18;
+}
+
 void	init_monster_type(t_data *d)
 {
-	d->monster_type[MOTHERDEMON].width = 0.8;
 	d->monster_type[MOTHERDEMON].height = 2.0;
 	d->monster_type[MOTHERDEMON].floating = 0.1;
 	d->monster_type[MOTHERDEMON].size = 7.0;
 	d->monster_type[MOTHERDEMON].health = 1000;
 	d->monster_type[MOTHERDEMON].hitbox_radius = 0.7;
-	d->monster_type[MOTHERDEMON].id_sprite = MOTHERDEMON;
 	d->monster_type[MOTHERDEMON].anim_order[0] = 1;
 	d->monster_type[MOTHERDEMON].anim_order[1] = 2;
 	d->monster_type[MOTHERDEMON].anim_order[2] = 3;
@@ -86,11 +102,11 @@ void	init_monsters(t_data *d)
 	short	i;
 
 	init_monster_type(d);
+	init_monster_type_2(d);
 	i = 0;
 	while (i < d->nummonsters)
 	{
 		initialize_all_monster(d, &(d->monsters[i]), i);
-		d->monster_target[i] = d->monsters[i].pos;
 		i++;
 	}
 }

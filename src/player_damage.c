@@ -23,7 +23,9 @@ void	player_fell(t_data *d)
 	d->player.health -= 10;
 }
 
-#define BOUNCING_DIST_PROJ 0.12
+# define BOUNCING_DIST_PROJ 0.12
+# define BOUNCING_DIST_MOTHERDEMON 0.15
+# define BOUCING_DIST_CHARGINGDEMON 0.23
 
 void	player_hit_projectile(t_data *d, t_projectile *projectile)
 {
@@ -45,4 +47,31 @@ void	check_dangerous_area(t_data *d)
 	change_buf_colo(d, 7, RED);
 	d->player.health -= 20;
 	d->last_dangerous_area_damage = SDL_GetTicks();
+}
+
+void		player_contact_monster(t_data *d, t_monster *monster)
+{
+	if (monster->id_type == MOTHERDEMON)
+	{
+		if (!d->player.can_be_stomped)
+		{
+			d->player.health -= 5;
+			d->player.can_be_stomped = 30;
+			change_buf_colo(d, 5, RED);
+		}
+		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
+				BOUNCING_DIST_MOTHERDEMON);
+	}
+	if (monster->id_type == CHARGINGDEMON)
+	{
+		if (!d->player.can_be_stomped)
+		{
+			d->player.health -= 15;
+			d->player.can_be_stomped = 30;
+//			change_buf_colo(d, 8, RED);
+		}
+		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
+				BOUCING_DIST_CHARGINGDEMON);		
+		charging_demon_wait(d, monster);
+	}
 }

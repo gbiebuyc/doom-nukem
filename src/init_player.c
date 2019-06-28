@@ -25,6 +25,7 @@ void	init_player3(t_data *d, t_player *player)
 	player->gravity = 0.0;
 	player->can_move = 0;
 	player->health = 100;
+	player->can_be_stomped = 0;
 	d->cursectnum = d->startsectnum;
 	d->cam = d->startcam;
 	d->cam.rot += 0.001;

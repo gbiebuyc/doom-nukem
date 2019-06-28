@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 05:45:22 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/26 00:07:27 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:23:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	inside(t_data *d, int16_t sectnum, t_vec2f pos)
 	return (n[0]);
 }
 
-#define DIST_COLL_PROJ_CEIL_FLOOR 0.1
+#define DIST_COLL_PROJ_CEIL_FLOOR 0.25
 
 int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth,
 		int16_t old_sect, t_vec3f pos)
@@ -123,7 +123,8 @@ void	swap_tabs(short *tab, short *tmp_tab)
 	}
 }
 
-int16_t	update_cursect_player(t_data *d, short depth)
+int16_t	update_cursect_smart(t_data *d, short depth, t_vec2f pos,
+		uint16_t cursectnum)
 {
 	short	i;
 	short	tab[MAXNUMSECTORS];
@@ -131,13 +132,13 @@ int16_t	update_cursect_player(t_data *d, short depth)
 
 	ft_memset(tab, -1, sizeof(tab));
 	ft_memset(tmp_tab, -1, sizeof(tmp_tab));
-	tab[0] = d->cursectnum;
+	tab[0] = cursectnum;
 	while (depth)
 	{
 		i = 0;
 		while (tab[i] != -1)
 		{
-			if (inside(d, tab[i], (t_vec2f){d->cam.pos.x, d->cam.pos.z}))
+			if (inside(d, tab[i], pos))
 				return (tab[i]);
 			set_tab(d, tab[i], &tmp_tab[0], tab[i]);
 			i++;

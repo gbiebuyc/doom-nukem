@@ -32,6 +32,7 @@ void	set_projectile_id(t_data *d, short i, short id_of_proj_type)
 	d->projectiles[i].time_remaining_anim = 5;
 	d->projectiles[i].current_anim_playing = 0;
 	d->projectiles[i].weapon_id = d->player.current_weapon;
+	d->projectiles[i].target = NULL;
 }
 
 void	create_projectile(t_data *d, short id_of_proj_type)
@@ -80,6 +81,7 @@ void	set_projectile_id_monster(t_data *d, short i,
 	d->projectiles[i].cursectnum = monster->cursectnum;
 	d->projectiles[i].time_remaining_anim = 5;
 	d->projectiles[i].current_anim_playing = 0;
+	d->projectiles[i].target = NULL;
 }
 
 void	create_projectile_monster(t_data *d, short id_of_proj_type,

@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/26 00:27:23 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/28 15:39:46 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ NAME= doom-nukem
 FILES= main \
 	   texanim \
 	   jetpack \
-	   move_monster \
 	   draw_hud \
 	   draw_hud2 \
 	   msg \
@@ -39,12 +38,14 @@ FILES= main \
 	   activate_door \
 	   press_e \
 	   monster_behaviour \
+	   monster_behaviour_chargingdemon \
 	   monster_anim_state \
 	   reorder_sprite \
 	   create_projectile \
 	   m16 \
 	   player_actions \
 	   projectile_collision \
+	   update_anim_projectile \
 	   blaster_col \
 	   update \
 	   draw_weapon \

@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 17:55:45 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/23 20:14:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 15:34:40 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int			fill_monster_structure(t_data *d)
 	i = 0;
 	while (lst)
 	{
-		d->monsters[i] = (t_monster){lst->pos, 1.0, 1, 0.0, lst->sectnunm, 0,
-									0, 0, 0, 0, 0, 0, 0, 0, 1};
+		d->monsters[i] = (t_monster){lst->pos, {0.0, 0.0}, 1,
+			lst->sectnunm, CHARGINGDEMON, 0, 0, 0, 0, 0, 0};
 		lst = lst->next;
 		i++;
 	}
@@ -78,8 +78,8 @@ static int	write_anim_texture(SDL_Surface **s, int f, int nb_anim)
 }
 
 /*
-**	i = monster_type_id
-*/
+ **	i = monster_type_id
+ */
 
 int			write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 {
@@ -91,9 +91,9 @@ int			write_monster_texture(t_data *d, int f, t_monsters_texture *mt)
 	while (++i < d->interface.nb_asset[1])
 	{
 		if (write(f, &mt[i].nb_walk_orientation, sizeof(int)) < 0 ||
-			write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim) ||
-			write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim) ||
-			write_anim_texture(mt[i].death, f, mt[i].nb_death_anim))
+				write_anim_texture(mt[i].walk, f, mt[i].nb_walk_anim) ||
+				write_anim_texture(mt[i].attack, f, mt[i].nb_attack_anim) ||
+				write_anim_texture(mt[i].death, f, mt[i].nb_death_anim))
 			return (1);
 	}
 	i = -1;

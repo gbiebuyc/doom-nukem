@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:00:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:37:46 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,22 @@
 #define LEFT_MOUSE_BLASTER_DAMAGE 1000
 #define RIGHT_MOUSE_BLASTER_DAMAGE 750
 
-int16_t	scan_sect_point_line(t_data *d,
-		uint16_t sect_to_scan, double dist, bool hit_all)
+bool		should_touch_blaster_hitbox(t_data *d, t_vec2f updated_pos, double
+		dist, uint16_t id_of_monst)
+{
+	if (updated_pos.y > 0 && updated_pos.x > -BLASTER_HITBOX -
+			d->monster_type[d->monsters[id_of_monst].id_type].hitbox_radius &&
+			updated_pos.x < BLASTER_HITBOX +
+			d->monster_type[d->monsters[id_of_monst].id_type].hitbox_radius)
+		if (d->monsters[id_of_monst].can_collide && (dist == -1 ||
+					get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos),
+							d->monsters[id_of_monst].pos)) < dist))
+			return true;
+	return false;
+}
+
+int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist,
+		bool hit_all)
 {
 	t_sprite_list	*tmp;
 	t_vec2f			pos;
@@ -33,20 +47,12 @@ int16_t	scan_sect_point_line(t_data *d,
 			pos.x -= d->cam.pos.x;
 			pos.y -= d->cam.pos.z;
 			actualize_dir(d->cam.rot, &pos);
-			if (pos.y > 0 && pos.x > -BLASTER_HITBOX -
-				d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius &&
-				pos.x < BLASTER_HITBOX +
-				d->monster_type[d->monsters[tmp->id].id_type].hitbox_radius)
+			if (should_touch_blaster_hitbox(d, pos, dist, tmp->id))
 			{
-				if (d->monsters[tmp->id].can_collide && (dist == -1 ||
-					get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos),
-							d->monsters[tmp->id].pos)) < dist))
-				{
-					if (hit_all)
-						monster_hit(d, RIGHT_MOUSE_BLASTER_DAMAGE, tmp->id);
-					else
-						id = tmp->id;
-				}
+				if (hit_all)
+					monster_hit(d, RIGHT_MOUSE_BLASTER_DAMAGE, tmp->id);
+				else
+					id = tmp->id;
 			}
 		}
 		tmp = tmp->next;
@@ -154,6 +160,7 @@ void	blaster_shot(t_data *d)
 	{
 		recur_scan_point_line(d, 30, d->cursectnum, -1, true);
 		change_buf_colo(d, 10, GREEN_BLAST);
+		d->weapon_type[BLASTER].current_ammo -= 2;
 	}
 	if (d->player.click == LEFT_CLICK)
 	{
@@ -161,5 +168,7 @@ void	blaster_shot(t_data *d)
 		if (id_of_monst != -1)
 			monster_hit(d, LEFT_MOUSE_BLASTER_DAMAGE, id_of_monst);
 		change_buf_colo(d, 5, GREEN_BLAST);
+		d->weapon_type[BLASTER].current_ammo -= 1;
 	}
+	// play good sound here
 }

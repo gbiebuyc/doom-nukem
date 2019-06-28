@@ -120,6 +120,9 @@ void		set_projectile_visual_collided_m16(t_data *d,
 	d->projectiles[i].time_remaining_anim = 5;
 	d->projectiles[i].current_anim_playing = 0;
 	d->projectiles[i].weapon_id = d->player.current_weapon;
+	d->projectiles[i].target = &d->monsters[inf.id_of_monst];
+	d->projectiles[i].dir = sub_vec3f(d->projectiles[i].pos, vec2to3(
+	d->monsters[inf.id_of_monst].pos));
 }
 
 void		m16_create_projectile(t_data *d, t_m16_inf inf)
