@@ -34,6 +34,7 @@ void	handle_finish(t_data *d)
 	i = -1;
 	while (++i < d->nb_textures)
 		SDL_FreeSurface(d->textures[i]);
+	free(d->textures);
 	i = -1;
 	while (++i < MAX_PROJECTILES)
 	{
