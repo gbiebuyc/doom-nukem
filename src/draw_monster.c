@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:46:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 17:50:38 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	display_sprite_one_point_monst(t_data *d, SDL_Surface *s,
 {
 	int		x;
 	int		y;
-	int		colo;
+	uint32_t		colo;
 
 	x = display_data.cut_start;
 	while (x <= display_data.cut_end)
@@ -75,8 +75,11 @@ void	display_sprite_one_point_monst(t_data *d, SDL_Surface *s,
 						display_data.scale.y * (y - display_data.start.y));
 				colo = alpha(((uint32_t *)d->screen->pixels)
 						[x + y * d->screen->w], colo);
-				putpixel(d, x, y, colo);
-				d->zbuffer[x + y * d->screen->w] = dist;	
+				if (colo != getpixel3(d->screen, x, y))
+				{
+					putpixel(d, x, y, colo);
+					d->zbuffer[x + y * d->screen->w] = dist;	
+				}
 			}
 			y++;
 		}
@@ -89,7 +92,7 @@ void	display_sprite_one_point_rev(t_data *d, SDL_Surface *s,
 {
 	int		x;
 	int		y;
-	int		colo;
+	uint32_t		colo;
 
 	x = display_data.cut_start;
 	while (x <= display_data.cut_end)
@@ -104,8 +107,11 @@ void	display_sprite_one_point_rev(t_data *d, SDL_Surface *s,
 						display_data.scale.y * (y - display_data.start.y));
 				colo = alpha(((uint32_t *)d->screen->pixels)
 						[x + y * d->screen->w], colo);
-				putpixel(d, x, y, colo);
-				d->zbuffer[x + y * d->screen->w] = dist;	
+				if (colo != getpixel3(d->screen, x, y))
+				{
+					putpixel(d, x, y, colo);
+					d->zbuffer[x + y * d->screen->w] = dist;	
+				}
 			}
 			y++;
 		}
