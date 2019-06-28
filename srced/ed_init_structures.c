@@ -87,7 +87,7 @@ void		init_sector_options_position(t_data *d, int x, int y,
 
 void		init_button_position(t_data *d, int x, int y, t_btn_option_p *b)
 {
-	y = H - d->interface.toolbar.properties[6]->h + 45;
+	y = H - d->interface.toolbar.properties[6]->h + 46;
 	assign_position(&b->cbox_onfloor, (t_vec2){136, y});
 	x = 295;
 	assign_position(&b->cbox_onceil, (t_vec2){x, y});
