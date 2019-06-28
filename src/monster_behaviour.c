@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 15:46:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 16:15:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	motherdemon_behaviour_change_after_attack(t_data *d,
 	t_vec2f	tmp2;
 
 	if (vec2f_length(sub_vec2f(vec3to2(d->cam.pos), monster->pos))
-	< LONG_RANGE)
+			< LONG_RANGE)
 	{
 		rand = ((abs((int)(monster->pos.x * 1000)) % 63) + 1);
 		if (!(SDL_GetTicks() % 6))
@@ -97,21 +97,34 @@ void	motherdemon_behaviour(t_data *d, t_monster *monster, uint16_t id)
 		motherdemon_behaviour_change_pattern(d, monster);
 }
 
+void	check_activation(t_data *d, t_monster *monster, t_vec2f pos, bool recur)
+{
+	t_sprite_list	*tmp;
+
+	if (vec2f_length(sub_vec2f(monster->pos, pos)) <
+		ACTIVATION_RADIUS)
+	{
+		monster->activated = true;
+		monster->timer = 2;
+	}
+	if (!recur || monster->activated == false)
+		return ;
+	tmp = d->sectors[monster->cursectnum].sprite_list;
+	while (tmp)
+	{
+		if (tmp->type == IS_MONSTER && d->monsters[tmp->id].activated == false)
+			check_activation(d, &d->monsters[tmp->id], monster->pos, false);
+		tmp = tmp->next;
+	}
+}
+
 void	monster_behaviour(t_data *d, t_monster *monster, uint16_t id)
 {
 	if (!monster->can_collide) // all monster collide so far, used for monster is dead
 		return ;
+	check_activation(d, monster, vec3to2(d->cam.pos), true);
 	if (!monster->activated)
-	{
-		if (vec2f_length(sub_vec2f(monster->pos, vec3to2(d->cam.pos))) <
-				ACTIVATION_RADIUS)
-		{
-			monster->activated = true;
-			monster->timer = 2;
-		}
-		else
-			return ;
-	}
+		return ;
 	monster->timer--;
 	if (monster->id_type == MOTHERDEMON)
 		motherdemon_behaviour(d, monster, id);

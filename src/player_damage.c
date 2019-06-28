@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 00:25:24 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 16:36:18 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	player_fell(t_data *d)
 	change_buf_colo(d, d->player.gravity * 100, 0x111111);
 	d->player.can_move = d->player.gravity > 0.2 ? 40 : 20;
 	d->player.health -= 10;
+	d->player.gravity = 0.0;
 }
 
 # define BOUNCING_DIST_PROJ 0.12

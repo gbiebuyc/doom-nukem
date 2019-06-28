@@ -6,15 +6,15 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 17:50:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 15:37:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 16:38:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 #define BLASTER_HITBOX 0.4
-#define LEFT_MOUSE_BLASTER_DAMAGE 1000
-#define RIGHT_MOUSE_BLASTER_DAMAGE 750
+#define BLASTER_DAMAGE 500
+#define RIGHT_MOUSE_BLASTER_DAMAGE 500
 
 bool		should_touch_blaster_hitbox(t_data *d, t_vec2f updated_pos, double
 		dist, uint16_t id_of_monst)
@@ -26,8 +26,8 @@ bool		should_touch_blaster_hitbox(t_data *d, t_vec2f updated_pos, double
 		if (d->monsters[id_of_monst].can_collide && (dist == -1 ||
 					get_vec2f_length(sub_vec2f(vec3to2(d->cam.pos),
 							d->monsters[id_of_monst].pos)) < dist))
-			return true;
-	return false;
+			return (true);
+	return (false);
 }
 
 int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist,

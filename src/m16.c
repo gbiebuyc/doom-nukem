@@ -6,13 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 00:53:16 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 16:16:57 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define M16_DAMAGE 80
+#define M16_DAMAGE 30
 #define M16_HITBOX 0.2
 #define Y_OFFSET_TO_ROT -0.001
 

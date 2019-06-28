@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 21:22:40 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/18 00:47:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/28 16:36:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	normal_gravity(t_data *d)
 	{
 		if (d->player.gravity < -0.16)
 			player_fell(d);
-		d->player.gravity = 0.0;
 		d->cam.pos.y = d->floorheightplayer + d->player.minimum_height;
 	}
 	if (d->cam.pos.y <= d->floorheightplayer + JUMP_FIX + d->player.minimum_height && d->keys[SDL_SCANCODE_SPACE])
@@ -74,8 +73,8 @@ void	fly_gravity(t_data *d)
 {
 	if (d->cam.pos.y < d->floorheightplayer + d->player.minimum_height)
 	{
-		// do damage with d->player.gravity
-		d->player.gravity = 0.0;
+		if (d->player.gravity < -0.20)
+			player_fell(d);
 		d->cam.pos.y = d->floorheightplayer + d->player.minimum_height;
 	}
 	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y <= d->floorheightplayer + JUMP_FIX + 
@@ -83,21 +82,23 @@ void	fly_gravity(t_data *d)
 	{
 		normal_gravity(d);
 		return ;
-	}	
+	}
 	d->player.gravity -= 0.002;
 	if (d->keys[SDL_SCANCODE_SPACE])
 	{
-		d->player.gravity += (FLYING_SPEED * (d->player.gravity < 0 ? 0.6 : 0.3));
+			if (d->cam.pos.y <= d->floorheightplayer + JUMP_FIX + d->player.minimum_height)
+				d->player.gravity = JUMP_FORCE / 2;
+			else
+			d->player.gravity += (FLYING_SPEED * (d->player.gravity < 0 ? 0.6 : 0.3));
 		d->cam.pos.y += FLYING_SPEED;
+		decrease_fuel(d);
 	}
 	else if (d->keys[SDL_SCANCODE_LCTRL])
 	{
 		d->player.gravity -= (FLYING_SPEED * 0.5);
 		d->cam.pos.y -= FLYING_SPEED;
 	}
-	if (d->cam.pos.y > d->floorheightplayer + d->player.minimum_height)
-		decrease_fuel(d);
-	else
+	if (!(d->cam.pos.y > d->floorheightplayer + d->player.minimum_height))
 		d->player.gravity = 0.0;
 	if (!d->player.is_flying)
 		d->player.gravity = 0.0;

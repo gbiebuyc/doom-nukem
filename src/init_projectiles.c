@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 23:47:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/28 16:34:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_projectiles_type_cryo_bow(t_data *d)
 	d->projectile_type[CRYO_BALLISTA].threat_to_monster = true;
 	d->projectile_type[CRYO_BALLISTA].hitbox_radius = 0.1;
 	d->projectile_type[CRYO_BALLISTA].speed = 0.25;
-	d->projectile_type[CRYO_BALLISTA].damage = 22;
+	d->projectile_type[CRYO_BALLISTA].damage = 800;
 	d->projectile_type[CRYO_BALLISTA].anim_order[0] = 1;
 	d->projectile_type[CRYO_BALLISTA].anim_order[1] = 2;
 	d->projectile_type[CRYO_BALLISTA].anim_order[2] = 3;
@@ -85,9 +85,9 @@ void	init_weapons(t_data *d)
 	d->weapon_type[M16].rate_of_fire[0] = d->player.speed_anim[M16] * 2 - 1;
 	d->weapon_type[M16].has_alt_fire = false;
 	d->weapon_type[M16].type = NORMAL;
-	d->weapon_type[BLASTER].max_ammo = 10;
-	d->weapon_type[CRYO_BALLISTA].max_ammo = 10;
-	d->weapon_type[M16].max_ammo = 50;
+	d->weapon_type[BLASTER].max_ammo = 35;
+	d->weapon_type[CRYO_BALLISTA].max_ammo = 15;
+	d->weapon_type[M16].max_ammo = 250;
 }
 
 void	init_projectiles(t_data *d)
