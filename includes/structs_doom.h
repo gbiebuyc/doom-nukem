@@ -287,6 +287,7 @@ typedef struct	s_data
 	char			msg[100];
 	uint32_t		msg_start;
 	uint32_t		last_dangerous_area_damage;
+	int				difficulty;
 }				t_data;
 
 typedef struct	s_thread_arg

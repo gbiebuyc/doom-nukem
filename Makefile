@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   menu_screen \
 	   intro_screen \
 	   texanim \
 	   jetpack \

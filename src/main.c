@@ -60,6 +60,7 @@ int		main(int ac, char **av)
 	init_sdl(&d);
 	if (!(d.zbuffer = malloc(sizeof(double) * WIDTH * HEIGHT)))
 		exit(ft_printf("malloc zbuffer_sprites failed.\n"));
+	d.difficulty = menu_screen(&d);
 	intro_screen(&d);
 	init_everything(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
 	return (EXIT_SUCCESS);

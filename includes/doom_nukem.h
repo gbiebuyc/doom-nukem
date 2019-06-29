@@ -130,6 +130,7 @@ void	handle_respawn(t_data *d);
 void	precompute_texanim(t_data *d);
 void	intro_screen(t_data *d);
 void	draw_string_typewriter_effect(t_data *d, t_font f);
+int		menu_screen(t_data *d);
 
 /*
 ** player_damage.c
