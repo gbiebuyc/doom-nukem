@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:54:58 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:47:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	motherdemon_behaviour_change_after_attack(t_data *d,
 			< LONG_RANGE)
 	{
 		rand = ((abs((int)(monster->pos.x * 1000)) % 63) + 1);
-		if (!(SDL_GetTicks() % (d->difficulty == 2 ? 4 : 6)))
+		if (!(SDL_GetTicks() % (d->difficulty == HARD ? 4 : 6)))
 			return (false);
 		rand = rand - (int)(rand / (2 * M_PI)) * 2 * M_PI;
 		actualize_dir(rand, &tmp);

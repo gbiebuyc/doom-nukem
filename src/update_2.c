@@ -6,12 +6,11 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 16:32:28 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:35:43 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:41:09 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
 
 #define NB_OF_SECTOR_DEPTH 2
 

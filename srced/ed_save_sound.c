@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 11:44:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 18:40:37 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,20 @@ int		write_sound2(t_data *d, int f, char *path, SDL_AudioFormat format)
 int		write_sound(t_data *d, int f)
 {
 	if (write_sound2(d, f, "sounds/music.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/shoot.wav", AUDIO_S16LSB) ||
 			write_sound2(d, f, "sounds/blaster.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/cryo_bal.wav", AUDIO_S16LSB))
+			write_sound2(d, f, "sounds/cryo_bal.wav", AUDIO_S16LSB) ||
+			write_sound2(d, f, "sounds/m16.wav", AUDIO_S16LSB) ||
+	   		write_sound2(d, f, "sounds/explosion.wav", AUDIO_S16LSB) ||
+			write_sound2(d, f, "sounds/player_fell.wav", AUDIO_S16LSB) ||
+			write_sound2(d, f, "sounds/player_got_hit.wav", AUDIO_S16LSB) ||
+			write_sound2(d, f, "sounds/player_death.wav", AUDIO_S16LSB) ||
+			write_sound2(d, f, "sounds/charg_agro.wav", AUDIO_S16LSB) || 
+			write_sound2(d, f, "sounds/charg_damage.wav", AUDIO_S16LSB) || 
+			write_sound2(d, f, "sounds/charg_death.wav", AUDIO_S16LSB) || 
+			write_sound2(d, f, "sounds/mother_agro.wav", AUDIO_S16LSB) || 
+			write_sound2(d, f, "sounds/mother_attack.wav", AUDIO_S16LSB) || 
+			write_sound2(d, f, "sounds/mother_death.wav", AUDIO_S16LSB))
+
 		return (1);
 	return (0);
 }

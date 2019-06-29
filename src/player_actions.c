@@ -6,29 +6,20 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 11:40:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 18:46:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	shoot_sound(t_data *d, uint8_t id)
-{
-	static t_sound_thread_arg	arg;
-	pthread_t					thread;
-
-	printf("i play sound\n");
-	arg = (t_sound_thread_arg){d, .is_music = false};
-	d->soundnum = id;
-	if (pthread_create(&thread, NULL, sound_thread, &arg))
-		ft_printf("pthread_create error\n");
-	pthread_detach(thread);
-}
-
 void	handle_sound_shot(t_data *d)
 {
 	if (d->player.current_weapon == BLASTER)
-		shoot_sound(d, BLASTER_SOUND);
+		play_sound(d, BLASTER_SOUND);
+	if (d->player.current_weapon == CRYO_BALLISTA)
+		play_sound(d, CRYO_SOUND);
+	if (d->player.current_weapon == M16)
+		play_sound(d, M16_SOUND);
 }
 
 void	shoot_weapon(t_data *d, uint8_t *w)

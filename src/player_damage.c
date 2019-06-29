@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:58:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 18:46:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	player_fell(t_data *d)
 	d->player.can_move = d->player.gravity > 0.2 ? 40 : 20;
 	d->player.health -= 10;
 	d->player.gravity = 0.0;
+	play_sound(d, PLAYER_FELL_SOUND);	
 }
 
 void	player_hit_projectile(t_data *d, t_projectile *projectile)
@@ -48,29 +49,35 @@ void	check_dangerous_area(t_data *d)
 	d->last_dangerous_area_damage = SDL_GetTicks();
 }
 
+void	player_contact_monster_2(t_data *d, t_monster *monster)
+{
+	if (!d->player.can_be_stomped)
+	{
+		d->player.health -= d->difficulty == HARD ? 20 : 15;
+		d->player.can_be_stomped = 30;
+		change_buf_colo(d, 8, RED);
+		play_sound(d, CHARG_ATK_SOUND);
+		play_sound(d, PLAYER_GOT_HIT_SOUND);	
+	}
+	change_inertia(d, atan2(monster->dir.y, monster->dir.x),
+			BOUCING_DIST_CHARGINGDEMON);
+	charging_demon_wait(d, monster);
+}
+
 void	player_contact_monster(t_data *d, t_monster *monster)
 {
 	if (monster->id_type == MOTHERDEMON)
 	{
 		if (!d->player.can_be_stomped)
 		{
-			d->player.health -= 5;
+			d->player.health -= d->difficulty == HARD ? 10 : 5;
 			d->player.can_be_stomped = 30;
 			change_buf_colo(d, 5, RED);
+			play_sound(d, PLAYER_FELL_SOUND);	
 		}
 		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 				BOUNCING_DIST_MOTHERDEMON);
 	}
 	if (monster->id_type == CHARGINGDEMON)
-	{
-		if (!d->player.can_be_stomped)
-		{
-			d->player.health -= 15;
-			d->player.can_be_stomped = 30;
-			change_buf_colo(d, 8, RED);
-		}
-		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
-				BOUCING_DIST_CHARGINGDEMON);
-		charging_demon_wait(d, monster);
-	}
+		player_contact_monster_2(d, monster);
 }

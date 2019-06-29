@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 11:41:18 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 18:40:31 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ typedef struct	s_color_buf
 # define MOUSE_PRESSED 1
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
+# define NB_OF_SOUNDS 14
 
 typedef struct	s_data
 {
@@ -275,9 +276,9 @@ typedef struct	s_data
 	double			floorheightplayer;
 	double			ceilheightplayer;
 	char			nextmap[100];
-	SDL_AudioSpec	wav_spec[4];
-	Uint32			wav_length[4];
-	Uint8			*wav_buffer[4];
+	SDL_AudioSpec	wav_spec[NB_OF_SOUNDS];
+	Uint32			wav_length[NB_OF_SOUNDS];
+	Uint8			*wav_buffer[NB_OF_SOUNDS];
 	int				musicnum;
 	int				soundnum;
 	pthread_t		music_thread;

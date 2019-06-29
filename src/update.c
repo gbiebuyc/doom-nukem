@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 01:05:19 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 16:35:44 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:51:32 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	update(t_data *d)
 	if ((sect = update_cursect_smart(d, DEPTH_TO_SCAN, vec3to2(d->cam.pos),
 					d->cursectnum)) != -1)
 	{
-		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d, sect) + d->player.minimum_height)
-			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d, sect);
+		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d,
+				   	sect) + d->player.minimum_height)
+			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d,
+					sect);
 		d->cursectnum = sect;
 	}
 	update_2(d);

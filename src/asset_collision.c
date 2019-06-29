@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:45:42 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/27 02:10:46 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 16:47:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 void	use_asset(t_data *d, t_assets *asset)
 {
-	d->player.health += asset->stat_mod.heal;
+	d->player.health += asset->stat_mod.heal * d->difficulty == EASY ? 1.5 : 1;
+	d->player.health = ft_min(100, d->player.health);
 	d->player.health -= asset->stat_mod.damage;
 	if (asset->is_jetpack)
 		d->player.is_flying = 300;

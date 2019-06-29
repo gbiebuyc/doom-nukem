@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:38:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 18:45:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,27 @@
 # define PATH_MAP "./maps/"
 # define POSTER_W 1.3
 # define MINIMUM_HEIGHT 0.5
-# define BLASTER_SOUND 2
+# define BLASTER_SOUND 1
+# define CRYO_SOUND 2
+# define M16_SOUND 3
+# define EXPLOSION_SOUND 4
+# define PLAYER_FELL_SOUND 5
+# define PLAYER_GOT_HIT_SOUND 6
+# define PLAYER_DEATH_SOUND 7
+# define CHARG_AGRO_SOUND 8
+# define CHARG_ATK_SOUND 9
+# define CHARG_DEATH_SOUND 10
+# define MOTHER_AGRO_SOUND 11
+# define MOTHER_ATK_SOUND 12
+# define MOTHER_DEATH_SOUND 13
 # define MINIMUM_CROUCH_HEIGHT 0.2
 # define MINIMUM_CEIL_DIST 0.1
 # define JUMP_FIX 0.01
 # define JUMP_FORCE 0.08
 # define M16_HITBOX 0.2
+# define EASY 0
+# define NORMAL 1
+# define HARD 2
 
 void	draw_aim_cross(t_data *d);
 void	m16_shoot(t_data *d);
@@ -112,6 +127,7 @@ void	fix_picnum(t_data *d);
 void	handle_finish(t_data *d);
 void	*sound_thread(void *void_arg);
 int		load_sound(t_data *d, int f);
+void	play_sound(t_data *d, uint8_t id);
 void	the_end(t_data *d);
 t_vec3f	transform_back(t_data *d, t_vec3f v);
 void	proj_floor(t_data *d, t_projdata *p);

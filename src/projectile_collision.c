@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:12:59 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 19:05:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void		monster_hit(t_data *d, uint16_t damage, uint16_t id_monster)
 		d->monsters[id_monster].anim_state = d->monsters[id_monster].id_type ==
 			MOTHERDEMON ? 10 : 13;
 		d->monsters[id_monster].anim_time = 20;
+		play_sound(d, d->monsters[id_monster].id_type == MOTHERDEMON ?
+				MOTHER_DEATH_SOUND : CHARG_DEATH_SOUND);
 	}
 }
 
