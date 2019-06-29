@@ -12,8 +12,6 @@
 
 #include "doom_nukem.h"
 
-#define ASSET_W 0.5
-
 void	proj_asset(t_data *d, t_projdata *p, t_vec3f v, SDL_Surface *tex)
 {
 	double	scale;
@@ -27,8 +25,8 @@ void	proj_asset(t_data *d, t_projdata *p, t_vec3f v, SDL_Surface *tex)
 	scale = (1.0 / v.z) * WIDTH;
 	v.x = v.x * scale + WIDTH / 2;
 	v.y = v.y * -scale + HEIGHT / 2 - d->cam.y_offset;
-	w = scale * ASSET_W;
-	h = w * tex->h / (double)tex->w;
+	w = scale * tex->w * 0.01;
+	h = scale * tex->h * 0.01;
 	p->x1 = v.x - w / 2;
 	p->x2 = p->x1 + w;
 	p->ya = (p->is_on_floor) ? v.y - h : v.y;
@@ -50,7 +48,7 @@ void	blit_asset(t_data *d, t_projdata *p, SDL_Surface *tex)
 	{
 		u = norm(x, p->x1, p->x2) * tex->w;
 		y = ft_max(p->ya, 0) - 1;
-		while (++y <= p->yb && y < HEIGHT)
+		while (++y < p->yb && y < HEIGHT)
 		{
 			if (p->z >= d->zbuffer[x + y * WIDTH])
 				continue ;
