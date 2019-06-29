@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   intro_screen \
 	   texanim \
 	   jetpack \
 	   draw_hud \
