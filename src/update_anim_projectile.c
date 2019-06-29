@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 21:07:06 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/27 21:07:06 by Kits             ###   ########.fr       */
+/*   Updated: 2019/06/29 16:18:35 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim)
 	{
 		projectile->pos = add_vec3f(vec2to3(projectile->target->pos),
 				projectile->dir);
-		if	((update_sec = update_cursect_proj(projectile->cursectnum, d,
-					NB_OF_SECTOR_DEPTH, -1, projectile->pos)) != -1)
+		if ((update_sec = update_cursect_proj((int16_t[2]){projectile->
+						cursectnum, -1}, d, NB_OF_SECTOR_DEPTH,
+						projectile->pos)) != -1)
 			projectile->cursectnum = update_sec;
 	}
 }

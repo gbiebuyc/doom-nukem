@@ -6,13 +6,15 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 18:15:59 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 14:58:17 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define MINIMUM_CROUCH_HEIGHT 0.2
+#define BOUNCING_DIST_PROJ 0.12
+#define BOUNCING_DIST_MOTHERDEMON 0.15
+#define BOUCING_DIST_CHARGINGDEMON 0.23
 
 void	player_fell(t_data *d)
 {
@@ -24,16 +26,12 @@ void	player_fell(t_data *d)
 	d->player.gravity = 0.0;
 }
 
-# define BOUNCING_DIST_PROJ 0.12
-# define BOUNCING_DIST_MOTHERDEMON 0.15
-# define BOUCING_DIST_CHARGINGDEMON 0.23
-
 void	player_hit_projectile(t_data *d, t_projectile *projectile)
 {
 	change_buf_colo(d, d->projectile_type[projectile->id_type].damage, RED);
 	if (projectile)
 		change_inertia(d, atan2(projectile->dir.z,
-			projectile->dir.x), BOUNCING_DIST_PROJ);
+					projectile->dir.x), BOUNCING_DIST_PROJ);
 	d->player.health -= d->projectile_type[projectile->id_type].damage;
 }
 
@@ -50,7 +48,7 @@ void	check_dangerous_area(t_data *d)
 	d->last_dangerous_area_damage = SDL_GetTicks();
 }
 
-void		player_contact_monster(t_data *d, t_monster *monster)
+void	player_contact_monster(t_data *d, t_monster *monster)
 {
 	if (monster->id_type == MOTHERDEMON)
 	{
@@ -69,10 +67,10 @@ void		player_contact_monster(t_data *d, t_monster *monster)
 		{
 			d->player.health -= 15;
 			d->player.can_be_stomped = 30;
-//			change_buf_colo(d, 8, RED);
+			change_buf_colo(d, 8, RED);
 		}
 		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
-				BOUCING_DIST_CHARGINGDEMON);		
+				BOUCING_DIST_CHARGINGDEMON);
 		charging_demon_wait(d, monster);
 	}
 }

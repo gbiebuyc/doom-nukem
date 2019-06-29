@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:59:30 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 11:41:18 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,9 +275,9 @@ typedef struct	s_data
 	double			floorheightplayer;
 	double			ceilheightplayer;
 	char			nextmap[100];
-	SDL_AudioSpec	wav_spec[3];
-	Uint32			wav_length[3];
-	Uint8			*wav_buffer[3];
+	SDL_AudioSpec	wav_spec[4];
+	Uint32			wav_length[4];
+	Uint8			*wav_buffer[4];
 	int				musicnum;
 	int				soundnum;
 	pthread_t		music_thread;

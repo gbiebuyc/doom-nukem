@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:10:49 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 16:38:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,20 @@
 # define PATH_MAP "./maps/"
 # define POSTER_W 1.3
 # define MINIMUM_HEIGHT 0.5
+# define BLASTER_SOUND 2
+# define MINIMUM_CROUCH_HEIGHT 0.2
+# define MINIMUM_CEIL_DIST 0.1
+# define JUMP_FIX 0.01
+# define JUMP_FORCE 0.08
+# define M16_HITBOX 0.2
 
 void	draw_aim_cross(t_data *d);
 void	m16_shoot(t_data *d);
+int16_t		scan_sect_point_line(t_data *d, uint16_t sect_to_scan, double dist,
+		bool hit_all);
 double	find_closest_wall_dist(t_data *d, uint16_t sect_to_scan);
+int16_t			recur_scan_point_line(t_data *d,
+		int16_t sect_to_scan, int16_t old_sect, bool hit_all);
 double	get_dist_to_intersect_wall(t_data *d, t_vec2f wall1, t_vec2f wall2);
 void	putpixel(t_data *d, int x, int y, uint32_t color);
 uint32_t	getpixel(SDL_Surface *s, double x, double y);
@@ -52,20 +62,18 @@ void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr);
 void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr);
 void	*draw_ceil_thread(void *arg);
 void	player_actions(t_data *d);
-void	update(t_data *d);
 void	render(t_data *d);
 void	draw_weapon(t_data *d);
 void	blaster_shot(t_data *d);
 void	render_sector(t_data *d, t_sector *sect, t_frustum *fr);
-void	draw_monster(t_data *d, t_frustum *fr, t_monster monster);
-void	draw_sprite(t_data *d, t_sector *sector, t_frustum *fr, t_sprite_list *sprite);
+void	draw_sprite(t_data *d, t_frustum *fr, t_sprite_list *sprite);
 void	init_player(t_data *d, t_player *player);
 void	init_monsters(t_data *d);
 void	init_projectiles(t_data *d);
 void	swap_list(uint8_t type, uint16_t id, t_data *d, int sectnum[2]);
 int16_t	update_cursect_smart(t_data *d, short depth, t_vec2f pos,
 uint16_t cursectnum);
-int16_t	update_cursect_proj(int16_t sect_to_scan, t_data *d, int depth, int16_t old_sect, t_vec3f pos);
+int16_t	update_cursect_proj(int16_t sects[2], t_data *d, int depth, t_vec3f pos);
 void	destroy_mail(short id, t_sector *sector, uint8_t type_to_destroy);
 void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		bool has_collided); // in monster_anim_state.c
@@ -137,6 +145,31 @@ void	pause_menu(t_data *d);
 int		ft_mod(int i, int n);
 
 /*
+** update_2.c
+*/
+
+void	update_2(t_data *d);
+
+/*
+** update.c
+*/
+
+void	update(t_data *d);
+
+/*
+** m16_util.c
+*/
+
+bool	set_pos_m16_inside_sec(t_data *d, int16_t id, t_vec2f *pos);
+
+/*
+** m16_recur.c
+*/
+
+t_m16_inf		m16_recur(t_data *d, int16_t sect_to_scan,
+		int16_t old_sect);
+
+/*
 ** player_damage.c
 */
 void		player_hit_projectile(t_data *d, t_projectile *projectile);
@@ -158,6 +191,23 @@ void	inertia(t_data *d, t_vec2f mvt);
 
 void	create_projectile_monster(t_data *d, short id_of_proj_type, t_monster *monster);
 void	create_projectile(t_data *d, short id_of_proj_type);
+/*
+** get_rot_monster.c
+*/ 
+
+uint8_t	get_nb_anim_from_rot(double monster_rot,
+		t_vec2f monster_pos, t_vec2f player_pos);
+/*
+** fly_gravity.c
+*/
+
+void	fly_gravity(t_data *d);
+
+/*
+** draw_monster.c
+*/
+
+void	draw_monster(t_data *d, t_monster monster);
 
 /*
 ** utils.c
@@ -199,7 +249,7 @@ void	event_key_down(t_data *d, SDL_KeyboardEvent event);
 ** jump.c
 */
 
-void	gravity(t_data *d, int mod);
+void	normal_gravity(t_data *d);
 void	jump(t_data *d);
 
 /*

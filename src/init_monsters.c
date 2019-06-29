@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 15:39:28 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 13:25:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	initialize_all_monster(t_data *d,
 }
 
 void	init_monster_type_2(t_data *d)
-{	
+{
 	d->monster_type[CHARGINGDEMON].height = 1.5;
 	d->monster_type[CHARGINGDEMON].floating = 0.1;
 	d->monster_type[CHARGINGDEMON].size = 6.0;
@@ -73,6 +73,8 @@ void	init_monster_type_2(t_data *d)
 
 void	init_monster_type(t_data *d)
 {
+	short	i;
+
 	d->monster_type[MOTHERDEMON].height = 2.0;
 	d->monster_type[MOTHERDEMON].floating = 0.1;
 	d->monster_type[MOTHERDEMON].size = 7.0;
@@ -85,14 +87,12 @@ void	init_monster_type(t_data *d)
 	d->monster_type[MOTHERDEMON].anim_order[4] = 5;
 	d->monster_type[MOTHERDEMON].anim_order[5] = 6;
 	d->monster_type[MOTHERDEMON].anim_order[6] = 0;
-	d->monster_type[MOTHERDEMON].anim_order[10] = 11;
-	d->monster_type[MOTHERDEMON].anim_order[11] = 12;
-	d->monster_type[MOTHERDEMON].anim_order[12] = 13;
-	d->monster_type[MOTHERDEMON].anim_order[13] = 14;
-	d->monster_type[MOTHERDEMON].anim_order[14] = 15;
-	d->monster_type[MOTHERDEMON].anim_order[15] = 16;
-	d->monster_type[MOTHERDEMON].anim_order[16] = 17;
-	d->monster_type[MOTHERDEMON].anim_order[17] = 18;
+	i = 10;
+	while (i < 18)
+	{
+		d->monster_type[MOTHERDEMON].anim_order[i] = i + 1;
+		i++;
+	}
 	d->monster_type[MOTHERDEMON].anim_order[18] = 18;
 	d->monster_type[MOTHERDEMON].id_of_proj = FIREBALL_1;
 }

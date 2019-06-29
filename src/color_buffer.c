@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 00:13:32 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 22:45:08 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 11:21:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	change_buf_colo(t_data *d, uint16_t amount, uint32_t colo)
 		d->color_buf.value = 0;
 		d->color_buf.colo = colo;
 	}
-	d->color_buf.value += (amount * 25);
+	d->color_buf.value += amount * 18;
 	if (d->color_buf.value > MAX_BUF_VALUE)
 		d->color_buf.value = MAX_BUF_VALUE;
 }

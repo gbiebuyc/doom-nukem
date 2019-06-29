@@ -6,51 +6,53 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 21:58:08 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 11:40:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	shoot_sound(t_data *d)
+void	shoot_sound(t_data *d, uint8_t id)
 {
 	static t_sound_thread_arg	arg;
 	pthread_t					thread;
 
+	printf("i play sound\n");
 	arg = (t_sound_thread_arg){d, .is_music = false};
-	d->soundnum = 1;
+	d->soundnum = id;
 	if (pthread_create(&thread, NULL, sound_thread, &arg))
 		ft_printf("pthread_create error\n");
 	pthread_detach(thread);
 }
 
+void	handle_sound_shot(t_data *d)
+{
+	if (d->player.current_weapon == BLASTER)
+		shoot_sound(d, BLASTER_SOUND);
+}
+
 void	shoot_weapon(t_data *d, uint8_t *w)
 {
-	if (d->weapon_type[*w].type == NORMAL || 1)
+	if (d->left_mouse_button == MOUSE_PRESSED)
 	{
-		if (d->left_mouse_button == MOUSE_PRESSED)
-		{
-			d->player.timer_anim_weap = d->player.speed_anim[*w];
-			d->player.current_anim_playing = 1;
-			d->player.can_shoot = d->weapon_type[*w].rate_of_fire[0];
-			d->player.click = LEFT_CLICK;
-			if (*w == M16)
-				m16_shoot(d);
-			shoot_sound(d);
-			if (d->weapon_type[d->player.current_weapon].current_ammo)
-				d->weapon_type[d->player.current_weapon].current_ammo--;
-		}
-		else if (d->right_mouse_button == MOUSE_PRESSED &&
-				d->weapon_type[*w].has_alt_fire)
-		{
-			d->player.can_shoot = d->weapon_type[*w].rate_of_fire[1];
-			d->player.timer_anim_weap = d->player.speed_anim[*w];
-			d->player.current_anim_playing = 1;
-			d->player.click = RIGHT_CLICK;
-		}
+		d->player.timer_anim_weap = d->player.speed_anim[*w];
+		d->player.current_anim_playing = 1;
+		d->player.can_shoot = d->weapon_type[*w].rate_of_fire[0];
+		d->player.click = LEFT_CLICK;
+		if (*w == M16)
+			m16_shoot(d);
+		if (d->weapon_type[d->player.current_weapon].current_ammo)
+			d->weapon_type[d->player.current_weapon].current_ammo--;
+		handle_sound_shot(d);
 	}
-	if (d->weapon_type[*w].type == CHARGED)
+	else if (d->right_mouse_button == MOUSE_PRESSED &&
+			d->weapon_type[*w].has_alt_fire && d->weapon_type
+			[d->player.current_weapon].current_ammo > 1)
 	{
+		d->player.can_shoot = d->weapon_type[*w].rate_of_fire[1];
+		d->player.timer_anim_weap = d->player.speed_anim[*w];
+		d->player.current_anim_playing = 1;
+		d->player.click = RIGHT_CLICK;
 	}
 }
 

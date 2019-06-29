@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 18:07:01 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:12:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void		monster_hit(t_data *d, uint16_t damage, uint16_t id_monster)
 	}
 }
 
-bool		collision_proj_one_monst(t_data *d, t_monster *monster, t_projectile *projectile, t_vec3f newpos)
+bool		collision_proj_one_monst(t_data *d, t_monster *monster,
+		t_projectile *projectile, t_vec3f newpos)
 {
 	double		dist;
-	t_vec2f			vec2f_tmp[2];
+	t_vec2f		vec2f_tmp[2];
 
 	dist = vec2f_length(sub_vec2f(vec3to2(newpos), monster->pos));
 	if (dist < d->projectile_type[projectile->id_type].hitbox_radius +
@@ -43,12 +44,12 @@ bool		collision_proj_one_monst(t_data *d, t_monster *monster, t_projectile *proj
 		{
 			vec2f_tmp[0] = sub_vec2f((t_vec2f){projectile->pos.x,
 					projectile->pos.z}, monster->pos);
-			vec2f_tmp[1] = (t_vec2f){d->monster_type[monster->id_type].hitbox_radius
-				+ d->projectile_type[projectile->id_type].hitbox_radius,
-					0.0};
+			vec2f_tmp[1] = (t_vec2f){d->monster_type[monster->id_type].
+				hitbox_radius +
+					d->projectile_type[projectile->id_type].hitbox_radius, 0.0};
 			actualize_dir(atan2(vec2f_tmp[0].y, vec2f_tmp[0].x), &vec2f_tmp[1]);
 			projectile->pos.x = monster->pos.x + vec2f_tmp[1].x;
-			projectile->pos.z = monster->pos.y +  vec2f_tmp[1].y;
+			projectile->pos.z = monster->pos.y + vec2f_tmp[1].y;
 			projectile->pos.y = (newpos.y + projectile->pos.y) * 0.5;
 			return (true);
 		}

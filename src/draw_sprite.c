@@ -6,13 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:52:04 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 13:20:25 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
+void		display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 		t_display_data display_data, double dist)
 {
 	int			x;
@@ -33,7 +33,7 @@ void	display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 			if (colo != getpixel3(d->screen, x, y))
 			{
 				putpixel(d, x, y, colo);
-				d->zbuffer[x + y * d->screen->w] = dist;	
+				d->zbuffer[x + y * d->screen->w] = dist;
 			}
 			y++;
 		}
@@ -41,7 +41,7 @@ void	display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 	}
 }
 
-t_vec3f	transform_vec3f_to_screen(t_data *d, t_vec3f v)
+t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v)
 {
 	t_vec3f	new;
 
@@ -58,17 +58,19 @@ t_vec3f	transform_vec3f_to_screen(t_data *d, t_vec3f v)
 	return (new);
 }
 
-void	set_display_data_proj(t_frustum *fr, t_display_data *display_data)
+static void	set_display_data_proj(t_frustum *fr, t_display_data *display_data)
 {
-	display_data->scale.x = fabs(100.0 / (display_data->start.x - display_data->end.x) * 0.01);
+	display_data->scale.x = fabs(100.0 / (display_data->start.x
+				- display_data->end.x) * 0.01);
 	display_data->cut_start = ft_max(display_data->start.x, fr->x1);
 	display_data->cut_end = ft_min(display_data->end.x, fr->x2);
-	display_data->scale.y = fabs(100.0 / (display_data->start.y - display_data->end.y) * 0.01);
+	display_data->scale.y = fabs(100.0 / (display_data->start.y
+				- display_data->end.y) * 0.01);
 	display_data->ytop = &fr->ytop[0];
 	display_data->ybot = &fr->ybottom[0];
 }
 
-void	draw_projectile(t_data *d, t_frustum *fr,
+void		draw_projectile(t_data *d, t_frustum *fr,
 		t_projectile proj)
 {
 	double			dist;
@@ -96,12 +98,10 @@ void	draw_projectile(t_data *d, t_frustum *fr,
 			[proj.current_anim_playing], a, point_in_screen.z);
 }
 
-void	draw_sprite(t_data *d, t_sector *sector,
-		t_frustum *fr, t_sprite_list *sprite)
+void		draw_sprite(t_data *d, t_frustum *fr, t_sprite_list *sprite)
 {
-	(void)sector;
 	if (sprite->type == IS_MONSTER)
-		draw_monster(d, fr, d->monsters[sprite->id]);
+		draw_monster(d, d->monsters[sprite->id]);
 	if (sprite->type == IS_PROJECTILE)
 		draw_projectile(d, fr, d->projectiles[sprite->id]);
 }

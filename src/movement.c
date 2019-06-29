@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 17:18:06 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:36:33 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #define MINIMUM_HEIGHT_TO_WALK 0.32
 #define MOVE_SPEED 0.02
 #define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
-#define MINIMUM_CEIL_DIST 0.1
 
 void	mvtnallanicaca(t_data *d, short *count, t_vec2f *mvt)
 {

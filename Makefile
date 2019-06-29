@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/29 16:29:35 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/29 16:37:23 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,16 @@ FILES= main \
 	   monster_anim_state \
 	   reorder_sprite \
 	   create_projectile \
-	   m16 \
 	   player_actions \
 	   projectile_collision \
 	   update_anim_projectile \
+	   find_closest_wall_dist \
+	   blaster_col_recur \
 	   blaster_col \
+	   m16_util \
+	   m16_recur \
+	   m16 \
+	   update_2 \
 	   update \
 	   draw_weapon \
 	   color_buffer \
@@ -70,11 +75,13 @@ FILES= main \
 	   load_map load_assets \
 	   inside \
 	   utils \
+	   fly_gravity \
 	   jump \
 	   inertia \
 	   monster_collision \
 	   movement \
 	   draw_sprite \
+   	   get_rot_monster \
 	   draw_monster \
 	   shade \
 	   swap_list \

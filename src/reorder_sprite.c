@@ -6,25 +6,49 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:15:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 22:02:33 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 16:11:02 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	super_unoptimized_reorder_sprite(t_data *d, t_sector *sec,
-		double *vla)
-{
-	double			tmp_dist;
-	t_sprite_list	*mainlist;
-	t_sprite_list	*tmp_prev;
-	t_sprite_list	*tmp_prev_prev;
-	short			i;
+#define INCREMENT true
+#define SET false
 
-	i = 0;
-	mainlist = sec->sprite_list->next;
-	tmp_prev = sec->sprite_list;
-	while (mainlist)
+static void	set_var_reorder_sprite(t_sprite_list **list, t_sector *sec, int *i,
+		bool type)
+{
+	if (type == SET)
+	{
+		list[2] = sec->sprite_list->next;
+		list[1] = sec->sprite_list;
+		*i = 0;
+	}
+	if (type == INCREMENT)
+	{
+		*i = *i + 1;
+		list[0] = list[1];
+		list[1] = list[2];
+		list[2] = list[2]->next;
+	}
+}
+
+void		change_list(t_sprite_list *one, t_sprite_list *two,
+		t_sprite_list *prev)
+{
+	prev->next = two;
+	one->next = two->next;
+	two->next = one;
+}
+
+void		reorder_sprites_algo(t_data *d, t_sector *sec, double *vla,
+		t_sprite_list **list)
+{
+	double		tmp_dist;
+	int			i;
+
+	set_var_reorder_sprite(list, sec, &i, SET);
+	while (list[2])
 	{
 		if (vla[i] < vla[i + 1])
 		{
@@ -33,26 +57,21 @@ void	super_unoptimized_reorder_sprite(t_data *d, t_sector *sec,
 			vla[i + 1] = tmp_dist;
 			if (i == 0)
 			{
-				tmp_prev->next = mainlist->next;
-				mainlist->next = sec->sprite_list;
-				sec->sprite_list = mainlist;
-				super_unoptimized_reorder_sprite(d, sec, vla);
+				list[1]->next = list[2]->next;
+				list[2]->next = sec->sprite_list;
+				sec->sprite_list = list[2];
+				reorder_sprites_algo(d, sec, vla, list);
 				return ;
 			}
-			tmp_prev_prev->next = mainlist;
-			tmp_prev->next = mainlist->next;
-			mainlist->next = tmp_prev;
-			super_unoptimized_reorder_sprite(d, sec, vla);
+			change_list(list[1], list[2], list[0]);
+			reorder_sprites_algo(d, sec, vla, list);
 			return ;
 		}
-		i++;
-		tmp_prev_prev = tmp_prev;
-		tmp_prev = mainlist;
-		mainlist = mainlist->next;
+		set_var_reorder_sprite(list, sec, &i, INCREMENT);
 	}
 }
 
-void	set_vla(t_sprite_list *tmp, double *vla, t_data *d)
+void		set_vla(t_sprite_list *tmp, double *vla, t_data *d)
 {
 	short	i;
 
@@ -73,11 +92,12 @@ void	set_vla(t_sprite_list *tmp, double *vla, t_data *d)
 	}
 }
 
-void	reorder_sprite(t_data *d, t_sector *sect)
+void		reorder_sprite(t_data *d, t_sector *sect)
 {
 	t_sprite_list	*tmp;
 	short			i;
 	double			*vla;
+	t_sprite_list	*list[3];
 
 	i = 0;
 	tmp = sect->sprite_list;
@@ -92,6 +112,6 @@ void	reorder_sprite(t_data *d, t_sector *sect)
 		exit(EXIT_FAILURE);
 	tmp = sect->sprite_list;
 	set_vla(tmp, vla, d);
-	super_unoptimized_reorder_sprite(d, sect, vla);
+	reorder_sprites_algo(d, sect, vla, &list[0]);
 	free(vla);
 }

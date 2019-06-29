@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 18:09:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 14:54:58 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ bool	motherdemon_behaviour_change_after_attack(t_data *d,
 			< LONG_RANGE)
 	{
 		rand = ((abs((int)(monster->pos.x * 1000)) % 63) + 1);
-		if (!(SDL_GetTicks() % 6))
-			return false;
+		if (!(SDL_GetTicks() % (d->difficulty == 2 ? 4 : 6)))
+			return (false);
 		rand = rand - (int)(rand / (2 * M_PI)) * 2 * M_PI;
 		actualize_dir(rand, &tmp);
 		monster->rot = rand;
@@ -38,11 +38,12 @@ bool	motherdemon_behaviour_change_after_attack(t_data *d,
 		tmp2 = sub_vec2f(monster->pos, vec3to2(d->cam.pos));
 		rand = atan2(tmp2.y, tmp2.x) + M_PI;
 		actualize_dir(rand, &tmp);
+		tmp = mul_vec2f(tmp, 1.5);
 		monster->dir = tmp;
 		monster->rot = rand;
 		monster->timer = 100;
 	}
-	return true;
+	return (true);
 }
 
 void	motherdemon_behaviour_change_pattern(t_data *d, t_monster *monster)
@@ -65,8 +66,8 @@ void	motherdemon_behaviour_change_pattern(t_data *d, t_monster *monster)
 		monster->rot = atan2(tmp.y, tmp.x);
 		monster->timer = 29;
 	}
-
 }
+
 void	motherdemon_behaviour(t_data *d, t_monster *monster, uint16_t id)
 {
 	short	new_sect;
@@ -79,20 +80,17 @@ void	motherdemon_behaviour(t_data *d, t_monster *monster, uint16_t id)
 			collision_monster_monster(d, monster->cursectnum, monster);
 			while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
 						&monster->pos, COLLISION_DIST_MOTHERDEMON))
-			{
 				if (monster->timer > 2)
 					monster->timer -= 2;
-			}
 			new_sect = update_cursect_smart(d, 2, monster->pos,
 					monster->cursectnum);
 			if (new_sect != monster->cursectnum && new_sect != -1)
 			{
-				swap_list(IS_MONSTER, id,  d, (int[2]){monster->cursectnum,
+				swap_list(IS_MONSTER, id, d, (int[2]){monster->cursectnum,
 						new_sect});
 				monster->cursectnum = new_sect;
 			}
 		}
-		//need other kind of patterns ?
 	}
 	if (!monster->timer)
 		motherdemon_behaviour_change_pattern(d, monster);
@@ -103,7 +101,7 @@ void	check_activation(t_data *d, t_monster *monster, t_vec2f pos, bool recur)
 	t_sprite_list	*tmp;
 
 	if (vec2f_length(sub_vec2f(monster->pos, pos)) <
-		ACTIVATION_RADIUS)
+			ACTIVATION_RADIUS)
 	{
 		monster->activated = true;
 		monster->timer = 2;
@@ -121,10 +119,10 @@ void	check_activation(t_data *d, t_monster *monster, t_vec2f pos, bool recur)
 
 void	monster_behaviour(t_data *d, t_monster *monster, uint16_t id)
 {
-	if (!monster->can_collide) // all monster collide so far, used for monster is dead
+	if (!monster->can_collide)
 		return ;
 	if (!monster->activated)
-	check_activation(d, monster, vec3to2(d->cam.pos), true);
+		check_activation(d, monster, vec3to2(d->cam.pos), true);
 	if (!monster->activated)
 		return ;
 	monster->timer--;

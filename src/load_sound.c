@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 00:10:57 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/19 00:10:57 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 11:29:32 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		load_sound(t_data *d, int f)
 	if (d->wav_buffer[0])
 		return (0);
 	if (load_sound2(d, f) ||
+			load_sound2(d, f) ||
+			load_sound2(d, f) ||
 			load_sound2(d, f))
 		return (1);
 	return (0);

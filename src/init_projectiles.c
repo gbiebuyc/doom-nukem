@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 16:34:27 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/29 15:15:04 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	init_projectiles_fireball_1(t_data *d)
 	d->projectile_type[M16].anim_order[2] = 3;
 	d->projectile_type[M16].anim_order[3] = 4;
 	d->projectile_type[M16].anim_order[4] = MUST_BE_DESTROYED;
+	d->projectile_type[M16].damage = 30;
 }
 
 void	init_weapons(t_data *d)
