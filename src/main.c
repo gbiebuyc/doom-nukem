@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/26 00:10:48 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 14:02:10 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	init_everything(t_data *d, char *map)
 		exit(ft_printf("bad startsectnum\n"));
 	if (!d->music_thread)
 		start_music(d);
+	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
+		ft_printf("SDL_SetRelativeMouseMode error");
 	loop(d);
 }
 
@@ -60,8 +62,7 @@ int		main(int ac, char **av)
 	init_sdl(&d);
 	if (!(d.zbuffer = malloc(sizeof(double) * WIDTH * HEIGHT)))
 		exit(ft_printf("malloc zbuffer_sprites failed.\n"));
-	d.difficulty = menu_screen(&d);
-	intro_screen(&d);
-	init_everything(&d, (ac == 2) ? av[1] : "newmap.DNMAP");
+	ft_strcpy(d.nextmap, (ac == 2) ? av[1] : "newmap.DNMAP");
+	main_menu(&d);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/28 17:22:14 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 14:10:49 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,12 @@ void	decrease_fuel(t_data *d);
 void	handle_respawn(t_data *d);
 void	precompute_texanim(t_data *d);
 void	intro_screen(t_data *d);
+void	help_screen(t_data *d);
 void	draw_string_typewriter_effect(t_data *d, t_font f);
-int		menu_screen(t_data *d);
+void	main_menu(t_data *d);
+void	difficulty_menu(t_data *d);
+void	pause_menu(t_data *d);
+int		ft_mod(int i, int n);
 
 /*
 ** player_damage.c

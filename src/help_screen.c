@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intro_screen.c                                     :+:      :+:    :+:   */
+/*   help_screen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/28 21:27:53 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 21:27:53 by gbiebuyc         ###   ########.fr       */
+/*   Created: 2019/06/29 14:03:55 by gbiebuyc          #+#    #+#             */
+/*   Updated: 2019/06/29 14:19:53 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	intro_screen(t_data *d)
+void	help_screen(t_data *d)
 {
 	SDL_Event	e;
 
 	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
-	draw_string_typewriter_effect(d, (t_font){
-			"The world is invaded by demonic creatures.\n"
-			"Your mission is to save Pikachu.\n"
-			"Good luck !",
-			WIDTH / 2 - 250, HEIGHT / 2 - 80, 0, 2});
+	draw_string(d, (t_font){
+			"WASD / ZQSD   Move\n"
+			"Ctrl          Crouch\n"
+			"Space         Jump / Jetpack\n"
+			"1             Cryo Ballista\n"
+			"2             Blaster\n"
+			"3             M16\n",
+			WIDTH / 2 - 150, HEIGHT / 2 - 120, 0, 2});
+	SDL_UpdateWindowSurface(d->win);
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type != SDL_KEYDOWN)
 			continue ;
 		else if (e.key.keysym.sym == SDLK_RETURN)
-			init_everything(d, d->nextmap);
+			return ;
 		else if (e.key.keysym.sym == SDLK_ESCAPE)
-			init_everything(d, d->nextmap);
+			return ;
 	}
 }

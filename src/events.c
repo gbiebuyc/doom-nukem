@@ -15,9 +15,9 @@
 void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 {
 	if (event.keysym.sym == SDLK_ESCAPE)
-		proper_exit(d);
+		pause_menu(d);
 	else if (event.keysym.sym == SDLK_p)
-		SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
+		pause_menu(d);
 	else if (event.keysym.sym == SDLK_PAUSE)
 		d->debug_pause = true;
 	else if (event.keysym.sym == SDLK_e)

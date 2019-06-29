@@ -6,15 +6,18 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/28 17:21:02 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/29 16:29:35 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= doom-nukem
 
 FILES= main \
-	   menu_screen \
+	   main_menu \
+	   difficulty_menu \
+	   pause_menu \
 	   intro_screen \
+	   help_screen \
 	   texanim \
 	   jetpack \
 	   draw_hud \
@@ -35,6 +38,7 @@ FILES= main \
 	   init_monsters \
 	   init_projectiles \
 	   init_player \
+	   init_font \
 	   loop \
 	   events \
 	   activate_door \

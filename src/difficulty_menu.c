@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_screen.c                                      :+:      :+:    :+:   */
+/*   difficulty_menu.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/29 10:09:45 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 10:09:45 by gbiebuyc         ###   ########.fr       */
+/*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
+/*   Updated: 2019/06/29 14:18:04 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 #define NB_MENU_ITEMS 3
+#define M "  I'M TOO YOUNG TO DIE.\n  HEY, NOT TOO ROUGH.\n  HURT ME PLENTY."
 
-void	redraw(t_data *d, int choice)
+static void	redraw(t_data *d, int choice)
 {
-	static char buf[] = "  I'M TOO YOUNG TO DIE.\n"
-		"  HEY, NOT TOO ROUGH.\n  HURT ME PLENTY.";
+	static char buf[] = M;
 
 	buf[0] = (choice == 0) ? '>' : ' ';
 	buf[24] = (choice == 1) ? '>' : ' ';
@@ -27,30 +27,27 @@ void	redraw(t_data *d, int choice)
 	SDL_UpdateWindowSurface(d->win);
 }
 
-int		ft_mod(int i, int n)
-{
-	return ((i % n + n) % n);
-}
-
-int		menu_screen(t_data *d)
+void		difficulty_menu(t_data *d)
 {
 	SDL_Event	e;
-	int			choice;
+	static int	choice = 1;
 
-	choice = 1;
 	redraw(d, choice);
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type != SDL_KEYDOWN)
 			continue ;
-		if (e.key.keysym.sym == SDLK_UP)
-			redraw(d, (choice = ft_mod((choice - 1), NB_MENU_ITEMS)));
-		if (e.key.keysym.sym == SDLK_DOWN)
-			redraw(d, (choice = ft_mod((choice + 1), NB_MENU_ITEMS)));
-		if (e.key.keysym.sym == SDLK_RETURN)
-			return (choice);
-		if (e.key.keysym.sym == SDLK_ESCAPE)
-			exit(EXIT_SUCCESS);
+		else if (e.key.keysym.sym == SDLK_UP)
+			choice = ft_mod((choice - 1), NB_MENU_ITEMS);
+		else if (e.key.keysym.sym == SDLK_DOWN)
+			choice = ft_mod((choice + 1), NB_MENU_ITEMS);
+		else if (e.key.keysym.sym == SDLK_RETURN)
+		{
+			d->difficulty = choice;
+			intro_screen(d);
+		}
+		else if (e.key.keysym.sym == SDLK_ESCAPE)
+			return ;
+		redraw(d, choice);
 	}
-	return (choice);
 }

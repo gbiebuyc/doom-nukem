@@ -50,7 +50,5 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (!(d->screen = SDL_GetWindowSurface(d->win)))
 		err_exit(d, 1, SDL_GetError());
-	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
-		err_exit(d, 2, SDL_GetError());
 	d->keys = SDL_GetKeyboardState(NULL);
 }
