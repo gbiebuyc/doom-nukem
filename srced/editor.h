@@ -211,6 +211,8 @@ typedef struct	s_interface
 	int16_t			nb_asset[NB_CATEGORY];
 	t_vec2			category_pos[NB_CATEGORY];
 	int				selected_asset;
+	t_assets_list	*selected_asset_on_map;
+	t_monster_list	*selected_monster_on_map;
 	int				selected_asset_cat;
 	t_vec2			selected_asset_position;
 	t_monster_list	*monster_list;
@@ -425,13 +427,15 @@ void			update_wall_pos(t_data *d);
 
 void			fix_outside_monster_and_assets(t_data *d, t_monster_list *mlst,
 														t_assets_list *alst);
-int				select_assets_on_map(t_data *d);
 void			draw_selection_arround_selected_asset(t_data *d, t_vec2 *v,
 																	int c);
 void			draw_selection_arround_asset(t_data *d, t_vec2 *category);
 void			get_selected_asset(t_data *d);
 int				add_asset_to_map(t_data *d, int x, int y);
+
+void			move_asset(t_data *d, int x, int y);
 void			check_if_assets_inside_sector(t_data *d);
+int				select_assets_on_map(t_data *d);
 
 /*
 **	ed_interface.c

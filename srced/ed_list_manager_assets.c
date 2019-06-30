@@ -63,6 +63,7 @@ int				delete_asset(t_data *d, t_assets_list *lst,
 				fix_list(d, prev, next);
 			d->nb_assets--;
 			d->interface.current_selected_asset = NULL;
+			d->interface.selected_asset_on_map = NULL;
 			return (1);
 		}
 		lst = lst->prev;

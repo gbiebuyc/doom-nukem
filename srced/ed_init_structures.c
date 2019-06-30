@@ -32,7 +32,8 @@ void		init_data(t_data *d)
 			.texture_case_select = -1, .category = -1, .selected_asset = -1,
 			.separate_sector = 0, .monster_list = NULL, .map_list = NULL,
 			.map_list_sort = NULL, .prompt_map_open = 0, .selected_map = -1,
-			.assets_list = NULL};
+			.assets_list = NULL, .selected_asset_on_map = NULL,
+			.selected_monster_on_map = NULL};
 	ft_memset(d->next_map, 0, 100);
 }
 

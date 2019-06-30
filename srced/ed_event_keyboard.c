@@ -20,6 +20,21 @@ static void	handle_escape(t_data *d)
 	d->interface.selected_asset = -1;
 	d->interface.prompt_map_open = 0;
 	d->interface.prompt_asset_option = 0;
+	if (d->interface.current_selected_asset)
+	{
+		d->interface.current_selected_asset->is_select = 0;
+		d->interface.current_selected_asset = NULL;
+	}
+	if (d->interface.selected_asset_on_map)
+	{
+		d->interface.selected_asset_on_map->is_select = 0;
+		d->interface.selected_asset_on_map = NULL;
+	}
+	if (d->interface.selected_monster_on_map)
+	{
+		d->interface.selected_monster_on_map->is_select = 0;
+		d->interface.selected_monster_on_map = NULL;
+	}
 	d->get_next_map = 0;
 }
 

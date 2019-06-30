@@ -34,8 +34,11 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 		return ;
 	d->interface.current_selected_asset = NULL;
 	d->interface.prompt_asset_option = 0;
-	if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y) &&
-		x > W - PROPERTIES_LIMIT)
+	if (d->interface.selected_asset_on_map ||
+		d->interface.selected_monster_on_map)
+		move_asset(d, x, y);
+	else if (!select_assets_on_map(d) && !selecting_wall_or_sector(d, e, x, y)
+			&& x > W - PROPERTIES_LIMIT)
 		btn_sector_height(d, x, y, &d->interface);
 	is_on_checkbox(d, x, y, e);
 	fix_default_texture(d, x, y);
