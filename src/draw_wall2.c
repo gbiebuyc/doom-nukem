@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 17:04:34 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 17:04:43 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:13:33 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible)
 
 void	draw_wall_no_nei(t_data *d, t_projdata *p, t_frustum *fr)
 {
+	uint32_t px;
+
 	while (++p->y <= ft_min(fr->ybottom[p->x], p->yb))
 		if (p->wall->posterpicnum >= 0 &&
-				p->y > p->ya_poster && p->y < p->yb_poster)
-			putpixel2(d, p->z, (t_vec2){p->x, p->y}, shade(p->shadefactor,
-						getpixel4(p->poster, p->u_poster,
-							norm(p->y, p->ya_poster, p->yb_poster))));
+			p->y > p->ya_poster && p->y < p->yb_poster && (((px =
+			getpixel4(p->poster, p->u_poster, norm(p->y, p->ya_poster,
+			p->yb_poster))) >> 24) > 128))
+			putpixel2(d, p->z, (t_vec2){p->x, p->y}, shade(p->shadefactor, px));
 		else
 			putpixel2(d, p->z, (t_vec2){p->x, p->y}, shade(p->shadefactor,
 						getpixel4(p->tex, p->u_tex,
