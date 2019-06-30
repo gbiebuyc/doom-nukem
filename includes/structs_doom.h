@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 17:52:15 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 18:36:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ typedef struct		s_data
 	double			floorheightplayer;
 	double			ceilheightplayer;
 	char			nextmap[100];
-	Mix_Chunk		chunk[NB_OF_SOUNDS];
+	Mix_Chunk		*chunk[NB_OF_SOUNDS];
 	t_assets		*slot1;
 	t_assets		*slot2;
 	t_assets		*slot3;

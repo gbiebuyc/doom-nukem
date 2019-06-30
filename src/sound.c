@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 00:20:57 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 17:51:06 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 18:36:49 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	play_sound(t_data *d, uint8_t id, t_vec2f pos)
 		angle = -atan2(pos.y, pos.x) * 180 / M_PI + 90;
 		dist = ft_min(vec2f_length(sub_vec2f(vec3to2(d->cam.pos), pos)) * 4, 254);
 	}
-	Mix_PlayChannel(i, &d->chunk[id], 0);
+	Mix_PlayChannel(i, d->chunk[id], 0);
 	Mix_SetPosition(i, angle, dist);
 	printf("dist:%d\n", dist);
 	if (++i > 98)
@@ -40,5 +40,5 @@ void	play_sound(t_data *d, uint8_t id, t_vec2f pos)
 
 void	play_music(t_data *d, uint8_t id)
 {
-	Mix_PlayChannel(99, &d->chunk[id], -1);
+	Mix_PlayChannel(99, d->chunk[id], -1);
 }

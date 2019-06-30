@@ -6,23 +6,35 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 17:52:10 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 18:46:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
+#define MAX_SIZE_FOR_SOUND 5000000
+
 int		write_sound2(int f, char *path)
 {
-	Mix_Chunk			*chunk;
+	uint8_t		*file;
+	int			read_ret;
+	int			fd;
 
-	if (!(chunk = Mix_LoadWAV(path)))
-		return (ft_printf("Could not open wav file: %s\n", SDL_GetError()));
-	if (write(f, &chunk->alen, sizeof(chunk->alen)) < 0)
-		return (ft_printf("Failed to write wav spec.\n"));
-	if (write(f, chunk->abuf, chunk->alen) < 0)
-		return (ft_printf("Failed to write abuf \n"));
-	Mix_FreeChunk(chunk);
+	if ((fd = open(path, O_RDONLY)) < 0)
+		return (ft_printf("Couldn't open sound file: %s\n", path));
+	if (!(file = malloc(MAX_SIZE_FOR_SOUND)))
+		return (ft_printf("Malloc for sound failed\n"));
+	read_ret = read(fd, file, MAX_SIZE_FOR_SOUND);
+	if (read_ret < 0)
+		return (ft_printf("Error reading file: %s\n", path));
+	if (read_ret >= MAX_SIZE_FOR_SOUND)
+		return (ft_printf("Error file too big:%s\n", path));
+	ft_printf("read_ret : %d\n", read_ret);
+	if (write(f, &read_ret, sizeof(read_ret)) < 0)
+		return (ft_printf("Failed to write sound file\n"));
+	if (write(f, file, read_ret) < 0)
+		return (ft_printf("Failed to write sound file\n"));
+	free(file);
 	return (0);
 }
 
