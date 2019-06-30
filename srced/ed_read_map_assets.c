@@ -45,17 +45,17 @@ int			read_assets_data(t_data *d, int f)
 		return (ft_printf("Failed to read map nb_assets.\n"));
 	if (d->nb_assets > 0)
 	{
+		d->previous_numsector = d->numsectors;
 		if (!(d->assets =
 					(t_assets**)malloc(sizeof(t_assets*) * d->numsectors)))
 			return (ft_printf("Failed to malloc assets structures.\n"));
 		s = -1;
-		while (++s < d->numsectors)
+		while (++s < d->numsectors && (i = -1))
 		{
 			if (!(d->assets[s] = (t_assets*)malloc(sizeof(t_assets) * 10)))
 				return (ft_printf("Failed to malloc assets structures.\n"));
 			if (read(f, &d->assets[s][0].nb_assets, sizeof(int)) < 0)
 				return (ft_printf("Failed to read nb_assets for sector.\n"));
-			i = -1;
 			while (++i < d->assets[s][0].nb_assets)
 				if (read(f, &d->assets[s][i], sizeof(t_assets)) < 0)
 					return (ft_printf("Failed to read d->asset[][].\n"));

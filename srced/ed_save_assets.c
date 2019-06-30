@@ -19,6 +19,8 @@ void	clear_assets_structure(t_data *d)
 
 	if (!numsect)
 		numsect = d->numsectors;
+	if (d->previous_numsector != -1)
+		numsect = d->previous_numsector;
 	if (!d->assets)
 		return ;
 	s = -1;
@@ -27,6 +29,7 @@ void	clear_assets_structure(t_data *d)
 	free(d->assets);
 	d->assets = NULL;
 	numsect = d->numsectors;
+	d->previous_numsector = -1;
 }
 
 void	copy_data(t_data *d, t_assets_list *a, int s, int *i)
@@ -59,7 +62,6 @@ int		fill_assets_structure(t_data *d, t_assets_list *lst)
 	s = -1;
 	while (++s < d->numsectors && (i = 0) != -1)
 	{
-		d->assets[s] = NULL;
 		if (!(d->assets[s] = (t_assets*)malloc(sizeof(t_assets) * 10)))
 			return (ft_printf("Failed to malloc assets structures.\n"));
 		ft_memset(d->assets[s], 0, 10);
