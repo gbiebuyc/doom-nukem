@@ -92,7 +92,7 @@ static void	print_next_map_and_asset(t_data *d, int x, int y)
 		draw_string(d, (t_font){string, x + 28, y + 3, 0x008800, 2});
 	}
 	else
-		draw_string(d, (t_font){"No next map", x + 28, y + 3,
+		draw_string(d, (t_font){"NO NEXT MAP", x + 28, y + 3,
 														0x008800, 2});
 	if (d->interface.current_selected_asset)
 		print_asset_values(d,

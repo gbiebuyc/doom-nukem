@@ -302,6 +302,7 @@ typedef struct	s_data
 	int					hl_wallnum_draw;
 	unsigned char		font[96][CHAR_WIDTH];
 	int					previous_numsector;
+	int					show_help;
 }				t_data;
 
 SDL_Surface		*load_bmp(char *path);

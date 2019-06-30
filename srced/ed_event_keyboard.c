@@ -27,6 +27,8 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 {
 	if (key == SDLK_r)
 		run_game(d);
+	else if (key == SDLK_F1)
+		d->show_help = !d->show_help;
 	else if (key == SDLK_s)
 		save_file(d, d->current_loaded_map);
 	else if ((key == SDLK_d || key == SDLK_DELETE) && !d->sectordrawing &&

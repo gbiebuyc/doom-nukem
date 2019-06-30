@@ -83,7 +83,7 @@ void	draw_string_typewriter_effect(t_data *d, t_font f)
 	int			delay;
 
 	if (f.scale <= 0)
-		return ((void)ft_printf("bad fond scale\n"));
+		return ((void)ft_printf("bad font scale\n"));
 	x_start = f.x;
 	delay = 30;
 	while (*f.str)
