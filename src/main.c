@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:14:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:54:35 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ int		main(int ac, char **av)
 	if (!(d.zbuffer = malloc(sizeof(double) * WIDTH * HEIGHT)))
 		exit(ft_printf("malloc zbuffer_sprites failed.\n"));
 	ft_strcpy(d.nextmap, (ac == 2) ? av[1] : "newmap.DNMAP");
-	main_menu(&d);
+	if (ft_strequ(d.nextmap, "./maps/newmap.DNMAP"))
+		init_everything(&d, d.nextmap);
+	else
+		main_menu(&d);
 	return (EXIT_SUCCESS);
 }
