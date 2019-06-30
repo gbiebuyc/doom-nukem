@@ -6,17 +6,23 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 21:48:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/14 18:57:45 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/30 19:49:08 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+bool	is_special_char(char c)
+{
+	return (c == 'y' || c == 'p' || c == 'q' || c == ',');
+}
 
 void	draw_char(t_data *d, t_font *f)
 {
 	int		i;
 	int		j;
 	char	c;
+	int		y;
 
 	c = *f->str & 0x7F;
 	if (c < ' ')
@@ -27,11 +33,11 @@ void	draw_char(t_data *d, t_font *f)
 	while (++j < CHAR_WIDTH * f->scale)
 	{
 		i = -1;
+		y = is_special_char(*f->str) ? 2 * f->scale : 0;
 		while (++i < CHAR_HEIGHT * f->scale)
-			if (d->font[(int)c][j / f->scale] & (1 << i / f->scale) &&
-				f->x >= 0 && f->y >= 0 && f->x < W && f->y < H)
-				((uint32_t*)d->screen->pixels)[f->x + j + (f->y + i) * W] =
-																	f->color;
+			if (d->font[(int)c][j / f->scale] & (1 << i / f->scale))
+				((uint32_t*)d->screen->pixels)[
+					f->x + j + (f->y + i + y) * W] = f->color;
 	}
 }
 
