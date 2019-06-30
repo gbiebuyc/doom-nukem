@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/26 13:56:00 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 18:20:54 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 19:04:51 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 		return ;
 	tex = d->textures[p->sector->ceilpicnum];
 	h = HEIGHT + MAX_Y_OFFSET * 2;
-	x = p->cx1 - 1;
-	while (++x <= p->cx2)
+	x = p->cx1;
+	while (++x <= p->cx2 + 1)
 	{
 		p->u = (unsigned int)(((double)x + d->cam.rot * 1000) /
 				(WIDTH * (h / HEIGHT)) * tex->w) % tex->w;
