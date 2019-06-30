@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 15:03:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:34:46 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		err_exit(d, 1, SDL_GetError());
-	if (! Mix_AllocateChannels(MAX_CHANNELS))
+	if (!Mix_AllocateChannels(MAX_CHANNELS))
 		err_exit(d, 1, SDL_GetError());
 	d->keys = SDL_GetKeyboardState(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 02:27:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 13:20:25 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:32:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void		display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 	int			y;
 	uint32_t	colo;
 
-	x = display_data.cut_start;
-	while (x <= display_data.cut_end)
+	x = display_data.cut_start - 1;
+	while (++x <= display_data.cut_end)
 	{
-		y = ft_max(display_data.ytop[x], display_data.start.y);
-		while (y <= ft_min(display_data.ybot[x], display_data.end.y))
+		y = ft_max(display_data.ytop[x], display_data.start.y) - 1;
+		while (++y <= ft_min(display_data.ybot[x], display_data.end.y))
 		{
 			colo = getpixel(s, display_data.scale.x *
 					(x - display_data.start.x),
@@ -32,12 +32,12 @@ void		display_sprite_one_point_proj(t_data *d, SDL_Surface *s,
 					[x + y * d->screen->w], colo);
 			if (colo != getpixel3(d->screen, x, y))
 			{
+				colo = sprite_shade(d, &d->sectors[display_data.cursectnum]
+						, dist, colo);
 				putpixel(d, x, y, colo);
 				d->zbuffer[x + y * d->screen->w] = dist;
 			}
-			y++;
 		}
-		x++;
 	}
 }
 
@@ -58,7 +58,8 @@ t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v)
 	return (new);
 }
 
-static void	set_display_data_proj(t_frustum *fr, t_display_data *display_data)
+static void	set_display_data_proj(t_frustum *fr, t_display_data *display_data,
+		uint16_t cursectnum)
 {
 	display_data->scale.x = fabs(100.0 / (display_data->start.x
 				- display_data->end.x) * 0.01);
@@ -68,6 +69,7 @@ static void	set_display_data_proj(t_frustum *fr, t_display_data *display_data)
 				- display_data->end.y) * 0.01);
 	display_data->ytop = &fr->ytop[0];
 	display_data->ybot = &fr->ybottom[0];
+	display_data->cursectnum = cursectnum;
 }
 
 void		draw_projectile(t_data *d, t_frustum *fr,
@@ -93,7 +95,7 @@ void		draw_projectile(t_data *d, t_frustum *fr,
 	a.end.y = point_in_screen.y + (d->projectile_tex[proj.weapon_id]
 			[proj.current_anim_playing]->h *
 			d->projectile_type[proj.id_type].size) / dist;
-	set_display_data_proj(fr, &a);
+	set_display_data_proj(fr, &a, proj.cursectnum);
 	display_sprite_one_point_proj(d, d->projectile_tex[proj.id_type]
 			[proj.current_anim_playing], a, point_in_screen.z);
 }

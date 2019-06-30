@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 14:45:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:37:17 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	player_contact_monster_2(t_data *d, t_monster *monster)
 		if (d->player.health > 0)
 		{
 			play_sound(d, CHARG_ATK_SOUND, monster->pos);
-			play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));	
+			play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));
 		}
 	}
 	change_inertia(d, atan2(monster->dir.y, monster->dir.x),
@@ -81,7 +81,7 @@ void	player_contact_monster(t_data *d, t_monster *monster)
 			d->player.can_be_stomped = 30;
 			change_buf_colo(d, 5, RED);
 			if (d->player.health > 0)
-				play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));	
+				play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));
 		}
 		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 				BOUNCING_DIST_MOTHERDEMON);

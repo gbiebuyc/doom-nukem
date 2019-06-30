@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 20:48:02 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:36:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@ static void	redraw(t_data *d, int choice)
 	SDL_UpdateWindowSurface(d->win);
 }
 
-void		difficulty_menu(t_data *d)
+void		difficulty_menu(t_data *d, int count)
 {
 	SDL_Event	e;
 	static int	choice = 1;
-	int			count;
 
 	redraw(d, choice);
-	count = 0;
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type == SDL_QUIT)
@@ -50,6 +48,7 @@ void		difficulty_menu(t_data *d)
 		if (count > 1)
 		{
 			d->difficulty = choice;
+			play_music(d, MAIN_MUSIC);
 			intro_screen(d);
 		}
 		redraw(d, choice);

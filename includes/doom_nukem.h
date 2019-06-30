@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 15:02:58 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:38:38 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define PATH_MAP "./maps/"
 # define POSTER_W 1.3
 # define MINIMUM_HEIGHT 0.5
+# define MAIN_MUSIC 0
 # define BLASTER_SOUND 1
 # define CRYO_SOUND 2
 # define M16_SOUND 3
@@ -106,11 +107,15 @@ bool		collision_proj_monster(t_data *d,
 		t_sector *sector, t_projectile *projectile);
 bool		collision_proj_player(t_data *d, t_projectile *projectile);
 t_vec3f		transform_vec3f_to_screen(t_data *d, t_vec3f v);
+void		check_activation(t_data *d, t_monster *monster, t_vec2f pos,
+		bool recur);
 void		monster_behaviour(t_data *d, t_monster *monster, uint16_t id);
 void		monster_behaviour_chargingdemon(
 		t_data *d, t_monster *monster, uint16_t id);
 void		charging_demon_wait(t_data *d, t_monster *monster);
 double		getshadefactor(t_data *d, t_projdata *p, double dist);
+uint32_t	sprite_shade(t_data *d, t_sector *sector, double dist,
+		uint32_t img);
 uint32_t	shade(double factor, uint32_t c);
 void		reorder_sprite(t_data *d, t_sector *sect);
 t_vec3f		vec2to3(t_vec2f v);
@@ -133,7 +138,7 @@ double		get_ceildh(t_data *d, t_sector *sect, t_vec2f v);
 void		init_everything(t_data *d, char *map);
 void		fix_picnum(t_data *d);
 void		handle_finish(t_data *d);
-void		*sound_thread(void *void_arg);
+void		play_music(t_data *d, uint8_t id);
 int			load_sound(t_data *d, int f);
 void		play_sound(t_data *d, uint8_t id, t_vec2f pos);
 void		the_end(t_data *d);
@@ -166,8 +171,8 @@ void		intro_screen(t_data *d);
 void		help_screen(t_data *d);
 void		draw_string_typewriter_effect(t_data *d, t_font f);
 void		main_menu(t_data *d);
-void		difficulty_menu(t_data *d);
-void		pause_menu(t_data *d);
+void		difficulty_menu(t_data *d, int count);
+void		pause_menu(t_data *d, int count);
 int			ft_mod(int i, int n);
 
 /*

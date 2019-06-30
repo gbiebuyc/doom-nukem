@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 15:33:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 20:48:17 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:35:29 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,14 @@ static void	redraw(t_data *d, int choice)
 	SDL_UpdateWindowSurface(d->win);
 }
 
-void		pause_menu(t_data *d)
+void		pause_menu(t_data *d, int count)
 {
 	SDL_Event	e;
 	static int	choice;
-	int	count;
 
 	if (SDL_SetRelativeMouseMode(SDL_FALSE) == -1)
 		ft_printf("SDL_SetRelativeMouseMode error");
 	redraw(d, choice);
-	count = 0;
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type == SDL_QUIT)

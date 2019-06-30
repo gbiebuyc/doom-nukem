@@ -6,21 +6,11 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 20:04:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:14:23 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
-void	start_music(t_data *d)
-{
-	static t_sound_thread_arg arg;
-
-	d->musicnum = 0;
-	arg = (t_sound_thread_arg){d, .is_music = true};
-	//if (pthread_create(&d->music_thread, NULL, sound_thread, &arg))
-	//	ft_printf("pthread_create error\n");
-}
 
 void	init_everything(t_data *d, char *map)
 {
@@ -41,8 +31,6 @@ void	init_everything(t_data *d, char *map)
 	init_player(d, &d->player);
 	if (d->startsectnum < 0)
 		exit(ft_printf("bad startsectnum\n"));
-	if (!d->music_thread)
-		start_music(d);
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		ft_printf("SDL_SetRelativeMouseMode error");
 	loop(d);

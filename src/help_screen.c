@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:03:55 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 20:45:22 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:34:27 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	help_screen(t_data *d)
 {
 	SDL_Event	e;
-	int	count;
+	int			count;
 
 	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
 	draw_string(d, (t_font){

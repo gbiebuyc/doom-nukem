@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 14:59:31 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:24:03 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_display_data
 	int				cut_end;
 	int				*ytop;
 	int				*ybot;
+	uint16_t		cursectnum;
 }					t_display_data;
 
 typedef	struct		s_m16_inf
@@ -268,8 +269,6 @@ typedef struct		s_data
 	double			ceilheightplayer;
 	char			nextmap[100];
 	Mix_Chunk		chunk[NB_OF_SOUNDS];
-	int				musicnum;
-	pthread_t		music_thread;
 	t_assets		*slot1;
 	t_assets		*slot2;
 	t_assets		*slot3;
@@ -292,12 +291,5 @@ typedef	struct		s_args_multi_colo_buf
 	short			start_x;
 	short			max_x;
 }					t_args_multi_colo_buf;
-
-typedef struct		s_sound_thread_arg
-{
-	t_data			*d;
-	bool			is_music;
-	uint8_t			id;
-}				t_sound_thread_arg;
 
 #endif

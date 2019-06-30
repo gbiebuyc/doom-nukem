@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:00:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/27 01:49:29 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:06:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	proper_exit(t_data *d)
 {
 	invoke_msg(d, "EXITING...");
 	render(d);
-	d->musicnum = -1;
-	if (pthread_join(d->music_thread, NULL))
-		ft_printf("pthread_join error\n");
 	SDL_DestroyWindow(d->win);
 	SDL_Quit();
 	exit(EXIT_SUCCESS);

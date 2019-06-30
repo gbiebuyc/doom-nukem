@@ -6,12 +6,26 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 22:30:55 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 12:31:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:40:40 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-void	check_activation(t_data *d, t_monster *monster, t_vec2f pos, bool recur);
+
+static void	monster_hit_2(t_data *d, uint16_t damage, uint16_t id_monster)
+{
+	if ((d->monsters[id_monster].life -= damage) <= 0)
+	{
+		d->monsters[id_monster].can_collide = false;
+		d->monsters[id_monster].activated = false;
+		d->monsters[id_monster].anim_state = d->monsters[id_monster].id_type ==
+			MOTHERDEMON ? 10 : 13;
+		d->monsters[id_monster].anim_time = 20;
+		play_sound(d, d->monsters[id_monster].id_type == MOTHERDEMON ?
+				MOTHER_DEATH_SOUND : CHARG_DEATH_SOUND, d->monsters[id_monster].
+				pos);
+	}
+}
 
 void		monster_hit(t_data *d, uint16_t damage, uint16_t id_monster)
 {
@@ -22,25 +36,19 @@ void		monster_hit(t_data *d, uint16_t damage, uint16_t id_monster)
 		d->monsters[id_monster].activated = true;
 		d->monsters[id_monster].timer = 2;
 		play_sound(d, d->monsters[id_monster].id_type == MOTHERDEMON ?
-				MOTHER_AGRO_SOUND : CHARG_AGRO_SOUND, d->monsters[id_monster].pos);
+				MOTHER_AGRO_SOUND : CHARG_AGRO_SOUND, d->monsters[id_monster].
+				pos);
 		tmp = d->sectors[d->monsters[id_monster].cursectnum].sprite_list;
 		while (tmp)
 		{
-			if (tmp->type == IS_MONSTER && d->monsters[tmp->id].activated == false)
-				check_activation(d, &d->monsters[tmp->id], d->monsters[id_monster].pos, false);
+			if (tmp->type == IS_MONSTER && d->monsters[tmp->id].activated ==
+					false)
+				check_activation(d, &d->monsters[tmp->id],
+						d->monsters[id_monster].pos, false);
 			tmp = tmp->next;
 		}
 	}
-	if ((d->monsters[id_monster].life -= damage) <= 0)
-	{
-		d->monsters[id_monster].can_collide = false;
-		d->monsters[id_monster].activated = false;
-		d->monsters[id_monster].anim_state = d->monsters[id_monster].id_type ==
-			MOTHERDEMON ? 10 : 13;
-		d->monsters[id_monster].anim_time = 20;
-		play_sound(d, d->monsters[id_monster].id_type == MOTHERDEMON ?
-				MOTHER_DEATH_SOUND : CHARG_DEATH_SOUND, d->monsters[id_monster].pos);
-	}
+	monster_hit_2(d, damage, id_monster);
 }
 
 bool		collision_proj_one_monst(t_data *d, t_monster *monster,
