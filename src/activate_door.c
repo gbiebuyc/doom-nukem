@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 13:25:48 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/05/27 16:38:01 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 18:04:58 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ bool	activate_door2(t_data *d, t_wall *w, int n[4])
 	}
 	d->dooranimstep[n[0]] = (d->doorstate[n[0]] == 0 ||
 			d->dooranimstep[n[0]] < 0) ? 0.01 : -0.01;
+	play_sound(d, d->dooranimstep[n[0]] > 0 ? OPEN_DOOR_SOUND :
+			CLOSE_DOOR_SOUND, vec3to2(d->cam.pos));
 	activate_neighbor_door(d, &d->walls[n[0]], &d->walls[n[1]],
 			&d->sectors[d->walls[n[0]].neighborsect]);
 	return (true);

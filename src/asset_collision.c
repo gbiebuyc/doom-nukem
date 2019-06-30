@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:45:42 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 14:53:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:51:08 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ static bool	check_if_return(t_data *d, t_assets *asset)
 
 static bool	check_jetpack(t_data *d, t_assets *asset)
 {
+	if (asset->stat_mod.heal > 0)
+	{
+		play_sound(d, HEALTH_SOUND, vec3to2(d->cam.pos));
+		change_buf_colo(d, asset->stat_mod.heal / 2, HEALTH_COLO);
+	}
+	if (asset->stat_mod.blaster_ammo || asset->stat_mod.m16_ammo ||
+			asset->stat_mod.ballista_ammo)
+		play_sound(d, AMMO_SOUND, vec3to2(d->cam.pos));
 	if (asset->is_jetpack || asset->is_key)
 	{
 		if (!d->slot1)

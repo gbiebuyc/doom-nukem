@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:42:59 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:52:15 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ typedef struct		s_weapon_type
 	uint8_t			rate_of_fire[2];
 	uint8_t			time_to_reload[2];
 	uint8_t			shooting_type[2];
-	uint8_t			type;
 	uint8_t			left_projectile;
 	uint8_t			right_projectile;
 	uint16_t		max_ammo;
@@ -188,6 +187,7 @@ typedef	struct		s_player
 	int16_t			health;
 	uint8_t			can_be_stomped;
 	uint8_t			current_weapon;
+	uint8_t			charging;
 	uint8_t			can_shoot;
 	uint8_t			timer_change_weap;
 	uint8_t			timer_anim_weap;
@@ -201,8 +201,6 @@ typedef	struct		s_player
 	double			gravity;
 }					t_player;
 
-# define RED 0xFF0000
-# define GREEN_BLAST 0x5CE26E
 # define MAX_BUF_VALUE 240
 
 typedef struct		s_color_buf
@@ -218,7 +216,7 @@ typedef struct		s_color_buf
 # define MOUSE_PRESSED 1
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
-# define NB_OF_SOUNDS 15
+# define NB_OF_SOUNDS 19
 
 typedef struct		s_data
 {

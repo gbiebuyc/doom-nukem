@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 15:59:20 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:52:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int		write_sound(int f)
 			write_sound2(f, "sounds/mother_agro.wav") ||
 			write_sound2(f, "sounds/mother_attack.wav") ||
 			write_sound2(f, "sounds/mother_death.wav") ||
-			write_sound2(f, "sounds/blaster_2.wav"))
+			write_sound2(f, "sounds/blaster_2.wav") ||
+			write_sound2(f, "sounds/refill_ammo.wav") ||
+			write_sound2(f, "sounds/health_up.wav") ||
+			write_sound2(f, "sounds/door_open.wav") ||
+			write_sound2(f, "sounds/door_close.wav"))
 		return (1);
 	return (0);
 }

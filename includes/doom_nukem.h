@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 17:20:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:52:43 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@
 # define MOTHER_ATK_SOUND 12
 # define MOTHER_DEATH_SOUND 13
 # define BLASTER_2_SOUND 14
+# define AMMO_SOUND 15
+# define HEALTH_SOUND 16
+# define OPEN_DOOR_SOUND 17
+# define CLOSE_DOOR_SOUND 18
 # define MAX_CHANNELS 100
 # define MINIMUM_CROUCH_HEIGHT 0.2
 # define MINIMUM_CEIL_DIST 0.1
@@ -55,6 +59,9 @@
 # define EASY 0
 # define NORMAL 1
 # define HARD 2
+# define RED 0xFF0000
+# define GREEN_BLAST 0x5CE26E
+# define HEALTH_COLO 0xFFFF66
 
 void		draw_aim_cross(t_data *d);
 void		m16_shoot(t_data *d);

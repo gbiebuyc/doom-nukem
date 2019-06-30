@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:49:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 17:24:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	init_weapons(t_data *d)
 {
 	d->weapon_type[CRYO_BALLISTA].rate_of_fire[0] =
 		d->player.speed_anim[CRYO_BALLISTA] * 11;
-	d->weapon_type[CRYO_BALLISTA].type = NORMAL;
 	d->weapon_type[CRYO_BALLISTA].has_alt_fire = false;
 	d->weapon_type[BLASTER].rate_of_fire[0] =
 		d->player.speed_anim[BLASTER] * 10;
@@ -85,7 +84,6 @@ void	init_weapons(t_data *d)
 		d->player.speed_anim[BLASTER] * 10;
 	d->weapon_type[M16].rate_of_fire[0] = d->player.speed_anim[M16] * 2 - 1;
 	d->weapon_type[M16].has_alt_fire = false;
-	d->weapon_type[M16].type = NORMAL;
 	d->weapon_type[BLASTER].max_ammo = 35;
 	d->weapon_type[CRYO_BALLISTA].max_ammo = 15;
 	d->weapon_type[M16].max_ammo = 250;
