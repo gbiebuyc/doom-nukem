@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 21:07:06 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/30 16:41:13 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:43:54 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim,
 						projectile->pos)) != -1)
 		{
 			if (update_sec != projectile->cursectnum)
-				swap_list(IS_PROJECTILE, id, d, (int[2]){projectile->cursectnum,
-						update_sec});
+				swap_list(IS_PROJECTILE, id, d,
+								(int[2]){projectile->cursectnum, update_sec});
 			projectile->cursectnum = update_sec;
 		}
 	}

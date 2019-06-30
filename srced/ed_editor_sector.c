@@ -82,7 +82,7 @@ void		del_sector(t_data *d, int16_t sectnum, t_sector *sect, int n)
 	}
 }
 
-static bool	inside(t_data *d, int16_t sectnum, t_vec2f p)
+bool		inside(t_data *d, int16_t sectnum, t_vec2f p)
 {
 	int		i;
 	int		j;

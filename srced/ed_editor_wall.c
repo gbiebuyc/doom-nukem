@@ -136,4 +136,5 @@ void		update_wall_pos(t_data *d)
 		d->selectedwall2->point = p;
 	else
 		detect_neighbors(d, in_which_sector_is_this_wall(d, d->selectedwall));
+	fix_outside_monster_and_assets(d, NULL, NULL);
 }

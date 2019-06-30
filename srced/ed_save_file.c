@@ -105,14 +105,15 @@ int			add_extension_file_and_path(t_data *d, char *map_name)
 
 int			save_file(t_data *d, char *map_name)
 {
-	double	angle;
 	int		f;
 
-	angle = 0;
+	if (d->numsectors <= 0 || !inside(d, d->startsectnum,
+							(t_vec2f){d->player_start.x, d->player_start.z}))
+		return (ft_printf("Warning : the player isn't inside a sector.\n"));
 	add_extension_file_and_path(d, map_name);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
 		|| write(f, &d->player_start, sizeof(t_vec3f)) < 0 ||
-		write(f, &angle, sizeof(double)) < 0 ||
+		write(f, &d->angle, sizeof(double)) < 0 ||
 		write(f, &d->startsectnum, sizeof(int16_t)) < 0 ||
 		write(f, d->next_map, 100) < 0)
 		return (ft_printf("Write starting data failed\n"));
