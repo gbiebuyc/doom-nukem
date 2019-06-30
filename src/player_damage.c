@@ -24,7 +24,7 @@ void	player_fell(t_data *d)
 	d->player.can_move = d->player.gravity > 0.2 ? 40 : 20;
 	d->player.health -= 10;
 	d->player.gravity = 0.0;
-	play_sound(d, PLAYER_FELL_SOUND);	
+	play_sound(d, PLAYER_FELL_SOUND);
 }
 
 void	player_hit_projectile(t_data *d, t_projectile *projectile)
@@ -57,7 +57,7 @@ void	player_contact_monster_2(t_data *d, t_monster *monster)
 		d->player.can_be_stomped = 30;
 		change_buf_colo(d, 8, RED);
 		play_sound(d, CHARG_ATK_SOUND);
-		play_sound(d, PLAYER_GOT_HIT_SOUND);	
+		play_sound(d, PLAYER_GOT_HIT_SOUND);
 	}
 	change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 			BOUCING_DIST_CHARGINGDEMON);
@@ -73,7 +73,7 @@ void	player_contact_monster(t_data *d, t_monster *monster)
 			d->player.health -= d->difficulty == HARD ? 10 : 5;
 			d->player.can_be_stomped = 30;
 			change_buf_colo(d, 5, RED);
-			play_sound(d, PLAYER_FELL_SOUND);	
+			play_sound(d, PLAYER_FELL_SOUND);
 		}
 		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 				BOUNCING_DIST_MOTHERDEMON);

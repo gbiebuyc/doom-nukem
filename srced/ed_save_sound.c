@@ -39,20 +39,19 @@ int		write_sound2(t_data *d, int f, char *path, SDL_AudioFormat format)
 int		write_sound(t_data *d, int f)
 {
 	if (write_sound2(d, f, "sounds/music.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/blaster.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/cryo_bal.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/m16.wav", AUDIO_S16LSB) ||
-	   		write_sound2(d, f, "sounds/explosion.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/player_fell.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/player_got_hit.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/player_death.wav", AUDIO_S16LSB) ||
-			write_sound2(d, f, "sounds/charg_agro.wav", AUDIO_S16LSB) || 
-			write_sound2(d, f, "sounds/charg_damage.wav", AUDIO_S16LSB) || 
-			write_sound2(d, f, "sounds/charg_death.wav", AUDIO_S16LSB) || 
-			write_sound2(d, f, "sounds/mother_agro.wav", AUDIO_S16LSB) || 
-			write_sound2(d, f, "sounds/mother_attack.wav", AUDIO_S16LSB) || 
-			write_sound2(d, f, "sounds/mother_death.wav", AUDIO_S16LSB))
-
+		write_sound2(d, f, "sounds/blaster.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/cryo_bal.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/m16.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/explosion.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/player_fell.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/player_got_hit.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/player_death.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/charg_agro.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/charg_damage.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/charg_death.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/mother_agro.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/mother_attack.wav", AUDIO_S16LSB) ||
+		write_sound2(d, f, "sounds/mother_death.wav", AUDIO_S16LSB))
 		return (1);
 	return (0);
 }

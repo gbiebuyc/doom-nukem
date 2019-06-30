@@ -32,6 +32,7 @@ static void	fill_list(t_data *d, t_interface *itf)
 			itf->assets_list->is_autopick = d->assets[s][i].is_autopick;
 			itf->assets_list->collision = d->assets[s][i].collision;
 			itf->assets_list->stat_mod = d->assets[s][i].stat_mod;
+			itf->assets_list->is_jetpack = d->assets[s][i].is_jetpack;
 		}
 	}
 }

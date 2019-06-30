@@ -56,7 +56,7 @@ void	update(t_data *d)
 					d->cursectnum)) != -1)
 	{
 		if (sect != d->cursectnum && d->cam.pos.y < get_floorheight_player(d,
-				   	sect) + d->player.minimum_height)
+					sect) + d->player.minimum_height)
 			d->player.minimum_height = d->cam.pos.y - get_floorheight_player(d,
 					sect);
 		d->cursectnum = sect;

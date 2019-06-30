@@ -29,7 +29,7 @@ void	start_playing_sound(t_data *d, bool is_music)
 		SDL_QueueAudio(dev, d->wav_buffer[i], d->wav_length[i]);
 		SDL_PauseAudioDevice(dev, 0);
 		while (SDL_GetQueuedAudioSize(dev) > 0)
-		{	
+		{
 			if (is_music && d->musicnum != i)
 				return ((void)SDL_CloseAudioDevice(dev));
 			SDL_Delay(100);

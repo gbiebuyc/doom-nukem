@@ -18,7 +18,7 @@ void		check_if_assets_inside_sector(t_data *d)
 	t_monster_list	*mtmp;
 	t_assets_list	*al;
 	t_assets_list	*atmp;
- 
+
 	ml = (d->interface.monster_list) ? d->interface.monster_list->begin : NULL;
 	al = (d->interface.assets_list) ? d->interface.assets_list->begin : NULL;
 	while (ml)

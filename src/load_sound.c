@@ -46,7 +46,6 @@ int		load_sound(t_data *d, int f)
 			load_sound2(d, f) ||
 			load_sound2(d, f) ||
 			load_sound2(d, f))
-			
 		return (1);
 	return (0);
 }
