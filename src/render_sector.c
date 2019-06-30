@@ -6,13 +6,13 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 12:57:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 13:58:55 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	transformvertex(t_data *d, t_vec2f v, double *x, double *z)
+void		transformvertex(t_data *d, t_vec2f v, double *x, double *z)
 {
 	v.x -= d->cam.pos.x;
 	v.y -= d->cam.pos.z;
@@ -20,7 +20,14 @@ void	transformvertex(t_data *d, t_vec2f v, double *x, double *z)
 	*z = v.x * d->cam.sin + v.y * d->cam.cos;
 }
 
-void	render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
+t_sector	*check_neighbor(t_data *d, int16_t nei)
+{
+	if (nei < 0 || nei >= d->numsectors)
+		return (NULL);
+	return (&d->sectors[nei]);
+}
+
+void		render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 {
 	int wallnum;
 	int wallnextnum;
@@ -30,8 +37,7 @@ void	render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 	transformvertex(d, d->walls[wallnum].point, &p->x1, &p->z1);
 	transformvertex(d, d->walls[wallnextnum].point, &p->x2, &p->z2);
 	p->wall = &d->walls[wallnum];
-	p->neighbor = (p->wall->neighborsect == -1) ? NULL :
-		&d->sectors[p->wall->neighborsect];
+	p->neighbor = check_neighbor(d, p->wall->neighborsect);
 	p->wall->lowerpicnum = d->walls[wallnextnum].middlepicnum;
 	p->len = vec2f_length((t_vec2f){p->x2 - p->x1, p->z2 - p->z1});
 	p->u1 = 0;
@@ -47,7 +53,7 @@ void	render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 			vec3to2(transform_back(d, (t_vec3f){p->x2, 0, p->z2}))});
 }
 
-void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
+void		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
 	t_sprite_list	*sprite_list_tmp;
 	t_projdata		p;
