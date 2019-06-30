@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 17:54:35 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 19:21:09 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_everything(t_data *d, char *map)
 		exit(ft_printf("bad startsectnum\n"));
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		ft_printf("SDL_SetRelativeMouseMode error");
+	play_music(d, MAIN_MUSIC);
 	loop(d);
 }
 

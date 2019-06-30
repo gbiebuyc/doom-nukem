@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 00:10:57 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 18:52:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 19:27:58 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		load_sound2(t_data *d, int f)
 
 	if (read(f, &size_of_file, sizeof(int)) < 0)
 		return (ft_printf("Failed to read size of sound_file\n"));
-	printf("%d\n", size_of_file);
 	if (!(tmp_file = malloc(size_of_file)))
 		return (ft_printf("Failed to malloc sound\n"));
 	if (read(f, tmp_file, size_of_file) < 0)

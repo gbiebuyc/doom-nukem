@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:47:36 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 19:20:19 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void		difficulty_menu(t_data *d, int count)
 		else if (e.key.keysym.sym == SDLK_RETURN)
 		{
 			d->difficulty = choice;
-			play_music(d, MAIN_MUSIC);
 			intro_screen(d);
 		}
 		else if (e.key.keysym.sym == SDLK_ESCAPE)

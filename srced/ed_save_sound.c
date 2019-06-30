@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 18:46:00 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 19:22:06 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		write_sound2(int f, char *path)
 		return (ft_printf("Error reading file: %s\n", path));
 	if (read_ret >= MAX_SIZE_FOR_SOUND)
 		return (ft_printf("Error file too big:%s\n", path));
-	ft_printf("read_ret : %d\n", read_ret);
 	if (write(f, &read_ret, sizeof(read_ret)) < 0)
 		return (ft_printf("Failed to write sound file\n"));
 	if (write(f, file, read_ret) < 0)
