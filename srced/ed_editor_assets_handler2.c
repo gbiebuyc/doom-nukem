@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-void 		move_asset(t_data *d, int x, int y)
+void		move_asset(t_data *d, int x, int y)
 {
 	t_vec2f	p;
 
