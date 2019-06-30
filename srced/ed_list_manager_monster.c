@@ -52,6 +52,7 @@ int				delete_monster(t_data *d, t_monster_list *lst)
 			else
 				fix_list(d, prev, next);
 			d->nbmonsters--;
+			d->interface.selected_monster_on_map = NULL;
 			return (1);
 		}
 		lst = lst->prev;
