@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/29 04:25:11 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/06/02 19:15:53 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/30 14:10:20 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,13 +38,15 @@ OBJ1 = $(SRC:.c=.o)
 OBJ2 = $(OBJ1:../src/%=%)
 OBJ = $(addprefix obj/, $(OBJ2))
 
+
 CC = gcc
 #-fsanitize=address
 
 FT_DIR = ../libft
 SDL_CFG = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../SDL/library/bin/sdl2-config
+LIBMIX = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../SDL/library/lib/libSDL2_mixer.a
 CFLAGS = -Wall -Wextra -Werror -I$(FT_DIR) -I../includes `$(SDL_CFG) --cflags`
-LDFLAGS = -lm -L$(FT_DIR) -lft `$(SDL_CFG) --static-libs`
+LDFLAGS = -lm -L$(FT_DIR) -lft $(LIBMIX) `$(SDL_CFG) --static-libs`
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:36:33 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 12:37:26 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define MOVE_SPEED 0.02
 #define MINIMUM_HEIGHT_OF_WALKABLE_SECTOR 0.6
 
-void	mvtnallanicaca(t_data *d, short *count, t_vec2f *mvt)
+void	smooth_movement(t_data *d, short *count, t_vec2f *mvt)
 {
 	if (d->keys[SDL_SCANCODE_W] && ++*count)
 	{
@@ -54,7 +54,7 @@ void	movement(t_data *d)
 	{
 		count = 0;
 		ft_bzero(&mvt, sizeof(t_vec2f));
-		mvtnallanicaca(d, &count, &mvt);
+		smooth_movement(d, &count, &mvt);
 		d->cam.pos.z += d->inertia.y;
 		d->cam.pos.x += d->inertia.x;
 	}

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:42:43 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:44:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 12:30:14 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	anim_id_0(t_monster *monster, t_monster_type *monster_type, t_data *d)
 	monster->anim_time = SPEED_ANIM;
 	if (monster->anim_state == MOTHER_DEMON_ATTACK &&
 			monster->anim_time == SPEED_ANIM)
+	{
 		create_projectile_monster(d, FIREBALL_1, monster);
+		play_sound(d, MOTHER_ATK_SOUND, monster->pos);
+	}
 }
 
 void	anim_id_1(t_monster *monster, t_monster_type *monster_type)

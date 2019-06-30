@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/26 13:54:11 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/14 19:00:36 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:05:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			save_file(t_data *d, char *map_name)
 		write_texture_data(d, f) || write_posters_data(d, f) ||
 		write_weapons_texture(d, f) ||
 		write_monster_texture(d, f, d->texture_monster) ||
-		write_assets_texture(d, f) || write_sound(d, f))
+		write_assets_texture(d, f) || write_sound(f))
 		return (1);
 	close(f);
 	ft_strcpy(d->current_loaded_map, d->path_to_save);

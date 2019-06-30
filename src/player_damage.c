@@ -6,15 +6,15 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 18:46:10 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 14:45:35 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
 #define BOUNCING_DIST_PROJ 0.12
-#define BOUNCING_DIST_MOTHERDEMON 0.15
-#define BOUCING_DIST_CHARGINGDEMON 0.23
+#define BOUNCING_DIST_MOTHERDEMON 0.1
+#define BOUCING_DIST_CHARGINGDEMON 0.18
 
 void	player_fell(t_data *d)
 {
@@ -24,7 +24,8 @@ void	player_fell(t_data *d)
 	d->player.can_move = d->player.gravity > 0.2 ? 40 : 20;
 	d->player.health -= 10;
 	d->player.gravity = 0.0;
-	play_sound(d, PLAYER_FELL_SOUND);
+	if (d->player.health > 0)
+		play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));
 }
 
 void	player_hit_projectile(t_data *d, t_projectile *projectile)
@@ -34,6 +35,7 @@ void	player_hit_projectile(t_data *d, t_projectile *projectile)
 		change_inertia(d, atan2(projectile->dir.z,
 					projectile->dir.x), BOUNCING_DIST_PROJ);
 	d->player.health -= d->projectile_type[projectile->id_type].damage;
+	play_sound(d, PLAYER_GOT_HIT_SOUND, vec3to2(d->cam.pos));
 }
 
 void	check_dangerous_area(t_data *d)
@@ -47,6 +49,8 @@ void	check_dangerous_area(t_data *d)
 	change_buf_colo(d, 7, RED);
 	d->player.health -= 20;
 	d->last_dangerous_area_damage = SDL_GetTicks();
+	if (d->player.health > 0)
+		play_sound(d, PLAYER_GOT_HIT_SOUND, vec3to2(d->cam.pos));
 }
 
 void	player_contact_monster_2(t_data *d, t_monster *monster)
@@ -56,8 +60,11 @@ void	player_contact_monster_2(t_data *d, t_monster *monster)
 		d->player.health -= d->difficulty == HARD ? 20 : 15;
 		d->player.can_be_stomped = 30;
 		change_buf_colo(d, 8, RED);
-		play_sound(d, CHARG_ATK_SOUND);
-		play_sound(d, PLAYER_GOT_HIT_SOUND);
+		if (d->player.health > 0)
+		{
+			play_sound(d, CHARG_ATK_SOUND, monster->pos);
+			play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));	
+		}
 	}
 	change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 			BOUCING_DIST_CHARGINGDEMON);
@@ -73,7 +80,8 @@ void	player_contact_monster(t_data *d, t_monster *monster)
 			d->player.health -= d->difficulty == HARD ? 10 : 5;
 			d->player.can_be_stomped = 30;
 			change_buf_colo(d, 5, RED);
-			play_sound(d, PLAYER_FELL_SOUND);
+			if (d->player.health > 0)
+				play_sound(d, PLAYER_FELL_SOUND, vec3to2(d->cam.pos));	
 		}
 		change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 				BOUNCING_DIST_MOTHERDEMON);

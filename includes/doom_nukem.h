@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 21:14:42 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 15:02:58 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define MOTHER_AGRO_SOUND 11
 # define MOTHER_ATK_SOUND 12
 # define MOTHER_DEATH_SOUND 13
+# define BLASTER_2_SOUND 14
+# define MAX_CHANNELS 100
 # define MINIMUM_CROUCH_HEIGHT 0.2
 # define MINIMUM_CEIL_DIST 0.1
 # define JUMP_FIX 0.01
@@ -133,7 +135,7 @@ void		fix_picnum(t_data *d);
 void		handle_finish(t_data *d);
 void		*sound_thread(void *void_arg);
 int			load_sound(t_data *d, int f);
-void		play_sound(t_data *d, uint8_t id);
+void		play_sound(t_data *d, uint8_t id, t_vec2f pos);
 void		the_end(t_data *d);
 t_vec3f		transform_back(t_data *d, t_vec3f v);
 void		proj_floor(t_data *d, t_projdata *p);

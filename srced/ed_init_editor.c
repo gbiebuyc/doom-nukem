@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 23:57:29 by mikorale          #+#    #+#             */
-/*   Updated: 2019/05/14 23:57:29 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:17:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int				init_editor(t_data *d)
 		return (ft_printf("Failed to create editor's window.\n"));
 	if (!(d->screen = SDL_GetWindowSurface(d->win)))
 		return (ft_printf("Failed to get window's surface.\n"));
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+		return (ft_printf("Failed to init audio Mixer\n"));
 	if (init_interface(d) || init_texture(d))
 		return (1);
 	return (0);

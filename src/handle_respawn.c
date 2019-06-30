@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 22:11:51 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/27 22:11:51 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 12:29:51 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	reset_assets(t_data *d)
 
 void	handle_respawn(t_data *d)
 {
+	play_sound(d, PLAYER_DEATH_SOUND, vec3to2(d->cam.pos));
 	init_monsters(d);
 	init_player(d, &d->player);
 	reset_assets(d);

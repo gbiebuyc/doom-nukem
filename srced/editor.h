@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 05:06:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/14 19:00:54 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:05:06 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -603,7 +603,7 @@ int				write_posters_data(t_data *d, int f);
 **	ed_save_sound.c
 */
 
-int				write_sound(t_data *d, int f);
+int				write_sound(int f);
 
 /*
 **	ed_door_toggle.c

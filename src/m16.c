@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 15:34:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 13:35:03 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void		m16_shoot(t_data *d)
 	double		y_dist;
 
 	inf = m16_recur(d, d->cursectnum, -1);
+	if (d->weapon_type[M16].current_ammo)
+		d->weapon_type[M16].current_ammo--;
 	if (inf.id_of_monst != -1)
 	{
 		y_dist = inf.dist * Y_OFFSET_TO_ROT * d->cam.y_offset +

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:22:51 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 14:21:35 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 20:48:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void		main_menu(t_data *d)
 	redraw(d, choice);
 	while (SDL_WaitEvent(&e))
 	{
+		if (e.type == SDL_QUIT)
+			proper_exit(d);
 		if (e.type != SDL_KEYDOWN)
 			continue ;
 		if (e.key.keysym.sym == SDLK_UP)

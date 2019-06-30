@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:40:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:47:36 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 12:30:07 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	check_activation(t_data *d, t_monster *monster, t_vec2f pos, bool recur)
 	{
 		monster->activated = true;
 		monster->timer = 2;
+		play_sound(d, monster->id_type == MOTHERDEMON ? MOTHER_AGRO_SOUND :
+				CHARG_AGRO_SOUND, monster->pos);
 	}
 	if (!recur || monster->activated == false)
 		return ;

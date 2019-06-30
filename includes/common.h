@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 07:09:25 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 20:50:05 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 21:30:38 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <SDL.h>
 # include <libft.h>
+# include <../SDL2_mixer/SDL_mixer.h>
 
 /*
 ** This header is used both by the editor and the game

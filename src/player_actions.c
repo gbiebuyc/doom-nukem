@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 18:46:11 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 13:42:22 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	handle_sound_shot(t_data *d)
 {
 	if (d->player.current_weapon == BLASTER)
-		play_sound(d, BLASTER_SOUND);
+		play_sound(d, BLASTER_SOUND, vec3to2(d->cam.pos));
 	if (d->player.current_weapon == CRYO_BALLISTA)
-		play_sound(d, CRYO_SOUND);
+		play_sound(d, CRYO_SOUND, vec3to2(d->cam.pos));
 	if (d->player.current_weapon == M16)
-		play_sound(d, M16_SOUND);
+		play_sound(d, M16_SOUND, vec3to2(d->cam.pos));
 }
 
 void	shoot_weapon(t_data *d, uint8_t *w)
@@ -32,8 +32,6 @@ void	shoot_weapon(t_data *d, uint8_t *w)
 		d->player.click = LEFT_CLICK;
 		if (*w == M16)
 			m16_shoot(d);
-		if (d->weapon_type[d->player.current_weapon].current_ammo)
-			d->weapon_type[d->player.current_weapon].current_ammo--;
 		handle_sound_shot(d);
 	}
 	else if (d->right_mouse_button == MOUSE_PRESSED &&
@@ -44,6 +42,7 @@ void	shoot_weapon(t_data *d, uint8_t *w)
 		d->player.timer_anim_weap = d->player.speed_anim[*w];
 		d->player.current_anim_playing = 1;
 		d->player.click = RIGHT_CLICK;
+		play_sound(d, BLASTER_2_SOUND, vec3to2(d->cam.pos));
 	}
 }
 
@@ -88,7 +87,11 @@ void	player_actions(t_data *d)
 		shoot_weapon(d, w);
 	if (*w == CRYO_BALLISTA && d->player.current_anim_playing == 5
 			&& !d->player.timer_anim_weap)
+	{
+		if (d->weapon_type[CRYO_BALLISTA].current_ammo)
+			d->weapon_type[CRYO_BALLISTA].current_ammo--;
 		create_projectile(d, d->weapon_type[*w].left_projectile);
+	}
 	if (*w == BLASTER && d->player.current_anim_playing == 11
 			&& !d->player.timer_anim_weap)
 		blaster_shot(d);

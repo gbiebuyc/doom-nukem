@@ -6,52 +6,43 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 18:40:37 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 14:45:11 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-int		write_sound2(t_data *d, int f, char *path, SDL_AudioFormat format)
+int		write_sound2(int f, char *path)
 {
-	SDL_AudioSpec		wav_spec;
-	Uint32				wav_length;
-	Uint8				*wav_buffer;
+	Mix_Chunk			*chunk;
 
-	(void)d;
-	ft_memset(&wav_spec, 0, sizeof(wav_spec));
-	wav_spec.freq = 44100;
-	wav_spec.format = format;
-	wav_spec.channels = 1;
-	wav_spec.samples = 4096;
-	if (SDL_LoadWAV(path, &wav_spec, &wav_buffer, &wav_length) == NULL)
+	if (!(chunk = Mix_LoadWAV(path)))
 		return (ft_printf("Could not open wav file: %s\n", SDL_GetError()));
-	if (write(f, &wav_spec, sizeof(wav_spec)) < 0)
+	if (write(f, &chunk->alen, sizeof(chunk->alen)) < 0)
 		return (ft_printf("Failed to write wav spec.\n"));
-	if (write(f, &wav_length, sizeof(wav_length)) < 0)
-		return (ft_printf("Failed to write wav length.\n"));
-	if (write(f, wav_buffer, wav_length) < 0)
-		return (ft_printf("Failed to write wav buffer.\n"));
-	SDL_FreeWAV(wav_buffer);
+	if (write(f, chunk->abuf, chunk->alen) < 0)
+		return (ft_printf("Failed to write abuf \n"));
+	Mix_FreeChunk(chunk);
 	return (0);
 }
 
-int		write_sound(t_data *d, int f)
+int		write_sound(int f)
 {
-	if (write_sound2(d, f, "sounds/music.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/blaster.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/cryo_bal.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/m16.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/explosion.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/player_fell.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/player_got_hit.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/player_death.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/charg_agro.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/charg_damage.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/charg_death.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/mother_agro.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/mother_attack.wav", AUDIO_S16LSB) ||
-		write_sound2(d, f, "sounds/mother_death.wav", AUDIO_S16LSB))
+	if (write_sound2(f, "./sounds/music.wav") ||
+			write_sound2(f, "./sounds/blaster.wav") ||
+			write_sound2(f, "sounds/cryo_bal.wav") ||
+			write_sound2(f, "sounds/m16.wav") ||
+			write_sound2(f, "sounds/explosion.wav") ||
+			write_sound2(f, "sounds/player_fell.wav") ||
+			write_sound2(f, "sounds/player_got_hit.wav") ||
+			write_sound2(f, "sounds/player_death.wav") ||
+			write_sound2(f, "sounds/charg_agro.wav") ||
+			write_sound2(f, "sounds/charg_damage.wav") ||
+			write_sound2(f, "sounds/charg_death.wav") ||
+			write_sound2(f, "sounds/mother_agro.wav") ||
+			write_sound2(f, "sounds/mother_attack.wav") ||
+			write_sound2(f, "sounds/mother_death.wav") ||
+			write_sound2(f, "sounds/blaster_2.wav"))
 		return (1);
 	return (0);
 }

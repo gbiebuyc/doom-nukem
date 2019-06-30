@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/29 16:37:23 by nallani          ###   ########.fr        #
+#    Updated: 2019/06/30 14:37:35 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,15 +99,17 @@ OBJ= $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 ABS_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SDL_SOURCES:=$(ABS_PATH)/SDL
+SDL_MIX_SOURCES:=$(ABS_PATH)/SDL2_mixer
 SDL_PATH:=$(ABS_PATH)/SDL/library
 SDL_CFG = $(SDL_PATH)/bin/sdl2-config
 FT_DIR = libft
+LIBMIX = $(SDL_PATH)/lib/libSDL2_mixer.a
 INCLUDE = includes 
 INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
 CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags` \
 		 -Wno-unused-variable -Wno-unused-parameter -g
-LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft `$(SDL_CFG) --static-libs` -fsanitize=address
+LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft $(LIBMIX) `$(SDL_CFG) --static-libs` -fsanitize=address
 ED_DIR = srced
 
 all: $(NAME) editor
@@ -148,8 +150,14 @@ SDL:
 	cd $(SDL_SOURCES); ./configure --disable-shared --prefix=$(SDL_PATH)
 	make -C $(SDL_SOURCES) -j4
 	make -C $(SDL_SOURCES) install
+	cd ..
+	cd $(SDL_MIX_SOURCES); ./configure --disable-shared --prefix=$(SDL_PATH)
+	make -C $(SDL_MIX_SOURCES) -j4
+	make -C $(SDL_MIX_SOURCES) install
 
 SDL_clean:
+	make -C $(SDL_MIX_SOURCES) clean
+	make -C $(SDL_MIX_SOURCES) uninstall
 	make -C $(SDL_SOURCES) clean
 	make -C $(SDL_SOURCES) uninstall
 

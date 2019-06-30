@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 14:18:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/29 20:48:02 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,27 @@ void		difficulty_menu(t_data *d)
 {
 	SDL_Event	e;
 	static int	choice = 1;
+	int			count;
 
 	redraw(d, choice);
+	count = 0;
 	while (SDL_WaitEvent(&e))
 	{
-		if (e.type != SDL_KEYDOWN)
-			continue ;
-		else if (e.key.keysym.sym == SDLK_UP)
+		if (e.type == SDL_QUIT)
+			proper_exit(d);
+		else if (e.key.keysym.sym == SDLK_UP && e.type == SDL_KEYDOWN)
 			choice = ft_mod((choice - 1), NB_MENU_ITEMS);
-		else if (e.key.keysym.sym == SDLK_DOWN)
+		else if (e.key.keysym.sym == SDLK_DOWN && e.type == SDL_KEYDOWN)
 			choice = ft_mod((choice + 1), NB_MENU_ITEMS);
-		else if (e.key.keysym.sym == SDLK_RETURN)
+		else if (e.key.keysym.sym == SDLK_RETURN && e.type == SDL_KEYUP)
+			count++;
+		else if (e.key.keysym.sym == SDLK_ESCAPE)
+			return ;
+		if (count > 1)
 		{
 			d->difficulty = choice;
 			intro_screen(d);
 		}
-		else if (e.key.keysym.sym == SDLK_ESCAPE)
-			return ;
 		redraw(d, choice);
 	}
 }

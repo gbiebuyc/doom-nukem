@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 21:07:06 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/29 16:18:35 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 12:32:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #define NB_OF_SECTOR_DEPTH 2
 
-void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim)
+void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim,
+		short id)
 {
 	int16_t		update_sec;
 
@@ -33,7 +34,11 @@ void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim)
 		if ((update_sec = update_cursect_proj((int16_t[2]){projectile->
 						cursectnum, -1}, d, NB_OF_SECTOR_DEPTH,
 						projectile->pos)) != -1)
+		{
+			if (update_sec != projectile->cursectnum)
+				swap_list(IS_PROJECTILE, id, d, (int[2]){projectile->cursectnum, update_sec});
 			projectile->cursectnum = update_sec;
+		}
 	}
 }
 
@@ -48,11 +53,12 @@ void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		projectile->current_anim_playing =
 			d->projectile_type[projectile->id_type].anim_order[COLLISION_ID];
 		projectile->time_remaining_anim = 5;
+		play_sound(d, EXPLOSION_SOUND, vec3to2(projectile->pos));
 		return ;
 	}
 	if (projectile->time_remaining_anim)
 	{
-		update_collided_proj(d, projectile, true);
+		update_collided_proj(d, projectile, true, id);
 		return ;
 	}
 	if (d->projectile_type[projectile->id_type].anim_order[
@@ -62,5 +68,5 @@ void	update_anim_projectile(t_projectile *projectile, t_data *d, short id,
 		destroy_mail(id, &d->sectors[projectile->cursectnum], IS_PROJECTILE);
 		return ;
 	}
-	update_collided_proj(d, projectile, false);
+	update_collided_proj(d, projectile, false, id);
 }
