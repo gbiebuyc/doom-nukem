@@ -264,6 +264,7 @@ typedef struct	s_data
 	t_interface			interface;
 	t_assets_data		assets_data[MAX_ASSETS];
 	t_vec3f				player_start;
+	double				angle;
 	int16_t				startsectnum;
 	char				next_map[100];
 	int					get_next_map;
@@ -408,6 +409,7 @@ void			detect_neighbors(t_data *d, int16_t sectnum);
 void			add_sector(t_data *d);
 void			del_sector(t_data *d, int16_t sectnum, t_sector *sect, int n);
 int16_t			find_sect_under_cursor(t_data *d);
+bool			inside(t_data *d, int16_t sectnum, t_vec2f p);
 
 /*
 **	ed_editor_wall.c
@@ -421,6 +423,8 @@ void			update_wall_pos(t_data *d);
 **	ed_editor_assets_handler.c
 */
 
+void			fix_outside_monster_and_assets(t_data *d, t_monster_list *mlst,
+														t_assets_list *alst);
 int				select_assets_on_map(t_data *d);
 void			draw_selection_arround_selected_asset(t_data *d, t_vec2 *v,
 																	int c);

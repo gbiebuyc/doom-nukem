@@ -62,7 +62,7 @@ void	init_sdl(t_data *d)
 		err_exit(d, 1, SDL_GetError());
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		err_exit(d, 1, SDL_GetError());
-	if (! Mix_AllocateChannels(MAX_CHANNELS))
+	if (!Mix_AllocateChannels(MAX_CHANNELS))
 		err_exit(d, 1, SDL_GetError());
 	d->keys = SDL_GetKeyboardState(NULL);
 }

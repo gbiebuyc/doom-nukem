@@ -12,6 +12,36 @@
 
 #include "editor.h"
 
+void	fix_outside_monster_and_assets(t_data *d, t_monster_list *mlst,
+													t_assets_list *alst)
+{
+	t_monster_list	*mnext;
+	t_assets_list	*anext;
+
+	mlst = d->interface.monster_list ? d->interface.monster_list->begin : NULL;
+	alst = d->interface.assets_list ? d->interface.assets_list->begin : NULL;
+	while (mlst)
+	{
+		mnext = mlst->next;
+		if (!inside(d, mlst->sectnunm, mlst->pos))
+		{
+			mlst->is_select = 1;
+			delete_monster(d, d->interface.monster_list);
+		}
+		mlst = mnext;
+	}
+	while (alst)
+	{
+		anext = alst->next;
+		if (!inside(d, alst->sectnunm, alst->world_pos))
+		{
+			alst->is_select = 1;
+			delete_asset(d, d->interface.assets_list, NULL, NULL);
+		}
+		alst = anext;
+	}
+}
+
 void	draw_selection_arround_selected_asset(t_data *d, t_vec2 *v, int c)
 {
 	int		x;

@@ -298,6 +298,6 @@ typedef struct		s_sound_thread_arg
 	t_data			*d;
 	bool			is_music;
 	uint8_t			id;
-}				t_sound_thread_arg;
+}					t_sound_thread_arg;
 
 #endif

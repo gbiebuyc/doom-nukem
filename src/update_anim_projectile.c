@@ -36,7 +36,8 @@ void	update_collided_proj(t_data *d, t_projectile *projectile, bool anim,
 						projectile->pos)) != -1)
 		{
 			if (update_sec != projectile->cursectnum)
-				swap_list(IS_PROJECTILE, id, d, (int[2]){projectile->cursectnum, update_sec});
+				swap_list(IS_PROJECTILE, id, d,
+								(int[2]){projectile->cursectnum, update_sec});
 			projectile->cursectnum = update_sec;
 		}
 	}

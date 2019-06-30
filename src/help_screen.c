@@ -15,7 +15,7 @@
 void	help_screen(t_data *d)
 {
 	SDL_Event	e;
-	int	count;
+	int			count;
 
 	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
 	draw_string(d, (t_font){

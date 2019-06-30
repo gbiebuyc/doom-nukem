@@ -52,7 +52,8 @@ void		use_asset(t_data *d, t_assets *asset)
 {
 	if (check_if_return(d, asset))
 		return ;
-	d->player.health += asset->stat_mod.heal * d->difficulty == EASY ? 1.5 : 1;
+	d->player.health += asset->stat_mod.heal *
+										(d->difficulty == EASY ? 1.5 : 1);
 	d->player.health = ft_min(100, d->player.health);
 	d->player.health -= asset->stat_mod.damage;
 	if (asset->is_jetpack)
