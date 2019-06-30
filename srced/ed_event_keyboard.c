@@ -32,7 +32,7 @@ void		event_key_up(t_data *d, SDL_Keycode key)
 	else if ((key == SDLK_d || key == SDLK_DELETE) && !d->sectordrawing &&
 			!delete_monster(d, d->interface.monster_list) &&
 			!delete_asset(d, d->interface.assets_list, NULL, NULL))
-		del_sector(d, d->selected_sector, (d->sectors + d->selected_sector));
+		del_sector(d, d->selected_sector, d->sectors + d->selected_sector, 0);
 	else if (key == SDLK_l)
 		d->grid_locking = !d->grid_locking;
 	else if (key == SDLK_x)

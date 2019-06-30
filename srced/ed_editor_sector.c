@@ -12,31 +12,6 @@
 
 #include "editor.h"
 
-void		check_if_assets_inside_sector(t_data *d)
-{
-	t_monster_list	*ml;
-	t_monster_list	*mtmp;
-	t_assets_list	*al;
-	t_assets_list	*atmp;
-
-	ml = (d->interface.monster_list) ? d->interface.monster_list->begin : NULL;
-	al = (d->interface.assets_list) ? d->interface.assets_list->begin : NULL;
-	while (ml)
-	{
-		mtmp = ml->next;
-		if (ml->sectnunm == d->selected_sector && (ml->is_select = 1))
-			delete_monster(d, d->interface.monster_list);
-		ml = mtmp;
-	}
-	while (al)
-	{
-		atmp = al->next;
-		if (al->sectnunm == d->selected_sector && (al->is_select = 1))
-			delete_asset(d, d->interface.assets_list, NULL, NULL);
-		al = atmp;
-	}
-}
-
 /*
 **	add_wall(d); // first wall
 **	add_wall(d); // current wall
@@ -50,7 +25,7 @@ void		add_sector(t_data *d)
 	d->sectors[d->numsectors - 1].numwalls = 0;
 	d->sectors[d->numsectors - 1].floorheight = 0;
 	d->sectors[d->numsectors - 1].floorpicnum = d->default_floor_texture;
-	d->sectors[d->numsectors - 1].ceilheight = 1;
+	d->sectors[d->numsectors - 1].ceilheight = 3;
 	d->sectors[d->numsectors - 1].ceilpicnum = d->default_ceil_texture;
 	d->sectors[d->numsectors - 1].light = 1.0;
 	d->sectors[d->numsectors - 1].blinking = false;
@@ -68,15 +43,25 @@ void		add_sector(t_data *d)
 	add_wall(d);
 }
 
-void		del_sector(t_data *d, int16_t sectnum, t_sector *sect)
+static void	fix_wall_neightbor(t_data *d, int sectnum)
+{
+	int i;
+
+	i = -1;
+	while (++i < d->numwalls)
+		if (d->walls[i].neighborsect == sectnum)
+			d->walls[i].neighborsect = -1;
+}
+
+void		del_sector(t_data *d, int16_t sectnum, t_sector *sect, int n)
 {
 	int			w;
 	int			s;
-	int			n;
 
 	if (sectnum < 0)
 		return ;
 	check_if_assets_inside_sector(d);
+	fix_wall_neightbor(d, sectnum);
 	d->numwalls -= sect->numwalls;
 	w = sect->firstwallnum - 1;
 	while (++w < d->numwalls)

@@ -406,7 +406,7 @@ void			detect_neighbors(t_data *d, int16_t sectnum);
 */
 
 void			add_sector(t_data *d);
-void			del_sector(t_data *d, int16_t sectnum, t_sector *sect);
+void			del_sector(t_data *d, int16_t sectnum, t_sector *sect, int n);
 int16_t			find_sect_under_cursor(t_data *d);
 
 /*
@@ -427,6 +427,7 @@ void			draw_selection_arround_selected_asset(t_data *d, t_vec2 *v,
 void			draw_selection_arround_asset(t_data *d, t_vec2 *category);
 void			get_selected_asset(t_data *d);
 int				add_asset_to_map(t_data *d, int x, int y);
+void			check_if_assets_inside_sector(t_data *d);
 
 /*
 **	ed_interface.c
