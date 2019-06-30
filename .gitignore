@@ -6,7 +6,7 @@
 #    By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/18 22:07:23 by gbiebuyc          #+#    #+#              #
-#    Updated: 2019/05/26 11:04:23 by gbiebuyc         ###   ########.fr        #
+#    Updated: 2019/06/30 15:37:22 by gbiebuyc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,15 @@ SDL/libtool
 SDL/sdl2-config
 SDL/sdl2-config.cmake
 SDL/sdl2.pc
+
+SDL2_mixer/Makefile
+SDL2_mixer/SDL2_mixer.pc
+SDL2_mixer/build/.libs/libSDL2_mixer.lai
+SDL2_mixer/build/playmus
+SDL2_mixer/build/playwave
+SDL2_mixer/config.log
+SDL2_mixer/config.status
+SDL2_mixer/libtool
 
 # Created by https://www.gitignore.io/api/c,vim,linux,macos
 # Edit at https://www.gitignore.io/?templates=c,vim,linux,macos
