@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 04:14:37 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:36:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:51:31 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	event_key_down(t_data *d, SDL_KeyboardEvent event)
 {
-	if (event.keysym.sym == SDLK_ESCAPE)
-		pause_menu(d, 0);
+	if (event.keysym.sym == SDLK_ESCAPE && !event.repeat)
+		pause_menu(d);
 	else if (event.keysym.sym == SDLK_p)
-		pause_menu(d, 0);
+		pause_menu(d);
 	else if (event.keysym.sym == SDLK_PAUSE)
 		d->debug_pause = true;
 	else if (event.keysym.sym == SDLK_e)

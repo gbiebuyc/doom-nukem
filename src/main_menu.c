@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:22:51 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:36:15 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:49:09 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void		main_menu(t_data *d)
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type == SDL_QUIT)
-			proper_exit(d);
-		if (e.type != SDL_KEYDOWN)
+			exit(EXIT_SUCCESS);
+		if ((e.type != SDL_KEYDOWN) || e.key.repeat)
 			continue ;
 		if (e.key.keysym.sym == SDLK_UP)
 			choice = ft_mod((choice - 1), NB_MENU_ITEMS);
@@ -46,9 +46,8 @@ void		main_menu(t_data *d)
 			difficulty_menu(d, 0);
 		if (e.key.keysym.sym == SDLK_RETURN && choice == 1)
 			help_screen(d);
-		if (e.key.keysym.sym == SDLK_RETURN && choice == 2)
-			exit(EXIT_SUCCESS);
-		if (e.key.keysym.sym == SDLK_ESCAPE)
+		if ((e.key.keysym.sym == SDLK_RETURN && choice == 2) ||
+			(e.key.keysym.sym == SDLK_ESCAPE))
 			exit(EXIT_SUCCESS);
 		redraw(d, choice);
 	}

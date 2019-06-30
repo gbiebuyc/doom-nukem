@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:36:24 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:47:36 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ void		difficulty_menu(t_data *d, int count)
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type == SDL_QUIT)
-			proper_exit(d);
-		else if (e.key.keysym.sym == SDLK_UP && e.type == SDL_KEYDOWN)
+			exit(EXIT_SUCCESS);
+		if ((e.type != SDL_KEYDOWN) || e.key.repeat)
+			continue ;
+		else if (e.key.keysym.sym == SDLK_UP)
 			choice = ft_mod((choice - 1), NB_MENU_ITEMS);
-		else if (e.key.keysym.sym == SDLK_DOWN && e.type == SDL_KEYDOWN)
+		else if (e.key.keysym.sym == SDLK_DOWN)
 			choice = ft_mod((choice + 1), NB_MENU_ITEMS);
-		else if (e.key.keysym.sym == SDLK_RETURN && e.type == SDL_KEYUP)
-			count++;
-		else if (e.key.keysym.sym == SDLK_ESCAPE)
-			return ;
-		if (count > 1)
+		else if (e.key.keysym.sym == SDLK_RETURN)
 		{
 			d->difficulty = choice;
 			play_music(d, MAIN_MUSIC);
 			intro_screen(d);
 		}
+		else if (e.key.keysym.sym == SDLK_ESCAPE)
+			return ;
 		redraw(d, choice);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:38:38 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:51:11 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void		help_screen(t_data *d);
 void		draw_string_typewriter_effect(t_data *d, t_font f);
 void		main_menu(t_data *d);
 void		difficulty_menu(t_data *d, int count);
-void		pause_menu(t_data *d, int count);
+void		pause_menu(t_data *d);
 int			ft_mod(int i, int n);
 
 /*

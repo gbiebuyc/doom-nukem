@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 21:27:53 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/28 21:27:53 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:44:18 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	intro_screen(t_data *d)
 			WIDTH / 2 - 250, HEIGHT / 2 - 80, 0, 2});
 	while (SDL_WaitEvent(&e))
 	{
-		if (e.type != SDL_KEYDOWN)
+		if (e.type == SDL_QUIT)
+			exit(EXIT_SUCCESS);
+		if ((e.type != SDL_KEYDOWN) || e.key.repeat)
 			continue ;
 		else if (e.key.keysym.sym == SDLK_RETURN)
 			init_everything(d, d->nextmap);

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 15:33:40 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:35:29 by nallani          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:50:25 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	redraw(t_data *d, int choice)
 	SDL_UpdateWindowSurface(d->win);
 }
 
-void		pause_menu(t_data *d, int count)
+void		pause_menu(t_data *d)
 {
 	SDL_Event	e;
 	static int	choice;
@@ -37,18 +37,17 @@ void		pause_menu(t_data *d, int count)
 	{
 		if (e.type == SDL_QUIT)
 			proper_exit(d);
-		if (e.key.keysym.sym == SDLK_UP && e.type == SDL_KEYDOWN)
+		if ((e.type != SDL_KEYDOWN) || e.key.repeat)
+			continue ;
+		if (e.key.keysym.sym == SDLK_UP)
 			choice = ft_mod((choice - 1), NB_MENU_ITEMS);
-		if (e.key.keysym.sym == SDLK_DOWN && e.type == SDL_KEYDOWN)
+		if (e.key.keysym.sym == SDLK_DOWN)
 			choice = ft_mod((choice + 1), NB_MENU_ITEMS);
 		if (e.key.keysym.sym == SDLK_RETURN && choice == 0)
 			help_screen(d);
 		if (e.key.keysym.sym == SDLK_RETURN && choice == 1)
 			proper_exit(d);
-		if ((e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_p)
-			&& e.type == SDL_KEYUP)
-			count++;
-		if (count > 1)
+		if (e.key.keysym.sym == SDLK_ESCAPE)
 			return ((void)SDL_SetRelativeMouseMode(SDL_TRUE));
 		redraw(d, choice);
 	}

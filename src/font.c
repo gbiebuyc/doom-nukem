@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 21:48:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/29 16:29:04 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:44:38 by gbiebuyc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	handle_keypress(int *delay)
 
 	while (SDL_PollEvent(&e))
 	{
-		if (e.type != SDL_KEYDOWN)
+		if (e.type == SDL_QUIT)
+			exit(EXIT_SUCCESS);
+		if ((e.type != SDL_KEYDOWN) || e.key.repeat)
 			continue ;
 		else if (e.key.keysym.sym == SDLK_RETURN)
 			*delay = 0;
