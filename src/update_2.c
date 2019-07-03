@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 16:32:28 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:41:09 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 20:45:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	update_projectiles(t_data *d)
 
 void	update_2(t_data *d)
 {
+	d->floorheightplayer = get_floorheight_player(d, d->cursectnum);
+	d->ceilheightplayer = get_ceilheight_player(d, d->cursectnum);
 	jump(d);
 	player_actions(d);
 	update_monsters(&d->nummonsters, d->monsters, d);

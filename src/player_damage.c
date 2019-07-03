@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/03 20:40:23 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 20:46:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	check_dangerous_area(t_data *d)
 {
 	if (!d->sectors[d->cursectnum].is_harmful)
 		return ;
-	if (fabs(d->cam.pos.y - d->player.minimum_height -
-				get_floorheight_point(d, d->cursectnum, vec3to2(d->cam.pos)))
+	if (fabs(d->cam.pos.y - d->player.minimum_height - d->floorheightplayer)
 				> 0.1)
 		return ;
 	if (SDL_GetTicks() - d->last_dangerous_area_damage < 1000)
