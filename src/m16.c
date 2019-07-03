@@ -6,14 +6,14 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 23:32:39 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 13:35:03 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 17:36:49 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define M16_DAMAGE 30
-#define Y_OFFSET_TO_ROT -0.001
+#define M16_DAMAGE 4
+#define Y_OFFSET_TO_ROT -0.00125
 
 void		set_projectile_visual_collided_m16(t_data *d,
 		short i, t_m16_inf inf)

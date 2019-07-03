@@ -6,13 +6,13 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:16:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/25 22:50:14 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/02 15:07:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-#define Y_OFFSET_TO_ROT -0.001
+#define Y_OFFSET_TO_ROT -0.00125
 
 void	set_projectile_id(t_data *d, short i, short id_of_proj_type)
 {

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 16:48:25 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 17:35:52 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_monster_type_2(t_data *d)
 	d->monster_type[CHARGINGDEMON].height = 1.5;
 	d->monster_type[CHARGINGDEMON].floating = 0.1;
 	d->monster_type[CHARGINGDEMON].size = 6.0;
-	d->monster_type[CHARGINGDEMON].health = d->difficulty == HARD ? 1900 : 1400;
+	d->monster_type[CHARGINGDEMON].health = d->difficulty == HARD ? 110 : 70;
 	d->monster_type[CHARGINGDEMON].hitbox_radius = 0.6;
 	d->monster_type[CHARGINGDEMON].anim_order[0] = 1;
 	d->monster_type[CHARGINGDEMON].anim_order[1] = 2;
@@ -78,7 +78,7 @@ void	init_monster_type(t_data *d)
 	d->monster_type[MOTHERDEMON].height = 2.0;
 	d->monster_type[MOTHERDEMON].floating = 0.1;
 	d->monster_type[MOTHERDEMON].size = 7.0;
-	d->monster_type[MOTHERDEMON].health = d->difficulty == HARD ? 1300 : 1000;
+	d->monster_type[MOTHERDEMON].health = d->difficulty == HARD ? 90 : 50;
 	d->monster_type[MOTHERDEMON].hitbox_radius = 0.7;
 	d->monster_type[MOTHERDEMON].anim_order[0] = 1;
 	d->monster_type[MOTHERDEMON].anim_order[1] = 2;

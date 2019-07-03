@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 15:24:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 17:24:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 17:37:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_projectiles_type_cryo_bow(t_data *d)
 	d->projectile_type[CRYO_BALLISTA].threat_to_monster = true;
 	d->projectile_type[CRYO_BALLISTA].hitbox_radius = 0.1;
 	d->projectile_type[CRYO_BALLISTA].speed = 0.25;
-	d->projectile_type[CRYO_BALLISTA].damage = 800;
+	d->projectile_type[CRYO_BALLISTA].damage = 80;
 	d->projectile_type[CRYO_BALLISTA].anim_order[0] = 1;
 	d->projectile_type[CRYO_BALLISTA].anim_order[1] = 2;
 	d->projectile_type[CRYO_BALLISTA].anim_order[2] = 3;
@@ -69,7 +69,7 @@ void	init_projectiles_fireball_1(t_data *d)
 	d->projectile_type[M16].anim_order[2] = 3;
 	d->projectile_type[M16].anim_order[3] = 4;
 	d->projectile_type[M16].anim_order[4] = MUST_BE_DESTROYED;
-	d->projectile_type[M16].damage = 30;
+	d->projectile_type[M16].damage = 4;
 }
 
 void	init_weapons(t_data *d)
