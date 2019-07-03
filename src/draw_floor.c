@@ -60,7 +60,7 @@ void	draw_floor(t_data *d, t_projdata *p, t_frustum *fr)
 			w[1] = edge_function(p->v[2], p->v[0], x, y) / p->area;
 			w[2] = edge_function(p->v[0], p->v[1], x, y) / p->area;
 			z = 1 / (w[0] * p->v[0].z + w[1] * p->v[1].z + w[2] * p->v[2].z);
-			if (z >= d->zbuffer[x + y * WIDTH])
+			if (z > d->zbuffer[x + y * WIDTH])
 				continue ;
 			putpixel2(d, z, (t_vec2){x, y}, shade(getshadefactor(d, p, z),
 				getpixel2(d->textures[p->sector->floorpicnum],

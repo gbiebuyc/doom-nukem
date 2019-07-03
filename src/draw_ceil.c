@@ -77,7 +77,7 @@ void	draw_ceil(t_data *d, t_projdata *p, t_frustum *fr)
 			w[1] = edge_function(p->a[2], p->a[0], x, y) / p->areaa;
 			w[2] = edge_function(p->a[0], p->a[1], x, y) / p->areaa;
 			z = 1 / (w[0] * p->a[0].z + w[1] * p->a[1].z + w[2] * p->a[2].z);
-			if (z >= d->zbuffer[x + y * WIDTH])
+			if (z > d->zbuffer[x + y * WIDTH])
 				continue ;
 			putpixel2(d, z, (t_vec2){x, y}, shade(getshadefactor(d, p, z),
 				getpixel2(d->textures[p->sector->ceilpicnum],
