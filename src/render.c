@@ -19,7 +19,6 @@ void	render(t_data *d)
 
 	fr.x1 = 0;
 	fr.x2 = WIDTH - 1;
-	fr.validnei = true;
 	ft_memset(fr.visitedportals, 0, sizeof(fr.visitedportals));
 	i = -1;
 	while (++i < WIDTH)

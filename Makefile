@@ -13,6 +13,7 @@
 NAME= doom-nukem
 
 FILES= main \
+	   fix_neighborsects \
 	   main_menu \
 	   difficulty_menu \
 	   pause_menu \

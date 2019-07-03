@@ -90,7 +90,7 @@ void		player_actions(t_data *d);
 void		render(t_data *d);
 void		draw_weapon(t_data *d);
 void		blaster_shot(t_data *d);
-int			render_sector(t_data *d, t_sector *sect, t_frustum *fr);
+void		render_sector(t_data *d, t_sector *sect, t_frustum *fr);
 void		draw_sprite(t_data *d, t_frustum *fr, t_sprite_list *sprite);
 void		init_player(t_data *d, t_player *player);
 void		init_monsters(t_data *d);
@@ -181,6 +181,7 @@ void		main_menu(t_data *d);
 void		difficulty_menu(t_data *d, int count);
 void		pause_menu(t_data *d);
 int			ft_mod(int i, int n);
+void		fix_neighborsects(t_data *d);
 
 /*
 ** update_2.c

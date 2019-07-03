@@ -53,8 +53,6 @@ typedef struct		s_frustum
 	int				x1;
 	int				x2;
 	bool			visitedportals[MAXNUMWALLS];
-	t_vec2f			check[2];
-	bool			validnei;
 }					t_frustum;
 
 typedef struct		s_projdata

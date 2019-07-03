@@ -34,6 +34,7 @@ void	init_everything(t_data *d, char *map)
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1)
 		ft_printf("SDL_SetRelativeMouseMode error");
 	play_music(d, MAIN_MUSIC);
+	fix_neighborsects(d);
 	loop(d);
 }
 
