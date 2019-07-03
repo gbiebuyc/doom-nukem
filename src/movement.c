@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 22:04:53 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 12:37:26 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/03 21:06:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void	movement(t_data *d)
 	}
 	else
 		d->player.can_move--;
-	d->floorheightplayer = get_floorheight_player(d, d->cursectnum);
-	d->ceilheightplayer = get_ceilheight_player(d, d->cursectnum);
 	while (collision(d, &d->sectors[d->cursectnum]))
 		;
 	collision_with_monster(d, d->cursectnum);
