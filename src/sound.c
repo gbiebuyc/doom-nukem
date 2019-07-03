@@ -34,7 +34,6 @@ void	play_sound(t_data *d, uint8_t id, t_vec2f pos)
 	}
 	Mix_PlayChannel(i, d->chunk[id], 0);
 	Mix_SetPosition(i, angle, dist);
-	printf("dist:%d\n", dist);
 	if (++i > 98)
 		i = 0;
 }

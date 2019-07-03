@@ -27,18 +27,22 @@ t_sector	*check_neighbor(t_data *d, int16_t nei)
 	return (&d->sectors[nei]);
 }
 
+bool		same_pos(t_vec2f v1, t_vec2f v2)
+{
+	return (v1.x == v2.x && v1.y == v2.y);
+}
+
 void		render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 {
-	int wallnum;
-	int wallnextnum;
-
-	wallnum = p->sector->firstwallnum + i;
-	wallnextnum = p->sector->firstwallnum + (i + 1) % p->sector->numwalls;
-	transformvertex(d, d->walls[wallnum].point, &p->x1, &p->z1);
-	transformvertex(d, d->walls[wallnextnum].point, &p->x2, &p->z2);
-	p->wall = &d->walls[wallnum];
+	p->wall = &d->walls[p->sector->firstwallnum + i];
+	p->wall2 = &d->walls[p->sector->firstwallnum +
+		(i + 1) % p->sector->numwalls];
+	fr->validnei |= (same_pos(fr->check[0], p->wall2->point) &&
+			same_pos(fr->check[1], p->wall->point));
+	transformvertex(d, p->wall->point, &p->x1, &p->z1);
+	transformvertex(d, p->wall2->point, &p->x2, &p->z2);
 	p->neighbor = check_neighbor(d, p->wall->neighborsect);
-	p->wall->lowerpicnum = d->walls[wallnextnum].middlepicnum;
+	p->wall->lowerpicnum = p->wall2->middlepicnum;
 	p->len = vec2f_length((t_vec2f){p->x2 - p->x1, p->z2 - p->z1});
 	p->u1 = 0;
 	p->u2 = p->len;
@@ -53,7 +57,35 @@ void		render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 			vec3to2(transform_back(d, (t_vec3f){p->x2, 0, p->z2}))});
 }
 
-void		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
+int		find_valid_nei(t_data *d, t_sector *sect, t_frustum *fr)
+{
+	int	s;
+	int	w0;
+	int	w1;
+
+	ft_printf("Bad neighborsect detected. Trying to fix it... ");
+	s = -1;
+	while (++s < d->numsectors)
+	{
+		w0 = d->sectors[s].firstwallnum + d->sectors[s].numwalls - 1;
+		w1 = d->sectors[s].firstwallnum;
+		while (w1 < (d->sectors[s].firstwallnum + d->sectors[s].numwalls))
+		{
+			if (same_pos(d->walls[w0].point, fr->check[1]) &&
+					same_pos(d->walls[w1].point, fr->check[0]) &&
+					(sect != &d->sectors[s]))
+			{
+				ft_printf("Succeeded\n");
+				return (render_sector(d, &d->sectors[s], fr));
+			}
+			w0 = w1++;
+		}
+	}
+	ft_printf("Failed\n");
+	return (-1);
+}
+
+int		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
 	t_sprite_list	*sprite_list_tmp;
 	t_projdata		p;
@@ -68,6 +100,8 @@ void		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 	i = -1;
 	while (++i < sect->numwalls)
 		render_wall(d, &p, fr, i);
+	if (!fr->validnei)
+		return (find_valid_nei(d, sect, fr));
 	if (sect->sprite_list)
 		reorder_sprite(d, sect);
 	sprite_list_tmp = sect->sprite_list;
@@ -77,4 +111,5 @@ void		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		sprite_list_tmp = sprite_list_tmp->next;
 	}
 	draw_assets(d, &p, fr, sect - d->sectors);
+	return (sect - d->sectors);
 }

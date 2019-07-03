@@ -74,7 +74,11 @@ void	draw_wall3(t_data *d, t_projdata *p, t_frustum *nfr, bool *visible)
 	{
 		nfr->x1 = p->cx1;
 		nfr->x2 = p->cx2;
-		render_sector(d, p->neighbor, nfr);
+		nfr->check[0] = p->wall->point;
+		nfr->check[1] = p->wall2->point;
+		nfr->validnei = false;
+		p->wall->neighborsect =
+			render_sector(d, p->neighbor, nfr);
 	}
 }
 
