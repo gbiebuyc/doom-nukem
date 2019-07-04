@@ -47,6 +47,7 @@ void	movement(t_data *d)
 {
 	t_vec2f	mvt;
 	short	count;
+	int		protection;
 
 	if (d->player.can_be_stomped)
 		d->player.can_be_stomped--;
@@ -60,7 +61,9 @@ void	movement(t_data *d)
 	}
 	else
 		d->player.can_move--;
+	protection = 0;
 	while (collision(d, &d->sectors[d->cursectnum]))
-		;
+		if (++protection > 6)
+			break ;
 	collision_with_monster(d, d->cursectnum);
 }
