@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/04 14:16:30 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:21:05 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		render_wall(t_data *d, t_projdata *p, t_frustum *fr, int i)
 			vec3to2(transform_back(d, (t_vec3f){p->x2, 0, p->z2}))});
 }
 
-void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
+void		render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 {
 	t_sprite_list	*sprite_list_tmp;
 	t_projdata		p;

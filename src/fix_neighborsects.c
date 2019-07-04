@@ -6,13 +6,13 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 17:46:43 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/07/03 17:46:43 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/04 14:21:13 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-bool		same_pos(t_vec2f v1, t_vec2f v2)
+bool	same_pos(t_vec2f v1, t_vec2f v2)
 {
 	return (v1.x == v2.x && v1.y == v2.y);
 }
