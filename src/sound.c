@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 00:20:57 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/07/02 15:06:54 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:14:30 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	play_sound(t_data *d, uint8_t id, t_vec2f pos)
 	static uint8_t	i;
 	int16_t			angle;
 	uint8_t			dist;
-	t_vec2f			tmp;
 
 	if (pos.x == d->cam.pos.x)
 	{

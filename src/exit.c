@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:00:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:53:03 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:14:50 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	proper_exit(t_data *d)
 	exit(EXIT_SUCCESS);
 }
 
-void	err_exit(t_data *d, const char *msg)
+void	err_exit(const char *msg)
 {
 	ft_printf("%s\n", msg);
 	exit(EXIT_FAILURE);

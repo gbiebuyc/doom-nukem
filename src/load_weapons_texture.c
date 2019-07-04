@@ -6,7 +6,7 @@
 /*   By: mikorale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 23:56:04 by mikorale          #+#    #+#             */
-/*   Updated: 2019/06/16 23:56:05 by mikorale         ###   ########.fr       */
+/*   Updated: 2019/07/04 14:17:20 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		load_weapons_texture(t_data *d, int f, int *nb_tex,
 	int			j;
 	int			w;
 	int			h;
-	SDL_Surface	*tmp;
 
 	i = -1;
 	while (++i < 3)

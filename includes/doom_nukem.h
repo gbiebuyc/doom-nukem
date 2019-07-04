@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 17:52:43 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:16:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		check_activation(t_data *d, t_monster *monster, t_vec2f pos,
 void		monster_behaviour(t_data *d, t_monster *monster, uint16_t id);
 void		monster_behaviour_chargingdemon(
 		t_data *d, t_monster *monster, uint16_t id);
-void		charging_demon_wait(t_data *d, t_monster *monster);
+void		charging_demon_wait(t_monster *monster);
 double		getshadefactor(t_data *d, t_projdata *p, double dist);
 uint32_t	sprite_shade(t_data *d, t_sector *sector, double dist,
 		uint32_t img);
@@ -157,7 +157,7 @@ bool		collision(t_data *d, t_sector *sect);
 bool		collision_monster_wall(t_data *d,
 		t_sector *sect, t_vec2f *pos, double dist_coll);
 void		draw_assets(t_data *d,
-		t_projdata *p, t_frustum *fr, int16_t sectnum);
+		t_projdata *p, int16_t sectnum);
 void		asset_collision(t_data *d);
 void		use_asset(t_data *d, t_assets *asset);
 void		draw_hud(t_data *d);
@@ -178,7 +178,7 @@ void		intro_screen(t_data *d);
 void		help_screen(t_data *d);
 void		draw_string_typewriter_effect(t_data *d, t_font f);
 void		main_menu(t_data *d);
-void		difficulty_menu(t_data *d, int count);
+void		difficulty_menu(t_data *d);
 void		pause_menu(t_data *d);
 int			ft_mod(int i, int n);
 void		fix_neighborsects(t_data *d);
@@ -264,7 +264,7 @@ double		fclamp(double x, double min, double max);
 */
 
 void		proper_exit(t_data *d);
-void		err_exit(t_data *d, const char *msg);
+void		err_exit(const char *msg);
 
 /*
 ** ini

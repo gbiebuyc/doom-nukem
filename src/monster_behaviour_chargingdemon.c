@@ -6,7 +6,7 @@
 /*   By: Kits <unkown@noaddress.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 18:58:56 by Kits              #+#    #+#             */
-/*   Updated: 2019/06/29 14:58:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:16:16 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	behaviour_update_charge(t_data *d, t_monster *monster)
 	monster->pos = add_vec2f(monster->pos, monster->dir);
 }
 
-void		charging_demon_wait(t_data *d, t_monster *monster)
+void		charging_demon_wait(t_monster *monster)
 {
 	monster->dir = (t_vec2f){0.0, 0.0};
 	monster->timer = 30;
@@ -77,6 +77,6 @@ void		monster_behaviour_chargingdemon(t_data *d, t_monster *monster,
 	while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
 				&monster->pos, COLLISION_RANGE_CHARGINGDEMON))
 		if (monster->timer < 240)
-			charging_demon_wait(d, monster);
+			charging_demon_wait(monster);
 	update_cursect_chargingdemon(d, monster, id);
 }

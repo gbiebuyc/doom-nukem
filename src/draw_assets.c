@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 22:49:10 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/22 22:49:10 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/04 14:13:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	blit_asset(t_data *d, t_projdata *p, SDL_Surface *tex)
 	}
 }
 
-void	draw_assets(t_data *d, t_projdata *p, t_frustum *fr, int16_t sectnum)
+void	draw_assets(t_data *d, t_projdata *p, int16_t sectnum)
 {
 	int			i;
 	t_assets	*asset;

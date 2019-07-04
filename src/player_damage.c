@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 23:46:25 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/03 20:46:05 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:16:36 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	player_contact_monster_2(t_data *d, t_monster *monster)
 	}
 	change_inertia(d, atan2(monster->dir.y, monster->dir.x),
 			BOUCING_DIST_CHARGINGDEMON);
-	charging_demon_wait(d, monster);
+	charging_demon_wait(monster);
 }
 
 void	player_contact_monster(t_data *d, t_monster *monster)

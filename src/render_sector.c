@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 22:40:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 13:58:55 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/04 14:16:30 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	render_sector(t_data *d, t_sector *sect, t_frustum *fr)
 		draw_sprite(d, fr, sprite_list_tmp);
 		sprite_list_tmp = sprite_list_tmp->next;
 	}
-	draw_assets(d, &p, fr, sect - d->sectors);
+	draw_assets(d, &p, sect - d->sectors);
 }

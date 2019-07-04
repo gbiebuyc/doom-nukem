@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 01:36:33 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 21:02:45 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:11:56 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	loop(t_data *d)
 
 	while (1)
 	{
-		print_fps();
 		start = SDL_GetTicks();
 		while (SDL_PollEvent(&e))
 		{

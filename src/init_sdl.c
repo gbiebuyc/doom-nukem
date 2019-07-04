@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 00:28:41 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:53:52 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:15:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ void	fix_picnum(t_data *d)
 void	init_sdl(t_data *d)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
-		err_exit(d, SDL_GetError());
+		err_exit(SDL_GetError());
 	if (!(d->win = SDL_CreateWindow("doom-nukem", SDL_WINDOWPOS_CENTERED,
 					SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0)))
-		err_exit(d, SDL_GetError());
+		err_exit(SDL_GetError());
 	if (!(d->screen = SDL_GetWindowSurface(d->win)))
-		err_exit(d, SDL_GetError());
+		err_exit(SDL_GetError());
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
-		err_exit(d, SDL_GetError());
+		err_exit(SDL_GetError());
 	if (!Mix_AllocateChannels(MAX_CHANNELS))
-		err_exit(d, SDL_GetError());
+		err_exit(SDL_GetError());
 	d->keys = SDL_GetKeyboardState(NULL);
 }

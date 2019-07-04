@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 16:54:54 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:47:41 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:17:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_vec3f	update_pos_vec3f(t_vec3f new_pos, t_vec2f point, double radius)
 	return (new_pos);
 }
 
-t_vec2f	update_pos_vec2f(t_vec2f pos, t_vec2f point,
-		double radius)
+t_vec2f	update_pos_vec2f(t_vec2f pos, t_vec2f point)
 {
 	t_vec2f		tmp;
 	double		angle;
@@ -60,7 +59,7 @@ void	collision_monster_monster(t_data *d, short cur_sect, t_monster *monster)
 			if (vec2f_length(sub_vec2f(d->monsters[tmp->id].pos, monster->pos))
 					< MINIMUM_SIZE_AROUND_MONSTERS)
 				monster->pos = update_pos_vec2f(monster->pos,
-						d->monsters[tmp->id].pos, MINIMUM_SIZE_AROUND_MONSTERS);
+						d->monsters[tmp->id].pos);
 		tmp = tmp->next;
 	}
 }

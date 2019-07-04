@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 14:18:02 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 19:20:19 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 14:12:59 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	redraw(t_data *d, int choice)
 	SDL_UpdateWindowSurface(d->win);
 }
 
-void		difficulty_menu(t_data *d, int count)
+void		difficulty_menu(t_data *d)
 {
 	SDL_Event	e;
 	static int	choice = 1;

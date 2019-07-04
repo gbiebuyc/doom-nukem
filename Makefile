@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/06/30 14:37:35 by nallani          ###   ########.fr        #
+#    Updated: 2019/07/04 14:12:45 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,7 +109,7 @@ INCLUDE = includes
 INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
 CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags` \
-		 -Wno-unused-variable -Wno-unused-parameter -g
+		 -g
 LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft $(LIBMIX) `$(SDL_CFG) --static-libs` -fsanitize=address
 ED_DIR = srced
 
