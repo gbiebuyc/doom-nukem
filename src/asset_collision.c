@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:45:42 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 17:51:08 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/04 17:11:28 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@ static bool	check_if_return(t_data *d, t_assets *asset)
 	return (false);
 }
 
+#define MAX_FUEL 500
+#define FUEL 300
+
 static bool	check_jetpack(t_data *d, t_assets *asset)
 {
-	if (asset->stat_mod.heal > 0)
-	{
-		play_sound(d, HEALTH_SOUND, vec3to2(d->cam.pos));
-		change_buf_colo(d, asset->stat_mod.heal / 2, HEALTH_COLO);
-	}
 	if (asset->stat_mod.blaster_ammo || asset->stat_mod.m16_ammo ||
 			asset->stat_mod.ballista_ammo)
 		play_sound(d, AMMO_SOUND, vec3to2(d->cam.pos));
-	if (asset->is_jetpack || asset->is_key)
+	if (asset->is_key)
 	{
 		if (!d->slot1)
 			d->slot1 = asset;
@@ -53,19 +51,25 @@ static bool	check_jetpack(t_data *d, t_assets *asset)
 		else
 			return (false);
 	}
+	if (asset->is_jetpack && (!d->slot1 || d->slot1->is_jetpack))
+		d->slot1 = asset;
+	else if (asset->is_jetpack && (!d->slot2 || d->slot2->is_jetpack))
+		d->slot2 = asset;
+	else if (asset->is_jetpack && (!d->slot3 || d->slot3->is_jetpack))
+		d->slot3 = asset;
+	else if (asset->is_jetpack)
+		return (false);
+	if (asset->is_jetpack)
+		d->player.is_flying = ft_min(d->player.is_flying + FUEL, MAX_FUEL);
 	return (true);
 }
 
 void		use_asset(t_data *d, t_assets *asset)
 {
-	if (check_if_return(d, asset))
-		return ;
 	d->player.health += asset->stat_mod.heal *
-										(d->difficulty == EASY ? 1.5 : 1);
+		(d->difficulty == EASY ? 1.5 : 1);
 	d->player.health = ft_min(100, d->player.health);
 	d->player.health -= asset->stat_mod.damage;
-	if (asset->is_jetpack)
-		d->player.is_flying = 300;
 	d->weapon_type[BLASTER].current_ammo += asset->stat_mod.blaster_ammo;
 	d->weapon_type[BLASTER].current_ammo = ft_min(d->weapon_type[BLASTER].
 			current_ammo, d->weapon_type[BLASTER].max_ammo);
@@ -76,6 +80,11 @@ void		use_asset(t_data *d, t_assets *asset)
 	d->weapon_type[M16].current_ammo += asset->stat_mod.m16_ammo;
 	d->weapon_type[M16].current_ammo = ft_min(d->weapon_type[M16].
 			current_ammo, d->weapon_type[M16].max_ammo);
+	if (asset->stat_mod.heal > 0)
+	{
+		play_sound(d, HEALTH_SOUND, vec3to2(d->cam.pos));
+		change_buf_colo(d, asset->stat_mod.heal / 2, HEALTH_COLO);
+	}
 	if (!check_jetpack(d, asset))
 		return (invoke_msg(d, "INVENTORY IS FULL"));
 	asset->used = true;
@@ -97,7 +106,7 @@ void		asset_collision2(t_data *d, t_assets *asset)
 		d->cam.pos.x = asset->world_pos.x + dist.x * COLLISION_R / dist_len;
 		d->cam.pos.z = asset->world_pos.y + dist.y * COLLISION_R / dist_len;
 	}
-	if (asset->is_autopick)
+	if (asset->is_autopick && !check_if_return(d, asset))
 		use_asset(d, asset);
 }
 
