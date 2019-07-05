@@ -14,8 +14,6 @@
 
 void	proper_exit(t_data *d)
 {
-	invoke_msg(d, "EXITING...");
-	render(d);
 	SDL_DestroyWindow(d->win);
 	SDL_Quit();
 	exit(EXIT_SUCCESS);
