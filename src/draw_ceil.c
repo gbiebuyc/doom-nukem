@@ -24,8 +24,8 @@ void	draw_sky(t_data *d, t_projdata *p, t_frustum *fr)
 		return ;
 	tex = d->textures[p->sector->ceilpicnum];
 	h = HEIGHT + MAX_Y_OFFSET * 2;
-	x = p->cx1;
-	while (++x <= p->cx2 + 1)
+	x = p->cx1 - 1;
+	while (++x <= p->cx2)
 	{
 		p->u = (unsigned int)(((double)x + d->cam.rot * 1000) /
 				(WIDTH * (h / HEIGHT)) * tex->w) % tex->w;
