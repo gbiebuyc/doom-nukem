@@ -66,13 +66,13 @@ static void	event_key_down2(t_data *d, SDL_Keycode key)
 	s = &d->sectors[d->selected_sector];
 	if (d->selected_sector >= 0)
 	{
-		if (key == SDLK_KP_2 && s->slope > -20)
+		if (key == SDLK_KP_2 && s->slope > -30)
 			s->slope -= 1;
-		if (key == SDLK_KP_8 && s->slope < 20)
+		if (key == SDLK_KP_8 && s->slope < 30)
 			s->slope += 1;
-		if (key == SDLK_KP_MINUS && s->slopeceil > -20)
+		if (key == SDLK_KP_MINUS && s->slopeceil > -30)
 			s->slopeceil -= 1;
-		if (key == SDLK_KP_PLUS && s->slopeceil < 20)
+		if (key == SDLK_KP_PLUS && s->slopeceil < 30)
 			s->slopeceil += 1;
 		if (key == SDLK_e)
 			d->sectors[d->selected_sector].is_elevator =

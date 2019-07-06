@@ -27,18 +27,16 @@ int				get_bmp_header(t_bmp *bmp, char *path)
 			read(fd, &bmp->header.width, 4) < 0 ||
 			read(fd, &bmp->header.height, 4) < 0 ||
 			read(fd, &bmp->header.planes, 2) < 0 ||
-			read(fd, &bmp->header.bpp, 2) < 0 ||
-			read(fd, &bmp->header.compression, 4) < 0 ||
-			read(fd, &bmp->header.imagesize, 4) < 0 ||
-			read(fd, &bmp->header.x_pixels_per_m, 4) < 0 ||
-			read(fd, &bmp->header.y_pixels_per_m, 4) < 0 ||
-			read(fd, &bmp->header.colors_used, 4) < 0 ||
-			read(fd, &bmp->header.important_colors, 4) < 0 ||
-			read(fd, &bmp->header.rgba, 4) < 0)
+			read(fd, &bmp->header.bpp, 2) < 0)
 			return (ft_printf("Failed to read BMP header\n"));
 		close(fd);
 	}
-	return (0);
+	if (bmp->header.bpp != 32)
+		return (ft_printf("Not a 32 bits BMP, need ARGB8888 format bmp.\n"));
+	if (bmp->header.width <= 0 || bmp->header.height <= 0)
+		return (1);
+	return ((bmp->header.signature[0] == 'B' &&
+			bmp->header.signature[1] == 'M') ? 0 : 1);
 }
 
 SDL_Surface		*load_bmp(char *path)
