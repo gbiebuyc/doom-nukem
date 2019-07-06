@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/07/04 14:12:45 by nallani          ###   ########.fr        #
+#    Updated: 2019/07/06 22:36:45 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,8 +105,8 @@ SDL_PATH:=$(ABS_PATH)/SDL/library
 SDL_CFG = $(SDL_PATH)/bin/sdl2-config
 FT_DIR = libft
 LIBMIX = $(SDL_PATH)/lib/libSDL2_mixer.a
-INCLUDE = includes 
-INCLUDE_FILE_NAMES = common.h struct_doom.h doom_nukem.h
+INCLUDE = includes/
+INCLUDE_FILE_NAMES = common.h structs_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
 CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags` \
 		 -g
@@ -118,7 +118,7 @@ all: $(NAME) editor
 #rajouter compilation de libft / autres libs (sdl ?)
 $(NAME):$(OBJ)
 	make -C libft
-	gcc -o $@ $(OBJ) $(LDFLAGS)
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 editor:
 	make -C $(ED_DIR)
@@ -136,7 +136,7 @@ fclean:
 
 re: fclean all
 
-obj/%.o: src/%.c
+obj/%.o: src/%.c $(INCLUDE_FILES)
 	@mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
 
