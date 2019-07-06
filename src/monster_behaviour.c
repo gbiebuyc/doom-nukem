@@ -71,25 +71,25 @@ void	motherdemon_behaviour_change_pattern(t_data *d, t_monster *monster)
 void	motherdemon_behaviour(t_data *d, t_monster *monster, uint16_t id)
 {
 	short	new_sect;
+	int		protection;
 
-	if (monster->timer > 0)
+	if ((monster->timer > 0) && (monster->anim_state < 4) && !(protection = 0))
 	{
-		if (monster->anim_state < 4)
+		monster->pos = add_vec2f(monster->pos, monster->dir);
+		collision_monster_monster(d, monster->cursectnum, monster);
+		while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
+					&monster->pos, COLLISION_DIST_MOTHERDEMON))
+			if (++protection > 6)
+				break ;
+		if (monster->timer > 2)
+			monster->timer -= 2;
+		new_sect = update_cursect_smart(d, 2, monster->pos,
+				monster->cursectnum);
+		if (new_sect != monster->cursectnum && new_sect != -1)
 		{
-			monster->pos = add_vec2f(monster->pos, monster->dir);
-			collision_monster_monster(d, monster->cursectnum, monster);
-			while (collision_monster_wall(d, &d->sectors[monster->cursectnum],
-						&monster->pos, COLLISION_DIST_MOTHERDEMON))
-				if (monster->timer > 2)
-					monster->timer -= 2;
-			new_sect = update_cursect_smart(d, 2, monster->pos,
-					monster->cursectnum);
-			if (new_sect != monster->cursectnum && new_sect != -1)
-			{
-				swap_list(IS_MONSTER, id, d, (int[2]){monster->cursectnum,
-						new_sect});
-				monster->cursectnum = new_sect;
-			}
+			swap_list(IS_MONSTER, id, d, (int[2]){monster->cursectnum,
+					new_sect});
+			monster->cursectnum = new_sect;
 		}
 	}
 	if (!monster->timer)
