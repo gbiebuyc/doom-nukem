@@ -12,7 +12,7 @@
 
 #include "editor.h"
 
-static void	free_list(t_data *d)
+static int	free_list(t_data *d)
 {
 	t_map_list *tmp;
 
@@ -27,6 +27,7 @@ static void	free_list(t_data *d)
 		free(d->interface.map_list_sort);
 	d->interface.map_list_sort = NULL;
 	d->interface.map_list = NULL;
+	return (0);
 }
 
 static void	sort_map_list(t_data *d)
@@ -93,8 +94,7 @@ int			get_map_list(t_data *d)
 	struct dirent	*de;
 	t_map_list		*begin;
 
-	free_list(d);
-	if (!(dr = opendir(PATH_MAP)))
+	if (!(dr = opendir(PATH_MAP)) && !free_list(d))
 		return (ft_printf("Failed to open maps direcory : %s.\n", PATH_MAP));
 	begin = NULL;
 	d->interface.nb_map = 0;
