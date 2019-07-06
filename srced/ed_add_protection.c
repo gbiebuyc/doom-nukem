@@ -16,18 +16,18 @@
 **	Protection for max walls and sectors
 */
 
-void		add_wall(t_data *d)
+void		add_wall_protection(t_data *d)
 {
 	if (d->numwalls < MAXNUMWALLS)
-		add_wall2(d);
+		add_wall(d);
 	else
 		ft_printf("Too much walls already.\n");
 }
 
-void		add_sector(t_data *d)
+void		add_sector_protection(t_data *d)
 {
 	if (d->numsectors < MAXNUMSECTORS)
-		add_sector2(d);
+		add_sector(d);
 	else
 		ft_printf("Too much sectors already.\n");
 }

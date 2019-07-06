@@ -107,8 +107,8 @@ int			save_file(t_data *d, char *map_name)
 {
 	int		f;
 
-	if (d->numsectors <= 0 || !inside(d, d->startsectnum,
-							(t_vec2f){d->player_start.x, d->player_start.z}))
+	if (d->numsectors <= 0 || d->startsectnum >= d->numsectors || !inside(d,
+		d->startsectnum, (t_vec2f){d->player_start.x, d->player_start.z}))
 		return (ft_printf("Warning : the player isn't inside a sector.\n"));
 	add_extension_file_and_path(d, map_name);
 	if (((f = open(d->path_to_save, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)

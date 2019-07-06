@@ -405,26 +405,26 @@ bool			same_pos(t_wall *w0, t_wall *w1);
 void			detect_neighbors(t_data *d, int16_t sectnum);
 
 /*
+**	ed_add_protection.c
+*/
+
+void			add_wall_protection(t_data *d);
+void			add_sector_protection(t_data *d);
+
+/*
 **	ed_editor_sector.c
 */
 
-void			add_sector2(t_data *d);
+void			add_sector(t_data *d);
 void			del_sector(t_data *d, int16_t sectnum, t_sector *sect, int n);
 int16_t			find_sect_under_cursor(t_data *d);
 bool			inside(t_data *d, int16_t sectnum, t_vec2f p);
 
 /*
-**	ed_add_protection.c
-*/
-
-void			add_wall(t_data *d);
-void			add_sector(t_data *d);
-
-/*
 **	ed_editor_wall.c
 */
 
-void			add_wall2(t_data *d);
+void			add_wall(t_data *d);
 void			select_wall_under_cursor(t_data *d, t_vec2f p);
 void			update_wall_pos(t_data *d);
 

@@ -113,5 +113,6 @@ int			get_map_list(t_data *d)
 	}
 	d->interface.map_list = begin;
 	sort_map_list(d);
+	closedir(dr);
 	return (0);
 }

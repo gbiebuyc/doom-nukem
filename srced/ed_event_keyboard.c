@@ -87,7 +87,7 @@ void		event_key_down(t_data *d, SDL_Keycode key)
 	if (d->interface.prompt_map_open)
 		return ;
 	if (key == SDLK_SPACE)
-		(d->sectordrawing) ? add_wall(d) : add_sector(d);
+		(d->sectordrawing) ? add_wall_protection(d) : add_sector_protection(d);
 	else if (key == SDLK_KP_1 || key == SDLK_KP_3)
 		floor_height(d, ((key == SDLK_KP_1) ? -0.1 : 0.1), d->selected_sector);
 	else if (key == SDLK_KP_7 || key == SDLK_KP_9)
