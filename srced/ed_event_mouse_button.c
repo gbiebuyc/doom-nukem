@@ -32,8 +32,8 @@ static void	mouse_button_left_handler(t_data *d, SDL_Event *e, int x, int y)
 {
 	if (is_over_options_menu(d, x, y))
 		return ;
-	d->interface.current_selected_asset = NULL;
-	d->interface.prompt_asset_option = 0;
+	if (!d->interface.move)
+		disable_asset_selection(d);
 	if (d->interface.selected_asset_on_map ||
 		d->interface.selected_monster_on_map)
 		move_asset(d, x, y);
@@ -77,6 +77,7 @@ static void	mouse_button_up(t_data *d, SDL_Event *e)
 	{
 		d->interface.select = (d->interface.move) ? 0 : 1;
 		d->interface.btn_right_pressed = 0;
+		disable_asset_selection(d);
 	}
 }
 

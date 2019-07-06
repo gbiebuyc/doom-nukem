@@ -12,6 +12,26 @@
 
 #include "editor.h"
 
+void		disable_asset_selection(t_data *d)
+{
+	if (d->interface.current_selected_asset)
+	{
+		d->interface.current_selected_asset->is_select = 0;
+		d->interface.current_selected_asset = NULL;
+		d->interface.prompt_asset_option = 0;
+	}
+	if (d->interface.selected_monster_on_map)
+	{
+		d->interface.selected_monster_on_map->is_select = 0;
+		d->interface.selected_monster_on_map = NULL;
+	}
+	if (d->interface.selected_asset_on_map)
+	{
+		d->interface.selected_asset_on_map->is_select = 0;
+		d->interface.selected_asset_on_map = NULL;
+	}
+}
+
 void		move_asset(t_data *d, int x, int y)
 {
 	t_vec2f	p;
@@ -19,16 +39,10 @@ void		move_asset(t_data *d, int x, int y)
 	p = screentoworld(d, (t_vec2f){x, y});
 	if (inside(d, find_sect_under_cursor(d), p))
 	{
-		if (d->interface.selected_asset_on_map)
-		{
+		if (d->interface.selected_asset_on_map && d->interface.move)
 			d->interface.selected_asset_on_map->world_pos = p;
-			d->interface.selected_asset_on_map = NULL;
-		}
-		else if (d->interface.selected_monster_on_map)
-		{
+		else if (d->interface.selected_monster_on_map && d->interface.move)
 			d->interface.selected_monster_on_map->pos = p;
-			d->interface.selected_monster_on_map = NULL;
-		}
 	}
 	else
 		ft_printf("Asset must be place inside a sector.\n");

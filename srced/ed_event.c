@@ -75,8 +75,6 @@ void		event_motion_mouse(t_data *d, SDL_Event *e, int x, int y)
 	{
 		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT) || d->sectordrawing)
 			(d->interface.select) ? update_wall_pos(d) : 1;
-		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
-			(d->interface.move) ? update_pos(d, e) : 1;
 		if (e->motion.state & SDL_BUTTON(SDL_BUTTON_RIGHT)
 			&& x < W - PROPERTIES_LIMIT && !is_over_options_menu(d, x, y) &&
 			(d->interface.texture_case_select < 0 || x < W - TEXTURE_TOOLBAR))
