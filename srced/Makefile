@@ -13,6 +13,7 @@
 NAME = ../editor
 
 SRC = main.c \
+	ed_add_protection.c \
 	ed_bmp_reader.c \
 	ed_init_structures.c ed_init_editor.c ed_init_texture.c ed_init_assets.c \
 	ed_draw.c ed_draw_assets.c ed_draw_string.c \

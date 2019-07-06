@@ -36,7 +36,7 @@ static int	is_there_a_wall(t_data *d, t_sector *sect)
 **	space bar at the first point again.
 */
 
-void		add_wall(t_data *d)
+void		add_wall2(t_data *d)
 {
 	int			x;
 	int			y;

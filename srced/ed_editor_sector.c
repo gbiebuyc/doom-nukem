@@ -17,7 +17,7 @@
 **	add_wall(d); // current wall
 */
 
-void		add_sector(t_data *d)
+void		add_sector2(t_data *d)
 {
 	d->sectordrawing = true;
 	d->numsectors++;
