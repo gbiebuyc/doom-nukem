@@ -6,7 +6,7 @@
 #    By: nallani <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/23 19:47:10 by nallani           #+#    #+#              #
-#    Updated: 2019/07/06 22:36:45 by nallani          ###   ########.fr        #
+#    Updated: 2019/07/09 22:44:40 by nallani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,14 +108,13 @@ LIBMIX = $(SDL_PATH)/lib/libSDL2_mixer.a
 INCLUDE = includes/
 INCLUDE_FILE_NAMES = common.h structs_doom.h doom_nukem.h
 INCLUDE_FILES = $(addprefix $(INCLUDE), $(INCLUDE_FILE_NAMES))
-CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG) --cflags` \
-		 -g
-LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft $(LIBMIX) `$(SDL_CFG) --static-libs` -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast -I$(INCLUDE) -I$(FT_DIR) `$(SDL_CFG)\
+		 --cflags`
+LDFLAGS = -lm -lpthread -L$(FT_DIR) -lft $(LIBMIX) `$(SDL_CFG) --static-libs`
 ED_DIR = srced
 
 all: $(NAME) editor
 
-#rajouter compilation de libft / autres libs (sdl ?)
 $(NAME):$(OBJ)
 	make -C libft
 	$(CC) -o $@ $(OBJ) $(LDFLAGS)
@@ -129,7 +128,7 @@ clean:
 	rm -rf $(OBJ)
 
 fclean:
-	#make -C $(FT_DIR) fclean // penible a chaque make re
+	make -C $(FT_DIR) fclean
 	make -C $(ED_DIR) fclean
 	rm -rf $(OBJ)
 	rm -rf $(NAME)
@@ -139,11 +138,6 @@ re: fclean all
 obj/%.o: src/%.c $(INCLUDE_FILES)
 	@mkdir -p obj
 	$(CC) -o $@ -c $< $(CFLAGS)
-
-#modifier $(NAME) pour compiler la sdl et etre en accord avec le pdf
-fast:
-	make -C libft
-	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 #compilation SDL
 

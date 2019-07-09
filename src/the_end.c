@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 02:59:09 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/07/09 22:29:47 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 23:24:10 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	the_end(t_data *d)
 	y = HEIGHT - 100;
 	play_music(d, PIKA_SONG);
 	while (y > -1 * HEIGHT)
-		play_music(d, PIKA_SONG);
 	{
 		colo = rainbow_font(y);
 		ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
