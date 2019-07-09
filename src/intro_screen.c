@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 21:27:53 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:44:18 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/09 22:18:00 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	intro_screen(t_data *d)
 			"The world is invaded by demonic creatures.\n"
 			"Your mission is to save Pikachu.\n"
 			"Good luck !",
-			WIDTH / 2 - 250, HEIGHT / 2 - 80, 0, 2});
+			WIDTH / 2 - 250, HEIGHT / 2 - 80, 0xffffff, 2});
 	while (SDL_WaitEvent(&e))
 	{
 		if (e.type == SDL_QUIT)

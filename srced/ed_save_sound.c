@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 23:55:56 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 20:09:18 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 22:20:50 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int		write_sound(int f)
 			write_sound2(f, "sounds/refill_ammo.wav") ||
 			write_sound2(f, "sounds/health_up.wav") ||
 			write_sound2(f, "sounds/door_open.wav") ||
-			write_sound2(f, "sounds/door_close.wav"))
+			write_sound2(f, "sounds/door_close.wav") ||
+			write_sound2(f, "sounds/the-pikachu-song.wav"))
 		return (1);
 	return (0);
 }

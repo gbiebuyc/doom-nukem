@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/17 16:37:00 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 16:10:15 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:39:17 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ void	player_actions(t_data *d)
 		d->player.can_shoot--;
 	else if (d->weapon_type[d->player.current_weapon].current_ammo)
 		shoot_weapon(d, w);
+	if (d->left_mouse_button == MOUSE_PRESSED && !d->weapon_type[d->player.
+			current_weapon].current_ammo)
+		invoke_msg(d, "Out of ammo !!");
 	if (*w == CRYO_BALLISTA && d->player.current_anim_playing == 5
 			&& !d->player.timer_anim_weap)
 	{

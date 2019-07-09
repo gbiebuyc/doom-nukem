@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:54:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/29 14:07:26 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 18:29:30 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		fly_gravity(t_data *d)
 	{
 		if (d->player.gravity < -0.20)
 			player_fell(d);
+		d->player.gravity = 0.0;
 		d->cam.pos.y = d->floorheightplayer + d->player.minimum_height;
 	}
 	if (!d->keys[SDL_SCANCODE_SPACE] && d->cam.pos.y <= d->floorheightplayer +
@@ -64,6 +65,8 @@ void		fly_gravity(t_data *d)
 		normal_gravity(d);
 		return ;
 	}
-	d->player.gravity -= 0.002;
+	if (d->cam.pos.y > d->floorheightplayer + d->player.minimum_height &&
+			!d->keys[SDL_SCANCODE_SPACE])
+		d->player.gravity -= 0.002;
 	fly_gravity_2(d);
 }

@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 20:06:00 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:09:56 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:07:37 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void	handle_finish(t_data *d)
 		clear_sector_sprites(d, i);
 	if (!ft_strlen(d->nextmap))
 		the_end(d);
-	invoke_msg(d, "YOU FINISHED THE MAP");
 	free_everything(d);
 	init_everything(d, d->nextmap);
 }

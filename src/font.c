@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 21:48:33 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/06/30 16:44:38 by gbiebuyc         ###   ########.fr       */
+/*   Updated: 2019/07/09 22:13:24 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	draw_char(t_data *d, t_font *f)
 		while (++i < CHAR_HEIGHT * f->scale)
 			if (d->font[(int)c][j / f->scale] & (1 << i / f->scale))
 			{
-				putpixel(d, f->x + j, f->y + i + y, 0xffffff);
+				putpixel(d, f->x + j, f->y + i + y, f->color);
 				putpixel(d, f->x + j, f->y + i + y + f->scale, 0x000000);
 			}
 	}

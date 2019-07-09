@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:53:29 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/04 14:16:10 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 22:21:30 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define HEALTH_SOUND 16
 # define OPEN_DOOR_SOUND 17
 # define CLOSE_DOOR_SOUND 18
+# define PIKA_SONG 19
 # define MAX_CHANNELS 100
 # define MINIMUM_CROUCH_HEIGHT 0.2
 # define MINIMUM_CEIL_DIST 0.1
@@ -169,7 +170,7 @@ t_vec2f		get_closest(t_vec2f a, t_vec2f b, t_vec2f p);
 void		move_monster(t_data *d, int i);
 void		draw_health(t_data *d);
 void		draw_fuel(t_data *d);
-void		draw_ammo(t_data *d, int ammo);
+void		draw_ammo(t_data *d, t_weapon_type weapon_type);
 void		check_dangerous_area(t_data *d);
 void		decrease_fuel(t_data *d);
 void		handle_respawn(t_data *d);

@@ -6,7 +6,7 @@
 /*   By: nallani <unkown@noaddress.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 00:50:16 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/03 17:35:52 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:06:12 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	initialize_all_monster(t_data *d,
 		t_monster *monster, int16_t id_of_monster)
 {
 	monster->life = d->monster_type[monster->id_type].health;
+	monster->activated = false;
 	monster->anim_state = 0;
 	monster->rot = 1.5 * M_PI;
 	monster->anim_time = 25;
@@ -78,7 +79,7 @@ void	init_monster_type(t_data *d)
 	d->monster_type[MOTHERDEMON].height = 2.0;
 	d->monster_type[MOTHERDEMON].floating = 0.1;
 	d->monster_type[MOTHERDEMON].size = 7.0;
-	d->monster_type[MOTHERDEMON].health = d->difficulty == HARD ? 90 : 50;
+	d->monster_type[MOTHERDEMON].health = d->difficulty == HARD ? 80 : 50;
 	d->monster_type[MOTHERDEMON].hitbox_radius = 0.7;
 	d->monster_type[MOTHERDEMON].anim_order[0] = 1;
 	d->monster_type[MOTHERDEMON].anim_order[1] = 2;

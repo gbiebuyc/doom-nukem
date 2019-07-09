@@ -6,7 +6,7 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 23:02:19 by nallani           #+#    #+#             */
-/*   Updated: 2019/06/30 18:36:12 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 22:21:22 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ typedef struct		s_color_buf
 # define MOUSE_PRESSED 1
 # define MOUSE_RELEASED 2
 # define MOUSE_NO_ACTION 3
-# define NB_OF_SOUNDS 19
+# define NB_OF_SOUNDS 20
 
 typedef struct		s_data
 {

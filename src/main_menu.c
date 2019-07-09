@@ -6,7 +6,7 @@
 /*   By: gbiebuyc <gbiebuyc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:22:51 by gbiebuyc          #+#    #+#             */
-/*   Updated: 2019/07/04 14:15:33 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 22:16:37 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	redraw(t_data *d, int choice)
 	buf[7] = (choice == 1) ? '>' : ' ';
 	buf[14] = (choice == 2) ? '>' : ' ';
 	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
-	draw_string(d, (t_font){buf, WIDTH / 2 - 50, HEIGHT / 2 - 80, 0, 2});
+	draw_string(d, (t_font){buf, WIDTH / 2 - 50, HEIGHT / 2 - 80, 0xffffff, 2});
 	SDL_UpdateWindowSurface(d->win);
 }
 

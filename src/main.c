@@ -6,11 +6,24 @@
 /*   By: nallani <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:39:11 by nallani           #+#    #+#             */
-/*   Updated: 2019/07/03 21:06:46 by nallani          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:53:13 by nallani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+void	set_doorstate(t_data *d)
+{
+	short	i;
+
+	i = 0;
+	while (i < d->numwalls)
+	{
+		d->dooranimstep[i] = 0.0;
+		d->doorstate[i] = 0.0;
+		i++;
+	}
+}
 
 void	init_everything(t_data *d, char *map)
 {
@@ -24,6 +37,7 @@ void	init_everything(t_data *d, char *map)
 			while (++k < MAXNBOFANIMATION)
 				d->monster_text[i][j][k] = NULL;
 	load_map(d, map);
+	set_doorstate(d);
 	fix_picnum(d);
 	init_player(d, &d->player);
 	init_monsters(d);
