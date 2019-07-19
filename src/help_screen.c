@@ -18,6 +18,7 @@ void	help_screen(t_data *d)
 
 	ft_memset(d->screen->pixels, 0, d->screen->pitch * d->screen->h);
 	draw_string(d, (t_font){
+			"E             Open doors / pickup items\n"
 			"WASD / ZQSD   Move\n"
 			"Ctrl          Crouch\n"
 			"Space         Jump / Jetpack\n"

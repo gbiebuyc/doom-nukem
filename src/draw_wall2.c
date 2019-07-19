@@ -20,18 +20,15 @@ void	draw_wall_transparent2(t_data *d, t_projdata *p, t_frustum *fr)
 	p->tex = d->textures[p->wall->middlepicnum];
 	p->u_tex = (p->u - floor(p->u)) * p->tex->w;
 	y = fr->ytop[p->x];
-	if ((p->shadefactor = getshadefactor(d, p, p->z)) <= 0)
-		while (++y <= fr->ybottom[p->x])
-			putpixel2(d, p->z, (t_vec2){p->x, y}, 0);
-	else
-		while (++y <= fr->ybottom[p->x])
-		{
-			px = getpixel4(p->tex, p->u_tex,
-					norm(y, p->yc, p->yd) * p->y_scale);
-			if ((px >> 24) == 0xff)
-				putpixel2(d, p->z, (t_vec2){p->x, y},
-						shade(p->shadefactor, px));
-		}
+	p->shadefactor = getshadefactor(d, p, p->z);
+	while (++y <= fr->ybottom[p->x])
+	{
+		px = getpixel4(p->tex, p->u_tex,
+				norm(y, p->yc, p->yd) * p->y_scale);
+		if ((px >> 24) == 0xff)
+			putpixel2(d, p->z, (t_vec2){p->x, y},
+					shade(p->shadefactor, px));
+	}
 }
 
 void	draw_wall_transparent(t_data *d, t_projdata *p, t_frustum *fr)

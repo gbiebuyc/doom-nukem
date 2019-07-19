@@ -45,10 +45,8 @@ void	draw_wall2bis(t_data *d, t_projdata *p, t_frustum *fr)
 	p->tex = d->textures[p->wall->middlepicnum];
 	p->u_tex = (p->u - floor(p->u)) * p->tex->w;
 	p->y = ft_max(fr->ytop[p->x], p->ya) - 1;
-	if ((p->shadefactor = getshadefactor(d, p, p->z)) <= 0)
-		while (++p->y <= ft_min(fr->ybottom[p->x], p->yb))
-			putpixel2(d, p->z, (t_vec2){p->x, p->y}, 0);
-	else if (!p->neighbor)
+	p->shadefactor = getshadefactor(d, p, p->z);
+	if (!p->neighbor)
 		draw_wall_no_nei(d, p, fr);
 	else if (p->neighbor)
 		draw_wall_nei(d, p, fr);
